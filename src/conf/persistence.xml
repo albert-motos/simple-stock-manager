@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="SimpleStockManagerPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.simplestockmanager.persistence.Provider</class>
+    <class>com.simplestockmanager.persistence.Item</class>
+    <class>com.simplestockmanager.persistence.EmployeeType</class>
+    <class>com.simplestockmanager.persistence.Employee</class>
+    <class>com.simplestockmanager.persistence.PaymentType</class>
+    <class>com.simplestockmanager.persistence.Store</class>
+    <class>com.simplestockmanager.persistence.AnalyticsTime</class>
+    <class>com.simplestockmanager.persistence.Checkin</class>
+    <class>com.simplestockmanager.persistence.Brand</class>
+    <class>com.simplestockmanager.persistence.Checkout</class>
+    <class>com.simplestockmanager.persistence.Price</class>
+    <class>com.simplestockmanager.persistence.Product</class>
+    <class>com.simplestockmanager.persistence.Order1</class>
+    <class>com.simplestockmanager.persistence.DayType</class>
+    <class>com.simplestockmanager.persistence.Stock</class>
+    <class>com.simplestockmanager.persistence.PriceType</class>
+    <class>com.simplestockmanager.persistence.MonthType</class>
+    <class>com.simplestockmanager.persistence.SexType</class>
+    <class>com.simplestockmanager.persistence.Client</class>
+    <class>com.simplestockmanager.persistence.Check</class>
+    <class>com.simplestockmanager.persistence.AgeType</class>
+    <class>com.simplestockmanager.persistence.Invoice</class>
+    <class>com.simplestockmanager.persistence.Record</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.16.8.128:3306/SimpleStockManager?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="ssm"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="ssm%SSM"/>
+    </properties>
+  </persistence-unit>
+</persistence>
