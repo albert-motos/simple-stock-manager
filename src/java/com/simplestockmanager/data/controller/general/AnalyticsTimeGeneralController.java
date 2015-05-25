@@ -53,7 +53,7 @@ public class AnalyticsTimeGeneralController {
 
     public static long update(long id, int minute, int hour, int day, long dayTypeID, int month, long monthTypeID, int year) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         AnalyticsTime analyticsTime = AnalyticsTimeSpecificController.find(minute, hour, day, dayTypeID, month, monthTypeID, year);
 
@@ -63,30 +63,30 @@ public class AnalyticsTimeGeneralController {
             try {
                 AnalyticsTimeJpaController analyticsTimeJpaController = AnalyticsTimeHelper.getJpaController();
                 analyticsTimeJpaController.edit(analyticsTime);
-                state = UpdateConstant.SUCCESS;
+                status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 
     public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long status = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
 
             try {
                 AnalyticsTimeJpaController analyticsTimeJpaController = AnalyticsTimeHelper.getJpaController();
                 analyticsTimeJpaController.destroy(id);
-                state = DeleteConstant.SUCCESS;
+                status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 }

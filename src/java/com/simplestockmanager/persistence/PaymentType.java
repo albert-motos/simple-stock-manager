@@ -46,6 +46,10 @@ public class PaymentType implements Serializable {
         this.id = id;
     }
 
+    public PaymentType(String type) {
+        this.type = type;
+    }
+
     public PaymentType(Long id, String type) {
         this.id = id;
         this.type = type;

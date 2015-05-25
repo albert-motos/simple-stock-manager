@@ -46,6 +46,10 @@ public class EmployeeType implements Serializable {
         this.id = id;
     }
 
+    public EmployeeType(String type) {
+        this.type = type;
+    }
+
     public EmployeeType(Long id, String type) {
         this.id = id;
         this.type = type;

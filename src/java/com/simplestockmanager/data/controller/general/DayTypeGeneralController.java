@@ -15,7 +15,7 @@ import com.simplestockmanager.persistence.controller.DayTypeJpaController;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class DayTypeGeneralController {
@@ -41,7 +41,7 @@ public class DayTypeGeneralController {
         return dayType.getId();
     }
 
-    public static DayType read(Long id) {
+    public static DayType read(long id) {
         DayType dayType;
 
         try {
@@ -54,40 +54,44 @@ public class DayTypeGeneralController {
         return dayType;
     }
 
-    public static long update(Long id, String type) {
+    public static long update(long id, String type) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-            DayType dayType = new DayType(id, type);
+            Query query = DayTypeHelper.getFindByTypeQuery(type);
 
-            try {
-                DayTypeJpaController dayTypeJpaController = DayTypeHelper.getJpaController();
-                dayTypeJpaController.edit(dayType);
-                state = UpdateConstant.SUCCESS;
-            } catch (Exception e) {
+            if (query.getResultList().isEmpty()) {
+                DayType dayType = new DayType(id, type);
 
+                try {
+                    DayTypeJpaController dayTypeJpaController = DayTypeHelper.getJpaController();
+                    dayTypeJpaController.edit(dayType);
+                    status = UpdateConstant.SUCCESS;
+                } catch (Exception e) {
+
+                }
             }
         }
 
-        return state;
+        return status;
     }
 
-    public static long delete(Long id) {
+    public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long status = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
 
             try {
                 DayTypeJpaController dayTypeJpaController = DayTypeHelper.getJpaController();
                 dayTypeJpaController.destroy(id);
-                state = DeleteConstant.SUCCESS;
+                status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 }

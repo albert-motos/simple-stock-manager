@@ -77,6 +77,16 @@ public class Item implements Serializable {
         this.id = id;
     }
 
+    public Item(long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
+        this.orderID = orderID;
+        this.stockID = stockID;
+        this.priceID = priceID;
+        this.amount = amount;
+        this.cost = cost;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     public Item(Long id, long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.orderID = orderID;

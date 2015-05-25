@@ -57,7 +57,7 @@ public class AgeTypeGeneralController {
 
     public static long update(long id, String type) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
             Query query = AgeTypeHelper.getFindByTypeQuery(type);
@@ -68,31 +68,31 @@ public class AgeTypeGeneralController {
                 try {
                     AgeTypeJpaController ageTypeJpaController = AgeTypeHelper.getJpaController();
                     ageTypeJpaController.edit(ageType);
-                    state = UpdateConstant.SUCCESS;
+                    status = UpdateConstant.SUCCESS;
                 } catch (Exception e) {
 
                 }
             }
         }
 
-        return state;
+        return status;
     }
 
     public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long status = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
 
             try {
                 AgeTypeJpaController ageTypeJpaController = AgeTypeHelper.getJpaController();
                 ageTypeJpaController.destroy(id);
-                state = DeleteConstant.SUCCESS;
+                status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 }

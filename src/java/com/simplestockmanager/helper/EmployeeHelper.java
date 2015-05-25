@@ -24,4 +24,11 @@ public class EmployeeHelper {
 
         return query;
     }
+    
+    public static Query getFindByUserNameQuery(String userName) {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Employee.findByUserName");
+        query.setParameter("userName", userName);
+
+        return query;
+    }
 }

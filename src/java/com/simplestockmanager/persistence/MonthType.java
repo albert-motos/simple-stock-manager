@@ -46,6 +46,10 @@ public class MonthType implements Serializable {
         this.id = id;
     }
 
+    public MonthType(String type) {
+        this.type = type;
+    }
+
     public MonthType(Long id, String type) {
         this.id = id;
         this.type = type;

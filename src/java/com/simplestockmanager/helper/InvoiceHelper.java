@@ -5,21 +5,21 @@
  */
 package com.simplestockmanager.helper;
 
-import com.simplestockmanager.persistence.controller.OrderJpaController;
+import com.simplestockmanager.persistence.controller.InvoiceJpaController;
 import javax.persistence.Query;
 
 /**
  *
  * @author foxtrot
  */
-public class OrderHelper {
+public class InvoiceHelper {
 
-    public static OrderJpaController getJpaController() {
-        return new OrderJpaController(EntityManagerHelper.getEntityManagerFactory());
+    public static InvoiceJpaController getJpaController() {
+        return new InvoiceJpaController(EntityManagerHelper.getEntityManagerFactory());
     }
 
     public static Query getFindByIdQuery(long id) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Order.findById");
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Invoice.findById");
         query.setParameter("id", id);
 
         return query;

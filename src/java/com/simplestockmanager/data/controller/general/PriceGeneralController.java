@@ -17,64 +17,65 @@ import java.util.Date;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class PriceGeneralController {
-    public static Long create(long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount, BigDecimal actualAmount,
-            Date endDate, boolean isEnable) {
-        
+
+    public static long create(long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount,
+            BigDecimal actualAmount, Date endDate, boolean isEnable) {
+
         Price price = new Price(stockID, priceTypeID, cost, createdDate, lastModifiedDate, initialAmount, actualAmount, endDate, isEnable);
-        
+
         try {
             PriceJpaController priceJpaController = PriceHelper.getJpaController();
             priceJpaController.create(price);
         } catch (Exception e) {
             price = new PriceNull();
         }
-        
+
         return price.getId();
     }
-    
-    public static Price read(Long id) {
+
+    public static Price read(long id) {
+
         Price price;
-        
+
         try {
             Query query = PriceHelper.getFindByIdQuery(id);
             price = (Price) query.getSingleResult();
         } catch (Exception e) {
             price = new PriceNull();
         }
-        
+
         return price;
     }
-    
-    public static long update(Long id, long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount,
+
+    public static long update(long id, long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount,
             BigDecimal actualAmount, Date endDate, boolean isEnable) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-            Price price = new Price(id, stockID, priceTypeID, cost, createdDate, lastModifiedDate, isEnable);
+            Price price = new Price(id, stockID, priceTypeID, cost, createdDate, lastModifiedDate, initialAmount, actualAmount, endDate, isEnable);
 
             try {
                 PriceJpaController priceJpaController = PriceHelper.getJpaController();
                 priceJpaController.edit(price);
-                state = UpdateConstant.SUCCESS;
+                status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 
-    public static long delete(Long id) {
+    public static long delete(long id) {
 
         long state = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-
             try {
                 PriceJpaController priceJpaController = PriceHelper.getJpaController();
                 priceJpaController.destroy(id);

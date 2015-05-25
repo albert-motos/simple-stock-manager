@@ -17,12 +17,13 @@ import java.util.Date;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class ItemGeneralController {
 
-    public static Long create(long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
+    public static long create(long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
+        
         Item item = new Item(orderID, stockID, priceID, amount, cost, createdDate, lastModifiedDate);
 
         try {
@@ -35,7 +36,8 @@ public class ItemGeneralController {
         return item.getId();
     }
     
-    public static Item read(Long id) {
+    public static Item read(long id) {
+        
         Item item;
         
         try {
@@ -48,9 +50,9 @@ public class ItemGeneralController {
         return item;
     }
     
-    public static long update(Long id, long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
+    public static long update(long id, long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
             Item item = new Item(id, orderID, stockID, priceID, amount, cost, createdDate, lastModifiedDate);
@@ -58,30 +60,29 @@ public class ItemGeneralController {
             try {
                 ItemJpaController itemJpaController = ItemHelper.getJpaController();
                 itemJpaController.edit(item);
-                state = UpdateConstant.SUCCESS;
+                status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 
-    public static long delete(Long id) {
+    public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long status = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-
             try {
                 ItemJpaController itemJpaController = ItemHelper.getJpaController();
                 itemJpaController.destroy(id);
-                state = DeleteConstant.SUCCESS;
+                status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 }

@@ -77,6 +77,16 @@ public class Invoice implements Serializable {
         this.id = id;
     }
 
+    public Invoice(long clientID, long employeeID, long paymentTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, long analitycsTimeID) {
+        this.clientID = clientID;
+        this.employeeID = employeeID;
+        this.paymentTypeID = paymentTypeID;
+        this.cost = cost;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+        this.analitycsTimeID = analitycsTimeID;
+    }
+
     public Invoice(Long id, long clientID, long employeeID, long paymentTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, long analitycsTimeID) {
         this.id = id;
         this.clientID = clientID;

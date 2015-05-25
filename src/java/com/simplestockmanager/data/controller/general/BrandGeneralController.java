@@ -56,7 +56,7 @@ public class BrandGeneralController {
 
     public static long update(long id, String name, boolean enable) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
 
@@ -74,30 +74,30 @@ public class BrandGeneralController {
                 try {
                     BrandJpaController brandJpaController = BrandHelper.getJpaController();
                     brandJpaController.edit(brand);
-                    state = UpdateConstant.SUCCESS;
+                    status = UpdateConstant.SUCCESS;
                 } catch (Exception e2) {
                 }
             }
         }
 
-        return state;
+        return status;
     }
 
     public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long status = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
 
             try {
                 BrandJpaController brandJpaController = BrandHelper.getJpaController();
                 brandJpaController.destroy(id);
-                state = DeleteConstant.SUCCESS;
+                status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 }

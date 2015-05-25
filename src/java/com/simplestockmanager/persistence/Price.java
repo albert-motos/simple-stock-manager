@@ -83,6 +83,31 @@ public class Price implements Serializable {
         this.id = id;
     }
 
+    public Price(long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount, BigDecimal actualAmount, Date endDate, boolean isEnable) {
+        this.stockID = stockID;
+        this.priceTypeID = priceTypeID;
+        this.cost = cost;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+        this.initialAmount = initialAmount;
+        this.actualAmount = actualAmount;
+        this.endDate = endDate;
+        this.isEnable = isEnable;
+    }
+
+    public Price(Long id, long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount, BigDecimal actualAmount, Date endDate, boolean isEnable) {
+        this.id = id;
+        this.stockID = stockID;
+        this.priceTypeID = priceTypeID;
+        this.cost = cost;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+        this.initialAmount = initialAmount;
+        this.actualAmount = actualAmount;
+        this.endDate = endDate;
+        this.isEnable = isEnable;
+    }
+
     public Price(Long id, long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, boolean isEnable) {
         this.id = id;
         this.stockID = stockID;

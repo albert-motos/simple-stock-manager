@@ -15,12 +15,13 @@ import com.simplestockmanager.persistence.controller.PaymentTypeJpaController;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class PaymentTypeGeneralController {
 
     public static long create(String type) {
+
         PaymentType paymentType;
 
         Query query = PaymentTypeHelper.getFindByTypeQuery(type);
@@ -41,7 +42,8 @@ public class PaymentTypeGeneralController {
         return paymentType.getId();
     }
 
-    public static PaymentType read(Long id) {
+    public static PaymentType read(long id) {
+
         PaymentType paymentType;
 
         try {
@@ -54,26 +56,29 @@ public class PaymentTypeGeneralController {
         return paymentType;
     }
 
-    public static long update(Long id, String type) {
+    public static long update(long id, String type) {
 
         long state = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-            PaymentType paymentType = new PaymentType(id, type);
+            Query query = PaymentTypeHelper.getFindByTypeQuery(type);
 
-            try {
-                PaymentTypeJpaController paymentTypeJpaController = PaymentTypeHelper.getJpaController();
-                paymentTypeJpaController.edit(paymentType);
-                state = UpdateConstant.SUCCESS;
-            } catch (Exception e) {
+            if (query.getResultList().isEmpty()) {
+                PaymentType paymentType = new PaymentType(id, type);
 
+                try {
+                    PaymentTypeJpaController paymentTypeJpaController = PaymentTypeHelper.getJpaController();
+                    paymentTypeJpaController.edit(paymentType);
+                    state = UpdateConstant.SUCCESS;
+                } catch (Exception e) {
+                }
             }
         }
 
         return state;
     }
 
-    public static long delete(Long id) {
+    public static long delete(long id) {
 
         long state = DeleteConstant.FAILURE;
 

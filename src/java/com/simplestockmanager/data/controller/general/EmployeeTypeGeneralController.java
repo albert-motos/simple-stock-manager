@@ -15,7 +15,7 @@ import com.simplestockmanager.persistence.controller.EmployeeTypeJpaController;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class EmployeeTypeGeneralController {
@@ -41,7 +41,7 @@ public class EmployeeTypeGeneralController {
         return employeeType.getId();
     }
 
-    public static EmployeeType read(Long id) {
+    public static EmployeeType read(long id) {
         EmployeeType employeeType;
 
         try {
@@ -54,40 +54,43 @@ public class EmployeeTypeGeneralController {
         return employeeType;
     }
 
-    public static long update(Long id, String type) {
+    public static long update(long id, String type) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-            EmployeeType employeeType = new EmployeeType(id, type);
+            Query query = EmployeeTypeHelper.getFindByTypeQuery(type);
 
-            try {
-                EmployeeTypeJpaController employeeTypeJpaController = EmployeeTypeHelper.getJpaController();
-                employeeTypeJpaController.edit(employeeType);
-                state = UpdateConstant.SUCCESS;
-            } catch (Exception e) {
+            if (query.getResultList().isEmpty()) {
+                EmployeeType employeeType = new EmployeeType(id, type);
 
+                try {
+                    EmployeeTypeJpaController employeeTypeJpaController = EmployeeTypeHelper.getJpaController();
+                    employeeTypeJpaController.edit(employeeType);
+                    status = UpdateConstant.SUCCESS;
+                } catch (Exception e) {
+
+                }
             }
         }
 
-        return state;
+        return status;
     }
 
-    public static long delete(Long id) {
+    public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long status = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-
             try {
                 EmployeeTypeJpaController employeeTypeJpaController = EmployeeTypeHelper.getJpaController();
                 employeeTypeJpaController.destroy(id);
-                state = UpdateConstant.SUCCESS;
+                status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 }

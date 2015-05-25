@@ -52,7 +52,7 @@ public class ClientGeneralController {
     public static long update(long id, String firstName, String lastName, long ageTypeID, long sexTypeID, String phone, String email, boolean isEnable,
             Date createdDate, Date lastModifiedDate) {
 
-        long state = UpdateConstant.FAILURE;
+        long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
             Client client = new Client(id, firstName, lastName, ageTypeID, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
@@ -60,31 +60,31 @@ public class ClientGeneralController {
             try {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();
                 clientJpaController.edit(client);
-                state = UpdateConstant.SUCCESS;
+                status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 
     public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long status = DeleteConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
 
             try {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();
                 clientJpaController.destroy(id);
-                state = DeleteConstant.SUCCESS;
+                status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
 
             }
         }
 
-        return state;
+        return status;
     }
 
 }

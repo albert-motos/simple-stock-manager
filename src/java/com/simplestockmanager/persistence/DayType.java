@@ -46,6 +46,10 @@ public class DayType implements Serializable {
         this.id = id;
     }
 
+    public DayType(String type) {
+        this.type = type;
+    }
+
     public DayType(Long id, String type) {
         this.id = id;
         this.type = type;

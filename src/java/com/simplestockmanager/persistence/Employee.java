@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -44,6 +46,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
@@ -95,6 +98,22 @@ public class Employee implements Serializable {
 
     public Employee(Long id) {
         this.id = id;
+    }
+
+    public Employee(String firstName, String lastName, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+        this.email = email;
+        this.employeTypeID = employeTypeID;
+        this.isEnable = isEnable;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+        this.userName = userName;
+        this.password = password;
+        this.isOnline = isOnline;
+        this.lastOnlineDate = lastOnlineDate;
+        this.sessionID = sessionID;
     }
 
     public Employee(Long id, String firstName, String lastName, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
