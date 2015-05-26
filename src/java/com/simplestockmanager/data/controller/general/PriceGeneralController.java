@@ -22,10 +22,10 @@ import javax.persistence.Query;
  */
 public class PriceGeneralController {
 
-    public static long create(long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount,
+    public static long create(long stockID, String title, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount,
             BigDecimal actualAmount, Date endDate, boolean isEnable) {
 
-        Price price = new Price(stockID, priceTypeID, cost, createdDate, lastModifiedDate, initialAmount, actualAmount, endDate, isEnable);
+        Price price = new Price(stockID, title, priceTypeID, cost, createdDate, lastModifiedDate, initialAmount, actualAmount, endDate, isEnable);
 
         try {
             PriceJpaController priceJpaController = PriceHelper.getJpaController();
@@ -51,13 +51,13 @@ public class PriceGeneralController {
         return price;
     }
 
-    public static long update(long id, long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount,
-            BigDecimal actualAmount, Date endDate, boolean isEnable) {
+    public static long update(long id, long stockID, String title, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate,
+            BigDecimal initialAmount, BigDecimal actualAmount, Date endDate, boolean isEnable) {
 
         long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-            Price price = new Price(id, stockID, priceTypeID, cost, createdDate, lastModifiedDate, initialAmount, actualAmount, endDate, isEnable);
+            Price price = new Price(id, stockID, title, priceTypeID, cost, createdDate, lastModifiedDate, isEnable);
 
             try {
                 PriceJpaController priceJpaController = PriceHelper.getJpaController();

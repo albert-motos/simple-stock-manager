@@ -42,6 +42,10 @@ public class PriceType implements Serializable {
     public PriceType() {
     }
 
+    public PriceType(String type) {
+        this.type = type;
+    }
+
     public PriceType(Long id) {
         this.id = id;
     }

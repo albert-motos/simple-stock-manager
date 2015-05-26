@@ -8,50 +8,51 @@ package com.simplestockmanager.data.controller.general;
 import com.simplestockmanager.constant.DeleteConstant;
 import com.simplestockmanager.constant.IdentifierConstant;
 import com.simplestockmanager.constant.UpdateConstant;
-import com.simplestockmanager.data.nullpackage.PriceTypeNull;
-import com.simplestockmanager.helper.PriceTypeHelper;
-import com.simplestockmanager.persistence.PriceType;
-import com.simplestockmanager.persistence.controller.PriceTypeJpaController;
+import com.simplestockmanager.data.nullpackage.SexTypeNull;
+import com.simplestockmanager.helper.SexTypeHelper;
+import com.simplestockmanager.persistence.SexType;
+import com.simplestockmanager.persistence.controller.SexTypeJpaController;
 import javax.persistence.Query;
 
 /**
  * TESTED
  * @author foxtrot
  */
-public class PriceTypeGeneralController {
+public class SexTypeGeneralController {
 
     public static long create(String type) {
-        PriceType priceType;
 
-        Query query = PriceTypeHelper.getFindByTypeQuery(type);
+        SexType sexType;
+        Query query = SexTypeHelper.getFindByTypeQuery(type);
 
         try {
-            priceType = (PriceType) query.getSingleResult();
+            sexType = (SexType) query.getSingleResult();
         } catch (Exception e) {
-            priceType = new PriceType(type);
+            sexType = new SexType(type);
 
             try {
-                PriceTypeJpaController priceTypeJpaController = PriceTypeHelper.getJpaController();
-                priceTypeJpaController.create(priceType);
+                SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
+                sexTypeJpaController.create(sexType);
             } catch (Exception e2) {
-                priceType = new PriceTypeNull();
+                sexType = new SexTypeNull();
             }
         }
 
-        return priceType.getId();
+        return sexType.getId();
     }
 
-    public static PriceType read(long id) {
-        PriceType priceType;
+    public static SexType read(long id) {
+
+        SexType sexType;
 
         try {
-            Query query = PriceTypeHelper.getFindByIdQuery(id);
-            priceType = (PriceType) query.getSingleResult();
+            Query query = SexTypeHelper.getFindByIdQuery(id);
+            sexType = (SexType) query.getSingleResult();
         } catch (Exception e) {
-            priceType = new PriceTypeNull();
+            sexType = new SexTypeNull();
         }
 
-        return priceType;
+        return sexType;
     }
 
     public static long update(long id, String type) {
@@ -59,14 +60,14 @@ public class PriceTypeGeneralController {
         long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-            Query query = PriceTypeHelper.getFindByTypeQuery(type);
+            Query query = SexTypeHelper.getFindByTypeQuery(type);
 
             if (query.getResultList().isEmpty()) {
-                PriceType priceType = new PriceType(id, type);
+                SexType sexType = new SexType(id, type);
 
                 try {
-                    PriceTypeJpaController priceTypeJpaController = PriceTypeHelper.getJpaController();
-                    priceTypeJpaController.edit(priceType);
+                    SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
+                    sexTypeJpaController.edit(sexType);
                     status = UpdateConstant.SUCCESS;
                 } catch (Exception e) {
 
@@ -83,8 +84,8 @@ public class PriceTypeGeneralController {
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
             try {
-                PriceTypeJpaController priceTypeJpaController = PriceTypeHelper.getJpaController();
-                priceTypeJpaController.destroy(id);
+                SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
+                sexTypeJpaController.destroy(id);
                 status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
 

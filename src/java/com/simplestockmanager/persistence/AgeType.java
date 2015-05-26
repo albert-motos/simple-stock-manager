@@ -27,7 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "AgeType.findAll", query = "SELECT a FROM AgeType a"),
     @NamedQuery(name = "AgeType.findById", query = "SELECT a FROM AgeType a WHERE a.id = :id"),
-    @NamedQuery(name = "AgeType.findByType", query = "SELECT a FROM AgeType a WHERE a.type = :type")})
+    @NamedQuery(name = "AgeType.findByType", query = "SELECT a FROM AgeType a WHERE a.type = :type"),
+    @NamedQuery(name = "AgeType.findByFromAge", query = "SELECT a FROM AgeType a WHERE a.fromAge = :fromAge"),
+    @NamedQuery(name = "AgeType.findByToAge", query = "SELECT a FROM AgeType a WHERE a.toAge = :toAge")})
 public class AgeType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,6 +40,12 @@ public class AgeType implements Serializable {
     @Basic(optional = false)
     @Column(name = "Type")
     private String type;
+    @Basic(optional = false)
+    @Column(name = "FromAge")
+    private int fromAge;
+    @Basic(optional = false)
+    @Column(name = "ToAge")
+    private int toAge;
 
     public AgeType() {
     }
@@ -46,13 +54,17 @@ public class AgeType implements Serializable {
         this.id = id;
     }
 
-    public AgeType(String type) {
+    public AgeType(String type, int fromAge, int toAge) {
         this.type = type;
+        this.fromAge = fromAge;
+        this.toAge = toAge;
     }
 
-    public AgeType(Long id, String type) {
+    public AgeType(Long id, String type, int fromAge, int toAge) {
         this.id = id;
         this.type = type;
+        this.fromAge = fromAge;
+        this.toAge = toAge;
     }
 
     public Long getId() {
@@ -69,6 +81,22 @@ public class AgeType implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getFromAge() {
+        return fromAge;
+    }
+
+    public void setFromAge(int fromAge) {
+        this.fromAge = fromAge;
+    }
+
+    public int getToAge() {
+        return toAge;
+    }
+
+    public void setToAge(int toAge) {
+        this.toAge = toAge;
     }
 
     @Override

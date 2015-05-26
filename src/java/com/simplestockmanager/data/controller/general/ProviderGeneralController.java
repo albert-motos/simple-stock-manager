@@ -16,66 +16,72 @@ import java.util.Date;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class ProviderGeneralController {
-    
+
     public static long create(String name, String identifier, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+
         Provider provider = new Provider(name, identifier, phone, email, isEnable, createdDate, lastModifiedDate);
-        
+
         try {
             ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
             providerJpaController.create(provider);
         } catch (Exception e) {
             provider = new ProviderNull();
         }
-        
+
         return provider.getId();
     }
-    
+
     public static Provider read(long id) {
+
         Provider provider;
-        
+
         try {
             Query query = ProviderHelper.getFindByIdQuery(id);
-            provider = (Provider) query.getResultList();
+            provider = (Provider) query.getSingleResult();
         } catch (Exception e) {
             provider = new ProviderNull();
         }
-        
+
         return provider;
     }
-    
+
     public static long update(long id, String name, String identifier, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+
         long status = UpdateConstant.FAILURE;
-        
+
         if (read(id).getId() != IdentifierConstant.INVALID) {
             Provider provider = new Provider(id, name, identifier, phone, email, isEnable, createdDate, lastModifiedDate);
-            
+
             try {
                 ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
                 providerJpaController.edit(provider);
                 status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
+
             }
         }
-        
+
         return status;
     }
-    
+
     public static long delete(long id) {
+
         long status = DeleteConstant.FAILURE;
-        
+
         if (read(id).getId() != IdentifierConstant.INVALID) {
             try {
                 ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
                 providerJpaController.destroy(id);
                 status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
+
             }
         }
-        
+
         return status;
     }
 }

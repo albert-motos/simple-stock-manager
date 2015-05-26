@@ -81,6 +81,17 @@ public class Stock implements Serializable {
         this.id = id;
     }
 
+    public Stock(long productID, long brandID, long storeID, long providerID, BigDecimal actualAmount, BigDecimal totalAmount, Date createdDate, Date lastModifiedDate) {
+        this.productID = productID;
+        this.brandID = brandID;
+        this.storeID = storeID;
+        this.providerID = providerID;
+        this.actualAmount = actualAmount;
+        this.totalAmount = totalAmount;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     public Stock(Long id, long productID, long brandID, long storeID, long providerID, BigDecimal actualAmount, BigDecimal totalAmount, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.productID = productID;

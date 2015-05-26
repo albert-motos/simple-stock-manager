@@ -7,7 +7,6 @@ package com.simplestockmanager.persistence.controller;
 
 import com.simplestockmanager.persistence.Store;
 import com.simplestockmanager.persistence.controller.exceptions.NonexistentEntityException;
-import com.simplestockmanager.persistence.controller.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -32,18 +31,13 @@ public class StoreJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Store store) throws PreexistingEntityException, Exception {
+    public void create(Store store) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(store);
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findStore(store.getId()) != null) {
-                throw new PreexistingEntityException("Store " + store + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

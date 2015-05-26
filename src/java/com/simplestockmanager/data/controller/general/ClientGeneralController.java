@@ -21,10 +21,10 @@ import javax.persistence.Query;
  */
 public class ClientGeneralController {
 
-    public static long create(String firstName, String lastName, long ageTypeID, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate,
+    public static long create(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate,
             Date lastModifiedDate) {
 
-        Client client = new Client(firstName, lastName, ageTypeID, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
+        Client client = new Client(firstName, lastName, bornDate, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
 
         try {
             ClientJpaController clientJpaController = ClientHelper.getJpaController();
@@ -49,13 +49,13 @@ public class ClientGeneralController {
         return client;
     }
 
-    public static long update(long id, String firstName, String lastName, long ageTypeID, long sexTypeID, String phone, String email, boolean isEnable,
+    public static long update(long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable,
             Date createdDate, Date lastModifiedDate) {
 
         long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
-            Client client = new Client(id, firstName, lastName, ageTypeID, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
+            Client client = new Client(id, firstName, lastName, bornDate, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
 
             try {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();

@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Price.findAll", query = "SELECT p FROM Price p"),
     @NamedQuery(name = "Price.findById", query = "SELECT p FROM Price p WHERE p.id = :id"),
     @NamedQuery(name = "Price.findByStockID", query = "SELECT p FROM Price p WHERE p.stockID = :stockID"),
+    @NamedQuery(name = "Price.findByTitle", query = "SELECT p FROM Price p WHERE p.title = :title"),
     @NamedQuery(name = "Price.findByPriceTypeID", query = "SELECT p FROM Price p WHERE p.priceTypeID = :priceTypeID"),
     @NamedQuery(name = "Price.findByCost", query = "SELECT p FROM Price p WHERE p.cost = :cost"),
     @NamedQuery(name = "Price.findByCreatedDate", query = "SELECT p FROM Price p WHERE p.createdDate = :createdDate"),
@@ -50,6 +51,9 @@ public class Price implements Serializable {
     @Basic(optional = false)
     @Column(name = "StockID")
     private long stockID;
+    @Basic(optional = false)
+    @Column(name = "Title")
+    private String title;
     @Basic(optional = false)
     @Column(name = "PriceTypeID")
     private long priceTypeID;
@@ -83,8 +87,9 @@ public class Price implements Serializable {
         this.id = id;
     }
 
-    public Price(long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount, BigDecimal actualAmount, Date endDate, boolean isEnable) {
+    public Price(long stockID, String title, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount, BigDecimal actualAmount, Date endDate, boolean isEnable) {
         this.stockID = stockID;
+        this.title = title;
         this.priceTypeID = priceTypeID;
         this.cost = cost;
         this.createdDate = createdDate;
@@ -95,22 +100,10 @@ public class Price implements Serializable {
         this.isEnable = isEnable;
     }
 
-    public Price(Long id, long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, BigDecimal initialAmount, BigDecimal actualAmount, Date endDate, boolean isEnable) {
+    public Price(Long id, long stockID, String title, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, boolean isEnable) {
         this.id = id;
         this.stockID = stockID;
-        this.priceTypeID = priceTypeID;
-        this.cost = cost;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-        this.initialAmount = initialAmount;
-        this.actualAmount = actualAmount;
-        this.endDate = endDate;
-        this.isEnable = isEnable;
-    }
-
-    public Price(Long id, long stockID, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate, boolean isEnable) {
-        this.id = id;
-        this.stockID = stockID;
+        this.title = title;
         this.priceTypeID = priceTypeID;
         this.cost = cost;
         this.createdDate = createdDate;
@@ -132,6 +125,14 @@ public class Price implements Serializable {
 
     public void setStockID(long stockID) {
         this.stockID = stockID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public long getPriceTypeID() {

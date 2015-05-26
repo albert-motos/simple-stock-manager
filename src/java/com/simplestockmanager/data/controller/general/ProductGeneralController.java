@@ -16,12 +16,13 @@ import java.util.Date;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class ProductGeneralController {
 
     public static long create(String name, String description, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+
         Product product = new Product(name, description, isEnable, createdDate, lastModifiedDate);
 
         try {
@@ -35,6 +36,7 @@ public class ProductGeneralController {
     }
 
     public static Product read(long id) {
+
         Product product;
 
         try {
@@ -48,6 +50,7 @@ public class ProductGeneralController {
     }
 
     public static long update(long id, String name, String description, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+
         long status = UpdateConstant.FAILURE;
 
         if (read(id).getId() != IdentifierConstant.INVALID) {
@@ -58,6 +61,7 @@ public class ProductGeneralController {
                 productJpaController.edit(product);
                 status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
+
             }
         }
 
@@ -65,17 +69,19 @@ public class ProductGeneralController {
     }
 
     public static long delete(long id) {
+
         long status = DeleteConstant.FAILURE;
-        
+
         if (read(id).getId() != IdentifierConstant.INVALID) {
             try {
                 ProductJpaController productJpaController = ProductHelper.getJpaController();
                 productJpaController.destroy(id);
                 status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
+
             }
         }
-        
+
         return status;
     }
 }

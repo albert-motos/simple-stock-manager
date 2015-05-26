@@ -75,6 +75,16 @@ public class Provider implements Serializable {
         this.id = id;
     }
 
+    public Provider(String name, String identifier, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+        this.name = name;
+        this.identifier = identifier;
+        this.phone = phone;
+        this.email = email;
+        this.isEnable = isEnable;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     public Provider(Long id, String name, String identifier, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.name = name;

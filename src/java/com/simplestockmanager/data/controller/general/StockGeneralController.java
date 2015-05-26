@@ -17,7 +17,7 @@ import java.util.Date;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class StockGeneralController {
@@ -38,6 +38,7 @@ public class StockGeneralController {
     }
     
     public static Stock read(long id) {
+        
         Stock stock;
         
         try {
@@ -50,8 +51,9 @@ public class StockGeneralController {
         return stock;
     }
     
-    public static long update(long id, long productID, long brandID, long storeID, long providerID, BigDecimal actualAmount, BigDecimal totalAmount, Date createdDate,
-            Date lastModifiedDate) {
+    public static long update(long id, long productID, long brandID, long storeID, long providerID, BigDecimal actualAmount, BigDecimal totalAmount,
+            Date createdDate, Date lastModifiedDate) {
+        
         long status = UpdateConstant.FAILURE;
         
         if (read(id).getId() != IdentifierConstant.INVALID) {
@@ -62,6 +64,7 @@ public class StockGeneralController {
                 stockJpaController.edit(stock);
                 status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
+                
             }
         }
         
@@ -69,6 +72,7 @@ public class StockGeneralController {
     }
     
     public static long delete(long id) {
+        
         long status = DeleteConstant.FAILURE;
         
         if (read(id).getId() != IdentifierConstant.INVALID) {
@@ -77,6 +81,7 @@ public class StockGeneralController {
                 stockJpaController.destroy(id);
                 status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
+                
             }
         }
         

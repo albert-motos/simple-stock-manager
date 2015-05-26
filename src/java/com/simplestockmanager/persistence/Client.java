@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Client.findById", query = "SELECT c FROM Client c WHERE c.id = :id"),
     @NamedQuery(name = "Client.findByFirstName", query = "SELECT c FROM Client c WHERE c.firstName = :firstName"),
     @NamedQuery(name = "Client.findByLastName", query = "SELECT c FROM Client c WHERE c.lastName = :lastName"),
-    @NamedQuery(name = "Client.findByAgeTypeID", query = "SELECT c FROM Client c WHERE c.ageTypeID = :ageTypeID"),
+    @NamedQuery(name = "Client.findByBornDate", query = "SELECT c FROM Client c WHERE c.bornDate = :bornDate"),
     @NamedQuery(name = "Client.findBySexTypeID", query = "SELECT c FROM Client c WHERE c.sexTypeID = :sexTypeID"),
     @NamedQuery(name = "Client.findByPhone", query = "SELECT c FROM Client c WHERE c.phone = :phone"),
     @NamedQuery(name = "Client.findByEmail", query = "SELECT c FROM Client c WHERE c.email = :email"),
@@ -53,8 +53,9 @@ public class Client implements Serializable {
     @Column(name = "LastName")
     private String lastName;
     @Basic(optional = false)
-    @Column(name = "AgeTypeID")
-    private long ageTypeID;
+    @Column(name = "BornDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bornDate;
     @Basic(optional = false)
     @Column(name = "SexTypeID")
     private long sexTypeID;
@@ -83,10 +84,10 @@ public class Client implements Serializable {
         this.id = id;
     }
 
-    public Client(String firstName, String lastName, long ageTypeID, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+    public Client(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.ageTypeID = ageTypeID;
+        this.bornDate = bornDate;
         this.sexTypeID = sexTypeID;
         this.phone = phone;
         this.email = email;
@@ -95,11 +96,11 @@ public class Client implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public Client(Long id, String firstName, String lastName, long ageTypeID, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+    public Client(Long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.ageTypeID = ageTypeID;
+        this.bornDate = bornDate;
         this.sexTypeID = sexTypeID;
         this.phone = phone;
         this.email = email;
@@ -132,12 +133,12 @@ public class Client implements Serializable {
         this.lastName = lastName;
     }
 
-    public long getAgeTypeID() {
-        return ageTypeID;
+    public Date getBornDate() {
+        return bornDate;
     }
 
-    public void setAgeTypeID(long ageTypeID) {
-        this.ageTypeID = ageTypeID;
+    public void setBornDate(Date bornDate) {
+        this.bornDate = bornDate;
     }
 
     public long getSexTypeID() {

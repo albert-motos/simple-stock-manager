@@ -46,6 +46,10 @@ public class SexType implements Serializable {
         this.id = id;
     }
 
+    public SexType(String type) {
+        this.type = type;
+    }
+
     public SexType(Long id, String type) {
         this.id = id;
         this.type = type;

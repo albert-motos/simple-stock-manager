@@ -21,7 +21,7 @@ import javax.persistence.Query;
  */
 public class AgeTypeGeneralController {
 
-    public static long create(String type) {
+    public static long create(String type, int fromAge, int toAge) {
         AgeType ageType;
 
         Query query = AgeTypeHelper.getFindByTypeQuery(type);
@@ -29,7 +29,7 @@ public class AgeTypeGeneralController {
         try {
             ageType = (AgeType) query.getSingleResult();
         } catch (Exception e) {
-            ageType = new AgeType(type);
+            ageType = new AgeType(type, fromAge, toAge);
 
             try {
                 AgeTypeJpaController ageTypeJpaController = AgeTypeHelper.getJpaController();
@@ -55,7 +55,7 @@ public class AgeTypeGeneralController {
         return ageType;
     }
 
-    public static long update(long id, String type) {
+    public static long update(long id, String type, int fromAge, int toAge) {
 
         long status = UpdateConstant.FAILURE;
 
@@ -63,7 +63,7 @@ public class AgeTypeGeneralController {
             Query query = AgeTypeHelper.getFindByTypeQuery(type);
 
             if (query.getResultList().isEmpty()) {
-                AgeType ageType = new AgeType(id, type);
+                AgeType ageType = new AgeType(id, type, fromAge, toAge);
 
                 try {
                     AgeTypeJpaController ageTypeJpaController = AgeTypeHelper.getJpaController();

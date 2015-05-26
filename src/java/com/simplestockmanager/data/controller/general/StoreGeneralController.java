@@ -16,13 +16,13 @@ import java.util.Date;
 import javax.persistence.Query;
 
 /**
- *
+ * TESTED
  * @author foxtrot
  */
 public class StoreGeneralController {
     
-    public static long create(String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable, Date createdDate,
-            Date lastModifiedDate) {
+    public static long create(String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable,
+            Date createdDate, Date lastModifiedDate) {
         
         Store store = new Store(name, street, city, state, country, phone, managerID, isEnable, createdDate, lastModifiedDate);
         
@@ -63,6 +63,7 @@ public class StoreGeneralController {
                 storeJpaController.edit(store);
                 status = UpdateConstant.SUCCESS;
             } catch (Exception e) {
+                
             }
         }
         
@@ -79,6 +80,7 @@ public class StoreGeneralController {
                 storeJpaController.destroy(id);
                 status = DeleteConstant.SUCCESS;
             } catch (Exception e) {
+                
             }
         }
         

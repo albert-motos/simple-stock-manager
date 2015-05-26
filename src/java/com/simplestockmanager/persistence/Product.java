@@ -67,6 +67,14 @@ public class Product implements Serializable {
         this.id = id;
     }
 
+    public Product(String name, String description, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+        this.name = name;
+        this.description = description;
+        this.isEnable = isEnable;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
     public Product(Long id, String name, String description, boolean isEnable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.name = name;

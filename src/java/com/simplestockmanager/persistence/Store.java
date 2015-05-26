@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Store implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
@@ -82,6 +85,19 @@ public class Store implements Serializable {
 
     public Store(Long id) {
         this.id = id;
+    }
+
+    public Store(String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+        this.name = name;
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.phone = phone;
+        this.managerID = managerID;
+        this.isEnable = isEnable;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     public Store(Long id, String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable, Date createdDate, Date lastModifiedDate) {
