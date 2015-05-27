@@ -14,7 +14,7 @@ import javax.faces.bean.ManagedBean;
  */
 @ManagedBean
 public class ClientAddView implements AddView {
-
+    
     private Client client;
     
     public ClientAddView() {
@@ -31,6 +31,6 @@ public class ClientAddView implements AddView {
 
     @Override
     public void add() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("#ADD");
     }
 }
