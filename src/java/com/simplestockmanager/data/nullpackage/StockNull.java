@@ -5,7 +5,7 @@
  */
 package com.simplestockmanager.data.nullpackage;
 
-import com.simplestockmanager.constant.IdentifierConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.persistence.Stock;
 
 /**
@@ -15,7 +15,7 @@ import com.simplestockmanager.persistence.Stock;
 public class StockNull extends Stock {
 
     public StockNull() {
-        super(IdentifierConstant.INVALID);
+        super(Constant.IDENTIFIER.INVALID);
     }
     
 }

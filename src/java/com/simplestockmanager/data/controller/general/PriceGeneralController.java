@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.PriceNull;
 import com.simplestockmanager.helper.PriceHelper;
 import com.simplestockmanager.persistence.Price;
@@ -18,6 +16,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class PriceGeneralController {
@@ -54,15 +53,15 @@ public class PriceGeneralController {
     public static long update(long id, long stockID, String title, long priceTypeID, BigDecimal cost, Date createdDate, Date lastModifiedDate,
             BigDecimal initialAmount, BigDecimal actualAmount, Date endDate, boolean isEnable) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Price price = new Price(id, stockID, title, priceTypeID, cost, createdDate, lastModifiedDate, isEnable);
 
             try {
                 PriceJpaController priceJpaController = PriceHelper.getJpaController();
                 priceJpaController.edit(price);
-                status = UpdateConstant.SUCCESS;
+                status = Constant.UPDATE.SUCCESS;
             } catch (Exception e) {
 
             }
@@ -73,13 +72,13 @@ public class PriceGeneralController {
 
     public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long state = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 PriceJpaController priceJpaController = PriceHelper.getJpaController();
                 priceJpaController.destroy(id);
-                state = UpdateConstant.SUCCESS;
+                state = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

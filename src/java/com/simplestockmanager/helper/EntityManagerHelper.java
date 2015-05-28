@@ -5,7 +5,7 @@
  */
 package com.simplestockmanager.helper;
 
-import com.simplestockmanager.constant.ProjectConstant;
+import com.simplestockmanager.common.Constant;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -17,7 +17,7 @@ import javax.persistence.Persistence;
 public class EntityManagerHelper {
 
     public static EntityManagerFactory getEntityManagerFactory() {
-        return Persistence.createEntityManagerFactory(ProjectConstant.PERSISTENCE_UNIT);
+        return Persistence.createEntityManagerFactory(Constant.PROJECT.PERSISTENCE_UNIT);
     }
 
     public static EntityManager getEntityManager() {

@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.ItemNull;
 import com.simplestockmanager.helper.ItemHelper;
 import com.simplestockmanager.persistence.Item;
@@ -18,12 +16,13 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class ItemGeneralController {
 
     public static long create(long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
-        
+
         Item item = new Item(orderID, stockID, priceID, amount, cost, createdDate, lastModifiedDate);
 
         try {
@@ -35,32 +34,32 @@ public class ItemGeneralController {
 
         return item.getId();
     }
-    
+
     public static Item read(long id) {
-        
+
         Item item;
-        
+
         try {
             Query query = ItemHelper.getFindByIdQuery(id);
             item = (Item) query.getSingleResult();
         } catch (Exception e) {
             item = new ItemNull();
         }
-        
+
         return item;
     }
-    
+
     public static long update(long id, long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Item item = new Item(id, orderID, stockID, priceID, amount, cost, createdDate, lastModifiedDate);
-            
+
             try {
                 ItemJpaController itemJpaController = ItemHelper.getJpaController();
                 itemJpaController.edit(item);
-                status = UpdateConstant.SUCCESS;
+                status = Constant.UPDATE.SUCCESS;
             } catch (Exception e) {
 
             }
@@ -71,13 +70,13 @@ public class ItemGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ItemJpaController itemJpaController = ItemHelper.getJpaController();
                 itemJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

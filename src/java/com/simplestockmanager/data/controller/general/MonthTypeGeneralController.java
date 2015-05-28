@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.MonthTypeNull;
 import com.simplestockmanager.helper.MonthTypeHelper;
 import com.simplestockmanager.persistence.MonthType;
@@ -16,6 +14,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class MonthTypeGeneralController {
@@ -57,9 +56,9 @@ public class MonthTypeGeneralController {
 
     public static long update(long id, String type) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Query query = MonthTypeHelper.getFindByTypeQuery(type);
 
             if (query.getResultList().isEmpty()) {
@@ -68,7 +67,7 @@ public class MonthTypeGeneralController {
                 try {
                     MonthTypeJpaController monthTypeJpaController = MonthTypeHelper.getJpaController();
                     monthTypeJpaController.edit(monthType);
-                    status = UpdateConstant.SUCCESS;
+                    status = Constant.UPDATE.SUCCESS;
                 } catch (Exception e) {
 
                 }
@@ -80,13 +79,13 @@ public class MonthTypeGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 MonthTypeJpaController monthTypeJpaController = MonthTypeHelper.getJpaController();
                 monthTypeJpaController.destroy(id);
-                status = UpdateConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

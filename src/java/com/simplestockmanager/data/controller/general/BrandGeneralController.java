@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.BrandNull;
 import com.simplestockmanager.helper.BrandHelper;
 import com.simplestockmanager.persistence.Brand;
@@ -16,13 +14,14 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class BrandGeneralController {
 
     public static long create(String name, boolean enable) {
-        Brand brand;
 
+        Brand brand;
         Query query = BrandHelper.getFindByNameQuery(name);
 
         try {
@@ -42,6 +41,7 @@ public class BrandGeneralController {
     }
 
     public static Brand read(long id) {
+
         Brand brand;
 
         try {
@@ -56,13 +56,12 @@ public class BrandGeneralController {
 
     public static long update(long id, String name, boolean enable) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
-
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Query query = BrandHelper.getFindByNameQuery(name);
             Brand brand;
-            
+
             try {
                 brand = (Brand) query.getSingleResult();
                 if (brand.getId() == id) {
@@ -74,8 +73,9 @@ public class BrandGeneralController {
                 try {
                     BrandJpaController brandJpaController = BrandHelper.getJpaController();
                     brandJpaController.edit(brand);
-                    status = UpdateConstant.SUCCESS;
+                    status = Constant.UPDATE.SUCCESS;
                 } catch (Exception e2) {
+
                 }
             }
         }
@@ -85,14 +85,13 @@ public class BrandGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
-
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 BrandJpaController brandJpaController = BrandHelper.getJpaController();
                 brandJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

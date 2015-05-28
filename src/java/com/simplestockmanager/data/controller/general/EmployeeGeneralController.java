@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.EmployeeNull;
 import com.simplestockmanager.helper.EmployeeHelper;
 import com.simplestockmanager.persistence.Employee;
@@ -17,6 +15,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class EmployeeGeneralController {
@@ -25,7 +24,6 @@ public class EmployeeGeneralController {
             Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
 
         Query query = EmployeeHelper.getFindByUserNameQuery(userName);
-
         Employee employee = new EmployeeNull();
 
         if (query.getResultList().isEmpty()) {
@@ -60,9 +58,9 @@ public class EmployeeGeneralController {
     public static long update(long id, String firstName, String lastName, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate,
             Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Query query = EmployeeHelper.getFindByUserNameQuery(userName);
             Employee employee;
 
@@ -78,7 +76,7 @@ public class EmployeeGeneralController {
                 try {
                     EmployeeJpaController employeeJpaController = EmployeeHelper.getJpaController();
                     employeeJpaController.edit(employee);
-                    status = UpdateConstant.SUCCESS;
+                    status = Constant.UPDATE.SUCCESS;
                 } catch (Exception e2) {
 
                 }
@@ -90,14 +88,14 @@ public class EmployeeGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
 
             try {
                 EmployeeJpaController employeeJpaController = EmployeeHelper.getJpaController();
                 employeeJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

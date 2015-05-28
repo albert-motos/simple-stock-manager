@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.RecordNull;
 import com.simplestockmanager.helper.RecordHelper;
 import com.simplestockmanager.persistence.Record;
@@ -18,6 +16,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class RecordGeneralController {
@@ -51,15 +50,15 @@ public class RecordGeneralController {
 
     public static long update(long id, long employeeID, long stockID, BigDecimal amount, String note, Date createdDate, Date lastModifiedDate) {
 
-        long state = UpdateConstant.FAILURE;
+        long state = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Record record = new Record(id, employeeID, stockID, amount, note, createdDate, lastModifiedDate);
 
             try {
                 RecordJpaController recordJpaController = RecordHelper.getJpaController();
                 recordJpaController.edit(record);
-                state = UpdateConstant.SUCCESS;
+                state = Constant.UPDATE.SUCCESS;
             } catch (Exception e) {
 
             }
@@ -70,14 +69,14 @@ public class RecordGeneralController {
 
     public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long state = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
 
             try {
                 RecordJpaController recordJpaController = RecordHelper.getJpaController();
                 recordJpaController.destroy(id);
-                state = DeleteConstant.SUCCESS;
+                state = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

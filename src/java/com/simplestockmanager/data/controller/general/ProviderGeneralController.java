@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.ProviderNull;
 import com.simplestockmanager.helper.ProviderHelper;
 import com.simplestockmanager.persistence.Provider;
@@ -17,6 +15,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class ProviderGeneralController {
@@ -51,15 +50,15 @@ public class ProviderGeneralController {
 
     public static long update(long id, String name, String identifier, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Provider provider = new Provider(id, name, identifier, phone, email, isEnable, createdDate, lastModifiedDate);
 
             try {
                 ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
                 providerJpaController.edit(provider);
-                status = UpdateConstant.SUCCESS;
+                status = Constant.UPDATE.SUCCESS;
             } catch (Exception e) {
 
             }
@@ -70,13 +69,13 @@ public class ProviderGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
                 providerJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

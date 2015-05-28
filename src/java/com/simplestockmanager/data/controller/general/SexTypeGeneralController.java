@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.SexTypeNull;
 import com.simplestockmanager.helper.SexTypeHelper;
 import com.simplestockmanager.persistence.SexType;
@@ -16,6 +14,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class SexTypeGeneralController {
@@ -57,9 +56,9 @@ public class SexTypeGeneralController {
 
     public static long update(long id, String type) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Query query = SexTypeHelper.getFindByTypeQuery(type);
 
             if (query.getResultList().isEmpty()) {
@@ -68,7 +67,7 @@ public class SexTypeGeneralController {
                 try {
                     SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
                     sexTypeJpaController.edit(sexType);
-                    status = UpdateConstant.SUCCESS;
+                    status = Constant.UPDATE.SUCCESS;
                 } catch (Exception e) {
 
                 }
@@ -80,13 +79,13 @@ public class SexTypeGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
                 sexTypeJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

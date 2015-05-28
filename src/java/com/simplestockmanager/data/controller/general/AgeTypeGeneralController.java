@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.AgeTypeNull;
 import com.simplestockmanager.helper.AgeTypeHelper;
 import com.simplestockmanager.persistence.AgeType;
@@ -22,8 +20,8 @@ import javax.persistence.Query;
 public class AgeTypeGeneralController {
 
     public static long create(String type, int fromAge, int toAge) {
-        AgeType ageType;
 
+        AgeType ageType;
         Query query = AgeTypeHelper.getFindByTypeQuery(type);
 
         try {
@@ -43,6 +41,7 @@ public class AgeTypeGeneralController {
     }
 
     public static AgeType read(long id) {
+
         AgeType ageType;
 
         try {
@@ -57,9 +56,9 @@ public class AgeTypeGeneralController {
 
     public static long update(long id, String type, int fromAge, int toAge) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Query query = AgeTypeHelper.getFindByTypeQuery(type);
 
             if (query.getResultList().isEmpty()) {
@@ -68,7 +67,7 @@ public class AgeTypeGeneralController {
                 try {
                     AgeTypeJpaController ageTypeJpaController = AgeTypeHelper.getJpaController();
                     ageTypeJpaController.edit(ageType);
-                    status = UpdateConstant.SUCCESS;
+                    status = Constant.UPDATE.SUCCESS;
                 } catch (Exception e) {
 
                 }
@@ -80,14 +79,14 @@ public class AgeTypeGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
 
             try {
                 AgeTypeJpaController ageTypeJpaController = AgeTypeHelper.getJpaController();
                 ageTypeJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

@@ -5,7 +5,7 @@
  */
 package com.simplestockmanager.data.nullpackage;
 
-import com.simplestockmanager.constant.IdentifierConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.persistence.SexType;
 
 /**
@@ -15,7 +15,7 @@ import com.simplestockmanager.persistence.SexType;
 public class SexTypeNull extends SexType {
 
     public SexTypeNull() {
-        super(IdentifierConstant.INVALID);
+        super(Constant.IDENTIFIER.INVALID);
     }
     
 }

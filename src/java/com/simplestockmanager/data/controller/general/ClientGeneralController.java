@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.ClientNull;
 import com.simplestockmanager.helper.ClientHelper;
 import com.simplestockmanager.persistence.Client;
@@ -17,6 +15,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class ClientGeneralController {
@@ -37,6 +36,7 @@ public class ClientGeneralController {
     }
 
     public static Client read(long id) {
+
         Client client;
 
         try {
@@ -52,15 +52,15 @@ public class ClientGeneralController {
     public static long update(long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable,
             Date createdDate, Date lastModifiedDate) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Client client = new Client(id, firstName, lastName, bornDate, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
 
             try {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();
                 clientJpaController.edit(client);
-                status = UpdateConstant.SUCCESS;
+                status = Constant.UPDATE.SUCCESS;
             } catch (Exception e) {
 
             }
@@ -71,14 +71,13 @@ public class ClientGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
-
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();
                 clientJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

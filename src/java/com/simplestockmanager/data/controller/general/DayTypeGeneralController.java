@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.DayTypeNull;
 import com.simplestockmanager.helper.DayTypeHelper;
 import com.simplestockmanager.persistence.DayType;
@@ -16,13 +14,14 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class DayTypeGeneralController {
 
     public static long create(String type) {
-        DayType dayType;
 
+        DayType dayType;
         Query query = DayTypeHelper.getFindByTypeQuery(type);
 
         try {
@@ -42,6 +41,7 @@ public class DayTypeGeneralController {
     }
 
     public static DayType read(long id) {
+
         DayType dayType;
 
         try {
@@ -56,9 +56,9 @@ public class DayTypeGeneralController {
 
     public static long update(long id, String type) {
 
-        long status = UpdateConstant.FAILURE;
+        long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Query query = DayTypeHelper.getFindByTypeQuery(type);
 
             if (query.getResultList().isEmpty()) {
@@ -67,7 +67,7 @@ public class DayTypeGeneralController {
                 try {
                     DayTypeJpaController dayTypeJpaController = DayTypeHelper.getJpaController();
                     dayTypeJpaController.edit(dayType);
-                    status = UpdateConstant.SUCCESS;
+                    status = Constant.UPDATE.SUCCESS;
                 } catch (Exception e) {
 
                 }
@@ -79,14 +79,14 @@ public class DayTypeGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
 
             try {
                 DayTypeJpaController dayTypeJpaController = DayTypeHelper.getJpaController();
                 dayTypeJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

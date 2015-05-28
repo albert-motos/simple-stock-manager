@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.nullpackage.PaymentTypeNull;
 import com.simplestockmanager.helper.PaymentTypeHelper;
 import com.simplestockmanager.persistence.PaymentType;
@@ -16,6 +14,7 @@ import javax.persistence.Query;
 
 /**
  * TESTED
+ *
  * @author foxtrot
  */
 public class PaymentTypeGeneralController {
@@ -23,7 +22,6 @@ public class PaymentTypeGeneralController {
     public static long create(String type) {
 
         PaymentType paymentType;
-
         Query query = PaymentTypeHelper.getFindByTypeQuery(type);
 
         try {
@@ -58,9 +56,9 @@ public class PaymentTypeGeneralController {
 
     public static long update(long id, String type) {
 
-        long state = UpdateConstant.FAILURE;
+        long state = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             Query query = PaymentTypeHelper.getFindByTypeQuery(type);
 
             if (query.getResultList().isEmpty()) {
@@ -69,7 +67,7 @@ public class PaymentTypeGeneralController {
                 try {
                     PaymentTypeJpaController paymentTypeJpaController = PaymentTypeHelper.getJpaController();
                     paymentTypeJpaController.edit(paymentType);
-                    state = UpdateConstant.SUCCESS;
+                    state = Constant.UPDATE.SUCCESS;
                 } catch (Exception e) {
                 }
             }
@@ -80,14 +78,14 @@ public class PaymentTypeGeneralController {
 
     public static long delete(long id) {
 
-        long state = DeleteConstant.FAILURE;
+        long state = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
 
             try {
                 PaymentTypeJpaController paymentTypeJpaController = PaymentTypeHelper.getJpaController();
                 paymentTypeJpaController.destroy(id);
-                state = UpdateConstant.SUCCESS;
+                state = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

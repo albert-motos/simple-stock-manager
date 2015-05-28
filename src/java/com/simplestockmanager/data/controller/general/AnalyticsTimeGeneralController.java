@@ -5,9 +5,7 @@
  */
 package com.simplestockmanager.data.controller.general;
 
-import com.simplestockmanager.constant.DeleteConstant;
-import com.simplestockmanager.constant.IdentifierConstant;
-import com.simplestockmanager.constant.UpdateConstant;
+import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.controller.specific.AnalyticsTimeSpecificController;
 import com.simplestockmanager.data.nullpackage.AnalyticsTimeNull;
 import com.simplestockmanager.helper.AnalyticsTimeHelper;
@@ -22,9 +20,10 @@ import javax.persistence.Query;
 public class AnalyticsTimeGeneralController {
 
     public static long create(int minute, int hour, int day, long dayTypeID, int month, long monthTypeID, int year) {
+        
         AnalyticsTime analyticsTime = AnalyticsTimeSpecificController.find(minute, hour, day, dayTypeID, month, monthTypeID, year);
 
-        if (analyticsTime.getId() == IdentifierConstant.INVALID) {
+        if (analyticsTime.getId() == Constant.IDENTIFIER.INVALID) {
             analyticsTime = new AnalyticsTime(minute, hour, day, dayTypeID, month, monthTypeID, year);
 
             try {
@@ -39,6 +38,7 @@ public class AnalyticsTimeGeneralController {
     }
 
     public static AnalyticsTime read(long id) {
+        
         AnalyticsTime analyticsTime;
 
         try {
@@ -53,17 +53,17 @@ public class AnalyticsTimeGeneralController {
 
     public static long update(long id, int minute, int hour, int day, long dayTypeID, int month, long monthTypeID, int year) {
 
-        long status = UpdateConstant.FAILURE;
-
+        long status = Constant.UPDATE.FAILURE;
+        
         AnalyticsTime analyticsTime = AnalyticsTimeSpecificController.find(minute, hour, day, dayTypeID, month, monthTypeID, year);
 
-        if (read(id).getId() != IdentifierConstant.INVALID && analyticsTime.getId() == IdentifierConstant.INVALID) {
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID && analyticsTime.getId() == Constant.IDENTIFIER.INVALID) {
             analyticsTime = new AnalyticsTime(id, minute, hour, day, dayTypeID, month, monthTypeID, year);
 
             try {
                 AnalyticsTimeJpaController analyticsTimeJpaController = AnalyticsTimeHelper.getJpaController();
                 analyticsTimeJpaController.edit(analyticsTime);
-                status = UpdateConstant.SUCCESS;
+                status = Constant.UPDATE.SUCCESS;
             } catch (Exception e) {
 
             }
@@ -74,14 +74,13 @@ public class AnalyticsTimeGeneralController {
 
     public static long delete(long id) {
 
-        long status = DeleteConstant.FAILURE;
+        long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != IdentifierConstant.INVALID) {
-
+        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 AnalyticsTimeJpaController analyticsTimeJpaController = AnalyticsTimeHelper.getJpaController();
                 analyticsTimeJpaController.destroy(id);
-                status = DeleteConstant.SUCCESS;
+                status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }
