@@ -24,11 +24,17 @@ public class SexTypeHelper {
 
         return query;
     }
-    
+
     public static Query getFindByTypeQuery(String type) {
         Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findByType");
         query.setParameter("type", type);
-        
+
+        return query;
+    }
+
+    public static Query getAllQuery() {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findAll");
+
         return query;
     }
 }

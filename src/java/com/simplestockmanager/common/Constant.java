@@ -31,5 +31,26 @@ public interface Constant {
     public interface PROJECT {
 
         public static String PERSISTENCE_UNIT = "SimpleStockManagerPU";
+        public static String WEB = "/SimpleStockManager";
+    }
+
+    public interface URL {
+
+        public static String INDEX = PROJECT.WEB + "/index.xhtml";
+
+        public interface ADD {
+
+            public static String ADD = PROJECT.WEB + "/add";
+            public static String CLIENT = ADD + "/client.xhtml";
+        }
+    }
+
+    public interface VIEW {
+
+        public interface BUTTON {
+
+            public static String BEFORE = "Cancel";
+            public static String AFTER = "Finish";
+        }
     }
 }

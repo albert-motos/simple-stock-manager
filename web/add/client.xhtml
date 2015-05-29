@@ -3,120 +3,130 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="/template.xhtml"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="content">
-        <p:panel header="Client attributes" >
-            <p:panelGrid style="width: 100%">
-                <p:row>
-                    <p:column style="width: 35%">
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 100px; text-align: center">
-                                    <h:outputText value="First name :" style="font-weight: bold;" />
-                                </p:column>
-                                <p:column>
-                                    <h:inputText value="#{clientAddView.client.firstName}" style="width: 100%" />
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                    <p:column style="width: 65%">
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 100px; text-align: center">
-                                    <h:outputText value="Last name :" style="font-weight: bold;" />
-                                </p:column>
-                                <p:column>
-                                    <h:inputText value="#{clientAddView.client.lastName}" style="width: 100%" />
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                </p:row>
-            </p:panelGrid>
+        <h:form>
+<!--            <p:panel style="padding: 0px">-->
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
+            <!--</p:panel>-->
+            <p:panel header="Client attributes" >
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 35%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column style="width: 100px; text-align: center">
+                                        <p:outputLabel value="First name :" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText  value="#{clientAddView.client.firstName}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 65%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column style="width: 100px; text-align: center">
+                                        <p:outputLabel value="Last name :" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText  value="#{clientAddView.client.lastName}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
 
-            <p:panelGrid style="width: 100%">
-                <p:row>
-                    <p:column style="width: 30%">
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 100px; text-align: center">
-                                    <h:outputText value="Born date :" style="font-weight: bold;" />
-                                </p:column>
-                                <p:column>
-                                    <h:inputText value="#{clientAddView.client.firstName}" style="width: 100%" />
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                    <p:column style="width: 30%">
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 100px; text-align: center">
-                                    <h:outputText value="Sex type :" style="font-weight: bold;" />
-                                </p:column>
-                                <p:column>
-                                    <h:inputText value="#{clientAddView.client.firstName}" style="width: 100%" />
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                    <p:column style="width: 40%">
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 100px; text-align: center">
-                                    <h:outputText value="Phone number :" style="font-weight: bold;" />
-                                </p:column>
-                                <p:column>
-                                    <h:inputText value="#{clientAddView.client.firstName}" style="width: 100%" />
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                </p:row>
-            </p:panelGrid>
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 30%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column style="width: 100px; text-align: center">
+                                        <p:outputLabel value="Sex type :" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectOneMenu id="basic" value="#{clientAddView.sexTypeSelection}" style="width: 100%">
+                                            <f:selectItem itemLabel="Select one" itemValue="" />
+                                            <f:selectItems value="#{sexTypeView.list}" />
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 20%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column style="width: 100px; text-align: center">
+                                        <p:outputLabel value="Born date :" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:calendar value="#{clientAddView.client.bornDate}" pattern="dd-MM-yyyy" mask="true" showOn="false" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 40%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column style="width: 100px; text-align: center">
+                                        <p:outputLabel value="Phone number :" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText value="#{clientAddView.client.phone}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
 
-            <p:panelGrid style="width: 100%">
-                <p:row>
-                    <p:column style="width: 100%">
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 100px; text-align: center">
-                                    <h:outputText value="Email :" style="font-weight: bold;" />
-                                </p:column>
-                                <p:column>
-                                    <h:inputText value="#{clientAddView.client.email}" style="width: 100%" />
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                </p:row>
-            </p:panelGrid>
-        </p:panel>
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 100%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column style="width: 100px; text-align: center">
+                                        <p:outputLabel value="Email :" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:inputText  value="#{clientAddView.client.email}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
 
-        <p:panel header="Client visibility">
-            <p:panelGrid style="width: 100%">
-                <p:row>
-                    <p:column style="width: 100%">
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 250px; text-align: center">
-                                    <h:outputText value="Client could be found on queries" style="font-weight: bold;" />
-                                </p:column>
-                                <p:column>
-                                    <p:selectBooleanCheckbox value="#{clientAddView.client.isEnable}" />
-                                </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                    </p:column>
-                </p:row>
-            </p:panelGrid>
-        </p:panel>
+            <p:panel header="Client visibility">
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 100%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column style="width: 250px; text-align: center">
+                                        <p:outputLabel value="Client could be found on queries" style="font-weight: bold;" />
+                                    </p:column>
+                                    <p:column>
+                                        <p:selectBooleanCheckbox value="#{clientAddView.client.isEnable}" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
 
-        <div style="text-align: right">
-            <p:commandButton value="Create" actionListener="#{clientAddView.add()}" style="width: 100px; color: green"/>
-            <p:commandButton value="Cancel" actionListener="#{navigationView.goToIndex()}" style="width: 100px; color: red; margin: 10px"/>
-        </div>
+            <p:outputPanel style="text-align: right">
+                <p:commandButton value="Create" rendered="#{not clientAddView.added}" actionListener="#{clientAddView.add()}" style="width: 100px" update="@form"  />
+                <p:commandButton value="#{languageView.backButtonValue(clientAddView.added)}" actionListener="#{navigationView.redirect(urlView.index())}"
+                                 style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
+            </p:outputPanel>
+        </h:form>
     </ui:define>
 </ui:composition>

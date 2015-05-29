@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.simplestockmanager.view;
+package com.simplestockmanager.view.common;
 
 import java.io.IOException;
 import javax.faces.bean.ManagedBean;
@@ -17,14 +17,20 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 public class NavigationView {
 
-    private ExternalContext externalContext;
+    private static FacesContext currentInstance;
 
     public NavigationView() {
-        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        currentInstance = FacesContext.getCurrentInstance();
+        
     }
 
-    public void goToIndex() throws IOException {
-        externalContext.redirect("/SimpleStockManager/index.xhtml");
+    public void redirect(String url) throws IOException {
+        currentInstance.getExternalContext().redirect(url);
     }
 
+    public static FacesContext getCurrentInstance() {
+        return currentInstance;
+    }
+ 
+    
 }

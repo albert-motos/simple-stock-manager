@@ -30,7 +30,7 @@
 
 .center_content {
     position: relative;
-    background-color: #dddddd;
+    background-color: turquoise;
     padding: 5px;
 }
 
@@ -47,8 +47,7 @@
 }
 
 #top a:link, #top a:visited {
-  color: white;
-  font-weight : bold;
+  color: black;
   text-decoration: none;
 }
 

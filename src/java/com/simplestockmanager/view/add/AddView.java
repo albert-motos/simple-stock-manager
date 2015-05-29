@@ -14,4 +14,6 @@ public interface AddView {
      * Main function of add view
      */
     public void add();
+    
+    public boolean validate();
 }

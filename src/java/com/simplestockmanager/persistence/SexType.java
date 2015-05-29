@@ -93,7 +93,7 @@ public class SexType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.SexType[ id=" + id + " ]";
+        return type;
     }
     
 }

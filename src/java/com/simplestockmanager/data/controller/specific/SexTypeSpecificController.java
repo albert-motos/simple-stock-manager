@@ -7,25 +7,33 @@ package com.simplestockmanager.data.controller.specific;
 
 import com.simplestockmanager.data.nullpackage.AnalyticsTimeNull;
 import com.simplestockmanager.helper.AnalyticsTimeHelper;
+import com.simplestockmanager.helper.SexTypeHelper;
 import com.simplestockmanager.persistence.AnalyticsTime;
+import com.simplestockmanager.persistence.SexType;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Query;
 
 /**
  *
  * @author foxtrot
  */
-public class AnalyticsTimeSpecificController {
+public class SexTypeSpecificController {
 
-    static public AnalyticsTime find(int minute, int hour, int day, long dayTypeID, int month, long monthTypeID, int year) {
-        AnalyticsTime analyticsTime;
+    static public List<SexType> getAll() {
+
+        List<SexType> list = new ArrayList<>();
 
         try {
-            Query query = AnalyticsTimeHelper.getFindByAllQuery(minute, hour, day, dayTypeID, month, monthTypeID, year);
-            analyticsTime = (AnalyticsTime) query.getSingleResult();
+            Query query = SexTypeHelper.getAllQuery();
+
+            for (Object object : query.getResultList()) {
+                list.add((SexType) object);
+            }
         } catch (Exception e) {
-            analyticsTime = new AnalyticsTimeNull();
+            list = new ArrayList<>();
         }
-        
-        return analyticsTime;
+
+        return list;
     }
 }
