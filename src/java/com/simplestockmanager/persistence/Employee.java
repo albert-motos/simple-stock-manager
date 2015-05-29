@@ -32,6 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Employee.findById", query = "SELECT e FROM Employee e WHERE e.id = :id"),
     @NamedQuery(name = "Employee.findByFirstName", query = "SELECT e FROM Employee e WHERE e.firstName = :firstName"),
     @NamedQuery(name = "Employee.findByLastName", query = "SELECT e FROM Employee e WHERE e.lastName = :lastName"),
+    @NamedQuery(name = "Employee.findByBornDate", query = "SELECT e FROM Employee e WHERE e.bornDate = :bornDate"),
+    @NamedQuery(name = "Employee.findBySexTypeID", query = "SELECT e FROM Employee e WHERE e.sexTypeID = :sexTypeID"),
     @NamedQuery(name = "Employee.findByPhone", query = "SELECT e FROM Employee e WHERE e.phone = :phone"),
     @NamedQuery(name = "Employee.findByEmail", query = "SELECT e FROM Employee e WHERE e.email = :email"),
     @NamedQuery(name = "Employee.findByEmployeTypeID", query = "SELECT e FROM Employee e WHERE e.employeTypeID = :employeTypeID"),
@@ -56,6 +58,13 @@ public class Employee implements Serializable {
     @Basic(optional = false)
     @Column(name = "LastName")
     private String lastName;
+    @Basic(optional = false)
+    @Column(name = "BornDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bornDate;
+    @Basic(optional = false)
+    @Column(name = "SexTypeID")
+    private long sexTypeID;
     @Basic(optional = false)
     @Column(name = "Phone")
     private String phone;
@@ -100,9 +109,11 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public Employee(String firstName, String lastName, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
+    public Employee(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.bornDate = bornDate;
+        this.sexTypeID = sexTypeID;
         this.phone = phone;
         this.email = email;
         this.employeTypeID = employeTypeID;
@@ -116,10 +127,12 @@ public class Employee implements Serializable {
         this.sessionID = sessionID;
     }
 
-    public Employee(Long id, String firstName, String lastName, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
+    public Employee(Long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.bornDate = bornDate;
+        this.sexTypeID = sexTypeID;
         this.phone = phone;
         this.email = email;
         this.employeTypeID = employeTypeID;
@@ -155,6 +168,22 @@ public class Employee implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Date getBornDate() {
+        return bornDate;
+    }
+
+    public void setBornDate(Date bornDate) {
+        this.bornDate = bornDate;
+    }
+
+    public long getSexTypeID() {
+        return sexTypeID;
+    }
+
+    public void setSexTypeID(long sexTypeID) {
+        this.sexTypeID = sexTypeID;
     }
 
     public String getPhone() {

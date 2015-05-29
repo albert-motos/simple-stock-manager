@@ -5,8 +5,8 @@
  */
 package com.simplestockmanager.view.type;
 
-import com.simplestockmanager.data.controller.specific.SexTypeSpecificController;
-import com.simplestockmanager.persistence.SexType;
+import com.simplestockmanager.data.controller.specific.EmployeeTypeSpecificController;
+import com.simplestockmanager.persistence.EmployeeType;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 
@@ -15,19 +15,19 @@ import javax.faces.bean.ManagedBean;
  * @author foxtrot
  */
 @ManagedBean
-public class SexTypeView {
+public class EmployeeTypeView {
 
-    private List<SexType> list;
+    private List<EmployeeType> list;
 
-    public SexTypeView() {
-        list = SexTypeSpecificController.getAll();
+    public EmployeeTypeView() {
+        list = EmployeeTypeSpecificController.getAll();
     }
     
-    public List<SexType> getList() {
+    public List<EmployeeType> getList() {
         return list;
     }
 
-    public void setList(List<SexType> list) {
+    public void setList(List<EmployeeType> list) {
         this.list = list;
     }
 

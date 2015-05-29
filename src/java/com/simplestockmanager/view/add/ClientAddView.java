@@ -33,6 +33,7 @@ public class ClientAddView implements AddView {
 
     @Override
     public void add() {
+        
         if (validate()) {
             long id = ClientGeneralController.create(client.getFirstName(), client.getLastName(), client.getBornDate(),
                     SexTypeGeneralController.create(sexTypeSelection), client.getPhone(), client.getEmail(), client.getIsEnable(), new Date(), new Date());
@@ -50,7 +51,6 @@ public class ClientAddView implements AddView {
     public boolean validate() {
 
         FacesContext currentInstance = FacesContext.getCurrentInstance();
-
         String fields_empty = "";
 
         fields_empty = fields_empty.concat((client.getFirstName().isEmpty() ? "First_name " : ""));

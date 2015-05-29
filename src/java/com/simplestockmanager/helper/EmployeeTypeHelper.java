@@ -31,4 +31,10 @@ public class EmployeeTypeHelper {
         
         return query;
     }
+    
+    public static Query getAllQuery() {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("EmployeeType.findAll");
+
+        return query;
+    }
 }

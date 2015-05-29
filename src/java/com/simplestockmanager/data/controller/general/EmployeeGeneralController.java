@@ -20,15 +20,15 @@ import javax.persistence.Query;
  */
 public class EmployeeGeneralController {
 
-    public static Long create(String firstName, String lastName, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate,
-            Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
+    public static Long create(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID, boolean isEnable,
+            Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
 
         Query query = EmployeeHelper.getFindByUserNameQuery(userName);
         Employee employee = new EmployeeNull();
 
         if (query.getResultList().isEmpty()) {
-            employee = new Employee(firstName, lastName, phone, email, employeTypeID, isEnable, createdDate, lastModifiedDate, userName, password, isOnline,
-                    lastOnlineDate, sessionID);
+            employee = new Employee(firstName, lastName, bornDate, sexTypeID, phone, email, employeTypeID, isEnable, createdDate, lastModifiedDate, userName,
+                    password, isOnline, lastOnlineDate, sessionID);
 
             try {
                 EmployeeJpaController employeeJpaController = EmployeeHelper.getJpaController();
@@ -55,8 +55,8 @@ public class EmployeeGeneralController {
         return employee;
     }
 
-    public static long update(long id, String firstName, String lastName, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate,
-            Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
+    public static long update(long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID,
+            boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
 
         long status = Constant.UPDATE.FAILURE;
 
@@ -70,8 +70,8 @@ public class EmployeeGeneralController {
                     throw new Exception();
                 }
             } catch (Exception e) {
-                employee = new Employee(id, firstName, lastName, phone, email, employeTypeID, isEnable, createdDate, lastModifiedDate, userName,
-                        password, isOnline, lastOnlineDate, sessionID);
+                employee = new Employee(id, firstName, lastName, bornDate, sexTypeID, phone, email, employeTypeID, isEnable, createdDate, lastModifiedDate,
+                        userName, password, isOnline, lastOnlineDate, sessionID);
 
                 try {
                     EmployeeJpaController employeeJpaController = EmployeeHelper.getJpaController();

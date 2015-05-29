@@ -93,7 +93,7 @@ public class EmployeeType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.EmployeeType[ id=" + id + " ]";
+        return type;
     }
     
 }

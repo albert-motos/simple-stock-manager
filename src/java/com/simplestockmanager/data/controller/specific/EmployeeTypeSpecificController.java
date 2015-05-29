@@ -5,8 +5,8 @@
  */
 package com.simplestockmanager.data.controller.specific;
 
-import com.simplestockmanager.helper.SexTypeHelper;
-import com.simplestockmanager.persistence.SexType;
+import com.simplestockmanager.helper.EmployeeTypeHelper;
+import com.simplestockmanager.persistence.EmployeeType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -15,17 +15,17 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class SexTypeSpecificController {
+public class EmployeeTypeSpecificController {
 
-    static public List<SexType> getAll() {
+    static public List<EmployeeType> getAll() {
 
-        List<SexType> list = new ArrayList<>();
+        List<EmployeeType> list = new ArrayList<>();
 
         try {
-            Query query = SexTypeHelper.getAllQuery();
+            Query query = EmployeeTypeHelper.getAllQuery();
 
             for (Object object : query.getResultList()) {
-                list.add((SexType) object);
+                list.add((EmployeeType) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
