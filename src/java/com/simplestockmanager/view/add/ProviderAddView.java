@@ -5,9 +5,6 @@
  */
 package com.simplestockmanager.view.add;
 
-import com.simplestockmanager.data.controller.general.ClientGeneralController;
-import com.simplestockmanager.data.controller.general.SexTypeGeneralController;
-import com.simplestockmanager.persistence.Client;
 import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.controller.general.ProviderGeneralController;
 import com.simplestockmanager.persistence.Provider;

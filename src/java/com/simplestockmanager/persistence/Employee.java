@@ -296,7 +296,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.Employee[ id=" + id + " ]";
+        return firstName + " " + lastName;
     }
     
 }

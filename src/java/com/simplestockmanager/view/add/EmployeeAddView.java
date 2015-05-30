@@ -6,7 +6,6 @@
 package com.simplestockmanager.view.add;
 
 import com.simplestockmanager.common.Constant;
-import com.simplestockmanager.data.controller.general.ClientGeneralController;
 import com.simplestockmanager.data.controller.general.EmployeeGeneralController;
 import com.simplestockmanager.data.controller.general.EmployeeTypeGeneralController;
 import com.simplestockmanager.data.controller.general.SexTypeGeneralController;
@@ -31,8 +30,6 @@ public class EmployeeAddView implements AddView {
 
     public EmployeeAddView() {
         employee = new Employee();
-        sexTypeSelection = "";
-        employeeTypeSelection = "";
         added = false;
     }
 

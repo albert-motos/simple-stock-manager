@@ -27,7 +27,6 @@ public class ClientAddView implements AddView {
 
     public ClientAddView() {
         client = new Client();
-        sexTypeSelection = "";
         added = false;
     }
 

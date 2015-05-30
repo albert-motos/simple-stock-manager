@@ -6,6 +6,9 @@
 package com.simplestockmanager.data.controller.specific;
 
 import com.simplestockmanager.helper.EmployeeHelper;
+import com.simplestockmanager.persistence.Employee;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Query;
 
 /**
@@ -17,6 +20,17 @@ public class EmployeeSpecificController {
     static public boolean userNameIsAvailable(String userName) {
         Query query = EmployeeHelper.getFindByUserNameQuery(userName);
 
-       return query.getResultList().isEmpty();
+        return query.getResultList().isEmpty();
+    }
+    
+    static public List<Employee> findByName(String name) {
+        List<Employee> list = new ArrayList<>();
+        Query query = EmployeeHelper.getFindByName(name);
+
+        for(Object object : query.getResultList()) {
+            list.add((Employee) object);
+        }
+        
+        return list;
     }
 }
