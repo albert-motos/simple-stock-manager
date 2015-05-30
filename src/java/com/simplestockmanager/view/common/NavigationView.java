@@ -27,10 +27,5 @@ public class NavigationView {
     public void redirect(String url) throws IOException {
         currentInstance.getExternalContext().redirect(url);
     }
-
-    public static FacesContext getCurrentInstance() {
-        return currentInstance;
-    }
- 
     
 }

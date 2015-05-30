@@ -15,5 +15,9 @@ public interface AddView {
      */
     public void add();
     
+    /**
+     * Function check if the fields are correct for create the object
+     * @return true if fields are correct
+     */
     public boolean validate();
 }
