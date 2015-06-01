@@ -6,8 +6,14 @@
 package com.simplestockmanager.view.add;
 
 import com.simplestockmanager.common.Constant;
+import com.simplestockmanager.data.controller.general.BrandGeneralController;
 import com.simplestockmanager.data.controller.general.ProductGeneralController;
+import com.simplestockmanager.data.controller.general.StoreGeneralController;
+import com.simplestockmanager.data.controller.specific.BrandSpecificController;
+import com.simplestockmanager.persistence.Brand;
 import com.simplestockmanager.persistence.Product;
+import com.simplestockmanager.persistence.Store;
+import com.simplestockmanager.view.selector.EmployeeSelectorView;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,25 +26,25 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class ProductAddView implements AddView {
-    
-    private Product product;
+public class BrandAddView implements AddView {
+
+    private Brand brand;
     private boolean added;
 
-    public ProductAddView() {
-        product = new Product();
+    public BrandAddView() {
+        brand = new Brand();
         added = false;
     }
 
     @Override
     public void add() {
         if (validate()) {
-            long id = ProductGeneralController.create(product.getName(), product.getDescription(), product.getIsEnable(), new Date(), new Date());
+            long id = BrandGeneralController.create(brand.getName(), brand.getIsEnable());
 
             if (id == Constant.IDENTIFIER.INVALID) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create product right now"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create brand right now"));
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Product [" + id + "] is created properly"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Brand [" + id + "] is created properly"));
                 added = true;
             }
         }
@@ -50,22 +56,27 @@ public class ProductAddView implements AddView {
         FacesContext currentInstance = FacesContext.getCurrentInstance();
         String fields_empty = "";
 
-        fields_empty = fields_empty.concat((product.getName().isEmpty() ? "Name " : ""));
-        fields_empty = fields_empty.concat((product.getDescription().isEmpty() ? "Description " : ""));
-        
+        fields_empty = fields_empty.concat((brand.getName().isEmpty() ? "Name" : ""));
+
         if (!fields_empty.isEmpty()) {
             currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
+        }
+
+        if (!brand.getName().isEmpty()) {
+            if (!BrandSpecificController.nameIsAvailable(brand.getName())) {
+                currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The name is already in use, change it"));
+            }
         }
 
         return currentInstance.getMessageList().isEmpty();
     }
 
-    public Product getProduct() {
-        return product;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public boolean isAdded() {
