@@ -15,6 +15,4 @@ public interface SelectorView {
      * Main function of selector view
      */
     public void find();
-    
-    public void reset();
 }

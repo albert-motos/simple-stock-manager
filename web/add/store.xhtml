@@ -104,21 +104,21 @@
                                         <p:outputLabel value="Employee name browser :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{employeeSelectorView.browser}" style="width: 100%" />
+                                        <p:inputText  value="#{storeAddView.employeeSelectorView.browser}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
                         <p:column style="width: 10%; text-align: center">
-                            <p:commandButton value="Find" actionListener="#{employeeSelectorView.find}" style="width: 100px" update="selector" />
+                            <p:commandButton value="Find" actionListener="#{storeAddView.employeeSelectorView.find}" style="width: 100px" update="selector" />
                         </p:column>
                         <p:column style="width: 45%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:selectOneMenu id="selector" value="#{employeeSelectorView.item}" style="width: 100%">
-                                            <f:selectItem itemLabel="Select one" itemValue="null" />
-                                            <f:selectItems value="#{employeeSelectorView.list}" />
+                                        <p:selectOneMenu id="selector" value="#{storeAddView.employeeSelectorView.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="Select one" itemValue="" />
+                                            <f:selectItems value="#{storeAddView.employeeSelectorView.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>

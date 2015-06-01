@@ -7,12 +7,12 @@ package com.simplestockmanager.view.add;
 
 import com.simplestockmanager.common.Constant;
 import com.simplestockmanager.data.controller.general.StoreGeneralController;
-import com.simplestockmanager.persistence.Employee;
 import com.simplestockmanager.persistence.Store;
 import com.simplestockmanager.view.selector.EmployeeSelectorView;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -20,23 +20,24 @@ import javax.faces.context.FacesContext;
  * @author foxtrot
  */
 @ManagedBean
+@ViewScoped
 public class StoreAddView implements AddView {
     
     private Store store;
     private boolean added;
-    private Employee manager;
+    private EmployeeSelectorView employeeSelectorView;
 
     public StoreAddView() {
         store = new Store();
         added = false;
+        employeeSelectorView = new EmployeeSelectorView();
     }
 
     @Override
     public void add() {
-        System.out.println("#" + EmployeeSelectorView.getValue().getId());
         if (validate()) {
             long id = StoreGeneralController.create(store.getName(), store.getStreet(), store.getCity(), store.getState(), store.getCountry(), store.getPhone(),
-                    1, store.getIsEnable(), new Date(), new Date());
+                    employeeSelectorView.getSelectedValue().getId(), store.getIsEnable(), new Date(), new Date());
 
             if (id == Constant.IDENTIFIER.INVALID) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create store right now"));
@@ -63,6 +64,10 @@ public class StoreAddView implements AddView {
         if (!fields_empty.isEmpty()) {
             currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
         }
+        
+        if (employeeSelectorView.getSelectedValue().getId() == Constant.IDENTIFIER.INVALID) {
+            currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The employee_selector is not indicated"));
+        }
 
         return currentInstance.getMessageList().isEmpty();
     }
@@ -83,12 +88,12 @@ public class StoreAddView implements AddView {
         this.added = added;
     }
 
-    public Employee getManager() {
-        return manager;
+    public EmployeeSelectorView getEmployeeSelectorView() {
+        return employeeSelectorView;
     }
 
-    public void setManager(Employee manager) {
-        this.manager = manager;
+    public void setEmployeeSelectorView(EmployeeSelectorView employeeSelectorView) {
+        this.employeeSelectorView = employeeSelectorView;
     }
 
 }

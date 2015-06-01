@@ -9,45 +9,45 @@ import com.simplestockmanager.data.controller.specific.EmployeeSpecificControlle
 import com.simplestockmanager.data.nullpackage.EmployeeNull;
 import com.simplestockmanager.persistence.Employee;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author foxtrot
  */
-@ManagedBean
-@ViewScoped
 public class EmployeeSelectorView implements SelectorView {
 
     private String browser;
-    private List<Employee> list;
-    private String item;
+    private HashMap<String, Employee> hashMap;
+    private List<String> list;
+    private String selection;
 
     public EmployeeSelectorView() {
-        System.out.println("#init");
-        list = new ArrayList<>();
     }
 
     @Override
     public void find() {
-        list = EmployeeSpecificController.findByName(browser);
+        hashMap = new HashMap<>();
+        list = new ArrayList<>();
+
+        for (Employee employee : EmployeeSpecificController.findByName(browser)) {
+            String key = employee.getFirstName() + " " + employee.getLastName();
+            hashMap.put(key, employee);
+            list.add(key);
+        }
     }
-    
-    @Override
-    public void reset() {
-        browser = "";
-        item = "";
+
+    public Employee getSelectedValue() {
+        Employee employee = new EmployeeNull();
+
+        if (!selection.isEmpty()) {
+            employee = hashMap.get(selection);
+        }
+
+        return employee;
     }
-    
-    public static Employee getValue() {
-        new EmployeeSelectorView().reset();
-        
-        return new EmployeeNull();
-    }
-    
+
     public String getBrowser() {
         return browser;
     }
@@ -56,20 +56,20 @@ public class EmployeeSelectorView implements SelectorView {
         this.browser = browser;
     }
 
-    public List<Employee> getList() {
+    public List<String> getList() {
         return list;
     }
 
-    public void setList(List<Employee> list) {
+    public void setList(List<String> list) {
         this.list = list;
     }
 
-    public String getItem() {
-        return item;
+    public String getSelection() {
+        return selection;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public void setSelection(String selection) {
+        this.selection = selection;
     }
 
 }
