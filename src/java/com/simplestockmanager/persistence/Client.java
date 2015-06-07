@@ -7,6 +7,7 @@ package com.simplestockmanager.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Client.findByCreatedDate", query = "SELECT c FROM Client c WHERE c.createdDate = :createdDate"),
     @NamedQuery(name = "Client.findByLastModifiedDate", query = "SELECT c FROM Client c WHERE c.lastModifiedDate = :lastModifiedDate")})
 public class Client implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -197,13 +199,42 @@ public class Client implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Client other = (Client) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Client other = (Client) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
+        if (!Objects.equals(this.bornDate, other.bornDate)) {
+            return false;
+        }
+        if (this.sexTypeID != other.sexTypeID) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (this.isEnable != other.isEnable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
         return true;
@@ -213,5 +244,5 @@ public class Client implements Serializable {
     public String toString() {
         return "com.simplestockmanager.persistence.Client[ id=" + id + " ]";
     }
-    
+
 }

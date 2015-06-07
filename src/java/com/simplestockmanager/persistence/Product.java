@@ -7,6 +7,7 @@ package com.simplestockmanager.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -140,13 +141,30 @@ public class Product implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Product)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Product other = (Product) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Product other = (Product) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (this.isEnable != other.isEnable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
         return true;

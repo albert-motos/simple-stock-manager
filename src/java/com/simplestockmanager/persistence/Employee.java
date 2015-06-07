@@ -7,6 +7,7 @@ package com.simplestockmanager.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,6 +47,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Employee.findByLastOnlineDate", query = "SELECT e FROM Employee e WHERE e.lastOnlineDate = :lastOnlineDate"),
     @NamedQuery(name = "Employee.findBySessionID", query = "SELECT e FROM Employee e WHERE e.sessionID = :sessionID")})
 public class Employee implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -282,13 +284,60 @@ public class Employee implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employee)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Employee other = (Employee) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Employee other = (Employee) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
+        if (!Objects.equals(this.bornDate, other.bornDate)) {
+            return false;
+        }
+        if (this.sexTypeID != other.sexTypeID) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (this.employeTypeID != other.employeTypeID) {
+            return false;
+        }
+        if (this.isEnable != other.isEnable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.userName, other.userName)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (this.isOnline != other.isOnline) {
+            return false;
+        }
+        if (!Objects.equals(this.lastOnlineDate, other.lastOnlineDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.sessionID, other.sessionID)) {
             return false;
         }
         return true;
@@ -298,5 +347,5 @@ public class Employee implements Serializable {
     public String toString() {
         return firstName + " " + lastName;
     }
-    
+
 }

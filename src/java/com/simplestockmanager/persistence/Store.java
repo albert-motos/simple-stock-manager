@@ -7,6 +7,7 @@ package com.simplestockmanager.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -210,13 +211,45 @@ public class Store implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Store)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Store other = (Store) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Store other = (Store) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.street, other.street)) {
+            return false;
+        }
+        if (!Objects.equals(this.city, other.city)) {
+            return false;
+        }
+        if (!Objects.equals(this.state, other.state)) {
+            return false;
+        }
+        if (!Objects.equals(this.country, other.country)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (this.managerID != other.managerID) {
+            return false;
+        }
+        if (this.isEnable != other.isEnable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
         return true;

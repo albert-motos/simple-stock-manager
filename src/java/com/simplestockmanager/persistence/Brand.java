@@ -6,6 +6,7 @@
 package com.simplestockmanager.persistence;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -93,17 +94,27 @@ public class Brand implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Brand)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Brand other = (Brand) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Brand other = (Brand) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (this.isEnable != other.isEnable) {
             return false;
         }
         return true;
     }
+
+    
 
     @Override
     public String toString() {
