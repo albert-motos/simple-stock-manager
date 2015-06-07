@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.simplestockmanager.data.controller.general;
 
 import com.simplestockmanager.common.Constant;
@@ -19,33 +14,26 @@ import javax.persistence.Query;
  */
 public class BrandGeneralController {
 
-    public static long create(String name, boolean enable) {
+    public long create(Brand brand) {
+        Query query = BrandHelper.getFindByNameQuery(brand.getName());
 
-        Brand brand;
-        Query query = BrandHelper.getFindByNameQuery(name);
-
-        try {
-            brand = (Brand) query.getSingleResult();
-        } catch (Exception e) {
-            brand = new Brand(name, enable);
-
+        if (query.getResultList().isEmpty()) {
             try {
                 BrandJpaController brandJpaController = BrandHelper.getJpaController();
                 brandJpaController.create(brand);
-            } catch (Exception e2) {
+            } catch (Exception e) {
                 brand = new BrandNull();
             }
+        } else {
+            brand = new BrandNull();
         }
 
         return brand.getId();
     }
 
-    public static Brand read(long id) {
-
-        Brand brand;
-
+    public Brand read(Brand brand) {
         try {
-            Query query = BrandHelper.getFindByIdQuery(id);
+            Query query = BrandHelper.getFindByIdQuery(brand.getId());
             brand = (Brand) query.getSingleResult();
         } catch (Exception e) {
             brand = new BrandNull();
@@ -54,27 +42,24 @@ public class BrandGeneralController {
         return brand;
     }
 
-    public static long update(long id, String name, boolean enable) {
-
+    public long update(Brand brand) {
         long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-            Query query = BrandHelper.getFindByNameQuery(name);
-            Brand brand;
+        if (read(brand).getId() != Constant.IDENTIFIER.INVALID) {
+            Query query = BrandHelper.getFindByNameQuery(brand.getName());
+            boolean uniqueName = true;
 
-            try {
-                brand = (Brand) query.getSingleResult();
-                if (brand.getId() == id) {
-                    throw new Exception();
-                }
-            } catch (Exception e) {
-                brand = new Brand(id, name, enable);
+            if (!query.getResultList().isEmpty()) {
+                Brand otherBrand = (Brand) query.getSingleResult();
+                uniqueName = brand.getId().equals(otherBrand.getId());
+            }
 
+            if (uniqueName) {
                 try {
                     BrandJpaController brandJpaController = BrandHelper.getJpaController();
                     brandJpaController.edit(brand);
                     status = Constant.UPDATE.SUCCESS;
-                } catch (Exception e2) {
+                } catch (Exception e) {
 
                 }
             }
@@ -83,14 +68,13 @@ public class BrandGeneralController {
         return status;
     }
 
-    public static long delete(long id) {
-
+    public long delete(Brand brand) {
         long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(brand).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 BrandJpaController brandJpaController = BrandHelper.getJpaController();
-                brandJpaController.destroy(id);
+                brandJpaController.destroy(brand.getId());
                 status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
@@ -99,4 +83,5 @@ public class BrandGeneralController {
 
         return status;
     }
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.simplestockmanager.data.controller.general;
 
 import com.simplestockmanager.common.Constant;
@@ -20,11 +15,7 @@ import javax.persistence.Query;
  */
 public class StoreGeneralController {
 
-    public static long create(String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable,
-            Date createdDate, Date lastModifiedDate) {
-
-        Store store = new Store(name, street, city, state, country, phone, managerID, isEnable, createdDate, lastModifiedDate);
-
+    public long create(Store store) {
         try {
             StoreJpaController storeJpaController = StoreHelper.getJpaController();
             storeJpaController.create(store);
@@ -35,12 +26,9 @@ public class StoreGeneralController {
         return store.getId();
     }
 
-    public static Store read(long id) {
-
-        Store store;
-
+    public Store read(Store store) {
         try {
-            Query query = StoreHelper.getFindByIdQuery(id);
+            Query query = StoreHelper.getFindByIdQuery(store.getId());
             store = (Store) query.getSingleResult();
         } catch (Exception e) {
             store = new StoreNull();
@@ -49,14 +37,10 @@ public class StoreGeneralController {
         return store;
     }
 
-    public static long update(long id, String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable,
-            Date createdDate, Date lastModifiedDate) {
-
+    public long update(Store store) {
         long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-            Store store = new Store(id, name, street, city, state, country, phone, managerID, isEnable, createdDate, lastModifiedDate);
-
+        if (read(store).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 StoreJpaController storeJpaController = StoreHelper.getJpaController();
                 storeJpaController.edit(store);
@@ -69,14 +53,13 @@ public class StoreGeneralController {
         return status;
     }
 
-    public static long delete(long id) {
-
+    public long delete(Store store) {
         long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(store).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 StoreJpaController storeJpaController = StoreHelper.getJpaController();
-                storeJpaController.destroy(id);
+                storeJpaController.destroy(store.getId());
                 status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
@@ -85,4 +68,5 @@ public class StoreGeneralController {
 
         return status;
     }
+
 }

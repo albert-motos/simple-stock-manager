@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.simplestockmanager.data.controller.general;
 
 import com.simplestockmanager.common.Constant;
@@ -10,7 +5,6 @@ import com.simplestockmanager.data.nullpackage.ProductNull;
 import com.simplestockmanager.helper.ProductHelper;
 import com.simplestockmanager.persistence.Product;
 import com.simplestockmanager.persistence.controller.ProductJpaController;
-import java.util.Date;
 import javax.persistence.Query;
 
 /**
@@ -20,10 +14,7 @@ import javax.persistence.Query;
  */
 public class ProductGeneralController {
 
-    public static long create(String name, String description, boolean isEnable, Date createdDate, Date lastModifiedDate) {
-
-        Product product = new Product(name, description, isEnable, createdDate, lastModifiedDate);
-
+    public long create(Product product) {
         try {
             ProductJpaController productJpaController = ProductHelper.getJpaController();
             productJpaController.create(product);
@@ -34,12 +25,9 @@ public class ProductGeneralController {
         return product.getId();
     }
 
-    public static Product read(long id) {
-
-        Product product;
-
+    public Product read(Product product) {
         try {
-            Query query = ProductHelper.getFindByIdQuery(id);
+            Query query = ProductHelper.getFindByIdQuery(product.getId());
             product = (Product) query.getSingleResult();
         } catch (Exception e) {
             product = new ProductNull();
@@ -48,13 +36,10 @@ public class ProductGeneralController {
         return product;
     }
 
-    public static long update(long id, String name, String description, boolean isEnable, Date createdDate, Date lastModifiedDate) {
-
+    public long update(Product product) {
         long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-            Product product = new Product(id, name, description, isEnable, createdDate, lastModifiedDate);
-
+        if (read(product).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ProductJpaController productJpaController = ProductHelper.getJpaController();
                 productJpaController.edit(product);
@@ -67,14 +52,13 @@ public class ProductGeneralController {
         return status;
     }
 
-    public static long delete(long id) {
-
+    public long delete(Product product) {
         long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(product).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ProductJpaController productJpaController = ProductHelper.getJpaController();
-                productJpaController.destroy(id);
+                productJpaController.destroy(product.getId());
                 status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
@@ -83,4 +67,5 @@ public class ProductGeneralController {
 
         return status;
     }
+
 }

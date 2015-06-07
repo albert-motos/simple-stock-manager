@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.simplestockmanager.data.controller.general;
 
 import com.simplestockmanager.common.Constant;
@@ -10,7 +5,6 @@ import com.simplestockmanager.data.nullpackage.EmployeeNull;
 import com.simplestockmanager.helper.EmployeeHelper;
 import com.simplestockmanager.persistence.Employee;
 import com.simplestockmanager.persistence.controller.EmployeeJpaController;
-import java.util.Date;
 import javax.persistence.Query;
 
 /**
@@ -20,33 +14,26 @@ import javax.persistence.Query;
  */
 public class EmployeeGeneralController {
 
-    public static Long create(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID, boolean isEnable,
-            Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
-
-        Query query = EmployeeHelper.getFindByUserNameQuery(userName);
-        Employee employee = new EmployeeNull();
+    public long create(Employee employee) {
+        Query query = EmployeeHelper.getFindByUserNameQuery(employee.getUserName());
 
         if (query.getResultList().isEmpty()) {
-            employee = new Employee(firstName, lastName, bornDate, sexTypeID, phone, email, employeTypeID, isEnable, createdDate, lastModifiedDate, userName,
-                    password, isOnline, lastOnlineDate, sessionID);
-
             try {
                 EmployeeJpaController employeeJpaController = EmployeeHelper.getJpaController();
                 employeeJpaController.create(employee);
             } catch (Exception e) {
                 employee = new EmployeeNull();
             }
+        } else {
+            employee = new EmployeeNull();
         }
 
         return employee.getId();
     }
 
-    public static Employee read(long id) {
-
-        Employee employee;
-
+    public Employee read(Employee employee) {
         try {
-            Query query = EmployeeHelper.getFindByIdQuery(id);
+            Query query = EmployeeHelper.getFindByIdQuery(employee.getId());
             employee = (Employee) query.getSingleResult();
         } catch (Exception e) {
             employee = new EmployeeNull();
@@ -55,29 +42,24 @@ public class EmployeeGeneralController {
         return employee;
     }
 
-    public static long update(long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID,
-            boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
-
+    public long update(Employee employee) {
         long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-            Query query = EmployeeHelper.getFindByUserNameQuery(userName);
-            Employee employee;
+        if (read(employee).getId() != Constant.IDENTIFIER.INVALID) {
+            Query query = EmployeeHelper.getFindByUserNameQuery(employee.getUserName());
+            boolean uniqueUserName = true;
 
-            try {
-                employee = (Employee) query.getSingleResult();
-                if (employee.getId() == id) {
-                    throw new Exception();
-                }
-            } catch (Exception e) {
-                employee = new Employee(id, firstName, lastName, bornDate, sexTypeID, phone, email, employeTypeID, isEnable, createdDate, lastModifiedDate,
-                        userName, password, isOnline, lastOnlineDate, sessionID);
+            if (!query.getResultList().isEmpty()) {
+                Employee otherEmployee = (Employee) query.getSingleResult();
+                uniqueUserName = employee.getId().equals(otherEmployee.getId());
+            }
 
+            if (uniqueUserName) {
                 try {
                     EmployeeJpaController employeeJpaController = EmployeeHelper.getJpaController();
                     employeeJpaController.edit(employee);
                     status = Constant.UPDATE.SUCCESS;
-                } catch (Exception e2) {
+                } catch (Exception e) {
 
                 }
             }
@@ -86,15 +68,14 @@ public class EmployeeGeneralController {
         return status;
     }
 
-    public static long delete(long id) {
-
+    public long delete(Employee employee) {
         long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(employee).getId() != Constant.IDENTIFIER.INVALID) {
 
             try {
                 EmployeeJpaController employeeJpaController = EmployeeHelper.getJpaController();
-                employeeJpaController.destroy(id);
+                employeeJpaController.destroy(employee.getId());
                 status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
@@ -103,4 +84,5 @@ public class EmployeeGeneralController {
 
         return status;
     }
+
 }

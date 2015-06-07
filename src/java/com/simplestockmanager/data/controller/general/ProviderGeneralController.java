@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.simplestockmanager.data.controller.general;
 
 import com.simplestockmanager.common.Constant;
@@ -20,10 +15,7 @@ import javax.persistence.Query;
  */
 public class ProviderGeneralController {
 
-    public static long create(String name, String identifier, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
-
-        Provider provider = new Provider(name, identifier, phone, email, isEnable, createdDate, lastModifiedDate);
-
+    public long create(Provider provider) {
         try {
             ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
             providerJpaController.create(provider);
@@ -34,12 +26,9 @@ public class ProviderGeneralController {
         return provider.getId();
     }
 
-    public static Provider read(long id) {
-
-        Provider provider;
-
+    public Provider read(Provider provider) {
         try {
-            Query query = ProviderHelper.getFindByIdQuery(id);
+            Query query = ProviderHelper.getFindByIdQuery(provider.getId());
             provider = (Provider) query.getSingleResult();
         } catch (Exception e) {
             provider = new ProviderNull();
@@ -48,13 +37,10 @@ public class ProviderGeneralController {
         return provider;
     }
 
-    public static long update(long id, String name, String identifier, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
-
+    public long update(Provider provider) {
         long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-            Provider provider = new Provider(id, name, identifier, phone, email, isEnable, createdDate, lastModifiedDate);
-
+        if (read(provider).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
                 providerJpaController.edit(provider);
@@ -67,14 +53,13 @@ public class ProviderGeneralController {
         return status;
     }
 
-    public static long delete(long id) {
-
+    public long delete(Provider provider) {
         long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(provider).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ProviderJpaController providerJpaController = ProviderHelper.getJpaController();
-                providerJpaController.destroy(id);
+                providerJpaController.destroy(provider.getId());
                 status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
@@ -83,4 +68,5 @@ public class ProviderGeneralController {
 
         return status;
     }
+
 }

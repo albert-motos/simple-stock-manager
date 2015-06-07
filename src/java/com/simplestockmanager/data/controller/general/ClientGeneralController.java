@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.simplestockmanager.data.controller.general;
 
 import com.simplestockmanager.common.Constant;
@@ -10,7 +5,6 @@ import com.simplestockmanager.data.nullpackage.ClientNull;
 import com.simplestockmanager.helper.ClientHelper;
 import com.simplestockmanager.persistence.Client;
 import com.simplestockmanager.persistence.controller.ClientJpaController;
-import java.util.Date;
 import javax.persistence.Query;
 
 /**
@@ -20,11 +14,7 @@ import javax.persistence.Query;
  */
 public class ClientGeneralController {
 
-    public static long create(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate,
-            Date lastModifiedDate) {
-
-        Client client = new Client(firstName, lastName, bornDate, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
-
+    public long create(Client client) {
         try {
             ClientJpaController clientJpaController = ClientHelper.getJpaController();
             clientJpaController.create(client);
@@ -35,12 +25,9 @@ public class ClientGeneralController {
         return client.getId();
     }
 
-    public static Client read(long id) {
-
-        Client client;
-
+    public Client read(Client client) {
         try {
-            Query query = ClientHelper.getFindByIdQuery(id);
+            Query query = ClientHelper.getFindByIdQuery(client.getId());
             client = (Client) query.getSingleResult();
         } catch (Exception e) {
             client = new ClientNull();
@@ -49,14 +36,10 @@ public class ClientGeneralController {
         return client;
     }
 
-    public static long update(long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable,
-            Date createdDate, Date lastModifiedDate) {
-
+    public long update(Client client) {
         long status = Constant.UPDATE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-            Client client = new Client(id, firstName, lastName, bornDate, sexTypeID, phone, email, isEnable, createdDate, lastModifiedDate);
-
+        if (read(client).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();
                 clientJpaController.edit(client);
@@ -69,14 +52,13 @@ public class ClientGeneralController {
         return status;
     }
 
-    public static long delete(long id) {
-
+    public long delete(Client client) {
         long status = Constant.DELETE.FAILURE;
 
-        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(client).getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();
-                clientJpaController.destroy(id);
+                clientJpaController.destroy(client.getId());
                 status = Constant.DELETE.SUCCESS;
             } catch (Exception e) {
 
