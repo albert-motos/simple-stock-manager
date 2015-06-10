@@ -1,6 +1,6 @@
 
-import com.simplestockmanager.data.controller.general.BrandGeneralController;
-import com.simplestockmanager.persistence.Brand;
+import com.development.simplestockmanager.business.object.controller.general.BrandGeneralController;
+import com.development.simplestockmanager.business.persistence.Brand;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
