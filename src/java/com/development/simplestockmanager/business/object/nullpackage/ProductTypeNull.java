@@ -1,16 +1,16 @@
 package com.development.simplestockmanager.business.object.nullpackage;
 
 import com.development.simplestockmanager.business.common.Constant;
-import com.development.simplestockmanager.business.persistence.EmployeeType;
+import com.development.simplestockmanager.business.persistence.ProductType;
 
 /**
- * Null class for EmployeeType object
+ * Null class for ProductType object
  *
  * @author foxtrot
  */
-public class EmployeeTypeNull extends EmployeeType {
+public class ProductTypeNull extends ProductType {
 
-    public EmployeeTypeNull() {
+    public ProductTypeNull() {
         super(Constant.IDENTIFIER.INVALID);
     }
 }

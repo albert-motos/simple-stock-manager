@@ -3,19 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.business.object.nullpackage;
+package com.development.simplestockmanager.business.object.nullpackage.old;
 
+import com.development.simplestockmanager.business.object.nullpackage.*;
 import com.development.simplestockmanager.business.common.Constant;
-import com.development.simplestockmanager.business.persistence.old.DayType;
+import com.development.simplestockmanager.business.persistence.old.Price;
 
 /**
  *
  * @author foxtrot
  */
-public class DayTypeNull extends DayType {
+public class PriceNull extends Price {
 
-    public DayTypeNull() {
+    public PriceNull() {
         super(Constant.IDENTIFIER.INVALID);
     }
-    
+
 }

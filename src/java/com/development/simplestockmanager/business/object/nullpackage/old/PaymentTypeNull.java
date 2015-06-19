@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.business.object.nullpackage;
+package com.development.simplestockmanager.business.object.nullpackage.old;
 
+import com.development.simplestockmanager.business.object.nullpackage.*;
 import com.development.simplestockmanager.business.common.Constant;
-import com.development.simplestockmanager.business.persistence.old.AgeType;
+import com.development.simplestockmanager.business.persistence.old.PaymentType;
 
 /**
  *
  * @author foxtrot
  */
-public class AgeTypeNull extends AgeType {
-    
-    public AgeTypeNull() {
+public class PaymentTypeNull extends PaymentType {
+
+    public PaymentTypeNull() {
         super(Constant.IDENTIFIER.INVALID);
     }
     
