@@ -8,7 +8,7 @@ package com.development.simplestockmanager.business.object.controller.general;
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.StockNull;
 import com.development.simplestockmanager.business.object.helper.StockHelper;
-import com.development.simplestockmanager.business.persistence.Stock;
+import com.development.simplestockmanager.business.persistence.old.Stock;
 import com.development.simplestockmanager.business.persistence.controller.StockJpaController;
 import java.math.BigDecimal;
 import java.util.Date;

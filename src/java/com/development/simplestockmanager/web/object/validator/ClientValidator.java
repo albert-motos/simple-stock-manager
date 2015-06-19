@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.web.object.validator;
 
-import com.development.simplestockmanager.business.persistence.Client;
+import com.development.simplestockmanager.business.persistence.old.Client;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

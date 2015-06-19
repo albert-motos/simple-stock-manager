@@ -7,26 +7,31 @@ package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author foxtrot
+ * @author Monica
  */
 @Entity
-@Table(name = "Store")
+@Table(name = "STORE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Store.findAll", query = "SELECT s FROM Store s"),
@@ -37,10 +42,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Store.findByState", query = "SELECT s FROM Store s WHERE s.state = :state"),
     @NamedQuery(name = "Store.findByCountry", query = "SELECT s FROM Store s WHERE s.country = :country"),
     @NamedQuery(name = "Store.findByPhone", query = "SELECT s FROM Store s WHERE s.phone = :phone"),
-    @NamedQuery(name = "Store.findByManagerID", query = "SELECT s FROM Store s WHERE s.managerID = :managerID"),
     @NamedQuery(name = "Store.findByIsEnable", query = "SELECT s FROM Store s WHERE s.isEnable = :isEnable"),
     @NamedQuery(name = "Store.findByCreatedDate", query = "SELECT s FROM Store s WHERE s.createdDate = :createdDate"),
-    @NamedQuery(name = "Store.findByLastModifiedDate", query = "SELECT s FROM Store s WHERE s.lastModifiedDate = :lastModifiedDate")})
+    @NamedQuery(name = "Store.findByCreatedUser", query = "SELECT s FROM Store s WHERE s.createdUser = :createdUser"),
+    @NamedQuery(name = "Store.findByLastModifiedDate", query = "SELECT s FROM Store s WHERE s.lastModifiedDate = :lastModifiedDate"),
+    @NamedQuery(name = "Store.findByLastModifiedUser", query = "SELECT s FROM Store s WHERE s.lastModifiedUser = :lastModifiedUser")})
 public class Store implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,37 +55,45 @@ public class Store implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "Name")
+    @Column(name = "NAME")
     private String name;
     @Basic(optional = false)
-    @Column(name = "Street")
+    @Column(name = "STREET")
     private String street;
     @Basic(optional = false)
-    @Column(name = "City")
+    @Column(name = "CITY")
     private String city;
     @Basic(optional = false)
-    @Column(name = "State")
+    @Column(name = "STATE")
     private String state;
     @Basic(optional = false)
-    @Column(name = "Country")
+    @Column(name = "COUNTRY")
     private String country;
     @Basic(optional = false)
-    @Column(name = "Phone")
+    @Column(name = "PHONE")
     private String phone;
     @Basic(optional = false)
-    @Column(name = "ManagerID")
-    private long managerID;
-    @Basic(optional = false)
-    @Column(name = "isEnable")
+    @Column(name = "IS_ENABLE")
     private boolean isEnable;
     @Basic(optional = false)
-    @Column(name = "CreatedDate")
+    @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "LastModifiedDate")
+    @Column(name = "CREATED_USER")
+    private String createdUser;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_USER")
+    private String lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
+    private List<Stock> stockList;
+    @JoinColumn(name = "EMPLOYEE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee employee;
 
     public Store() {
     }
@@ -88,20 +102,7 @@ public class Store implements Serializable {
         this.id = id;
     }
 
-    public Store(String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable, Date createdDate, Date lastModifiedDate) {
-        this.name = name;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.phone = phone;
-        this.managerID = managerID;
-        this.isEnable = isEnable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public Store(Long id, String name, String street, String city, String state, String country, String phone, long managerID, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+    public Store(Long id, String name, String street, String city, String state, String country, String phone, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.name = name;
         this.street = street;
@@ -109,10 +110,11 @@ public class Store implements Serializable {
         this.state = state;
         this.country = country;
         this.phone = phone;
-        this.managerID = managerID;
         this.isEnable = isEnable;
         this.createdDate = createdDate;
+        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -171,14 +173,6 @@ public class Store implements Serializable {
         this.phone = phone;
     }
 
-    public long getManagerID() {
-        return managerID;
-    }
-
-    public void setManagerID(long managerID) {
-        this.managerID = managerID;
-    }
-
     public boolean getIsEnable() {
         return isEnable;
     }
@@ -195,12 +189,45 @@ public class Store implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<Stock> getStockList() {
+        return stockList;
+    }
+
+    public void setStockList(List<Stock> stockList) {
+        this.stockList = stockList;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override
@@ -211,45 +238,13 @@ public class Store implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Store)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Store other = (Store) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.street, other.street)) {
-            return false;
-        }
-        if (!Objects.equals(this.city, other.city)) {
-            return false;
-        }
-        if (!Objects.equals(this.state, other.state)) {
-            return false;
-        }
-        if (!Objects.equals(this.country, other.country)) {
-            return false;
-        }
-        if (!Objects.equals(this.phone, other.phone)) {
-            return false;
-        }
-        if (this.managerID != other.managerID) {
-            return false;
-        }
-        if (this.isEnable != other.isEnable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+        Store other = (Store) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -257,7 +252,7 @@ public class Store implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.Store[ id=" + id + " ]";
+        return "DB.Store[ id=" + id + " ]";
     }
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.business.persistence;
+package com.development.simplestockmanager.business.persistence.old;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -22,13 +22,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author foxtrot
  */
 @Entity
-@Table(name = "DayType")
+@Table(name = "PriceType")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "DayType.findAll", query = "SELECT d FROM DayType d"),
-    @NamedQuery(name = "DayType.findById", query = "SELECT d FROM DayType d WHERE d.id = :id"),
-    @NamedQuery(name = "DayType.findByType", query = "SELECT d FROM DayType d WHERE d.type = :type")})
-public class DayType implements Serializable {
+    @NamedQuery(name = "PriceType.findAll", query = "SELECT p FROM PriceType p"),
+    @NamedQuery(name = "PriceType.findById", query = "SELECT p FROM PriceType p WHERE p.id = :id"),
+    @NamedQuery(name = "PriceType.findByType", query = "SELECT p FROM PriceType p WHERE p.type = :type")})
+public class PriceType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,18 +39,18 @@ public class DayType implements Serializable {
     @Column(name = "Type")
     private String type;
 
-    public DayType() {
+    public PriceType() {
     }
 
-    public DayType(Long id) {
-        this.id = id;
-    }
-
-    public DayType(String type) {
+    public PriceType(String type) {
         this.type = type;
     }
 
-    public DayType(Long id, String type) {
+    public PriceType(Long id) {
+        this.id = id;
+    }
+
+    public PriceType(Long id, String type) {
         this.id = id;
         this.type = type;
     }
@@ -81,10 +81,10 @@ public class DayType implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DayType)) {
+        if (!(object instanceof PriceType)) {
             return false;
         }
-        DayType other = (DayType) object;
+        PriceType other = (PriceType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -93,7 +93,7 @@ public class DayType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.DayType[ id=" + id + " ]";
+        return "com.simplestockmanager.persistence.PriceType[ id=" + id + " ]";
     }
     
 }

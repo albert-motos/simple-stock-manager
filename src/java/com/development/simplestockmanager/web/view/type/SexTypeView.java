@@ -6,7 +6,7 @@
 package com.development.simplestockmanager.web.view.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
-import com.development.simplestockmanager.business.persistence.SexType;
+import com.development.simplestockmanager.business.persistence.old.SexType;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 

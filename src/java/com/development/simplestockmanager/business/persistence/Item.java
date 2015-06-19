@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,21 +25,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author foxtrot
+ * @author Monica
  */
 @Entity
-@Table(name = "Item")
+@Table(name = "ITEM")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
     @NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id"),
-    @NamedQuery(name = "Item.findByOrderID", query = "SELECT i FROM Item i WHERE i.orderID = :orderID"),
-    @NamedQuery(name = "Item.findByStockID", query = "SELECT i FROM Item i WHERE i.stockID = :stockID"),
-    @NamedQuery(name = "Item.findByPriceID", query = "SELECT i FROM Item i WHERE i.priceID = :priceID"),
     @NamedQuery(name = "Item.findByAmount", query = "SELECT i FROM Item i WHERE i.amount = :amount"),
-    @NamedQuery(name = "Item.findByCost", query = "SELECT i FROM Item i WHERE i.cost = :cost"),
+    @NamedQuery(name = "Item.findByIsEnable", query = "SELECT i FROM Item i WHERE i.isEnable = :isEnable"),
     @NamedQuery(name = "Item.findByCreatedDate", query = "SELECT i FROM Item i WHERE i.createdDate = :createdDate"),
-    @NamedQuery(name = "Item.findByLastModifiedDate", query = "SELECT i FROM Item i WHERE i.lastModifiedDate = :lastModifiedDate")})
+    @NamedQuery(name = "Item.findByCreatedUser", query = "SELECT i FROM Item i WHERE i.createdUser = :createdUser"),
+    @NamedQuery(name = "Item.findByLastModifiedDate", query = "SELECT i FROM Item i WHERE i.lastModifiedDate = :lastModifiedDate"),
+    @NamedQuery(name = "Item.findByLastModifiedUser", query = "SELECT i FROM Item i WHERE i.lastModifiedUser = :lastModifiedUser")})
 public class Item implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,30 +46,36 @@ public class Item implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Basic(optional = false)
-    @Column(name = "OrderID")
-    private long orderID;
-    @Basic(optional = false)
-    @Column(name = "StockID")
-    private long stockID;
-    @Basic(optional = false)
-    @Column(name = "PriceID")
-    private long priceID;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @Column(name = "Amount")
+    @Column(name = "AMOUNT")
     private BigDecimal amount;
     @Basic(optional = false)
-    @Column(name = "Cost")
-    private BigDecimal cost;
+    @Column(name = "IS_ENABLE")
+    private boolean isEnable;
     @Basic(optional = false)
-    @Column(name = "CreatedDate")
+    @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "LastModifiedDate")
+    @Column(name = "CREATED_USER")
+    private String createdUser;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_USER")
+    private String lastModifiedUser;
+    @JoinColumn(name = "INVOICE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Invoice invoice;
+    @JoinColumn(name = "PRICE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Price price;
+    @JoinColumn(name = "STOCK", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Stock stock;
 
     public Item() {
     }
@@ -77,25 +84,14 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public Item(long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
-        this.orderID = orderID;
-        this.stockID = stockID;
-        this.priceID = priceID;
-        this.amount = amount;
-        this.cost = cost;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public Item(Long id, long orderID, long stockID, long priceID, BigDecimal amount, BigDecimal cost, Date createdDate, Date lastModifiedDate) {
+    public Item(Long id, BigDecimal amount, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
-        this.orderID = orderID;
-        this.stockID = stockID;
-        this.priceID = priceID;
         this.amount = amount;
-        this.cost = cost;
+        this.isEnable = isEnable;
         this.createdDate = createdDate;
+        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -106,30 +102,6 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public long getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(long orderID) {
-        this.orderID = orderID;
-    }
-
-    public long getStockID() {
-        return stockID;
-    }
-
-    public void setStockID(long stockID) {
-        this.stockID = stockID;
-    }
-
-    public long getPriceID() {
-        return priceID;
-    }
-
-    public void setPriceID(long priceID) {
-        this.priceID = priceID;
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
@@ -138,12 +110,12 @@ public class Item implements Serializable {
         this.amount = amount;
     }
 
-    public BigDecimal getCost() {
-        return cost;
+    public boolean getIsEnable() {
+        return isEnable;
     }
 
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
+    public void setIsEnable(boolean isEnable) {
+        this.isEnable = isEnable;
     }
 
     public Date getCreatedDate() {
@@ -154,12 +126,52 @@ public class Item implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
+
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
     }
 
     @Override
@@ -184,7 +196,7 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.Item[ id=" + id + " ]";
+        return "DB.Item[ id=" + id + " ]";
     }
     
 }

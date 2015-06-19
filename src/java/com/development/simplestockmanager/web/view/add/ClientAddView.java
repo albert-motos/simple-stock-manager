@@ -7,7 +7,7 @@ package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.object.controller.general.ClientGeneralController;
 import com.development.simplestockmanager.business.object.controller.general.SexTypeGeneralController;
-import com.development.simplestockmanager.business.persistence.Client;
+import com.development.simplestockmanager.business.persistence.old.Client;
 import com.development.simplestockmanager.business.common.Constant;
 import java.util.Date;
 import javax.faces.application.FacesMessage;

@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.DayType;
+import com.development.simplestockmanager.business.persistence.old.DayType;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;

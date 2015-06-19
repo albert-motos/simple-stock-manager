@@ -6,28 +6,42 @@
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author foxtrot
+ * @author Monica
  */
 @Entity
-@Table(name = "PaymentType")
+@Table(name = "PAYMENT_TYPE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PaymentType.findAll", query = "SELECT p FROM PaymentType p"),
     @NamedQuery(name = "PaymentType.findById", query = "SELECT p FROM PaymentType p WHERE p.id = :id"),
-    @NamedQuery(name = "PaymentType.findByType", query = "SELECT p FROM PaymentType p WHERE p.type = :type")})
+    @NamedQuery(name = "PaymentType.findByType", query = "SELECT p FROM PaymentType p WHERE p.type = :type"),
+    @NamedQuery(name = "PaymentType.findByIsEnable", query = "SELECT p FROM PaymentType p WHERE p.isEnable = :isEnable"),
+    @NamedQuery(name = "PaymentType.findByCreatedDate", query = "SELECT p FROM PaymentType p WHERE p.createdDate = :createdDate"),
+    @NamedQuery(name = "PaymentType.findByCreatedUser", query = "SELECT p FROM PaymentType p WHERE p.createdUser = :createdUser"),
+    @NamedQuery(name = "PaymentType.findByLastModifiedDate", query = "SELECT p FROM PaymentType p WHERE p.lastModifiedDate = :lastModifiedDate"),
+    @NamedQuery(name = "PaymentType.findByLastModifiedUser", query = "SELECT p FROM PaymentType p WHERE p.lastModifiedUser = :lastModifiedUser")})
 public class PaymentType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,8 +50,35 @@ public class PaymentType implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "Type")
+    @Column(name = "TYPE")
     private String type;
+    @Basic(optional = false)
+    @Column(name = "IS_ENABLE")
+    private boolean isEnable;
+    @Basic(optional = false)
+    @Column(name = "CREATED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @Basic(optional = false)
+    @Column(name = "CREATED_USER")
+    private String createdUser;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_USER")
+    private String lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentType")
+    private List<Invoice> invoiceList;
+    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private LanguageType languageType;
+    @OneToMany(mappedBy = "referencedType")
+    private List<PaymentType> paymentTypeList;
+    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
+    @ManyToOne
+    private PaymentType referencedType;
 
     public PaymentType() {
     }
@@ -46,13 +87,14 @@ public class PaymentType implements Serializable {
         this.id = id;
     }
 
-    public PaymentType(String type) {
-        this.type = type;
-    }
-
-    public PaymentType(Long id, String type) {
+    public PaymentType(Long id, String type, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.type = type;
+        this.isEnable = isEnable;
+        this.createdDate = createdDate;
+        this.createdUser = createdUser;
+        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -69,6 +111,80 @@ public class PaymentType implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(boolean isEnable) {
+        this.isEnable = isEnable;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
+    public LanguageType getLanguageType() {
+        return languageType;
+    }
+
+    public void setLanguageType(LanguageType languageType) {
+        this.languageType = languageType;
+    }
+
+    @XmlTransient
+    public List<PaymentType> getPaymentTypeList() {
+        return paymentTypeList;
+    }
+
+    public void setPaymentTypeList(List<PaymentType> paymentTypeList) {
+        this.paymentTypeList = paymentTypeList;
+    }
+
+    public PaymentType getReferencedType() {
+        return referencedType;
+    }
+
+    public void setReferencedType(PaymentType referencedType) {
+        this.referencedType = referencedType;
     }
 
     @Override
@@ -93,7 +209,7 @@ public class PaymentType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.PaymentType[ id=" + id + " ]";
+        return "DB.PaymentType[ id=" + id + " ]";
     }
     
 }

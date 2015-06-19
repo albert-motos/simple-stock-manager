@@ -1,7 +1,7 @@
 package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
-import com.development.simplestockmanager.business.persistence.Brand;
+import com.development.simplestockmanager.business.persistence.old.Brand;
 import java.util.ArrayList;
 import java.util.List;
 

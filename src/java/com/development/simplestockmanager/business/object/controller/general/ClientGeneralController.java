@@ -3,7 +3,7 @@ package com.development.simplestockmanager.business.object.controller.general;
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.ClientNull;
 import com.development.simplestockmanager.business.object.helper.ClientHelper;
-import com.development.simplestockmanager.business.persistence.Client;
+import com.development.simplestockmanager.business.persistence.old.Client;
 import com.development.simplestockmanager.business.persistence.controller.ClientJpaController;
 import javax.persistence.Query;
 

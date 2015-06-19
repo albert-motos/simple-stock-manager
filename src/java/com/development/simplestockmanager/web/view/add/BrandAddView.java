@@ -10,9 +10,9 @@ import com.development.simplestockmanager.business.object.controller.general.Bra
 import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
 import com.development.simplestockmanager.business.object.controller.general.StoreGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
-import com.development.simplestockmanager.business.persistence.Brand;
-import com.development.simplestockmanager.business.persistence.Product;
-import com.development.simplestockmanager.business.persistence.Store;
+import com.development.simplestockmanager.business.persistence.old.Brand;
+import com.development.simplestockmanager.business.persistence.old.Product;
+import com.development.simplestockmanager.business.persistence.old.Store;
 import com.development.simplestockmanager.web.object.component.selector.EmployeeSelectorView;
 import java.util.Date;
 import javax.faces.application.FacesMessage;

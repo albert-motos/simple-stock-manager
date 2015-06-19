@@ -6,7 +6,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.EmployeeTypeHelper;
-import com.development.simplestockmanager.business.persistence.EmployeeType;
+import com.development.simplestockmanager.business.persistence.old.EmployeeType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;

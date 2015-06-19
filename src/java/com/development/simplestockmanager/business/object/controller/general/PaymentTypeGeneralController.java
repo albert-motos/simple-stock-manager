@@ -8,7 +8,7 @@ package com.development.simplestockmanager.business.object.controller.general;
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.PaymentTypeNull;
 import com.development.simplestockmanager.business.object.helper.PaymentTypeHelper;
-import com.development.simplestockmanager.business.persistence.PaymentType;
+import com.development.simplestockmanager.business.persistence.old.PaymentType;
 import com.development.simplestockmanager.business.persistence.controller.PaymentTypeJpaController;
 import javax.persistence.Query;
 

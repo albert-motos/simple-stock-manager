@@ -8,7 +8,7 @@ package com.development.simplestockmanager.business.object.controller.general;
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
 import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
-import com.development.simplestockmanager.business.persistence.SexType;
+import com.development.simplestockmanager.business.persistence.old.SexType;
 import com.development.simplestockmanager.business.persistence.controller.SexTypeJpaController;
 import javax.persistence.Query;
 

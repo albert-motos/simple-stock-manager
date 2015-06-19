@@ -8,7 +8,7 @@ package com.development.simplestockmanager.business.object.controller.general;
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeTypeNull;
 import com.development.simplestockmanager.business.object.helper.EmployeeTypeHelper;
-import com.development.simplestockmanager.business.persistence.EmployeeType;
+import com.development.simplestockmanager.business.persistence.old.EmployeeType;
 import com.development.simplestockmanager.business.persistence.controller.EmployeeTypeJpaController;
 import javax.persistence.Query;
 

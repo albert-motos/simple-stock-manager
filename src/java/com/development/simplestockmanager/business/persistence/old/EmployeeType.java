@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.business.persistence;
+package com.development.simplestockmanager.business.persistence.old;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -22,15 +22,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author foxtrot
  */
 @Entity
-@Table(name = "AgeType")
+@Table(name = "EmployeeType")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AgeType.findAll", query = "SELECT a FROM AgeType a"),
-    @NamedQuery(name = "AgeType.findById", query = "SELECT a FROM AgeType a WHERE a.id = :id"),
-    @NamedQuery(name = "AgeType.findByType", query = "SELECT a FROM AgeType a WHERE a.type = :type"),
-    @NamedQuery(name = "AgeType.findByFromAge", query = "SELECT a FROM AgeType a WHERE a.fromAge = :fromAge"),
-    @NamedQuery(name = "AgeType.findByToAge", query = "SELECT a FROM AgeType a WHERE a.toAge = :toAge")})
-public class AgeType implements Serializable {
+    @NamedQuery(name = "EmployeeType.findAll", query = "SELECT e FROM EmployeeType e"),
+    @NamedQuery(name = "EmployeeType.findById", query = "SELECT e FROM EmployeeType e WHERE e.id = :id"),
+    @NamedQuery(name = "EmployeeType.findByType", query = "SELECT e FROM EmployeeType e WHERE e.type = :type")})
+public class EmployeeType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,31 +38,21 @@ public class AgeType implements Serializable {
     @Basic(optional = false)
     @Column(name = "Type")
     private String type;
-    @Basic(optional = false)
-    @Column(name = "FromAge")
-    private int fromAge;
-    @Basic(optional = false)
-    @Column(name = "ToAge")
-    private int toAge;
 
-    public AgeType() {
+    public EmployeeType() {
     }
 
-    public AgeType(Long id) {
+    public EmployeeType(Long id) {
         this.id = id;
     }
 
-    public AgeType(String type, int fromAge, int toAge) {
+    public EmployeeType(String type) {
         this.type = type;
-        this.fromAge = fromAge;
-        this.toAge = toAge;
     }
 
-    public AgeType(Long id, String type, int fromAge, int toAge) {
+    public EmployeeType(Long id, String type) {
         this.id = id;
         this.type = type;
-        this.fromAge = fromAge;
-        this.toAge = toAge;
     }
 
     public Long getId() {
@@ -83,22 +71,6 @@ public class AgeType implements Serializable {
         this.type = type;
     }
 
-    public int getFromAge() {
-        return fromAge;
-    }
-
-    public void setFromAge(int fromAge) {
-        this.fromAge = fromAge;
-    }
-
-    public int getToAge() {
-        return toAge;
-    }
-
-    public void setToAge(int toAge) {
-        this.toAge = toAge;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -109,10 +81,10 @@ public class AgeType implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AgeType)) {
+        if (!(object instanceof EmployeeType)) {
             return false;
         }
-        AgeType other = (AgeType) object;
+        EmployeeType other = (EmployeeType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -121,7 +93,7 @@ public class AgeType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.AgeType[ id=" + id + " ]";
+        return type;
     }
     
 }

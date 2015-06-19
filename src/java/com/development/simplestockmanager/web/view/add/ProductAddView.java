@@ -7,7 +7,7 @@ package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
-import com.development.simplestockmanager.business.persistence.Product;
+import com.development.simplestockmanager.business.persistence.old.Product;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

@@ -6,7 +6,7 @@
 package com.development.simplestockmanager.business.object.nullpackage;
 
 import com.development.simplestockmanager.business.common.Constant;
-import com.development.simplestockmanager.business.persistence.Product;
+import com.development.simplestockmanager.business.persistence.old.Product;
 
 /**
  *

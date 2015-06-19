@@ -6,7 +6,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
-import com.development.simplestockmanager.business.persistence.SexType;
+import com.development.simplestockmanager.business.persistence.old.SexType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;

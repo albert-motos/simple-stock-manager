@@ -10,7 +10,7 @@ import com.development.simplestockmanager.business.object.controller.general.Emp
 import com.development.simplestockmanager.business.object.controller.general.EmployeeTypeGeneralController;
 import com.development.simplestockmanager.business.object.controller.general.SexTypeGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
-import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.old.Employee;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

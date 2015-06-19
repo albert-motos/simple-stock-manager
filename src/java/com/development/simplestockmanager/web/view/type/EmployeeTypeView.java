@@ -6,7 +6,7 @@
 package com.development.simplestockmanager.web.view.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeTypeSpecificController;
-import com.development.simplestockmanager.business.persistence.EmployeeType;
+import com.development.simplestockmanager.business.persistence.old.EmployeeType;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 

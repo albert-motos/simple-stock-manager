@@ -9,7 +9,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.specific.AnalyticsTimeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.AnalyticsTimeNull;
 import com.development.simplestockmanager.business.object.helper.AnalyticsTimeHelper;
-import com.development.simplestockmanager.business.persistence.AnalyticsTime;
+import com.development.simplestockmanager.business.persistence.old.AnalyticsTime;
 import com.development.simplestockmanager.business.persistence.controller.AnalyticsTimeJpaController;
 import javax.persistence.Query;
 
