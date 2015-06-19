@@ -4,7 +4,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeNull;
 import com.development.simplestockmanager.business.object.helper.EmployeeHelper;
 import com.development.simplestockmanager.business.persistence.old.Employee;
-import com.development.simplestockmanager.business.persistence.controller.EmployeeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.EmployeeJpaController;
 import javax.persistence.Query;
 
 /**

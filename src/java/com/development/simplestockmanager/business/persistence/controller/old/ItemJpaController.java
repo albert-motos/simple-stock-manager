@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.business.persistence.controller;
+package com.development.simplestockmanager.business.persistence.controller.old;
 
-import com.development.simplestockmanager.business.persistence.old.MonthType;
+import com.development.simplestockmanager.business.persistence.old.Item;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
@@ -20,9 +20,9 @@ import javax.persistence.criteria.Root;
  *
  * @author foxtrot
  */
-public class MonthTypeJpaController implements Serializable {
+public class ItemJpaController implements Serializable {
 
-    public MonthTypeJpaController(EntityManagerFactory emf) {
+    public ItemJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -31,12 +31,12 @@ public class MonthTypeJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(MonthType monthType) {
+    public void create(Item item) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(monthType);
+            em.persist(item);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,19 +45,19 @@ public class MonthTypeJpaController implements Serializable {
         }
     }
 
-    public void edit(MonthType monthType) throws NonexistentEntityException, Exception {
+    public void edit(Item item) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            monthType = em.merge(monthType);
+            item = em.merge(item);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = monthType.getId();
-                if (findMonthType(id) == null) {
-                    throw new NonexistentEntityException("The monthType with id " + id + " no longer exists.");
+                Long id = item.getId();
+                if (findItem(id) == null) {
+                    throw new NonexistentEntityException("The item with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -73,14 +73,14 @@ public class MonthTypeJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            MonthType monthType;
+            Item item;
             try {
-                monthType = em.getReference(MonthType.class, id);
-                monthType.getId();
+                item = em.getReference(Item.class, id);
+                item.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The monthType with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The item with id " + id + " no longer exists.", enfe);
             }
-            em.remove(monthType);
+            em.remove(item);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -89,19 +89,19 @@ public class MonthTypeJpaController implements Serializable {
         }
     }
 
-    public List<MonthType> findMonthTypeEntities() {
-        return findMonthTypeEntities(true, -1, -1);
+    public List<Item> findItemEntities() {
+        return findItemEntities(true, -1, -1);
     }
 
-    public List<MonthType> findMonthTypeEntities(int maxResults, int firstResult) {
-        return findMonthTypeEntities(false, maxResults, firstResult);
+    public List<Item> findItemEntities(int maxResults, int firstResult) {
+        return findItemEntities(false, maxResults, firstResult);
     }
 
-    private List<MonthType> findMonthTypeEntities(boolean all, int maxResults, int firstResult) {
+    private List<Item> findItemEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(MonthType.class));
+            cq.select(cq.from(Item.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -113,20 +113,20 @@ public class MonthTypeJpaController implements Serializable {
         }
     }
 
-    public MonthType findMonthType(Long id) {
+    public Item findItem(Long id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(MonthType.class, id);
+            return em.find(Item.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getMonthTypeCount() {
+    public int getItemCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<MonthType> rt = cq.from(MonthType.class);
+            Root<Item> rt = cq.from(Item.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

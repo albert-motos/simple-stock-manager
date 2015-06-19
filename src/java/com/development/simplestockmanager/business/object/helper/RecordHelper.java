@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.business.object.helper;
 
-import com.development.simplestockmanager.business.persistence.controller.RecordJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.RecordJpaController;
 import javax.persistence.Query;
 
 /**

@@ -4,7 +4,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.BrandNull;
 import com.development.simplestockmanager.business.object.helper.BrandHelper;
 import com.development.simplestockmanager.business.persistence.old.Brand;
-import com.development.simplestockmanager.business.persistence.controller.BrandJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.BrandJpaController;
 import javax.persistence.Query;
 
 /**

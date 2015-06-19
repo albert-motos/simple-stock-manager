@@ -5,20 +5,24 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.old.AnalyticsTime;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import com.development.simplestockmanager.business.persistence.AnalyticsTime;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Record;
+import java.util.ArrayList;
+import java.util.List;
+import com.development.simplestockmanager.business.persistence.Invoice;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author foxtrot
+ * @author Monica
  */
 public class AnalyticsTimeJpaController implements Serializable {
 
@@ -32,11 +36,47 @@ public class AnalyticsTimeJpaController implements Serializable {
     }
 
     public void create(AnalyticsTime analyticsTime) {
+        if (analyticsTime.getRecordList() == null) {
+            analyticsTime.setRecordList(new ArrayList<Record>());
+        }
+        if (analyticsTime.getInvoiceList() == null) {
+            analyticsTime.setInvoiceList(new ArrayList<Invoice>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Record> attachedRecordList = new ArrayList<Record>();
+            for (Record recordListRecordToAttach : analyticsTime.getRecordList()) {
+                recordListRecordToAttach = em.getReference(recordListRecordToAttach.getClass(), recordListRecordToAttach.getId());
+                attachedRecordList.add(recordListRecordToAttach);
+            }
+            analyticsTime.setRecordList(attachedRecordList);
+            List<Invoice> attachedInvoiceList = new ArrayList<Invoice>();
+            for (Invoice invoiceListInvoiceToAttach : analyticsTime.getInvoiceList()) {
+                invoiceListInvoiceToAttach = em.getReference(invoiceListInvoiceToAttach.getClass(), invoiceListInvoiceToAttach.getId());
+                attachedInvoiceList.add(invoiceListInvoiceToAttach);
+            }
+            analyticsTime.setInvoiceList(attachedInvoiceList);
             em.persist(analyticsTime);
+            for (Record recordListRecord : analyticsTime.getRecordList()) {
+                AnalyticsTime oldAnalitycsTimeOfRecordListRecord = recordListRecord.getAnalitycsTime();
+                recordListRecord.setAnalitycsTime(analyticsTime);
+                recordListRecord = em.merge(recordListRecord);
+                if (oldAnalitycsTimeOfRecordListRecord != null) {
+                    oldAnalitycsTimeOfRecordListRecord.getRecordList().remove(recordListRecord);
+                    oldAnalitycsTimeOfRecordListRecord = em.merge(oldAnalitycsTimeOfRecordListRecord);
+                }
+            }
+            for (Invoice invoiceListInvoice : analyticsTime.getInvoiceList()) {
+                AnalyticsTime oldAnalitycsTimeOfInvoiceListInvoice = invoiceListInvoice.getAnalitycsTime();
+                invoiceListInvoice.setAnalitycsTime(analyticsTime);
+                invoiceListInvoice = em.merge(invoiceListInvoice);
+                if (oldAnalitycsTimeOfInvoiceListInvoice != null) {
+                    oldAnalitycsTimeOfInvoiceListInvoice.getInvoiceList().remove(invoiceListInvoice);
+                    oldAnalitycsTimeOfInvoiceListInvoice = em.merge(oldAnalitycsTimeOfInvoiceListInvoice);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,12 +85,73 @@ public class AnalyticsTimeJpaController implements Serializable {
         }
     }
 
-    public void edit(AnalyticsTime analyticsTime) throws NonexistentEntityException, Exception {
+    public void edit(AnalyticsTime analyticsTime) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            AnalyticsTime persistentAnalyticsTime = em.find(AnalyticsTime.class, analyticsTime.getId());
+            List<Record> recordListOld = persistentAnalyticsTime.getRecordList();
+            List<Record> recordListNew = analyticsTime.getRecordList();
+            List<Invoice> invoiceListOld = persistentAnalyticsTime.getInvoiceList();
+            List<Invoice> invoiceListNew = analyticsTime.getInvoiceList();
+            List<String> illegalOrphanMessages = null;
+            for (Record recordListOldRecord : recordListOld) {
+                if (!recordListNew.contains(recordListOldRecord)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Record " + recordListOldRecord + " since its analitycsTime field is not nullable.");
+                }
+            }
+            for (Invoice invoiceListOldInvoice : invoiceListOld) {
+                if (!invoiceListNew.contains(invoiceListOldInvoice)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Invoice " + invoiceListOldInvoice + " since its analitycsTime field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Record> attachedRecordListNew = new ArrayList<Record>();
+            for (Record recordListNewRecordToAttach : recordListNew) {
+                recordListNewRecordToAttach = em.getReference(recordListNewRecordToAttach.getClass(), recordListNewRecordToAttach.getId());
+                attachedRecordListNew.add(recordListNewRecordToAttach);
+            }
+            recordListNew = attachedRecordListNew;
+            analyticsTime.setRecordList(recordListNew);
+            List<Invoice> attachedInvoiceListNew = new ArrayList<Invoice>();
+            for (Invoice invoiceListNewInvoiceToAttach : invoiceListNew) {
+                invoiceListNewInvoiceToAttach = em.getReference(invoiceListNewInvoiceToAttach.getClass(), invoiceListNewInvoiceToAttach.getId());
+                attachedInvoiceListNew.add(invoiceListNewInvoiceToAttach);
+            }
+            invoiceListNew = attachedInvoiceListNew;
+            analyticsTime.setInvoiceList(invoiceListNew);
             analyticsTime = em.merge(analyticsTime);
+            for (Record recordListNewRecord : recordListNew) {
+                if (!recordListOld.contains(recordListNewRecord)) {
+                    AnalyticsTime oldAnalitycsTimeOfRecordListNewRecord = recordListNewRecord.getAnalitycsTime();
+                    recordListNewRecord.setAnalitycsTime(analyticsTime);
+                    recordListNewRecord = em.merge(recordListNewRecord);
+                    if (oldAnalitycsTimeOfRecordListNewRecord != null && !oldAnalitycsTimeOfRecordListNewRecord.equals(analyticsTime)) {
+                        oldAnalitycsTimeOfRecordListNewRecord.getRecordList().remove(recordListNewRecord);
+                        oldAnalitycsTimeOfRecordListNewRecord = em.merge(oldAnalitycsTimeOfRecordListNewRecord);
+                    }
+                }
+            }
+            for (Invoice invoiceListNewInvoice : invoiceListNew) {
+                if (!invoiceListOld.contains(invoiceListNewInvoice)) {
+                    AnalyticsTime oldAnalitycsTimeOfInvoiceListNewInvoice = invoiceListNewInvoice.getAnalitycsTime();
+                    invoiceListNewInvoice.setAnalitycsTime(analyticsTime);
+                    invoiceListNewInvoice = em.merge(invoiceListNewInvoice);
+                    if (oldAnalitycsTimeOfInvoiceListNewInvoice != null && !oldAnalitycsTimeOfInvoiceListNewInvoice.equals(analyticsTime)) {
+                        oldAnalitycsTimeOfInvoiceListNewInvoice.getInvoiceList().remove(invoiceListNewInvoice);
+                        oldAnalitycsTimeOfInvoiceListNewInvoice = em.merge(oldAnalitycsTimeOfInvoiceListNewInvoice);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -68,7 +169,7 @@ public class AnalyticsTimeJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,6 +180,24 @@ public class AnalyticsTimeJpaController implements Serializable {
                 analyticsTime.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The analyticsTime with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Record> recordListOrphanCheck = analyticsTime.getRecordList();
+            for (Record recordListOrphanCheckRecord : recordListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This AnalyticsTime (" + analyticsTime + ") cannot be destroyed since the Record " + recordListOrphanCheckRecord + " in its recordList field has a non-nullable analitycsTime field.");
+            }
+            List<Invoice> invoiceListOrphanCheck = analyticsTime.getInvoiceList();
+            for (Invoice invoiceListOrphanCheckInvoice : invoiceListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This AnalyticsTime (" + analyticsTime + ") cannot be destroyed since the Invoice " + invoiceListOrphanCheckInvoice + " in its invoiceList field has a non-nullable analitycsTime field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(analyticsTime);
             em.getTransaction().commit();

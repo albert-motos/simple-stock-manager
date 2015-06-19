@@ -9,7 +9,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.RecordNull;
 import com.development.simplestockmanager.business.object.helper.RecordHelper;
 import com.development.simplestockmanager.business.persistence.old.Record;
-import com.development.simplestockmanager.business.persistence.controller.RecordJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.RecordJpaController;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Query;

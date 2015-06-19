@@ -9,7 +9,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.AgeTypeNull;
 import com.development.simplestockmanager.business.object.helper.AgeTypeHelper;
 import com.development.simplestockmanager.business.persistence.old.AgeType;
-import com.development.simplestockmanager.business.persistence.controller.AgeTypeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.AgeTypeJpaController;
 import javax.persistence.Query;
 
 /**

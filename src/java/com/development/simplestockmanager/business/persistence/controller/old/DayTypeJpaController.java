@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.business.persistence.controller;
+package com.development.simplestockmanager.business.persistence.controller.old;
 
 import com.development.simplestockmanager.business.persistence.old.DayType;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;

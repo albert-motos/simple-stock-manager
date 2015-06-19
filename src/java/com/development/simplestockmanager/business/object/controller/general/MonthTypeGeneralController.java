@@ -9,7 +9,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.MonthTypeNull;
 import com.development.simplestockmanager.business.object.helper.MonthTypeHelper;
 import com.development.simplestockmanager.business.persistence.old.MonthType;
-import com.development.simplestockmanager.business.persistence.controller.MonthTypeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.MonthTypeJpaController;
 import javax.persistence.Query;
 
 /**

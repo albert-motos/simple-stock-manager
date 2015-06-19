@@ -9,7 +9,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.DayTypeNull;
 import com.development.simplestockmanager.business.object.helper.DayTypeHelper;
 import com.development.simplestockmanager.business.persistence.old.DayType;
-import com.development.simplestockmanager.business.persistence.controller.DayTypeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.DayTypeJpaController;
 import javax.persistence.Query;
 
 /**

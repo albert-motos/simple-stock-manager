@@ -9,7 +9,7 @@ import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.PriceTypeNull;
 import com.development.simplestockmanager.business.object.helper.PriceTypeHelper;
 import com.development.simplestockmanager.business.persistence.old.PriceType;
-import com.development.simplestockmanager.business.persistence.controller.PriceTypeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.PriceTypeJpaController;
 import javax.persistence.Query;
 
 /**

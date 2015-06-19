@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.business.object.helper;
 
-import com.development.simplestockmanager.business.persistence.controller.SexTypeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.SexTypeJpaController;
 import javax.persistence.Query;
 
 /**

@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.business.object.helper;
 
-import com.development.simplestockmanager.business.persistence.controller.PriceTypeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.PriceTypeJpaController;
 import javax.persistence.Query;
 
 /**

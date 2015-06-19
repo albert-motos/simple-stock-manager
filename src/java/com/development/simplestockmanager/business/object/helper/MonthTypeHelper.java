@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.business.object.helper;
 
-import com.development.simplestockmanager.business.persistence.controller.MonthTypeJpaController;
+import com.development.simplestockmanager.business.persistence.controller.old.MonthTypeJpaController;
 import javax.persistence.Query;
 
 /**
