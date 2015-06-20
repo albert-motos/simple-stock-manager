@@ -1,7 +1,7 @@
 package com.development.simplestockmanager.business.object.nullpackage;
 
 import com.development.simplestockmanager.business.common.Constant;
-import com.development.simplestockmanager.business.persistence.old.Stock;
+import com.development.simplestockmanager.business.persistence.Stock;
 
 /**
  * Null class for Stock object
