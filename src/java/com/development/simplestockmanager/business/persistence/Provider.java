@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "PROVIDER")
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Provider.findByIdentifier", query = "SELECT p FROM Provider p WHERE p.identifier = :identifier"),
     @NamedQuery(name = "Provider.findByPhone", query = "SELECT p FROM Provider p WHERE p.phone = :phone"),
     @NamedQuery(name = "Provider.findByEmail", query = "SELECT p FROM Provider p WHERE p.email = :email"),
-    @NamedQuery(name = "Provider.findByIsEnable", query = "SELECT p FROM Provider p WHERE p.isEnable = :isEnable"),
+    @NamedQuery(name = "Provider.findByEnable", query = "SELECT p FROM Provider p WHERE p.enable = :enable"),
     @NamedQuery(name = "Provider.findByCreatedDate", query = "SELECT p FROM Provider p WHERE p.createdDate = :createdDate"),
     @NamedQuery(name = "Provider.findByCreatedUser", query = "SELECT p FROM Provider p WHERE p.createdUser = :createdUser"),
     @NamedQuery(name = "Provider.findByLastModifiedDate", query = "SELECT p FROM Provider p WHERE p.lastModifiedDate = :lastModifiedDate"),
@@ -62,8 +62,8 @@ public class Provider implements Serializable {
     @Column(name = "EMAIL")
     private String email;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -88,12 +88,12 @@ public class Provider implements Serializable {
         this.id = id;
     }
 
-    public Provider(Long id, String name, String phone, String email, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Provider(Long id, String name, String phone, String email, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -140,12 +140,12 @@ public class Provider implements Serializable {
         this.email = email;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -211,7 +211,7 @@ public class Provider implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.Provider[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.Provider[ id=" + id + " ]";
     }
     
 }

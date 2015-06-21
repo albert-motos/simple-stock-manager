@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "SEX_TYPE")
@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SexType.findAll", query = "SELECT s FROM SexType s"),
     @NamedQuery(name = "SexType.findById", query = "SELECT s FROM SexType s WHERE s.id = :id"),
     @NamedQuery(name = "SexType.findByType", query = "SELECT s FROM SexType s WHERE s.type = :type"),
-    @NamedQuery(name = "SexType.findByIsEnable", query = "SELECT s FROM SexType s WHERE s.isEnable = :isEnable"),
+    @NamedQuery(name = "SexType.findByEnable", query = "SELECT s FROM SexType s WHERE s.enable = :enable"),
     @NamedQuery(name = "SexType.findByCreatedDate", query = "SELECT s FROM SexType s WHERE s.createdDate = :createdDate"),
     @NamedQuery(name = "SexType.findByCreatedUser", query = "SELECT s FROM SexType s WHERE s.createdUser = :createdUser"),
     @NamedQuery(name = "SexType.findByLastModifiedDate", query = "SELECT s FROM SexType s WHERE s.lastModifiedDate = :lastModifiedDate"),
@@ -53,8 +53,8 @@ public class SexType implements Serializable {
     @Column(name = "TYPE")
     private String type;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -89,10 +89,10 @@ public class SexType implements Serializable {
         this.id = id;
     }
 
-    public SexType(Long id, String type, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public SexType(Long id, String type, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.type = type;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -115,12 +115,12 @@ public class SexType implements Serializable {
         this.type = type;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -220,7 +220,7 @@ public class SexType implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.SexType[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.SexType[ id=" + id + " ]";
     }
     
 }

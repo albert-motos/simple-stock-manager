@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "LANGUAGE_TYPE")
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LanguageType.findById", query = "SELECT l FROM LanguageType l WHERE l.id = :id"),
     @NamedQuery(name = "LanguageType.findByCode", query = "SELECT l FROM LanguageType l WHERE l.code = :code"),
     @NamedQuery(name = "LanguageType.findByLanguage", query = "SELECT l FROM LanguageType l WHERE l.language = :language"),
-    @NamedQuery(name = "LanguageType.findByIsEnable", query = "SELECT l FROM LanguageType l WHERE l.isEnable = :isEnable"),
+    @NamedQuery(name = "LanguageType.findByEnable", query = "SELECT l FROM LanguageType l WHERE l.enable = :enable"),
     @NamedQuery(name = "LanguageType.findByCreatedDate", query = "SELECT l FROM LanguageType l WHERE l.createdDate = :createdDate"),
     @NamedQuery(name = "LanguageType.findByCreatedUser", query = "SELECT l FROM LanguageType l WHERE l.createdUser = :createdUser"),
     @NamedQuery(name = "LanguageType.findByLastModifiedDate", query = "SELECT l FROM LanguageType l WHERE l.lastModifiedDate = :lastModifiedDate"),
@@ -55,8 +55,8 @@ public class LanguageType implements Serializable {
     @Column(name = "LANGUAGE")
     private String language;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -89,11 +89,11 @@ public class LanguageType implements Serializable {
         this.id = id;
     }
 
-    public LanguageType(Long id, String code, String language, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public LanguageType(Long id, String code, String language, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.code = code;
         this.language = language;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -124,12 +124,12 @@ public class LanguageType implements Serializable {
         this.language = language;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -231,7 +231,7 @@ public class LanguageType implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.LanguageType[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.LanguageType[ id=" + id + " ]";
     }
     
 }

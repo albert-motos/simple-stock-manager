@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "INVOICE")
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i"),
     @NamedQuery(name = "Invoice.findById", query = "SELECT i FROM Invoice i WHERE i.id = :id"),
     @NamedQuery(name = "Invoice.findByCost", query = "SELECT i FROM Invoice i WHERE i.cost = :cost"),
-    @NamedQuery(name = "Invoice.findByIsEnable", query = "SELECT i FROM Invoice i WHERE i.isEnable = :isEnable"),
+    @NamedQuery(name = "Invoice.findByEnable", query = "SELECT i FROM Invoice i WHERE i.enable = :enable"),
     @NamedQuery(name = "Invoice.findByCreatedDate", query = "SELECT i FROM Invoice i WHERE i.createdDate = :createdDate"),
     @NamedQuery(name = "Invoice.findByCreatedUser", query = "SELECT i FROM Invoice i WHERE i.createdUser = :createdUser"),
     @NamedQuery(name = "Invoice.findByLastModifiedDate", query = "SELECT i FROM Invoice i WHERE i.lastModifiedDate = :lastModifiedDate"),
@@ -54,8 +54,8 @@ public class Invoice implements Serializable {
     @Column(name = "COST")
     private BigDecimal cost;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -92,9 +92,9 @@ public class Invoice implements Serializable {
         this.id = id;
     }
 
-    public Invoice(Long id, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Invoice(Long id, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -117,12 +117,12 @@ public class Invoice implements Serializable {
         this.cost = cost;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -220,7 +220,7 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.Invoice[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.Invoice[ id=" + id + " ]";
     }
     
 }

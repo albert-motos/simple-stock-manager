@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "BRAND")
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Brand.findById", query = "SELECT b FROM Brand b WHERE b.id = :id"),
     @NamedQuery(name = "Brand.findByName", query = "SELECT b FROM Brand b WHERE b.name = :name"),
     @NamedQuery(name = "Brand.findByDescription", query = "SELECT b FROM Brand b WHERE b.description = :description"),
-    @NamedQuery(name = "Brand.findByIsEnable", query = "SELECT b FROM Brand b WHERE b.isEnable = :isEnable"),
+    @NamedQuery(name = "Brand.findByEnable", query = "SELECT b FROM Brand b WHERE b.enable = :enable"),
     @NamedQuery(name = "Brand.findByCreatedDate", query = "SELECT b FROM Brand b WHERE b.createdDate = :createdDate"),
     @NamedQuery(name = "Brand.findByCreatedUser", query = "SELECT b FROM Brand b WHERE b.createdUser = :createdUser"),
     @NamedQuery(name = "Brand.findByLastModifiedDate", query = "SELECT b FROM Brand b WHERE b.lastModifiedDate = :lastModifiedDate"),
@@ -54,8 +54,8 @@ public class Brand implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -80,10 +80,10 @@ public class Brand implements Serializable {
         this.id = id;
     }
 
-    public Brand(Long id, String name, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Brand(Long id, String name, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.name = name;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -114,12 +114,12 @@ public class Brand implements Serializable {
         this.description = description;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -185,7 +185,7 @@ public class Brand implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.Brand[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.Brand[ id=" + id + " ]";
     }
     
 }

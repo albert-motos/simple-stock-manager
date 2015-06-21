@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "ITEM")
@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Item.findAll", query = "SELECT i FROM Item i"),
     @NamedQuery(name = "Item.findById", query = "SELECT i FROM Item i WHERE i.id = :id"),
     @NamedQuery(name = "Item.findByAmount", query = "SELECT i FROM Item i WHERE i.amount = :amount"),
-    @NamedQuery(name = "Item.findByIsEnable", query = "SELECT i FROM Item i WHERE i.isEnable = :isEnable"),
+    @NamedQuery(name = "Item.findByEnable", query = "SELECT i FROM Item i WHERE i.enable = :enable"),
     @NamedQuery(name = "Item.findByCreatedDate", query = "SELECT i FROM Item i WHERE i.createdDate = :createdDate"),
     @NamedQuery(name = "Item.findByCreatedUser", query = "SELECT i FROM Item i WHERE i.createdUser = :createdUser"),
     @NamedQuery(name = "Item.findByLastModifiedDate", query = "SELECT i FROM Item i WHERE i.lastModifiedDate = :lastModifiedDate"),
@@ -51,8 +51,8 @@ public class Item implements Serializable {
     @Column(name = "AMOUNT")
     private BigDecimal amount;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -84,10 +84,10 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public Item(Long id, BigDecimal amount, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Item(Long id, BigDecimal amount, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.amount = amount;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -110,12 +110,12 @@ public class Item implements Serializable {
         this.amount = amount;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -196,7 +196,7 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.Item[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.Item[ id=" + id + " ]";
     }
     
 }

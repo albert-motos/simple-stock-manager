@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "ANALYTICS_TIME")
@@ -238,7 +238,7 @@ public class AnalyticsTime implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.AnalyticsTime[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.AnalyticsTime[ id=" + id + " ]";
     }
     
 }

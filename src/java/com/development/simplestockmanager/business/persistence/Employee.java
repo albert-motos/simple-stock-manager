@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "EMPLOYEE")
@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employee.findByIsOnline", query = "SELECT e FROM Employee e WHERE e.isOnline = :isOnline"),
     @NamedQuery(name = "Employee.findByLastOnlineDate", query = "SELECT e FROM Employee e WHERE e.lastOnlineDate = :lastOnlineDate"),
     @NamedQuery(name = "Employee.findBySessionId", query = "SELECT e FROM Employee e WHERE e.sessionId = :sessionId"),
-    @NamedQuery(name = "Employee.findByIsEnable", query = "SELECT e FROM Employee e WHERE e.isEnable = :isEnable"),
+    @NamedQuery(name = "Employee.findByEnable", query = "SELECT e FROM Employee e WHERE e.enable = :enable"),
     @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
     @NamedQuery(name = "Employee.findByCreatedUser", query = "SELECT e FROM Employee e WHERE e.createdUser = :createdUser"),
     @NamedQuery(name = "Employee.findByLastModifiedDate", query = "SELECT e FROM Employee e WHERE e.lastModifiedDate = :lastModifiedDate"),
@@ -90,8 +90,8 @@ public class Employee implements Serializable {
     @Column(name = "SESSION_ID")
     private String sessionId;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -126,7 +126,7 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public Employee(Long id, String firstname, String lastname, Date bornDate, String phone, String email, String username, String password, boolean isOnline, Date lastOnlineDate, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Employee(Long id, String firstname, String lastname, Date bornDate, String phone, String email, String username, String password, boolean isOnline, Date lastOnlineDate, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -137,7 +137,7 @@ public class Employee implements Serializable {
         this.password = password;
         this.isOnline = isOnline;
         this.lastOnlineDate = lastOnlineDate;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -232,12 +232,12 @@ public class Employee implements Serializable {
         this.sessionId = sessionId;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -337,7 +337,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.Employee[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.Employee[ id=" + id + " ]";
     }
     
 }

@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "PRICE_TYPE")
@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PriceType.findAll", query = "SELECT p FROM PriceType p"),
     @NamedQuery(name = "PriceType.findById", query = "SELECT p FROM PriceType p WHERE p.id = :id"),
     @NamedQuery(name = "PriceType.findByType", query = "SELECT p FROM PriceType p WHERE p.type = :type"),
-    @NamedQuery(name = "PriceType.findByIsEnable", query = "SELECT p FROM PriceType p WHERE p.isEnable = :isEnable"),
+    @NamedQuery(name = "PriceType.findByEnable", query = "SELECT p FROM PriceType p WHERE p.enable = :enable"),
     @NamedQuery(name = "PriceType.findByCreatedDate", query = "SELECT p FROM PriceType p WHERE p.createdDate = :createdDate"),
     @NamedQuery(name = "PriceType.findByCreatedUser", query = "SELECT p FROM PriceType p WHERE p.createdUser = :createdUser"),
     @NamedQuery(name = "PriceType.findByLastModifiedDate", query = "SELECT p FROM PriceType p WHERE p.lastModifiedDate = :lastModifiedDate"),
@@ -53,8 +53,8 @@ public class PriceType implements Serializable {
     @Column(name = "TYPE")
     private String type;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -87,10 +87,10 @@ public class PriceType implements Serializable {
         this.id = id;
     }
 
-    public PriceType(Long id, String type, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public PriceType(Long id, String type, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.type = type;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -113,12 +113,12 @@ public class PriceType implements Serializable {
         this.type = type;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -209,7 +209,7 @@ public class PriceType implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.PriceType[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.PriceType[ id=" + id + " ]";
     }
     
 }

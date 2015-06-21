@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 @Entity
 @Table(name = "STORE")
@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Store.findByState", query = "SELECT s FROM Store s WHERE s.state = :state"),
     @NamedQuery(name = "Store.findByCountry", query = "SELECT s FROM Store s WHERE s.country = :country"),
     @NamedQuery(name = "Store.findByPhone", query = "SELECT s FROM Store s WHERE s.phone = :phone"),
-    @NamedQuery(name = "Store.findByIsEnable", query = "SELECT s FROM Store s WHERE s.isEnable = :isEnable"),
+    @NamedQuery(name = "Store.findByEnable", query = "SELECT s FROM Store s WHERE s.enable = :enable"),
     @NamedQuery(name = "Store.findByCreatedDate", query = "SELECT s FROM Store s WHERE s.createdDate = :createdDate"),
     @NamedQuery(name = "Store.findByCreatedUser", query = "SELECT s FROM Store s WHERE s.createdUser = :createdUser"),
     @NamedQuery(name = "Store.findByLastModifiedDate", query = "SELECT s FROM Store s WHERE s.lastModifiedDate = :lastModifiedDate"),
@@ -73,8 +73,8 @@ public class Store implements Serializable {
     @Column(name = "PHONE")
     private String phone;
     @Basic(optional = false)
-    @Column(name = "IS_ENABLE")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -102,7 +102,7 @@ public class Store implements Serializable {
         this.id = id;
     }
 
-    public Store(Long id, String name, String street, String city, String state, String country, String phone, boolean isEnable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Store(Long id, String name, String street, String city, String state, String country, String phone, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.name = name;
         this.street = street;
@@ -110,7 +110,7 @@ public class Store implements Serializable {
         this.state = state;
         this.country = country;
         this.phone = phone;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
@@ -173,12 +173,12 @@ public class Store implements Serializable {
         this.phone = phone;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -252,7 +252,7 @@ public class Store implements Serializable {
 
     @Override
     public String toString() {
-        return "DB.Store[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.Store[ id=" + id + " ]";
     }
     
 }

@@ -2,35 +2,30 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="SimpleStockManagerPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>com.simplestockmanager.persistence.Checkin</class>
-    <class>com.simplestockmanager.persistence.Checkout</class>
-    <class>com.simplestockmanager.persistence.Order1</class>
-    <class>com.simplestockmanager.persistence.Check</class>
-    <class>com.development.simplestockmanager.persistence.Employee</class>
-    <class>com.development.simplestockmanager.persistence.Stock</class>
-    <class>com.development.simplestockmanager.persistence.Product</class>
-    <class>com.development.simplestockmanager.persistence.AgeType</class>
-    <class>com.development.simplestockmanager.persistence.Invoice</class>
-    <class>com.development.simplestockmanager.persistence.Client</class>
-    <class>com.development.simplestockmanager.persistence.SexType</class>
-    <class>com.development.simplestockmanager.persistence.AnalyticsTime</class>
-    <class>com.development.simplestockmanager.persistence.Price</class>
-    <class>com.development.simplestockmanager.persistence.PriceType</class>
-    <class>com.development.simplestockmanager.persistence.Store</class>
-    <class>com.development.simplestockmanager.persistence.EmployeeType</class>
-    <class>com.development.simplestockmanager.persistence.Provider</class>
-    <class>com.development.simplestockmanager.persistence.MonthType</class>
-    <class>com.development.simplestockmanager.persistence.PaymentType</class>
-    <class>com.development.simplestockmanager.persistence.Brand</class>
-    <class>com.development.simplestockmanager.persistence.Record</class>
-    <class>com.development.simplestockmanager.persistence.DayType</class>
-    <class>com.development.simplestockmanager.persistence.Item</class>
+    <class>com.development.simplestockmanager.business.persistence.PriceType</class>
+    <class>com.development.simplestockmanager.business.persistence.Invoice</class>
+    <class>com.development.simplestockmanager.business.persistence.PaymentType</class>
+    <class>com.development.simplestockmanager.business.persistence.LanguageType</class>
+    <class>com.development.simplestockmanager.business.persistence.AnalyticsTime</class>
+    <class>com.development.simplestockmanager.business.persistence.Employee</class>
+    <class>com.development.simplestockmanager.business.persistence.Client</class>
+    <class>com.development.simplestockmanager.business.persistence.Record</class>
+    <class>com.development.simplestockmanager.business.persistence.EmployeeType</class>
+    <class>com.development.simplestockmanager.business.persistence.Item</class>
+    <class>com.development.simplestockmanager.business.persistence.ProductType</class>
+    <class>com.development.simplestockmanager.business.persistence.Stock</class>
+    <class>com.development.simplestockmanager.business.persistence.Product</class>
+    <class>com.development.simplestockmanager.business.persistence.Brand</class>
+    <class>com.development.simplestockmanager.business.persistence.Provider</class>
+    <class>com.development.simplestockmanager.business.persistence.SexType</class>
+    <class>com.development.simplestockmanager.business.persistence.Price</class>
+    <class>com.development.simplestockmanager.business.persistence.Store</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.16.8.128:3306/SimpleStockManager?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="ssm"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.16.8.129:3306/STOCK?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="stock_user"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="ssm%SSM"/>
+      <property name="javax.persistence.jdbc.password" value="stock_password"/>
     </properties>
   </persistence-unit>
 </persistence>
