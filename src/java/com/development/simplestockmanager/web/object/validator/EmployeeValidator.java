@@ -1,7 +1,7 @@
 package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
-import com.development.simplestockmanager.business.persistence.old.Employee;
+import com.development.simplestockmanager.business.persistence.Employee;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,11 +25,11 @@ public class EmployeeValidator extends BaseValidator {
     protected List<String> checkFields() {
         List<String> fieldsEmptyList = new ArrayList<>();
 
-        if (employee.getFirstName().isEmpty()) {
+        if (employee.getFirstname().isEmpty()) {
             fieldsEmptyList.add("First name");
         }
 
-        if (employee.getLastName().isEmpty()) {
+        if (employee.getLastname().isEmpty()) {
             fieldsEmptyList.add("Last name");
         }
 
@@ -41,25 +41,25 @@ public class EmployeeValidator extends BaseValidator {
             fieldsEmptyList.add("Email");
         }
 
-        if (employee.getUserName().isEmpty()) {
-            fieldsEmptyList.add("User name");
-        }
-
-        if (employee.getPassword().isEmpty()) {
-            fieldsEmptyList.add("Password");
-        }
-
-        if (employee.getBornDate() == null) {
-            fieldsEmptyList.add("Born date");
-        }
-
-        if (employee.getSexTypeID() == 0) {
-            fieldsEmptyList.add("Sex type selector: this selector is not indicated");
-        }
-
-        if (employee.getEmployeTypeID() == 0) {
-            fieldsEmptyList.add("Employee type selector: this selector is not indicated");
-        }
+//        if (employee.getUserName().isEmpty()) {
+//            fieldsEmptyList.add("User name");
+//        }
+//
+//        if (employee.getPassword().isEmpty()) {
+//            fieldsEmptyList.add("Password");
+//        }
+//
+//        if (employee.getBornDate() == null) {
+//            fieldsEmptyList.add("Born date");
+//        }
+//
+//        if (employee.getSexTypeID() == 0) {
+//            fieldsEmptyList.add("Sex type selector: this selector is not indicated");
+//        }
+//
+//        if (employee.getEmployeTypeID() == 0) {
+//            fieldsEmptyList.add("Employee type selector: this selector is not indicated");
+//        }
 
         return fieldsEmptyList;
     }
@@ -74,8 +74,8 @@ public class EmployeeValidator extends BaseValidator {
             }
         }
 
-        if (!employee.getUserName().isEmpty()) {
-            if (!EmployeeSpecificController.userNameIsAvailable(employee.getUserName())) {
+        if (!employee.getUsername().isEmpty()) {
+            if (!EmployeeSpecificController.userNameIsAvailable(employee.getUsername())) {
                 causeList.add("User name: This user name is already in use, change it");
             }
         }

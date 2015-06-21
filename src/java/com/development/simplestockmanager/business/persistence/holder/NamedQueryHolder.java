@@ -17,9 +17,9 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "AnalyticsTime.findByAll", query = "SELECT a FROM AnalyticsTime a WHERE a.minute = :minute AND a.hour = :hour AND a.day = :day AND "
-            + "a.dayTypeID = :dayTypeID AND a.month = :month AND a.monthTypeID = :monthTypeID AND a.year = :year"),
-    @NamedQuery(name = "Employee.findByName", query = "SELECT e From Employee e where (e.firstName LIKE :name OR e.lastName LIKE :name) AND e.isEnable = true")})
+    @NamedQuery(name = "SexType.findAllForSelector", query = "SELECT s FROM SexType s WHERE s.languageType = :language AND s.enable = TRUE"),
+    @NamedQuery(name = "SexType.getFindByRefencedType", query = "SELECT s FROM SexType s WHERE s.referencedType IS NULL AND s.type = :type"),
+    @NamedQuery(name = "SexType.getFindByRefencedTypeAndLanguage", query = "SELECT s FROM SexType s WHERE s.referencedType.type = :type AND s.languageType.code = :language")})
 public class NamedQueryHolder implements Serializable {
 
     @Id

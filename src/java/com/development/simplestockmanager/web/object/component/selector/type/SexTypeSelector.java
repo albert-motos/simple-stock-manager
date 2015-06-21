@@ -1,37 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.development.simplestockmanager.web.object.component.selector;
+package com.development.simplestockmanager.web.object.component.selector.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
+import com.development.simplestockmanager.business.persistence.LanguageType;
 import com.development.simplestockmanager.business.persistence.SexType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * Selector class for SexType object
  *
  * @author foxtrot
  */
-public class SexTypeSelector extends BaseSelector  {
+public class SexTypeSelector extends BaseTypeSelector {
 
-    private HashMap<String, SexType> hashMap;
-    private SexTypeSpecificController controller;
+    private final HashMap<String, SexType> hashMap;
 
-    public SexTypeSelector() {
-        controller = new SexTypeSpecificController();
-    }
-    
-    @Override
-    public void find() {
+    public SexTypeSelector(LanguageType languageType) {
+        SexTypeSpecificController controller = new SexTypeSpecificController(languageType);
         hashMap = new HashMap<>();
         list = new ArrayList<>();
 
-        
-        
-        for (SexType sexType : controller.getAll()) {
+        for (SexType sexType : controller.fillSelector()) {
             String key = sexType.getType();
             hashMap.put(key, sexType);
             list.add(key);
@@ -47,5 +37,5 @@ public class SexTypeSelector extends BaseSelector  {
 
         return sexType;
     }
-    
+
 }

@@ -1,63 +1,77 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.web.view.add;
 
+import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.ClientGeneralController;
 import com.development.simplestockmanager.web.object.Client;
 import com.development.simplestockmanager.common.converter.ClientConverter;
-import com.development.simplestockmanager.web.object.component.selector.SexTypeSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.object.validator.ClientValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
+ * Add view controller class for Client object
  *
  * @author foxtrot
  */
+@ViewScoped
 @ManagedBean
-public class ClientAddView implements AddView {
+public class ClientAddView extends BaseAddView {
 
-    private FacesContext facesContext;
-    private ClientValidator validator;
-    private ClientGeneralController controller;
-    private ClientConverter converter;
-    
-    private SexTypeSelector sexTypeSelector;
-    private Client client;
-    private boolean added;
+    private final ClientValidator validator;
+    private final ClientGeneralController controller;
+    private final ClientConverter converter;
+
+    private final SexTypeSelector sexTypeSelector;
+    private final Client client;
 
     public ClientAddView() {
-        facesContext = FacesContext.getCurrentInstance();
         validator = new ClientValidator();
         controller = new ClientGeneralController();
         converter = new ClientConverter();
-        
+
         client = new Client();
-        sexTypeSelector = new SexTypeSelector();
-        added = false;
+        sexTypeSelector = new SexTypeSelector(user.getLanguageType());
     }
 
     @Override
     public void add() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        System.out.println(sexTypeSelector.getSelectedValue().getId());
+        client.setSexType(sexTypeSelector.getSelectedValue().getId());
         validator.setObject(client);
-        
+
         if (validator.validate()) {
-            client.setSexType(sexTypeSelector.getSelectedValue().getId());
             com.development.simplestockmanager.business.persistence.Client businessObject = converter.getBusinessObject(client);
             businessObject.setCreatedDate(new Date());
             businessObject.setLastModifiedDate(new Date());
+            businessObject.setCreatedUser(user.getUsername());
+            businessObject.setLastModifiedUser(user.getUsername());
+
             Long id = controller.create(businessObject);
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Client [" + id + "] is created properly"));
+
+            if (id == Constant.IDENTIFIER.INVALID) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "Database server doesn't work properly"));
+            } else {
+                added = true;
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Client [" + id + "] is created properly"));
+            }
         } else {
             for (FacesMessage message : validator.getMessageList()) {
-                facesContext.addMessage(null, message);
+                context.addMessage(null, message);
             }
         }
+    }
+
+    public SexTypeSelector getSexTypeSelector() {
+        return sexTypeSelector;
+    }
+
+    public Client getClient() {
+        return client;
     }
 
 }

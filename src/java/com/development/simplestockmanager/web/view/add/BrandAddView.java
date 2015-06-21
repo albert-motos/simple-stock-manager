@@ -7,14 +7,8 @@ package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.BrandGeneralController;
-import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
-import com.development.simplestockmanager.business.object.controller.general.StoreGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
-import com.development.simplestockmanager.business.persistence.old.Brand;
-import com.development.simplestockmanager.business.persistence.old.Product;
-import com.development.simplestockmanager.business.persistence.old.Store;
-import com.development.simplestockmanager.web.object.component.selector.EmployeeSelectorView;
-import java.util.Date;
+import com.development.simplestockmanager.business.persistence.Brand;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,7 +20,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class BrandAddView implements AddView {
+public class BrandAddView extends BaseAddView {
 
     private Brand brand;
     private boolean added;
@@ -39,18 +33,18 @@ public class BrandAddView implements AddView {
     @Override
     public void add() {
         if (validate()) {
-            long id = BrandGeneralController.create(brand.getName(), brand.getIsEnable());
-
-            if (id == Constant.IDENTIFIER.INVALID) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create brand right now"));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Brand [" + id + "] is created properly"));
-                added = true;
-            }
+//            long id = BrandGeneralController.create(brand.getName(), brand.getIsEnable());
+//
+//            if (id == Constant.IDENTIFIER.INVALID) {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create brand right now"));
+//            } else {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Brand [" + id + "] is created properly"));
+//                added = true;
+//            }
         }
     }
 
-    @Override
+//    @Override
     public boolean validate() {
 
         FacesContext currentInstance = FacesContext.getCurrentInstance();

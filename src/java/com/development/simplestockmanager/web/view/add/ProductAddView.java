@@ -7,7 +7,7 @@ package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
-import com.development.simplestockmanager.business.persistence.old.Product;
+import com.development.simplestockmanager.business.persistence.Product;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,7 +20,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class ProductAddView implements AddView {
+public class ProductAddView extends BaseAddView {
     
     private Product product;
     private boolean added;
@@ -33,18 +33,18 @@ public class ProductAddView implements AddView {
     @Override
     public void add() {
         if (validate()) {
-            long id = ProductGeneralController.create(product.getName(), product.getDescription(), product.getIsEnable(), new Date(), new Date());
-
-            if (id == Constant.IDENTIFIER.INVALID) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create product right now"));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Product [" + id + "] is created properly"));
-                added = true;
-            }
+//            long id = ProductGeneralController.create(product.getName(), product.getDescription(), product.getIsEnable(), new Date(), new Date());
+//
+//            if (id == Constant.IDENTIFIER.INVALID) {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create product right now"));
+//            } else {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Product [" + id + "] is created properly"));
+//                added = true;
+//            }
         }
     }
 
-    @Override
+//    @Override
     public boolean validate() {
 
         FacesContext currentInstance = FacesContext.getCurrentInstance();

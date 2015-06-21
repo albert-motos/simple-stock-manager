@@ -44,7 +44,7 @@ public class ClientValidator extends BaseValidator {
             fieldsEmptyList.add("Born date");
         }
 
-        if (client.getSexType() == 0) {
+        if (client.getSexType() == -1) {
             fieldsEmptyList.add("Sex type selector: this selector is not indicated");
         }
 

@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.web.object.validator;
 
-import com.development.simplestockmanager.business.persistence.old.Store;
+import com.development.simplestockmanager.business.persistence.Store;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +47,9 @@ public class StoreValidator extends BaseValidator {
             fieldsEmptyList.add("Phone number");
         }
 
-        if (store.getManagerID() == 0) {
-            fieldsEmptyList.add("Manager selector: this selector is not indicated");
-        }
+//        if (store.getManagerID() == 0) {
+//            fieldsEmptyList.add("Manager selector: this selector is not indicated");
+//        }
         
         return fieldsEmptyList;
     }

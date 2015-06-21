@@ -7,7 +7,7 @@ package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.StoreGeneralController;
-import com.development.simplestockmanager.business.persistence.old.Store;
+import com.development.simplestockmanager.business.persistence.Store;
 import com.development.simplestockmanager.web.object.component.selector.EmployeeSelectorView;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class StoreAddView implements AddView {
+public class StoreAddView extends BaseAddView {
     
     private Store store;
     private boolean added;
@@ -35,20 +35,20 @@ public class StoreAddView implements AddView {
 
     @Override
     public void add() {
-        if (validate()) {
-            long id = StoreGeneralController.create(store.getName(), store.getStreet(), store.getCity(), store.getState(), store.getCountry(), store.getPhone(),
-                    employeeSelectorView.getSelectedValue().getId(), store.getIsEnable(), new Date(), new Date());
-
-            if (id == Constant.IDENTIFIER.INVALID) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create store right now"));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Store [" + id + "] is created properly"));
-                added = true;
-            }
-        }
+//        if (validate()) {
+//            long id = StoreGeneralController.create(store.getName(), store.getStreet(), store.getCity(), store.getState(), store.getCountry(), store.getPhone(),
+//                    employeeSelectorView.getSelectedValue().getId(), store.getIsEnable(), new Date(), new Date());
+//
+//            if (id == Constant.IDENTIFIER.INVALID) {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create store right now"));
+//            } else {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Store [" + id + "] is created properly"));
+//                added = true;
+//            }
+//        }
     }
 
-    @Override
+//    @Override
     public boolean validate() {
 
         FacesContext currentInstance = FacesContext.getCurrentInstance();

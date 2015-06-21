@@ -10,7 +10,7 @@ import com.development.simplestockmanager.business.object.controller.general.Emp
 import com.development.simplestockmanager.business.object.controller.general.EmployeeTypeGeneralController;
 import com.development.simplestockmanager.business.object.controller.general.SexTypeGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
-import com.development.simplestockmanager.business.persistence.old.Employee;
+import com.development.simplestockmanager.business.persistence.Employee;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,7 +21,7 @@ import javax.faces.context.FacesContext;
  * @author foxtrot
  */
 @ManagedBean
-public class EmployeeAddView implements AddView {
+public class EmployeeAddView extends BaseAddView {
 
     private Employee employee;
     private String sexTypeSelection;
@@ -36,32 +36,32 @@ public class EmployeeAddView implements AddView {
     @Override
     public void add() {
         if (validate()) {
-            long id = EmployeeGeneralController.create(employee.getFirstName(), employee.getLastName(), employee.getBornDate(),
-                    SexTypeGeneralController.create(sexTypeSelection), employee.getPhone(), employee.getEmail(),
-                    EmployeeTypeGeneralController.create(employeeTypeSelection), employee.getIsEnable(), new Date(), new Date(), employee.getUserName(),
-                    employee.getPassword(), false, new Date(), "");
+//            long id = EmployeeGeneralController.create(employee.getFirstName(), employee.getLastName(), employee.getBornDate(),
+//                    SexTypeGeneralController.create(sexTypeSelection), employee.getPhone(), employee.getEmail(),
+//                    EmployeeTypeGeneralController.create(employeeTypeSelection), employee.getIsEnable(), new Date(), new Date(), employee.getUserName(),
+//                    employee.getPassword(), false, new Date(), "");
 
-            if (id == Constant.IDENTIFIER.INVALID) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create employee right now"));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Employee [" + id + "] is created properly"));
-                added = true;
-            }
+//            if (id == Constant.IDENTIFIER.INVALID) {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create employee right now"));
+//            } else {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Employee [" + id + "] is created properly"));
+//                added = true;
+//            }
         }
     }
 
-    @Override
+//    @Override
     public boolean validate() {
         FacesContext currentInstance = FacesContext.getCurrentInstance();
 
         String fields_empty = "";
-
-        fields_empty = fields_empty.concat((employee.getFirstName().isEmpty() ? "First_name " : ""));
-        fields_empty = fields_empty.concat((employee.getLastName().isEmpty() ? "Last_name " : ""));
-        fields_empty = fields_empty.concat((employee.getPhone().isEmpty() ? "Phone_number " : ""));
-        fields_empty = fields_empty.concat((employee.getEmail().isEmpty() ? "Email " : ""));
-        fields_empty = fields_empty.concat((employee.getUserName().isEmpty() ? "User_name " : ""));
-        fields_empty = fields_empty.concat((employee.getPassword().isEmpty() ? "Password " : ""));
+//
+//        fields_empty = fields_empty.concat((employee.getFirstName().isEmpty() ? "First_name " : ""));
+//        fields_empty = fields_empty.concat((employee.getLastName().isEmpty() ? "Last_name " : ""));
+//        fields_empty = fields_empty.concat((employee.getPhone().isEmpty() ? "Phone_number " : ""));
+//        fields_empty = fields_empty.concat((employee.getEmail().isEmpty() ? "Email " : ""));
+//        fields_empty = fields_empty.concat((employee.getUserName().isEmpty() ? "User_name " : ""));
+//        fields_empty = fields_empty.concat((employee.getPassword().isEmpty() ? "Password " : ""));
 
         if (!fields_empty.isEmpty()) {
             currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
@@ -83,11 +83,11 @@ public class EmployeeAddView implements AddView {
             currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The employee_type_selector is not indicated"));
         }
 
-        if (!employee.getUserName().isEmpty()) {
-            if (!EmployeeSpecificController.userNameIsAvailable(employee.getUserName())) {
-                currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The user_name is already in use, change it"));
-            }
-        }
+//        if (!employee.getUserName().isEmpty()) {
+//            if (!EmployeeSpecificController.userNameIsAvailable(employee.getUserName())) {
+//                currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The user_name is already in use, change it"));
+//            }
+//        }
 
         return currentInstance.getMessageList().isEmpty();
     }

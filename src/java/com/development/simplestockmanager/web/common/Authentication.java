@@ -5,26 +5,23 @@
  */
 package com.development.simplestockmanager.web.common;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.LanguageType;
-import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author foxtrot
  */
-@ManagedBean
-public class LanguageView {
-
-    public LanguageType getLanguage(){
+public class Authentication {
+    
+    public Employee getCurrentUser(){
+        Employee e = new Employee(Long.valueOf(1));
+        e.setUsername("Dummy");
         LanguageType languageType = new LanguageType();
         languageType.setId(Long.valueOf(1));
         languageType.setCode("en_US");
+        e.setLanguageType(languageType);
         
-        return languageType;
-    }
-    
-    public String backButtonValue(boolean finish) {
-        return (finish ? Constant.VIEW.BUTTON.AFTER : Constant.VIEW.BUTTON.BEFORE);
+        return e;
     }
 }

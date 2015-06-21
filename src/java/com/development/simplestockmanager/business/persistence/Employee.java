@@ -112,6 +112,9 @@ public class Employee implements Serializable {
     @JoinColumn(name = "SEX_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private SexType sexType;
+    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private LanguageType languageType;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Record> recordList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
@@ -286,6 +289,14 @@ public class Employee implements Serializable {
 
     public void setSexType(SexType sexType) {
         this.sexType = sexType;
+    }
+
+    public LanguageType getLanguageType() {
+        return languageType;
+    }
+
+    public void setLanguageType(LanguageType languageType) {
+        this.languageType = languageType;
     }
 
     @XmlTransient

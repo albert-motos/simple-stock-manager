@@ -10,9 +10,10 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.PriceType;
+import com.development.simplestockmanager.business.persistence.Employee;
 import java.util.ArrayList;
 import java.util.List;
+import com.development.simplestockmanager.business.persistence.PriceType;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.PaymentType;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
@@ -25,7 +26,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 public class LanguageTypeJpaController implements Serializable {
 
@@ -39,6 +40,9 @@ public class LanguageTypeJpaController implements Serializable {
     }
 
     public void create(LanguageType languageType) {
+        if (languageType.getEmployeeList() == null) {
+            languageType.setEmployeeList(new ArrayList<Employee>());
+        }
         if (languageType.getPriceTypeList() == null) {
             languageType.setPriceTypeList(new ArrayList<PriceType>());
         }
@@ -58,6 +62,12 @@ public class LanguageTypeJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Employee> attachedEmployeeList = new ArrayList<Employee>();
+            for (Employee employeeListEmployeeToAttach : languageType.getEmployeeList()) {
+                employeeListEmployeeToAttach = em.getReference(employeeListEmployeeToAttach.getClass(), employeeListEmployeeToAttach.getId());
+                attachedEmployeeList.add(employeeListEmployeeToAttach);
+            }
+            languageType.setEmployeeList(attachedEmployeeList);
             List<PriceType> attachedPriceTypeList = new ArrayList<PriceType>();
             for (PriceType priceTypeListPriceTypeToAttach : languageType.getPriceTypeList()) {
                 priceTypeListPriceTypeToAttach = em.getReference(priceTypeListPriceTypeToAttach.getClass(), priceTypeListPriceTypeToAttach.getId());
@@ -89,6 +99,15 @@ public class LanguageTypeJpaController implements Serializable {
             }
             languageType.setProductTypeList(attachedProductTypeList);
             em.persist(languageType);
+            for (Employee employeeListEmployee : languageType.getEmployeeList()) {
+                LanguageType oldLanguageTypeOfEmployeeListEmployee = employeeListEmployee.getLanguageType();
+                employeeListEmployee.setLanguageType(languageType);
+                employeeListEmployee = em.merge(employeeListEmployee);
+                if (oldLanguageTypeOfEmployeeListEmployee != null) {
+                    oldLanguageTypeOfEmployeeListEmployee.getEmployeeList().remove(employeeListEmployee);
+                    oldLanguageTypeOfEmployeeListEmployee = em.merge(oldLanguageTypeOfEmployeeListEmployee);
+                }
+            }
             for (PriceType priceTypeListPriceType : languageType.getPriceTypeList()) {
                 LanguageType oldLanguageTypeOfPriceTypeListPriceType = priceTypeListPriceType.getLanguageType();
                 priceTypeListPriceType.setLanguageType(languageType);
@@ -148,6 +167,8 @@ public class LanguageTypeJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             LanguageType persistentLanguageType = em.find(LanguageType.class, languageType.getId());
+            List<Employee> employeeListOld = persistentLanguageType.getEmployeeList();
+            List<Employee> employeeListNew = languageType.getEmployeeList();
             List<PriceType> priceTypeListOld = persistentLanguageType.getPriceTypeList();
             List<PriceType> priceTypeListNew = languageType.getPriceTypeList();
             List<SexType> sexTypeListOld = persistentLanguageType.getSexTypeList();
@@ -159,6 +180,14 @@ public class LanguageTypeJpaController implements Serializable {
             List<ProductType> productTypeListOld = persistentLanguageType.getProductTypeList();
             List<ProductType> productTypeListNew = languageType.getProductTypeList();
             List<String> illegalOrphanMessages = null;
+            for (Employee employeeListOldEmployee : employeeListOld) {
+                if (!employeeListNew.contains(employeeListOldEmployee)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Employee " + employeeListOldEmployee + " since its languageType field is not nullable.");
+                }
+            }
             for (PriceType priceTypeListOldPriceType : priceTypeListOld) {
                 if (!priceTypeListNew.contains(priceTypeListOldPriceType)) {
                     if (illegalOrphanMessages == null) {
@@ -202,6 +231,13 @@ public class LanguageTypeJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            List<Employee> attachedEmployeeListNew = new ArrayList<Employee>();
+            for (Employee employeeListNewEmployeeToAttach : employeeListNew) {
+                employeeListNewEmployeeToAttach = em.getReference(employeeListNewEmployeeToAttach.getClass(), employeeListNewEmployeeToAttach.getId());
+                attachedEmployeeListNew.add(employeeListNewEmployeeToAttach);
+            }
+            employeeListNew = attachedEmployeeListNew;
+            languageType.setEmployeeList(employeeListNew);
             List<PriceType> attachedPriceTypeListNew = new ArrayList<PriceType>();
             for (PriceType priceTypeListNewPriceTypeToAttach : priceTypeListNew) {
                 priceTypeListNewPriceTypeToAttach = em.getReference(priceTypeListNewPriceTypeToAttach.getClass(), priceTypeListNewPriceTypeToAttach.getId());
@@ -238,6 +274,17 @@ public class LanguageTypeJpaController implements Serializable {
             productTypeListNew = attachedProductTypeListNew;
             languageType.setProductTypeList(productTypeListNew);
             languageType = em.merge(languageType);
+            for (Employee employeeListNewEmployee : employeeListNew) {
+                if (!employeeListOld.contains(employeeListNewEmployee)) {
+                    LanguageType oldLanguageTypeOfEmployeeListNewEmployee = employeeListNewEmployee.getLanguageType();
+                    employeeListNewEmployee.setLanguageType(languageType);
+                    employeeListNewEmployee = em.merge(employeeListNewEmployee);
+                    if (oldLanguageTypeOfEmployeeListNewEmployee != null && !oldLanguageTypeOfEmployeeListNewEmployee.equals(languageType)) {
+                        oldLanguageTypeOfEmployeeListNewEmployee.getEmployeeList().remove(employeeListNewEmployee);
+                        oldLanguageTypeOfEmployeeListNewEmployee = em.merge(oldLanguageTypeOfEmployeeListNewEmployee);
+                    }
+                }
+            }
             for (PriceType priceTypeListNewPriceType : priceTypeListNew) {
                 if (!priceTypeListOld.contains(priceTypeListNewPriceType)) {
                     LanguageType oldLanguageTypeOfPriceTypeListNewPriceType = priceTypeListNewPriceType.getLanguageType();
@@ -323,6 +370,13 @@ public class LanguageTypeJpaController implements Serializable {
                 throw new NonexistentEntityException("The languageType with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
+            List<Employee> employeeListOrphanCheck = languageType.getEmployeeList();
+            for (Employee employeeListOrphanCheckEmployee : employeeListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the Employee " + employeeListOrphanCheckEmployee + " in its employeeList field has a non-nullable languageType field.");
+            }
             List<PriceType> priceTypeListOrphanCheck = languageType.getPriceTypeList();
             for (PriceType priceTypeListOrphanCheckPriceType : priceTypeListOrphanCheck) {
                 if (illegalOrphanMessages == null) {

@@ -5,7 +5,6 @@
  */
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
 import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
 import com.development.simplestockmanager.business.persistence.SexType;
@@ -19,30 +18,35 @@ import javax.persistence.Query;
  */
 public class SexTypeGeneralController {
 
-//    public static long create(String type) {
-//
-//        SexType sexType;
-//        Query query = SexTypeHelper.getFindByTypeQuery(type);
-//
-//        try {
-//            sexType = (SexType) query.getSingleResult();
-//        } catch (Exception e) {
-//            sexType = new SexType(type);
-//
-//            try {
-//                SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
-//                sexTypeJpaController.create(sexType);
-//            } catch (Exception e2) {
-//                sexType = new SexTypeNull();
-//            }
-//        }
-//
-//        return sexType.getId();
-//    }
-    
+    private final SexTypeHelper helper;
+    private final SexTypeJpaController controller;
+
+    public SexTypeGeneralController() {
+        helper = new SexTypeHelper();
+        controller = helper.getJpaController();
+    }
+
+    public long create(SexType sexType) {
+        Query query;
+
+        if (sexType.getReferencedType() == null) {
+            query = helper.getFindByRefencedType(sexType.getType());
+        } else {
+            query = helper.getFindByRefencedTypeAndLanguage(sexType.getReferencedType().getType(), sexType.getLanguageType().getCode());
+        }
+        
+        if (query.getResultList().isEmpty()) {
+            controller.create(sexType);
+        } else {
+            sexType = new SexTypeNull();
+        }
+
+        return sexType.getId();
+    }
+
     public SexType read(SexType sexType) {
         try {
-            Query query = SexTypeHelper.getFindByIdQuery(sexType.getId());
+            Query query = helper.getFindByIdQuery(sexType.getId());
             sexType = (SexType) query.getSingleResult();
         } catch (Exception e) {
             sexType = new SexTypeNull();
@@ -50,6 +54,17 @@ public class SexTypeGeneralController {
 
         return sexType;
     }
+
+//    public long update(SexType sexType) {
+////        try {
+////            Query query = SexTypeHelper.getFindByIdQuery(sexType.getId());
+////            sexType = (SexType) query.getSingleResult();
+////        } catch (Exception e) {
+////            sexType = new SexTypeNull();
+////        }
+////
+////        return sexType;
+//    }
 
 //    public static long update(long id, String type) {
 //
@@ -62,8 +77,8 @@ public class SexTypeGeneralController {
 //                SexType sexType = new SexType(id, type);
 //
 //                try {
-//                    SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
-//                    sexTypeJpaController.edit(sexType);
+//                    SexTypeJpaController controller = SexTypeHelper.getJpaController();
+//                    controller.edit(sexType);
 //                    status = Constant.UPDATE.SUCCESS;
 //                } catch (Exception e) {
 //
@@ -80,8 +95,8 @@ public class SexTypeGeneralController {
 //
 //        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
 //            try {
-//                SexTypeJpaController sexTypeJpaController = SexTypeHelper.getJpaController();
-//                sexTypeJpaController.destroy(id);
+//                SexTypeJpaController controller = SexTypeHelper.getJpaController();
+//                controller.destroy(id);
 //                status = Constant.DELETE.SUCCESS;
 //            } catch (Exception e) {
 //

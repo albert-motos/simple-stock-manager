@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import com.development.simplestockmanager.business.persistence.SexType;
+import com.development.simplestockmanager.business.persistence.LanguageType;
 import com.development.simplestockmanager.business.persistence.Record;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Monica
+ * @author foxtrot
  */
 public class EmployeeJpaController implements Serializable {
 
@@ -62,6 +63,11 @@ public class EmployeeJpaController implements Serializable {
                 sexType = em.getReference(sexType.getClass(), sexType.getId());
                 employee.setSexType(sexType);
             }
+            LanguageType languageType = employee.getLanguageType();
+            if (languageType != null) {
+                languageType = em.getReference(languageType.getClass(), languageType.getId());
+                employee.setLanguageType(languageType);
+            }
             List<Record> attachedRecordList = new ArrayList<Record>();
             for (Record recordListRecordToAttach : employee.getRecordList()) {
                 recordListRecordToAttach = em.getReference(recordListRecordToAttach.getClass(), recordListRecordToAttach.getId());
@@ -88,6 +94,10 @@ public class EmployeeJpaController implements Serializable {
             if (sexType != null) {
                 sexType.getEmployeeList().add(employee);
                 sexType = em.merge(sexType);
+            }
+            if (languageType != null) {
+                languageType.getEmployeeList().add(employee);
+                languageType = em.merge(languageType);
             }
             for (Record recordListRecord : employee.getRecordList()) {
                 Employee oldEmployeeOfRecordListRecord = recordListRecord.getEmployee();
@@ -134,6 +144,8 @@ public class EmployeeJpaController implements Serializable {
             EmployeeType employeeTypeNew = employee.getEmployeeType();
             SexType sexTypeOld = persistentEmployee.getSexType();
             SexType sexTypeNew = employee.getSexType();
+            LanguageType languageTypeOld = persistentEmployee.getLanguageType();
+            LanguageType languageTypeNew = employee.getLanguageType();
             List<Record> recordListOld = persistentEmployee.getRecordList();
             List<Record> recordListNew = employee.getRecordList();
             List<Invoice> invoiceListOld = persistentEmployee.getInvoiceList();
@@ -176,6 +188,10 @@ public class EmployeeJpaController implements Serializable {
                 sexTypeNew = em.getReference(sexTypeNew.getClass(), sexTypeNew.getId());
                 employee.setSexType(sexTypeNew);
             }
+            if (languageTypeNew != null) {
+                languageTypeNew = em.getReference(languageTypeNew.getClass(), languageTypeNew.getId());
+                employee.setLanguageType(languageTypeNew);
+            }
             List<Record> attachedRecordListNew = new ArrayList<Record>();
             for (Record recordListNewRecordToAttach : recordListNew) {
                 recordListNewRecordToAttach = em.getReference(recordListNewRecordToAttach.getClass(), recordListNewRecordToAttach.getId());
@@ -213,6 +229,14 @@ public class EmployeeJpaController implements Serializable {
             if (sexTypeNew != null && !sexTypeNew.equals(sexTypeOld)) {
                 sexTypeNew.getEmployeeList().add(employee);
                 sexTypeNew = em.merge(sexTypeNew);
+            }
+            if (languageTypeOld != null && !languageTypeOld.equals(languageTypeNew)) {
+                languageTypeOld.getEmployeeList().remove(employee);
+                languageTypeOld = em.merge(languageTypeOld);
+            }
+            if (languageTypeNew != null && !languageTypeNew.equals(languageTypeOld)) {
+                languageTypeNew.getEmployeeList().add(employee);
+                languageTypeNew = em.merge(languageTypeNew);
             }
             for (Record recordListNewRecord : recordListNew) {
                 if (!recordListOld.contains(recordListNewRecord)) {
@@ -310,6 +334,11 @@ public class EmployeeJpaController implements Serializable {
             if (sexType != null) {
                 sexType.getEmployeeList().remove(employee);
                 sexType = em.merge(sexType);
+            }
+            LanguageType languageType = employee.getLanguageType();
+            if (languageType != null) {
+                languageType.getEmployeeList().remove(employee);
+                languageType = em.merge(languageType);
             }
             em.remove(employee);
             em.getTransaction().commit();
