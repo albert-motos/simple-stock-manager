@@ -14,10 +14,4 @@ public interface AddView {
      * Main function of add view
      */
     public void add();
-    
-    /**
-     * Function check if the fields are correct for create the object
-     * @return true if fields are correct
-     */
-    public boolean validate();
 }

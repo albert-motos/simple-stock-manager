@@ -16,12 +16,9 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class EmployeeSelectorView implements SelectorView {
+public class EmployeeSelectorView extends BaseSelector {
 
-    private String browser;
     private HashMap<String, Employee> hashMap;
-    private List<String> list;
-    private String selection;
 
     public EmployeeSelectorView() {
     }
