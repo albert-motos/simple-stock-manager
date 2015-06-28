@@ -28,11 +28,11 @@ public class EmployeeSelectorView extends BaseSelector {
         hashMap = new HashMap<>();
         list = new ArrayList<>();
 
-        for (Employee employee : EmployeeSpecificController.findByName(browser)) {
-            String key = employee.getFirstname() + " " + employee.getLastname();
-            hashMap.put(key, employee);
-            list.add(key);
-        }
+//        for (Employee employee : EmployeeSpecificController.findByName(browser)) {
+//            String key = employee.getFirstname() + " " + employee.getLastname();
+//            hashMap.put(key, employee);
+//            list.add(key);
+//        }
     }
 
     public Employee getSelectedValue() {

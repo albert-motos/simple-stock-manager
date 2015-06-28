@@ -2,7 +2,6 @@ package com.development.simplestockmanager.web.object.component.selector.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
-import com.development.simplestockmanager.business.persistence.LanguageType;
 import com.development.simplestockmanager.business.persistence.SexType;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +15,8 @@ public class SexTypeSelector extends BaseTypeSelector {
 
     private final HashMap<String, SexType> hashMap;
 
-    public SexTypeSelector(LanguageType languageType) {
-        SexTypeSpecificController controller = new SexTypeSpecificController(languageType);
+    public SexTypeSelector(String language) {
+        SexTypeSpecificController controller = new SexTypeSpecificController(language);
         hashMap = new HashMap<>();
         list = new ArrayList<>();
 

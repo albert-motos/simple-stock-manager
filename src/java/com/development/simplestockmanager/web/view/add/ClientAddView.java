@@ -34,7 +34,7 @@ public class ClientAddView extends BaseAddView {
         converter = new ClientConverter();
 
         client = new Client();
-        sexTypeSelector = new SexTypeSelector(user.getLanguageType());
+        sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
     }
 
     @Override

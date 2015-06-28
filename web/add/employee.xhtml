@@ -19,7 +19,7 @@
                                         <p:outputLabel value="First name :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{employeeAddView.employee.firstName}" style="width: 100%" />
+                                        <p:inputText  value="#{employeeAddView.employee.firstname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -31,7 +31,7 @@
                                         <p:outputLabel value="Last name :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{employeeAddView.employee.lastName}" style="width: 100%" />
+                                        <p:inputText  value="#{employeeAddView.employee.lastname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -48,9 +48,9 @@
                                         <p:outputLabel value="Sex type :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:selectOneMenu id="basic" value="#{employeeAddView.sexTypeSelection}" style="width: 100%">
+                                        <p:selectOneMenu value="#{employeeAddView.sexTypeSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="Select one" itemValue="" />
-                                            <f:selectItems value="#{sexTypeView.list}" />
+                                            <f:selectItems value="#{employeeAddView.sexTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -111,7 +111,7 @@
                                         <p:outputLabel value="User name :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:inputText value="#{employeeAddView.employee.userName}" style="width: 100%" />
+                                        <p:inputText value="#{employeeAddView.employee.username}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -135,9 +135,9 @@
                                         <p:outputLabel value="Employee type :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:selectOneMenu value="#{employeeAddView.employeeTypeSelection}" style="width: 100%">
+                                        <p:selectOneMenu value="#{employeeAddView.employeeTypeSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="Select one" itemValue="" />
-                                            <f:selectItems value="#{employeeTypeView.list}" />
+                                            <f:selectItems value="#{employeeAddView.employeeTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -157,7 +157,7 @@
                                         <p:outputLabel value="Employee could be found on queries" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:selectBooleanCheckbox value="#{employeeAddView.employee.isEnable}" />
+                                        <p:selectBooleanCheckbox value="#{employeeAddView.employee.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -168,7 +168,7 @@
 
             <p:outputPanel style="text-align: right">
                 <p:commandButton value="Create" rendered="#{not employeeAddView.added}" actionListener="#{employeeAddView.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{languageView.backButtonValue(employeeAddView.added)}" actionListener="#{navigationView.redirect(urlView.index())}"
+                <p:commandButton value="#{languageView.backButtonValue(employeeAddView.added)}" actionListener="#{employeeAddView.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

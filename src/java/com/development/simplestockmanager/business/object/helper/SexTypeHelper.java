@@ -20,14 +20,13 @@ public class SexTypeHelper implements BaseTypeHelper {
     }
 
     @Override
-    public Query getFindAllForSelector(LanguageType languageType) {
+    public Query getFindAllForSelector(String language) {
         Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findAllForSelector");
-        query.setParameter("language", languageType);
+        query.setParameter("language", language);
 
         return query;
     }
     
-    @Override
     public Query getFindByIdQuery(long id) {
         Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findById");
         query.setParameter("id", id);

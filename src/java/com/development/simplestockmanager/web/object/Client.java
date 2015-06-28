@@ -34,20 +34,6 @@ public class Client implements Serializable {
 
     public Client() {
     }
-    
-    public Client(Long id, String firstname, String lastname, Date bornDate, String phone, String email, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.bornDate = bornDate;
-        this.phone = phone;
-        this.email = email;
-        this.enable = enable;
-        this.createdDate = createdDate;
-        this.createdUser = createdUser;
-        this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
-    }
 
     public Long getId() {
         return id;

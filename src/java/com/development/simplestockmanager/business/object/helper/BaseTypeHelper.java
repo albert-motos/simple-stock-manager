@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.object.helper;
 
-import com.development.simplestockmanager.business.persistence.LanguageType;
 import javax.persistence.Query;
 
 /**
@@ -14,7 +8,7 @@ import javax.persistence.Query;
  */
 public interface BaseTypeHelper {
     
-    public Query getFindByIdQuery(long id);
+//    public Query getFindByIdQuery(long id);
     
-    public Query getFindAllForSelector(LanguageType languageType);
+    public Query getFindAllForSelector(String language);
 }

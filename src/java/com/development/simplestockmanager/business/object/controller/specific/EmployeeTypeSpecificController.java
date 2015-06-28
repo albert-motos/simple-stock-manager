@@ -17,11 +17,17 @@ import javax.persistence.Query;
  */
 public class EmployeeTypeSpecificController {
 
-    public List<EmployeeType> getAll() {
+    private final String language;
+
+    public EmployeeTypeSpecificController(String language) {
+        this.language = language;
+    }
+
+    public List<EmployeeType> fillSelector() {
         List<EmployeeType> list = new ArrayList<>();
 
         try {
-            Query query = EmployeeTypeHelper.getAllQuery();
+            Query query = new EmployeeTypeHelper().getFindAllForSelector(language);
             for (Object object : query.getResultList()) {
                 list.add((EmployeeType) object);
             }

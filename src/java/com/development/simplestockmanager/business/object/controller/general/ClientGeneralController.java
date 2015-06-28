@@ -10,7 +10,7 @@ import com.development.simplestockmanager.business.persistence.controller.except
 import javax.persistence.Query;
 
 /**
- * TESTED
+ * General controller class for Client object
  *
  * @author foxtrot
  */

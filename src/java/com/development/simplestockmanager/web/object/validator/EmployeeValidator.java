@@ -1,11 +1,16 @@
 package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
-import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.web.object.Employee;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Validator class for Employee object
+ *
+ * @author foxtrot
+ */
 public class EmployeeValidator extends BaseValidator {
 
     private Employee employee;
@@ -41,25 +46,25 @@ public class EmployeeValidator extends BaseValidator {
             fieldsEmptyList.add("Email");
         }
 
-//        if (employee.getUserName().isEmpty()) {
-//            fieldsEmptyList.add("User name");
-//        }
-//
-//        if (employee.getPassword().isEmpty()) {
-//            fieldsEmptyList.add("Password");
-//        }
-//
-//        if (employee.getBornDate() == null) {
-//            fieldsEmptyList.add("Born date");
-//        }
-//
-//        if (employee.getSexTypeID() == 0) {
-//            fieldsEmptyList.add("Sex type selector: this selector is not indicated");
-//        }
-//
-//        if (employee.getEmployeTypeID() == 0) {
-//            fieldsEmptyList.add("Employee type selector: this selector is not indicated");
-//        }
+        if (employee.getUsername().isEmpty()) {
+            fieldsEmptyList.add("Username");
+        }
+
+        if (employee.getPassword().isEmpty()) {
+            fieldsEmptyList.add("Password");
+        }
+
+        if (employee.getBornDate() == null) {
+            fieldsEmptyList.add("Born date");
+        }
+
+        if (employee.getSexType() == -1) {
+            fieldsEmptyList.add("Sex type selector: this selector is not indicated");
+        }
+
+        if (employee.getEmployeeType() == -1) {
+            fieldsEmptyList.add("Employee type selector: this selector is not indicated");
+        }
 
         return fieldsEmptyList;
     }
@@ -75,7 +80,7 @@ public class EmployeeValidator extends BaseValidator {
         }
 
         if (!employee.getUsername().isEmpty()) {
-            if (!EmployeeSpecificController.userNameIsAvailable(employee.getUsername())) {
+            if (!new EmployeeSpecificController().usernameIsAvailable(employee.getUsername())) {
                 causeList.add("User name: This user name is already in use, change it");
             }
         }
