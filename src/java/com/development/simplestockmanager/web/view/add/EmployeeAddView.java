@@ -1,8 +1,8 @@
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.EmployeeGeneralController;
 import com.development.simplestockmanager.common.converter.EmployeeConverter;
+import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.web.object.Employee;
 import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.LanguageTypeSelector;
@@ -33,13 +33,13 @@ public class EmployeeAddView extends BaseAddView {
     private final Employee employee;
 
     public EmployeeAddView() {
-        validator = new EmployeeValidator();
+        validator = new EmployeeValidator(Constant.VALIDATOR.MODE.CREATE);
         controller = new EmployeeGeneralController();
         converter = new EmployeeConverter();
 
         employee = new Employee();
         employeeTypeSelector = new EmployeeTypeSelector(user.getLanguageType().getCode());
-        languageTypeSelector = new LanguageTypeSelector();
+        languageTypeSelector = new LanguageTypeSelector(user.getLanguageType().getCode());
         sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
     }
 
@@ -82,6 +82,10 @@ public class EmployeeAddView extends BaseAddView {
 
     public EmployeeTypeSelector getEmployeeTypeSelector() {
         return employeeTypeSelector;
+    }
+
+    public LanguageTypeSelector getLanguageTypeSelector() {
+        return languageTypeSelector;
     }
 
     public Employee getEmployee() {

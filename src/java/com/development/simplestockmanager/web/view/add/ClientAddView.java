@@ -1,10 +1,12 @@
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.ClientGeneralController;
 import com.development.simplestockmanager.web.object.Client;
 import com.development.simplestockmanager.common.converter.ClientConverter;
+import com.development.simplestockmanager.common.language.LanguageController;
+import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
+import com.development.simplestockmanager.web.object.component.translator.ClientTranslator;
 import com.development.simplestockmanager.web.object.validator.ClientValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -24,14 +26,16 @@ public class ClientAddView extends BaseAddView {
     private final ClientValidator validator;
     private final ClientGeneralController controller;
     private final ClientConverter converter;
+    private final ClientTranslator translator;
 
     private final SexTypeSelector sexTypeSelector;
     private final Client client;
 
-    public ClientAddView() {
-        validator = new ClientValidator();
+    public ClientAddView() {        
+        validator = new ClientValidator(Constant.VALIDATOR.MODE.CREATE);
         controller = new ClientGeneralController();
         converter = new ClientConverter();
+        translator = new ClientTranslator(user.getLanguageType().getCode());
 
         client = new Client();
         sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
@@ -72,6 +76,10 @@ public class ClientAddView extends BaseAddView {
 
     public Client getClient() {
         return client;
+    }
+
+    public ClientTranslator getTranslator() {
+        return translator;
     }
 
 }

@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,8 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LanguageType.findAll", query = "SELECT l FROM LanguageType l"),
     @NamedQuery(name = "LanguageType.findById", query = "SELECT l FROM LanguageType l WHERE l.id = :id"),
     @NamedQuery(name = "LanguageType.findByCode", query = "SELECT l FROM LanguageType l WHERE l.code = :code"),
-    @NamedQuery(name = "LanguageType.findByLanguage", query = "SELECT l FROM LanguageType l WHERE l.language = :language"),
-    @NamedQuery(name = "LanguageType.findByEnable", query = "SELECT l FROM LanguageType l WHERE l.enable = :enable")})
+    @NamedQuery(name = "LanguageType.findByLanguage", query = "SELECT l FROM LanguageType l WHERE l.language = :language")})
 public class LanguageType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,19 +42,19 @@ public class LanguageType implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
-    @Basic(optional = false)
-    @Column(name = "Code")
+    @Column(name = "CODE")
     private String code;
-    @Basic(optional = false)
     @Column(name = "LANGUAGE")
     private String language;
-    @Basic(optional = false)
-    @Column(name = "ENABLE")
-    private boolean enable;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
     private List<Employee> employeeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
     private List<PriceType> priceTypeList;
+    @OneToMany(mappedBy = "referencedType")
+    private List<LanguageType> languageTypeList;
+    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
+    @ManyToOne
+    private LanguageType referencedType;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
     private List<SexType> sexTypeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
@@ -68,13 +69,6 @@ public class LanguageType implements Serializable {
 
     public LanguageType(Long id) {
         this.id = id;
-    }
-
-    public LanguageType(Long id, String code, String language, boolean enable) {
-        this.id = id;
-        this.code = code;
-        this.language = language;
-        this.enable = enable;
     }
 
     public Long getId() {
@@ -101,14 +95,6 @@ public class LanguageType implements Serializable {
         this.language = language;
     }
 
-    public boolean getEnable() {
-        return enable;
-    }
-
-    public void setEnable(boolean enable) {
-        this.enable = enable;
-    }
-
     @XmlTransient
     public List<Employee> getEmployeeList() {
         return employeeList;
@@ -125,6 +111,23 @@ public class LanguageType implements Serializable {
 
     public void setPriceTypeList(List<PriceType> priceTypeList) {
         this.priceTypeList = priceTypeList;
+    }
+
+    @XmlTransient
+    public List<LanguageType> getLanguageTypeList() {
+        return languageTypeList;
+    }
+
+    public void setLanguageTypeList(List<LanguageType> languageTypeList) {
+        this.languageTypeList = languageTypeList;
+    }
+
+    public LanguageType getReferencedType() {
+        return referencedType;
+    }
+
+    public void setReferencedType(LanguageType referencedType) {
+        this.referencedType = referencedType;
     }
 
     @XmlTransient

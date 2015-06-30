@@ -8,6 +8,10 @@ public class ProviderValidator extends BaseValidator {
 
     private Provider provider;
 
+    public ProviderValidator(long mode) {
+        super(mode);
+    }
+
     @Override
     protected void convertObject() {
         provider = (Provider) object;

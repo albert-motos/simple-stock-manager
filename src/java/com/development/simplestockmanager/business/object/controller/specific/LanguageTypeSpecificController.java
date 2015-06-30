@@ -18,15 +18,11 @@ public class LanguageTypeSpecificController {
         this.language = language;
     }
 
-    public LanguageTypeSpecificController() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public List<LanguageType> fillSelector() {
         List<LanguageType> list = new ArrayList<>();
 
         try {
-            Query query = new LanguageTypeHelper().getFindAll();
+            Query query = new LanguageTypeHelper().getFindAllForSelector(language);
             for (Object object : query.getResultList()) {
                 list.add((LanguageType) object);
             }

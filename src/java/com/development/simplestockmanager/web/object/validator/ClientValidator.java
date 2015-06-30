@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.web.object.validator;
 
+import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.web.object.Client;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,10 @@ import java.util.List;
 public class ClientValidator extends BaseValidator {
 
     private Client client;
+
+    public ClientValidator(long mode) {
+        super(mode);
+    }
 
     @Override
     protected void convertObject() {
@@ -44,7 +49,7 @@ public class ClientValidator extends BaseValidator {
             fieldsEmptyList.add("Born date");
         }
 
-        if (client.getSexType() == -1) {
+        if (client.getSexType() == Constant.IDENTIFIER.INVALID) {
             fieldsEmptyList.add("Sex type selector: this selector is not indicated");
         }
 

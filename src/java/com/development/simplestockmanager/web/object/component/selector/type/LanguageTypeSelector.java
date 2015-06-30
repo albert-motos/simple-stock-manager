@@ -15,8 +15,8 @@ public class LanguageTypeSelector extends BaseTypeSelector {
 
     private final HashMap<String, LanguageType> hashMap;
 
-    public LanguageTypeSelector() {
-        LanguageTypeSpecificController controller = new LanguageTypeSpecificController();
+    public LanguageTypeSelector(String language) {
+        LanguageTypeSpecificController controller = new LanguageTypeSpecificController(language);
         hashMap = new HashMap<>();
         list = new ArrayList<>();
 

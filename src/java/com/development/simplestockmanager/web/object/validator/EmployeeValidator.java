@@ -15,6 +15,10 @@ public class EmployeeValidator extends BaseValidator {
 
     private Employee employee;
 
+    public EmployeeValidator(long mode) {
+        super(mode);
+    }
+
     @Override
     protected void convertObject() {
         employee = (Employee) object;

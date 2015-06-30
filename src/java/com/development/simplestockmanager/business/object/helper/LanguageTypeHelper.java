@@ -6,10 +6,12 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class LanguageTypeHelper {
+public class LanguageTypeHelper implements BaseTypeHelper{
 
-    public Query getFindAll() {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("EmployeeType.findAll");
+    @Override
+    public Query getFindAllForSelector(String language) {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("LanguageType.findAllForSelector");
+        query.setParameter("language", language);
 
         return query;
     }

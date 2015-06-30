@@ -88,11 +88,32 @@
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Email :" style="font-weight: bold;" />
+                                    <p:column style="width: 50%">
+                                        <p:panelGrid style="width: 100%">
+                                            <p:row>
+                                                <p:column style="width: 100px; text-align: center">
+                                                    <p:outputLabel value="Email :" style="font-weight: bold;" />
+                                                </p:column>
+                                                <p:column>
+                                                    <p:inputText  value="#{employeeAddView.employee.email}" style="width: 100%" />
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
                                     </p:column>
-                                    <p:column>
-                                        <p:inputText  value="#{employeeAddView.employee.email}" style="width: 100%" />
+                                    <p:column style="width: 50%">
+                                        <p:panelGrid style="width: 100%">
+                                            <p:row>
+                                                <p:column style="width: 100px; text-align: center">
+                                                    <p:outputLabel value="Language :" style="font-weight: bold;" />
+                                                </p:column>
+                                                <p:column>
+                                                    <p:selectOneMenu value="#{employeeAddView.languageTypeSelector.selection}" style="width: 100%">
+                                                        <f:selectItem itemLabel="Select one" itemValue="-1" />
+                                                        <f:selectItems value="#{employeeAddView.languageTypeSelector.list}" />
+                                                    </p:selectOneMenu>
+                                                </p:column>
+                                            </p:row>
+                                        </p:panelGrid>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -100,7 +121,7 @@
                     </p:row>
                 </p:panelGrid>
             </p:panel>
-            
+
             <p:panel header="Employee credentials">
                 <p:panelGrid style="width: 100%">
                     <p:row>

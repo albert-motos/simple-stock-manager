@@ -7,6 +7,10 @@ import java.util.List;
 public class StoreValidator extends BaseValidator {
 
     private Store store;
+
+    public StoreValidator(long mode) {
+        super(mode);
+    }
     
     @Override
     protected void convertObject() {
