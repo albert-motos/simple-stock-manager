@@ -9,6 +9,10 @@ public class BrandValidator extends BaseValidator {
 
     private Brand brand;
 
+    public BrandValidator(long mode) {
+        super(mode);
+    }
+    
     @Override
     protected void convertObject() {
         brand = (Brand) object;

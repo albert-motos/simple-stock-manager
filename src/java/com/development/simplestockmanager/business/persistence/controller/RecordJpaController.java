@@ -5,16 +5,19 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.Record;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.AnalyticsTime;
+import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.Record;
+import com.development.simplestockmanager.business.persistence.Stock;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -36,7 +39,34 @@ public class RecordJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            AnalyticsTime analitycsTime = record.getAnalitycsTime();
+            if (analitycsTime != null) {
+                analitycsTime = em.getReference(analitycsTime.getClass(), analitycsTime.getId());
+                record.setAnalitycsTime(analitycsTime);
+            }
+            Employee employee = record.getEmployee();
+            if (employee != null) {
+                employee = em.getReference(employee.getClass(), employee.getId());
+                record.setEmployee(employee);
+            }
+            Stock stock = record.getStock();
+            if (stock != null) {
+                stock = em.getReference(stock.getClass(), stock.getId());
+                record.setStock(stock);
+            }
             em.persist(record);
+            if (analitycsTime != null) {
+                analitycsTime.getRecordList().add(record);
+                analitycsTime = em.merge(analitycsTime);
+            }
+            if (employee != null) {
+                employee.getRecordList().add(record);
+                employee = em.merge(employee);
+            }
+            if (stock != null) {
+                stock.getRecordList().add(record);
+                stock = em.merge(stock);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,7 +80,50 @@ public class RecordJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Record persistentRecord = em.find(Record.class, record.getId());
+            AnalyticsTime analitycsTimeOld = persistentRecord.getAnalitycsTime();
+            AnalyticsTime analitycsTimeNew = record.getAnalitycsTime();
+            Employee employeeOld = persistentRecord.getEmployee();
+            Employee employeeNew = record.getEmployee();
+            Stock stockOld = persistentRecord.getStock();
+            Stock stockNew = record.getStock();
+            if (analitycsTimeNew != null) {
+                analitycsTimeNew = em.getReference(analitycsTimeNew.getClass(), analitycsTimeNew.getId());
+                record.setAnalitycsTime(analitycsTimeNew);
+            }
+            if (employeeNew != null) {
+                employeeNew = em.getReference(employeeNew.getClass(), employeeNew.getId());
+                record.setEmployee(employeeNew);
+            }
+            if (stockNew != null) {
+                stockNew = em.getReference(stockNew.getClass(), stockNew.getId());
+                record.setStock(stockNew);
+            }
             record = em.merge(record);
+            if (analitycsTimeOld != null && !analitycsTimeOld.equals(analitycsTimeNew)) {
+                analitycsTimeOld.getRecordList().remove(record);
+                analitycsTimeOld = em.merge(analitycsTimeOld);
+            }
+            if (analitycsTimeNew != null && !analitycsTimeNew.equals(analitycsTimeOld)) {
+                analitycsTimeNew.getRecordList().add(record);
+                analitycsTimeNew = em.merge(analitycsTimeNew);
+            }
+            if (employeeOld != null && !employeeOld.equals(employeeNew)) {
+                employeeOld.getRecordList().remove(record);
+                employeeOld = em.merge(employeeOld);
+            }
+            if (employeeNew != null && !employeeNew.equals(employeeOld)) {
+                employeeNew.getRecordList().add(record);
+                employeeNew = em.merge(employeeNew);
+            }
+            if (stockOld != null && !stockOld.equals(stockNew)) {
+                stockOld.getRecordList().remove(record);
+                stockOld = em.merge(stockOld);
+            }
+            if (stockNew != null && !stockNew.equals(stockOld)) {
+                stockNew.getRecordList().add(record);
+                stockNew = em.merge(stockNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -79,6 +152,21 @@ public class RecordJpaController implements Serializable {
                 record.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The record with id " + id + " no longer exists.", enfe);
+            }
+            AnalyticsTime analitycsTime = record.getAnalitycsTime();
+            if (analitycsTime != null) {
+                analitycsTime.getRecordList().remove(record);
+                analitycsTime = em.merge(analitycsTime);
+            }
+            Employee employee = record.getEmployee();
+            if (employee != null) {
+                employee.getRecordList().remove(record);
+                employee = em.merge(employee);
+            }
+            Stock stock = record.getStock();
+            if (stock != null) {
+                stock.getRecordList().remove(record);
+                stock = em.merge(stock);
             }
             em.remove(record);
             em.getTransaction().commit();

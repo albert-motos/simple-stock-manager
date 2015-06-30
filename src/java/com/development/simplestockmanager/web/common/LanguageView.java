@@ -6,6 +6,7 @@
 package com.development.simplestockmanager.web.common;
 
 import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.persistence.LanguageType;
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -15,6 +16,14 @@ import javax.faces.bean.ManagedBean;
 @ManagedBean
 public class LanguageView {
 
+    public LanguageType getLanguage(){
+        LanguageType languageType = new LanguageType();
+        languageType.setId(Long.valueOf(1));
+        languageType.setCode("en_US");
+        
+        return languageType;
+    }
+    
     public String backButtonValue(boolean finish) {
         return (finish ? Constant.VIEW.BUTTON.AFTER : Constant.VIEW.BUTTON.BEFORE);
     }

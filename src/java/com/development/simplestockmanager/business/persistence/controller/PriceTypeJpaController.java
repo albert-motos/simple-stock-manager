@@ -5,16 +5,20 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.PriceType;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.LanguageType;
+import com.development.simplestockmanager.business.persistence.PriceType;
+import com.development.simplestockmanager.business.persistence.Price;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -32,11 +36,65 @@ public class PriceTypeJpaController implements Serializable {
     }
 
     public void create(PriceType priceType) {
+        if (priceType.getPriceList() == null) {
+            priceType.setPriceList(new ArrayList<Price>());
+        }
+        if (priceType.getPriceTypeList() == null) {
+            priceType.setPriceTypeList(new ArrayList<PriceType>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            LanguageType languageType = priceType.getLanguageType();
+            if (languageType != null) {
+                languageType = em.getReference(languageType.getClass(), languageType.getId());
+                priceType.setLanguageType(languageType);
+            }
+            PriceType referencedType = priceType.getReferencedType();
+            if (referencedType != null) {
+                referencedType = em.getReference(referencedType.getClass(), referencedType.getId());
+                priceType.setReferencedType(referencedType);
+            }
+            List<Price> attachedPriceList = new ArrayList<Price>();
+            for (Price priceListPriceToAttach : priceType.getPriceList()) {
+                priceListPriceToAttach = em.getReference(priceListPriceToAttach.getClass(), priceListPriceToAttach.getId());
+                attachedPriceList.add(priceListPriceToAttach);
+            }
+            priceType.setPriceList(attachedPriceList);
+            List<PriceType> attachedPriceTypeList = new ArrayList<PriceType>();
+            for (PriceType priceTypeListPriceTypeToAttach : priceType.getPriceTypeList()) {
+                priceTypeListPriceTypeToAttach = em.getReference(priceTypeListPriceTypeToAttach.getClass(), priceTypeListPriceTypeToAttach.getId());
+                attachedPriceTypeList.add(priceTypeListPriceTypeToAttach);
+            }
+            priceType.setPriceTypeList(attachedPriceTypeList);
             em.persist(priceType);
+            if (languageType != null) {
+                languageType.getPriceTypeList().add(priceType);
+                languageType = em.merge(languageType);
+            }
+            if (referencedType != null) {
+                referencedType.getPriceTypeList().add(priceType);
+                referencedType = em.merge(referencedType);
+            }
+            for (Price priceListPrice : priceType.getPriceList()) {
+                PriceType oldPriceTypeOfPriceListPrice = priceListPrice.getPriceType();
+                priceListPrice.setPriceType(priceType);
+                priceListPrice = em.merge(priceListPrice);
+                if (oldPriceTypeOfPriceListPrice != null) {
+                    oldPriceTypeOfPriceListPrice.getPriceList().remove(priceListPrice);
+                    oldPriceTypeOfPriceListPrice = em.merge(oldPriceTypeOfPriceListPrice);
+                }
+            }
+            for (PriceType priceTypeListPriceType : priceType.getPriceTypeList()) {
+                PriceType oldReferencedTypeOfPriceTypeListPriceType = priceTypeListPriceType.getReferencedType();
+                priceTypeListPriceType.setReferencedType(priceType);
+                priceTypeListPriceType = em.merge(priceTypeListPriceType);
+                if (oldReferencedTypeOfPriceTypeListPriceType != null) {
+                    oldReferencedTypeOfPriceTypeListPriceType.getPriceTypeList().remove(priceTypeListPriceType);
+                    oldReferencedTypeOfPriceTypeListPriceType = em.merge(oldReferencedTypeOfPriceTypeListPriceType);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,12 +103,99 @@ public class PriceTypeJpaController implements Serializable {
         }
     }
 
-    public void edit(PriceType priceType) throws NonexistentEntityException, Exception {
+    public void edit(PriceType priceType) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            PriceType persistentPriceType = em.find(PriceType.class, priceType.getId());
+            LanguageType languageTypeOld = persistentPriceType.getLanguageType();
+            LanguageType languageTypeNew = priceType.getLanguageType();
+            PriceType referencedTypeOld = persistentPriceType.getReferencedType();
+            PriceType referencedTypeNew = priceType.getReferencedType();
+            List<Price> priceListOld = persistentPriceType.getPriceList();
+            List<Price> priceListNew = priceType.getPriceList();
+            List<PriceType> priceTypeListOld = persistentPriceType.getPriceTypeList();
+            List<PriceType> priceTypeListNew = priceType.getPriceTypeList();
+            List<String> illegalOrphanMessages = null;
+            for (Price priceListOldPrice : priceListOld) {
+                if (!priceListNew.contains(priceListOldPrice)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Price " + priceListOldPrice + " since its priceType field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (languageTypeNew != null) {
+                languageTypeNew = em.getReference(languageTypeNew.getClass(), languageTypeNew.getId());
+                priceType.setLanguageType(languageTypeNew);
+            }
+            if (referencedTypeNew != null) {
+                referencedTypeNew = em.getReference(referencedTypeNew.getClass(), referencedTypeNew.getId());
+                priceType.setReferencedType(referencedTypeNew);
+            }
+            List<Price> attachedPriceListNew = new ArrayList<Price>();
+            for (Price priceListNewPriceToAttach : priceListNew) {
+                priceListNewPriceToAttach = em.getReference(priceListNewPriceToAttach.getClass(), priceListNewPriceToAttach.getId());
+                attachedPriceListNew.add(priceListNewPriceToAttach);
+            }
+            priceListNew = attachedPriceListNew;
+            priceType.setPriceList(priceListNew);
+            List<PriceType> attachedPriceTypeListNew = new ArrayList<PriceType>();
+            for (PriceType priceTypeListNewPriceTypeToAttach : priceTypeListNew) {
+                priceTypeListNewPriceTypeToAttach = em.getReference(priceTypeListNewPriceTypeToAttach.getClass(), priceTypeListNewPriceTypeToAttach.getId());
+                attachedPriceTypeListNew.add(priceTypeListNewPriceTypeToAttach);
+            }
+            priceTypeListNew = attachedPriceTypeListNew;
+            priceType.setPriceTypeList(priceTypeListNew);
             priceType = em.merge(priceType);
+            if (languageTypeOld != null && !languageTypeOld.equals(languageTypeNew)) {
+                languageTypeOld.getPriceTypeList().remove(priceType);
+                languageTypeOld = em.merge(languageTypeOld);
+            }
+            if (languageTypeNew != null && !languageTypeNew.equals(languageTypeOld)) {
+                languageTypeNew.getPriceTypeList().add(priceType);
+                languageTypeNew = em.merge(languageTypeNew);
+            }
+            if (referencedTypeOld != null && !referencedTypeOld.equals(referencedTypeNew)) {
+                referencedTypeOld.getPriceTypeList().remove(priceType);
+                referencedTypeOld = em.merge(referencedTypeOld);
+            }
+            if (referencedTypeNew != null && !referencedTypeNew.equals(referencedTypeOld)) {
+                referencedTypeNew.getPriceTypeList().add(priceType);
+                referencedTypeNew = em.merge(referencedTypeNew);
+            }
+            for (Price priceListNewPrice : priceListNew) {
+                if (!priceListOld.contains(priceListNewPrice)) {
+                    PriceType oldPriceTypeOfPriceListNewPrice = priceListNewPrice.getPriceType();
+                    priceListNewPrice.setPriceType(priceType);
+                    priceListNewPrice = em.merge(priceListNewPrice);
+                    if (oldPriceTypeOfPriceListNewPrice != null && !oldPriceTypeOfPriceListNewPrice.equals(priceType)) {
+                        oldPriceTypeOfPriceListNewPrice.getPriceList().remove(priceListNewPrice);
+                        oldPriceTypeOfPriceListNewPrice = em.merge(oldPriceTypeOfPriceListNewPrice);
+                    }
+                }
+            }
+            for (PriceType priceTypeListOldPriceType : priceTypeListOld) {
+                if (!priceTypeListNew.contains(priceTypeListOldPriceType)) {
+                    priceTypeListOldPriceType.setReferencedType(null);
+                    priceTypeListOldPriceType = em.merge(priceTypeListOldPriceType);
+                }
+            }
+            for (PriceType priceTypeListNewPriceType : priceTypeListNew) {
+                if (!priceTypeListOld.contains(priceTypeListNewPriceType)) {
+                    PriceType oldReferencedTypeOfPriceTypeListNewPriceType = priceTypeListNewPriceType.getReferencedType();
+                    priceTypeListNewPriceType.setReferencedType(priceType);
+                    priceTypeListNewPriceType = em.merge(priceTypeListNewPriceType);
+                    if (oldReferencedTypeOfPriceTypeListNewPriceType != null && !oldReferencedTypeOfPriceTypeListNewPriceType.equals(priceType)) {
+                        oldReferencedTypeOfPriceTypeListNewPriceType.getPriceTypeList().remove(priceTypeListNewPriceType);
+                        oldReferencedTypeOfPriceTypeListNewPriceType = em.merge(oldReferencedTypeOfPriceTypeListNewPriceType);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -68,7 +213,7 @@ public class PriceTypeJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,6 +224,32 @@ public class PriceTypeJpaController implements Serializable {
                 priceType.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The priceType with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Price> priceListOrphanCheck = priceType.getPriceList();
+            for (Price priceListOrphanCheckPrice : priceListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This PriceType (" + priceType + ") cannot be destroyed since the Price " + priceListOrphanCheckPrice + " in its priceList field has a non-nullable priceType field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            LanguageType languageType = priceType.getLanguageType();
+            if (languageType != null) {
+                languageType.getPriceTypeList().remove(priceType);
+                languageType = em.merge(languageType);
+            }
+            PriceType referencedType = priceType.getReferencedType();
+            if (referencedType != null) {
+                referencedType.getPriceTypeList().remove(priceType);
+                referencedType = em.merge(referencedType);
+            }
+            List<PriceType> priceTypeList = priceType.getPriceTypeList();
+            for (PriceType priceTypeListPriceType : priceTypeList) {
+                priceTypeListPriceType.setReferencedType(null);
+                priceTypeListPriceType = em.merge(priceTypeListPriceType);
             }
             em.remove(priceType);
             em.getTransaction().commit();

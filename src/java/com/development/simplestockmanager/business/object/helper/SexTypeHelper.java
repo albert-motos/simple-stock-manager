@@ -12,28 +12,38 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class SexTypeHelper {
+public class SexTypeHelper implements BaseTypeHelper {
 
-    public static SexTypeJpaController getJpaController() {
+    public SexTypeJpaController getJpaController() {
         return new SexTypeJpaController(EntityManagerHelper.getEntityManagerFactory());
     }
 
-    public static Query getFindByIdQuery(long id) {
+    @Override
+    public Query getFindAllForSelector(String language) {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findAllForSelector");
+        query.setParameter("language", language);
+
+        return query;
+    }
+    
+    public Query getFindByIdQuery(long id) {
         Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findById");
         query.setParameter("id", id);
 
         return query;
     }
 
-    public static Query getFindByTypeQuery(String type) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findByType");
+    public Query getFindByRefencedType(String type) {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.getFindByRefencedType");
         query.setParameter("type", type);
 
         return query;
     }
 
-    public static Query getAllQuery() {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.findAll");
+    public Query getFindByRefencedTypeAndLanguage(String type, String language) {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("SexType.getFindByRefencedTypeAndLanguage");
+        query.setParameter("type", type);
+        query.setParameter("language", language);
 
         return query;
     }

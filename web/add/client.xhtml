@@ -9,7 +9,8 @@
     <ui:define name="content">
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
-            <p:panel header="Client attributes" >
+            <!--            <p:panel header="Client attributes" >-->
+            <p:panel header="#{clientAddView.translator.headerAttributes}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 35%">
@@ -19,7 +20,7 @@
                                         <p:outputLabel value="First name :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:inputText value="#{clientAddView.client.firstName}" style="width: 100%" />
+                                        <p:inputText value="#{clientAddView.client.firstname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -31,7 +32,7 @@
                                         <p:outputLabel value="Last name :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{clientAddView.client.lastName}" style="width: 100%" />
+                                        <p:inputText  value="#{clientAddView.client.lastname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -48,9 +49,9 @@
                                         <p:outputLabel value="Sex type :" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:selectOneMenu value="#{clientAddView.sexTypeSelection}" style="width: 100%">
+                                        <p:selectOneMenu value="#{clientAddView.sexTypeSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="Select one" itemValue="" />
-                                            <f:selectItems value="#{sexTypeView.list}" />
+                                            <f:selectItems value="#{clientAddView.sexTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -111,7 +112,7 @@
                                         <p:outputLabel value="Client could be found on queries" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
-                                        <p:selectBooleanCheckbox value="#{clientAddView.client.isEnable}" />
+                                        <p:selectBooleanCheckbox value="#{clientAddView.client.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -122,7 +123,7 @@
 
             <p:outputPanel style="text-align: right">
                 <p:commandButton value="Create" rendered="#{not clientAddView.added}" actionListener="#{clientAddView.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{languageView.backButtonValue(clientAddView.added)}" actionListener="#{navigationView.redirect(urlView.index())}"
+                <p:commandButton value="#{languageView.backButtonValue(clientAddView.added)}" actionListener="#{clientAddView.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

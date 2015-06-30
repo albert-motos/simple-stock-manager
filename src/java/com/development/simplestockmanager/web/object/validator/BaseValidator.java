@@ -15,9 +15,14 @@ import javax.faces.application.FacesMessage;
  */
 abstract class BaseValidator {
     
+    protected long mode;
     protected Object object;
     private List<FacesMessage> messageList;
 
+    public BaseValidator(long mode) {
+        this.mode = mode;
+    }
+    
     public void setObject(Object object) {
         this.object = object;
     }

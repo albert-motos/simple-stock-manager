@@ -16,12 +16,9 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class EmployeeSelectorView implements SelectorView {
+public class EmployeeSelectorView extends BaseSelector {
 
-    private String browser;
     private HashMap<String, Employee> hashMap;
-    private List<String> list;
-    private String selection;
 
     public EmployeeSelectorView() {
     }
@@ -31,45 +28,21 @@ public class EmployeeSelectorView implements SelectorView {
         hashMap = new HashMap<>();
         list = new ArrayList<>();
 
-        for (Employee employee : EmployeeSpecificController.findByName(browser)) {
-            String key = employee.getFirstName() + " " + employee.getLastName();
-            hashMap.put(key, employee);
-            list.add(key);
-        }
+//        for (Employee employee : EmployeeSpecificController.findByName(browser)) {
+//            String key = employee.getFirstname() + " " + employee.getLastname();
+//            hashMap.put(key, employee);
+//            list.add(key);
+//        }
     }
 
     public Employee getSelectedValue() {
         Employee employee = new EmployeeNull();
 
         if (!selection.isEmpty()) {
-            employee = hashMap.get(selection);
+//            employee = hashMa
         }
 
         return employee;
-    }
-
-    public String getBrowser() {
-        return browser;
-    }
-
-    public void setBrowser(String browser) {
-        this.browser = browser;
-    }
-
-    public List<String> getList() {
-        return list;
-    }
-
-    public void setList(List<String> list) {
-        this.list = list;
-    }
-
-    public String getSelection() {
-        return selection;
-    }
-
-    public void setSelection(String selection) {
-        this.selection = selection;
     }
 
 }

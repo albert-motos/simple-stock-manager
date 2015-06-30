@@ -5,10 +5,12 @@ import com.development.simplestockmanager.business.object.nullpackage.ClientNull
 import com.development.simplestockmanager.business.object.helper.ClientHelper;
 import com.development.simplestockmanager.business.persistence.Client;
 import com.development.simplestockmanager.business.persistence.controller.ClientJpaController;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import javax.persistence.Query;
 
 /**
- * TESTED
+ * General controller class for Client object
  *
  * @author foxtrot
  */
@@ -60,7 +62,7 @@ public class ClientGeneralController {
                 ClientJpaController clientJpaController = ClientHelper.getJpaController();
                 clientJpaController.destroy(client.getId());
                 status = Constant.DELETE.SUCCESS;
-            } catch (Exception e) {
+            } catch (IllegalOrphanException | NonexistentEntityException e) {
 
             }
         }

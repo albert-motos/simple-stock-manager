@@ -5,16 +5,19 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.Provider;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Product;
+import com.development.simplestockmanager.business.persistence.Provider;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -32,11 +35,29 @@ public class ProviderJpaController implements Serializable {
     }
 
     public void create(Provider provider) {
+        if (provider.getProductList() == null) {
+            provider.setProductList(new ArrayList<Product>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Product> attachedProductList = new ArrayList<Product>();
+            for (Product productListProductToAttach : provider.getProductList()) {
+                productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getId());
+                attachedProductList.add(productListProductToAttach);
+            }
+            provider.setProductList(attachedProductList);
             em.persist(provider);
+            for (Product productListProduct : provider.getProductList()) {
+                Provider oldProviderOfProductListProduct = productListProduct.getProvider();
+                productListProduct.setProvider(provider);
+                productListProduct = em.merge(productListProduct);
+                if (oldProviderOfProductListProduct != null) {
+                    oldProviderOfProductListProduct.getProductList().remove(productListProduct);
+                    oldProviderOfProductListProduct = em.merge(oldProviderOfProductListProduct);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,12 +66,45 @@ public class ProviderJpaController implements Serializable {
         }
     }
 
-    public void edit(Provider provider) throws NonexistentEntityException, Exception {
+    public void edit(Provider provider) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Provider persistentProvider = em.find(Provider.class, provider.getId());
+            List<Product> productListOld = persistentProvider.getProductList();
+            List<Product> productListNew = provider.getProductList();
+            List<String> illegalOrphanMessages = null;
+            for (Product productListOldProduct : productListOld) {
+                if (!productListNew.contains(productListOldProduct)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Product " + productListOldProduct + " since its provider field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Product> attachedProductListNew = new ArrayList<Product>();
+            for (Product productListNewProductToAttach : productListNew) {
+                productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getId());
+                attachedProductListNew.add(productListNewProductToAttach);
+            }
+            productListNew = attachedProductListNew;
+            provider.setProductList(productListNew);
             provider = em.merge(provider);
+            for (Product productListNewProduct : productListNew) {
+                if (!productListOld.contains(productListNewProduct)) {
+                    Provider oldProviderOfProductListNewProduct = productListNewProduct.getProvider();
+                    productListNewProduct.setProvider(provider);
+                    productListNewProduct = em.merge(productListNewProduct);
+                    if (oldProviderOfProductListNewProduct != null && !oldProviderOfProductListNewProduct.equals(provider)) {
+                        oldProviderOfProductListNewProduct.getProductList().remove(productListNewProduct);
+                        oldProviderOfProductListNewProduct = em.merge(oldProviderOfProductListNewProduct);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -68,7 +122,7 @@ public class ProviderJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,6 +133,17 @@ public class ProviderJpaController implements Serializable {
                 provider.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The provider with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Product> productListOrphanCheck = provider.getProductList();
+            for (Product productListOrphanCheckProduct : productListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Provider (" + provider + ") cannot be destroyed since the Product " + productListOrphanCheckProduct + " in its productList field has a non-nullable provider field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(provider);
             em.getTransaction().commit();

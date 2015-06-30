@@ -9,6 +9,7 @@ import com.development.simplestockmanager.business.persistence.controller.Client
 import javax.persistence.Query;
 
 /**
+ * Helper class for Client object
  *
  * @author foxtrot
  */

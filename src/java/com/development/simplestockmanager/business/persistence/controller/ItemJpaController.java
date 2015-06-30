@@ -5,16 +5,19 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.Item;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Invoice;
+import com.development.simplestockmanager.business.persistence.Item;
+import com.development.simplestockmanager.business.persistence.Price;
+import com.development.simplestockmanager.business.persistence.Stock;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -36,7 +39,34 @@ public class ItemJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Invoice invoice = item.getInvoice();
+            if (invoice != null) {
+                invoice = em.getReference(invoice.getClass(), invoice.getId());
+                item.setInvoice(invoice);
+            }
+            Price price = item.getPrice();
+            if (price != null) {
+                price = em.getReference(price.getClass(), price.getId());
+                item.setPrice(price);
+            }
+            Stock stock = item.getStock();
+            if (stock != null) {
+                stock = em.getReference(stock.getClass(), stock.getId());
+                item.setStock(stock);
+            }
             em.persist(item);
+            if (invoice != null) {
+                invoice.getItemList().add(item);
+                invoice = em.merge(invoice);
+            }
+            if (price != null) {
+                price.getItemList().add(item);
+                price = em.merge(price);
+            }
+            if (stock != null) {
+                stock.getItemList().add(item);
+                stock = em.merge(stock);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,7 +80,50 @@ public class ItemJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Item persistentItem = em.find(Item.class, item.getId());
+            Invoice invoiceOld = persistentItem.getInvoice();
+            Invoice invoiceNew = item.getInvoice();
+            Price priceOld = persistentItem.getPrice();
+            Price priceNew = item.getPrice();
+            Stock stockOld = persistentItem.getStock();
+            Stock stockNew = item.getStock();
+            if (invoiceNew != null) {
+                invoiceNew = em.getReference(invoiceNew.getClass(), invoiceNew.getId());
+                item.setInvoice(invoiceNew);
+            }
+            if (priceNew != null) {
+                priceNew = em.getReference(priceNew.getClass(), priceNew.getId());
+                item.setPrice(priceNew);
+            }
+            if (stockNew != null) {
+                stockNew = em.getReference(stockNew.getClass(), stockNew.getId());
+                item.setStock(stockNew);
+            }
             item = em.merge(item);
+            if (invoiceOld != null && !invoiceOld.equals(invoiceNew)) {
+                invoiceOld.getItemList().remove(item);
+                invoiceOld = em.merge(invoiceOld);
+            }
+            if (invoiceNew != null && !invoiceNew.equals(invoiceOld)) {
+                invoiceNew.getItemList().add(item);
+                invoiceNew = em.merge(invoiceNew);
+            }
+            if (priceOld != null && !priceOld.equals(priceNew)) {
+                priceOld.getItemList().remove(item);
+                priceOld = em.merge(priceOld);
+            }
+            if (priceNew != null && !priceNew.equals(priceOld)) {
+                priceNew.getItemList().add(item);
+                priceNew = em.merge(priceNew);
+            }
+            if (stockOld != null && !stockOld.equals(stockNew)) {
+                stockOld.getItemList().remove(item);
+                stockOld = em.merge(stockOld);
+            }
+            if (stockNew != null && !stockNew.equals(stockOld)) {
+                stockNew.getItemList().add(item);
+                stockNew = em.merge(stockNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -79,6 +152,21 @@ public class ItemJpaController implements Serializable {
                 item.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The item with id " + id + " no longer exists.", enfe);
+            }
+            Invoice invoice = item.getInvoice();
+            if (invoice != null) {
+                invoice.getItemList().remove(item);
+                invoice = em.merge(invoice);
+            }
+            Price price = item.getPrice();
+            if (price != null) {
+                price.getItemList().remove(item);
+                price = em.merge(price);
+            }
+            Stock stock = item.getStock();
+            if (stock != null) {
+                stock.getItemList().remove(item);
+                stock = em.merge(stock);
             }
             em.remove(item);
             em.getTransaction().commit();

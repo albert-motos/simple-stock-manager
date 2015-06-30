@@ -5,16 +5,20 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.Store;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.Stock;
+import com.development.simplestockmanager.business.persistence.Store;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -32,11 +36,38 @@ public class StoreJpaController implements Serializable {
     }
 
     public void create(Store store) {
+        if (store.getStockList() == null) {
+            store.setStockList(new ArrayList<Stock>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee employee = store.getEmployee();
+            if (employee != null) {
+                employee = em.getReference(employee.getClass(), employee.getId());
+                store.setEmployee(employee);
+            }
+            List<Stock> attachedStockList = new ArrayList<Stock>();
+            for (Stock stockListStockToAttach : store.getStockList()) {
+                stockListStockToAttach = em.getReference(stockListStockToAttach.getClass(), stockListStockToAttach.getId());
+                attachedStockList.add(stockListStockToAttach);
+            }
+            store.setStockList(attachedStockList);
             em.persist(store);
+            if (employee != null) {
+                employee.getStoreList().add(store);
+                employee = em.merge(employee);
+            }
+            for (Stock stockListStock : store.getStockList()) {
+                Store oldStoreOfStockListStock = stockListStock.getStore();
+                stockListStock.setStore(store);
+                stockListStock = em.merge(stockListStock);
+                if (oldStoreOfStockListStock != null) {
+                    oldStoreOfStockListStock.getStockList().remove(stockListStock);
+                    oldStoreOfStockListStock = em.merge(oldStoreOfStockListStock);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,12 +76,59 @@ public class StoreJpaController implements Serializable {
         }
     }
 
-    public void edit(Store store) throws NonexistentEntityException, Exception {
+    public void edit(Store store) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Store persistentStore = em.find(Store.class, store.getId());
+            Employee employeeOld = persistentStore.getEmployee();
+            Employee employeeNew = store.getEmployee();
+            List<Stock> stockListOld = persistentStore.getStockList();
+            List<Stock> stockListNew = store.getStockList();
+            List<String> illegalOrphanMessages = null;
+            for (Stock stockListOldStock : stockListOld) {
+                if (!stockListNew.contains(stockListOldStock)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Stock " + stockListOldStock + " since its store field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            if (employeeNew != null) {
+                employeeNew = em.getReference(employeeNew.getClass(), employeeNew.getId());
+                store.setEmployee(employeeNew);
+            }
+            List<Stock> attachedStockListNew = new ArrayList<Stock>();
+            for (Stock stockListNewStockToAttach : stockListNew) {
+                stockListNewStockToAttach = em.getReference(stockListNewStockToAttach.getClass(), stockListNewStockToAttach.getId());
+                attachedStockListNew.add(stockListNewStockToAttach);
+            }
+            stockListNew = attachedStockListNew;
+            store.setStockList(stockListNew);
             store = em.merge(store);
+            if (employeeOld != null && !employeeOld.equals(employeeNew)) {
+                employeeOld.getStoreList().remove(store);
+                employeeOld = em.merge(employeeOld);
+            }
+            if (employeeNew != null && !employeeNew.equals(employeeOld)) {
+                employeeNew.getStoreList().add(store);
+                employeeNew = em.merge(employeeNew);
+            }
+            for (Stock stockListNewStock : stockListNew) {
+                if (!stockListOld.contains(stockListNewStock)) {
+                    Store oldStoreOfStockListNewStock = stockListNewStock.getStore();
+                    stockListNewStock.setStore(store);
+                    stockListNewStock = em.merge(stockListNewStock);
+                    if (oldStoreOfStockListNewStock != null && !oldStoreOfStockListNewStock.equals(store)) {
+                        oldStoreOfStockListNewStock.getStockList().remove(stockListNewStock);
+                        oldStoreOfStockListNewStock = em.merge(oldStoreOfStockListNewStock);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -68,7 +146,7 @@ public class StoreJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -79,6 +157,22 @@ public class StoreJpaController implements Serializable {
                 store.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The store with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Stock> stockListOrphanCheck = store.getStockList();
+            for (Stock stockListOrphanCheckStock : stockListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Store (" + store + ") cannot be destroyed since the Stock " + stockListOrphanCheckStock + " in its stockList field has a non-nullable store field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Employee employee = store.getEmployee();
+            if (employee != null) {
+                employee.getStoreList().remove(store);
+                employee = em.merge(employee);
             }
             em.remove(store);
             em.getTransaction().commit();

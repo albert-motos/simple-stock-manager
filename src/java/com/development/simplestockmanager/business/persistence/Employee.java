@@ -7,47 +7,51 @@ package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author foxtrot
  */
 @Entity
-@Table(name = "Employee")
+@Table(name = "EMPLOYEE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
     @NamedQuery(name = "Employee.findById", query = "SELECT e FROM Employee e WHERE e.id = :id"),
-    @NamedQuery(name = "Employee.findByFirstName", query = "SELECT e FROM Employee e WHERE e.firstName = :firstName"),
-    @NamedQuery(name = "Employee.findByLastName", query = "SELECT e FROM Employee e WHERE e.lastName = :lastName"),
+    @NamedQuery(name = "Employee.findByFirstname", query = "SELECT e FROM Employee e WHERE e.firstname = :firstname"),
+    @NamedQuery(name = "Employee.findByLastname", query = "SELECT e FROM Employee e WHERE e.lastname = :lastname"),
     @NamedQuery(name = "Employee.findByBornDate", query = "SELECT e FROM Employee e WHERE e.bornDate = :bornDate"),
-    @NamedQuery(name = "Employee.findBySexTypeID", query = "SELECT e FROM Employee e WHERE e.sexTypeID = :sexTypeID"),
     @NamedQuery(name = "Employee.findByPhone", query = "SELECT e FROM Employee e WHERE e.phone = :phone"),
     @NamedQuery(name = "Employee.findByEmail", query = "SELECT e FROM Employee e WHERE e.email = :email"),
-    @NamedQuery(name = "Employee.findByEmployeTypeID", query = "SELECT e FROM Employee e WHERE e.employeTypeID = :employeTypeID"),
-    @NamedQuery(name = "Employee.findByIsEnable", query = "SELECT e FROM Employee e WHERE e.isEnable = :isEnable"),
-    @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
-    @NamedQuery(name = "Employee.findByLastModifiedDate", query = "SELECT e FROM Employee e WHERE e.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Employee.findByUserName", query = "SELECT e FROM Employee e WHERE e.userName = :userName"),
+    @NamedQuery(name = "Employee.findByUsername", query = "SELECT e FROM Employee e WHERE e.username = :username"),
     @NamedQuery(name = "Employee.findByPassword", query = "SELECT e FROM Employee e WHERE e.password = :password"),
     @NamedQuery(name = "Employee.findByIsOnline", query = "SELECT e FROM Employee e WHERE e.isOnline = :isOnline"),
     @NamedQuery(name = "Employee.findByLastOnlineDate", query = "SELECT e FROM Employee e WHERE e.lastOnlineDate = :lastOnlineDate"),
-    @NamedQuery(name = "Employee.findBySessionID", query = "SELECT e FROM Employee e WHERE e.sessionID = :sessionID")})
+    @NamedQuery(name = "Employee.findBySessionId", query = "SELECT e FROM Employee e WHERE e.sessionId = :sessionId"),
+    @NamedQuery(name = "Employee.findByEnable", query = "SELECT e FROM Employee e WHERE e.enable = :enable"),
+    @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
+    @NamedQuery(name = "Employee.findByCreatedUser", query = "SELECT e FROM Employee e WHERE e.createdUser = :createdUser"),
+    @NamedQuery(name = "Employee.findByLastModifiedDate", query = "SELECT e FROM Employee e WHERE e.lastModifiedDate = :lastModifiedDate"),
+    @NamedQuery(name = "Employee.findByLastModifiedUser", query = "SELECT e FROM Employee e WHERE e.lastModifiedUser = :lastModifiedUser")})
 public class Employee implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,54 +59,68 @@ public class Employee implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "FirstName")
-    private String firstName;
+    @Column(name = "FIRSTNAME")
+    private String firstname;
     @Basic(optional = false)
-    @Column(name = "LastName")
-    private String lastName;
+    @Column(name = "LASTNAME")
+    private String lastname;
     @Basic(optional = false)
-    @Column(name = "BornDate")
+    @Column(name = "BORN_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date bornDate;
     @Basic(optional = false)
-    @Column(name = "SexTypeID")
-    private long sexTypeID;
-    @Basic(optional = false)
-    @Column(name = "Phone")
+    @Column(name = "PHONE")
     private String phone;
     @Basic(optional = false)
-    @Column(name = "Email")
+    @Column(name = "EMAIL")
     private String email;
     @Basic(optional = false)
-    @Column(name = "EmployeTypeID")
-    private long employeTypeID;
+    @Column(name = "USERNAME")
+    private String username;
     @Basic(optional = false)
-    @Column(name = "isEnable")
-    private boolean isEnable;
+    @Column(name = "PASSWORD")
+    private String password;
     @Basic(optional = false)
-    @Column(name = "CreatedDate")
+    @Column(name = "IS_ONLINE")
+    private boolean isOnline;
+    @Basic(optional = false)
+    @Column(name = "LAST_ONLINE_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastOnlineDate;
+    @Column(name = "SESSION_ID")
+    private String sessionId;
+    @Basic(optional = false)
+    @Column(name = "ENABLE")
+    private boolean enable;
+    @Basic(optional = false)
+    @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "LastModifiedDate")
+    @Column(name = "CREATED_USER")
+    private String createdUser;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
     @Basic(optional = false)
-    @Column(name = "UserName")
-    private String userName;
-    @Basic(optional = false)
-    @Column(name = "Password")
-    private String password;
-    @Basic(optional = false)
-    @Column(name = "isOnline")
-    private boolean isOnline;
-    @Basic(optional = false)
-    @Column(name = "LastOnlineDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastOnlineDate;
-    @Basic(optional = false)
-    @Column(name = "SessionID")
-    private String sessionID;
+    @Column(name = "LAST_MODIFIED_USER")
+    private String lastModifiedUser;
+    @JoinColumn(name = "EMPLOYEE_TYPE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private EmployeeType employeeType;
+    @JoinColumn(name = "SEX_TYPE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private SexType sexType;
+    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private LanguageType languageType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Record> recordList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Invoice> invoiceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Store> storeList;
 
     public Employee() {
     }
@@ -111,41 +129,22 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public Employee(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.bornDate = bornDate;
-        this.sexTypeID = sexTypeID;
-        this.phone = phone;
-        this.email = email;
-        this.employeTypeID = employeTypeID;
-        this.isEnable = isEnable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-        this.userName = userName;
-        this.password = password;
-        this.isOnline = isOnline;
-        this.lastOnlineDate = lastOnlineDate;
-        this.sessionID = sessionID;
-    }
-
-    public Employee(Long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, long employeTypeID, boolean isEnable, Date createdDate, Date lastModifiedDate, String userName, String password, boolean isOnline, Date lastOnlineDate, String sessionID) {
+    public Employee(Long id, String firstname, String lastname, Date bornDate, String phone, String email, String username, String password, boolean isOnline, Date lastOnlineDate, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.bornDate = bornDate;
-        this.sexTypeID = sexTypeID;
         this.phone = phone;
         this.email = email;
-        this.employeTypeID = employeTypeID;
-        this.isEnable = isEnable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.isOnline = isOnline;
         this.lastOnlineDate = lastOnlineDate;
-        this.sessionID = sessionID;
+        this.enable = enable;
+        this.createdDate = createdDate;
+        this.createdUser = createdUser;
+        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -156,20 +155,20 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Date getBornDate() {
@@ -178,14 +177,6 @@ public class Employee implements Serializable {
 
     public void setBornDate(Date bornDate) {
         this.bornDate = bornDate;
-    }
-
-    public long getSexTypeID() {
-        return sexTypeID;
-    }
-
-    public void setSexTypeID(long sexTypeID) {
-        this.sexTypeID = sexTypeID;
     }
 
     public String getPhone() {
@@ -204,44 +195,12 @@ public class Employee implements Serializable {
         this.email = email;
     }
 
-    public long getEmployeTypeID() {
-        return employeTypeID;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmployeTypeID(long employeTypeID) {
-        this.employeTypeID = employeTypeID;
-    }
-
-    public boolean getIsEnable() {
-        return isEnable;
-    }
-
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -268,12 +227,103 @@ public class Employee implements Serializable {
         this.lastOnlineDate = lastOnlineDate;
     }
 
-    public String getSessionID() {
-        return sessionID;
+    public String getSessionId() {
+        return sessionId;
     }
 
-    public void setSessionID(String sessionID) {
-        this.sessionID = sessionID;
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    public EmployeeType getEmployeeType() {
+        return employeeType;
+    }
+
+    public void setEmployeeType(EmployeeType employeeType) {
+        this.employeeType = employeeType;
+    }
+
+    public SexType getSexType() {
+        return sexType;
+    }
+
+    public void setSexType(SexType sexType) {
+        this.sexType = sexType;
+    }
+
+    public LanguageType getLanguageType() {
+        return languageType;
+    }
+
+    public void setLanguageType(LanguageType languageType) {
+        this.languageType = languageType;
+    }
+
+    @XmlTransient
+    public List<Record> getRecordList() {
+        return recordList;
+    }
+
+    public void setRecordList(List<Record> recordList) {
+        this.recordList = recordList;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
+    @XmlTransient
+    public List<Store> getStoreList() {
+        return storeList;
+    }
+
+    public void setStoreList(List<Store> storeList) {
+        this.storeList = storeList;
     }
 
     @Override
@@ -284,60 +334,13 @@ public class Employee implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Employee)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Employee other = (Employee) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.firstName, other.firstName)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastName, other.lastName)) {
-            return false;
-        }
-        if (!Objects.equals(this.bornDate, other.bornDate)) {
-            return false;
-        }
-        if (this.sexTypeID != other.sexTypeID) {
-            return false;
-        }
-        if (!Objects.equals(this.phone, other.phone)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (this.employeTypeID != other.employeTypeID) {
-            return false;
-        }
-        if (this.isEnable != other.isEnable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.userName, other.userName)) {
-            return false;
-        }
-        if (!Objects.equals(this.password, other.password)) {
-            return false;
-        }
-        if (this.isOnline != other.isOnline) {
-            return false;
-        }
-        if (!Objects.equals(this.lastOnlineDate, other.lastOnlineDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.sessionID, other.sessionID)) {
+        Employee other = (Employee) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -345,7 +348,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName;
+        return "com.development.simplestockmanager.business.persistence.Employee[ id=" + id + " ]";
     }
-
+    
 }

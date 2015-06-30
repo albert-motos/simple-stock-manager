@@ -18,7 +18,7 @@ import javax.faces.context.FacesContext;
  * @author foxtrot
  */
 @ManagedBean
-public class ProviderAddView implements AddView {
+public class ProviderAddView extends BaseAddView {
 
     private Provider provider;
     private boolean added;
@@ -31,44 +31,44 @@ public class ProviderAddView implements AddView {
     @Override
     public void add() {
         
-        if (validate()) {
-            long id = ProviderGeneralController.create(provider.getName(), provider.getIdentifier(), provider.getPhone(), provider.getEmail(),
-                    provider.getIsEnable(), new Date(), new Date());
-
-            if (id == Constant.IDENTIFIER.INVALID) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create provider right now"));
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Provider [" + id + "] is created properly"));
-                added = true;
-            }
-        }
+//        if (validate()) {
+//            long id = ProviderGeneralController.create(provider.getName(), provider.getIdentifier(), provider.getPhone(), provider.getEmail(),
+//                    provider.getIsEnable(), new Date(), new Date());
+//
+//            if (id == Constant.IDENTIFIER.INVALID) {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create provider right now"));
+//            } else {
+//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Provider [" + id + "] is created properly"));
+//                added = true;
+//            }
+//        }
     }
 
-    @Override
-    public boolean validate() {
+//    @Override
+//    public boolean validate() {
+//
+//        FacesContext currentInstance = FacesContext.getCurrentInstance();
+//        String fields_empty = "";
+//
+//        fields_empty = fields_empty.concat((provider.getName().isEmpty() ? "Name " : ""));
+//        fields_empty = fields_empty.concat((provider.getIdentifier().isEmpty() ? "Identifier " : ""));
+//        fields_empty = fields_empty.concat((provider.getPhone().isEmpty() ? "Phone_number " : ""));
+//        fields_empty = fields_empty.concat((provider.getEmail().isEmpty() ? "Email " : ""));
+//
+//        if (!fields_empty.isEmpty()) {
+//            currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
+//        }
+//
+//        return currentInstance.getMessageList().isEmpty();
+//    }
 
-        FacesContext currentInstance = FacesContext.getCurrentInstance();
-        String fields_empty = "";
+//    public Provider getProvider() {
+//        return provider;
+//    }
 
-        fields_empty = fields_empty.concat((provider.getName().isEmpty() ? "Name " : ""));
-        fields_empty = fields_empty.concat((provider.getIdentifier().isEmpty() ? "Identifier " : ""));
-        fields_empty = fields_empty.concat((provider.getPhone().isEmpty() ? "Phone_number " : ""));
-        fields_empty = fields_empty.concat((provider.getEmail().isEmpty() ? "Email " : ""));
-
-        if (!fields_empty.isEmpty()) {
-            currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
-        }
-
-        return currentInstance.getMessageList().isEmpty();
-    }
-
-    public Provider getProvider() {
-        return provider;
-    }
-
-    public void setProvider(Provider provider) {
-        this.provider = provider;
-    }
+//    public void setProvider(Provider provider) {
+//        this.provider = provider;
+//    }
 
     public boolean isAdded() {
         return added;

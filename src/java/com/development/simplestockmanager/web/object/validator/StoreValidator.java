@@ -7,6 +7,10 @@ import java.util.List;
 public class StoreValidator extends BaseValidator {
 
     private Store store;
+
+    public StoreValidator(long mode) {
+        super(mode);
+    }
     
     @Override
     protected void convertObject() {
@@ -47,9 +51,9 @@ public class StoreValidator extends BaseValidator {
             fieldsEmptyList.add("Phone number");
         }
 
-        if (store.getManagerID() == 0) {
-            fieldsEmptyList.add("Manager selector: this selector is not indicated");
-        }
+//        if (store.getManagerID() == 0) {
+//            fieldsEmptyList.add("Manager selector: this selector is not indicated");
+//        }
         
         return fieldsEmptyList;
     }

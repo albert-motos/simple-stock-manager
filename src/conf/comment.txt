@@ -1,0 +1,7 @@
+GeneralController -> General controller class for [X] object
+SpecificController -> Specific controller class for [X] object
+Helper -> Helper class for [X] object
+AddView -> Add view controller class for [X] object
+Selector -> Selector class for [X] object
+Validator -> Validator class for [X] object
+Converter -> Converter class for [X] object

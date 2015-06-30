@@ -6,28 +6,42 @@
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author foxtrot
  */
 @Entity
-@Table(name = "PriceType")
+@Table(name = "PRICE_TYPE")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PriceType.findAll", query = "SELECT p FROM PriceType p"),
     @NamedQuery(name = "PriceType.findById", query = "SELECT p FROM PriceType p WHERE p.id = :id"),
-    @NamedQuery(name = "PriceType.findByType", query = "SELECT p FROM PriceType p WHERE p.type = :type")})
+    @NamedQuery(name = "PriceType.findByType", query = "SELECT p FROM PriceType p WHERE p.type = :type"),
+    @NamedQuery(name = "PriceType.findByEnable", query = "SELECT p FROM PriceType p WHERE p.enable = :enable"),
+    @NamedQuery(name = "PriceType.findByCreatedDate", query = "SELECT p FROM PriceType p WHERE p.createdDate = :createdDate"),
+    @NamedQuery(name = "PriceType.findByCreatedUser", query = "SELECT p FROM PriceType p WHERE p.createdUser = :createdUser"),
+    @NamedQuery(name = "PriceType.findByLastModifiedDate", query = "SELECT p FROM PriceType p WHERE p.lastModifiedDate = :lastModifiedDate"),
+    @NamedQuery(name = "PriceType.findByLastModifiedUser", query = "SELECT p FROM PriceType p WHERE p.lastModifiedUser = :lastModifiedUser")})
 public class PriceType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,23 +50,51 @@ public class PriceType implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "Type")
+    @Column(name = "TYPE")
     private String type;
+    @Basic(optional = false)
+    @Column(name = "ENABLE")
+    private boolean enable;
+    @Basic(optional = false)
+    @Column(name = "CREATED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @Basic(optional = false)
+    @Column(name = "CREATED_USER")
+    private String createdUser;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_USER")
+    private String lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "priceType")
+    private List<Price> priceList;
+    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private LanguageType languageType;
+    @OneToMany(mappedBy = "referencedType")
+    private List<PriceType> priceTypeList;
+    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
+    @ManyToOne
+    private PriceType referencedType;
 
     public PriceType() {
-    }
-
-    public PriceType(String type) {
-        this.type = type;
     }
 
     public PriceType(Long id) {
         this.id = id;
     }
 
-    public PriceType(Long id, String type) {
+    public PriceType(Long id, String type, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
         this.type = type;
+        this.enable = enable;
+        this.createdDate = createdDate;
+        this.createdUser = createdUser;
+        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -69,6 +111,80 @@ public class PriceType implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public boolean getEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<Price> getPriceList() {
+        return priceList;
+    }
+
+    public void setPriceList(List<Price> priceList) {
+        this.priceList = priceList;
+    }
+
+    public LanguageType getLanguageType() {
+        return languageType;
+    }
+
+    public void setLanguageType(LanguageType languageType) {
+        this.languageType = languageType;
+    }
+
+    @XmlTransient
+    public List<PriceType> getPriceTypeList() {
+        return priceTypeList;
+    }
+
+    public void setPriceTypeList(List<PriceType> priceTypeList) {
+        this.priceTypeList = priceTypeList;
+    }
+
+    public PriceType getReferencedType() {
+        return referencedType;
+    }
+
+    public void setReferencedType(PriceType referencedType) {
+        this.referencedType = referencedType;
     }
 
     @Override
@@ -93,7 +209,7 @@ public class PriceType implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.PriceType[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.PriceType[ id=" + id + " ]";
     }
     
 }

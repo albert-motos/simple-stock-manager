@@ -7,41 +7,46 @@ package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author foxtrot
  */
 @Entity
-@Table(name = "Client")
+@Table(name = "CLIENT")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c"),
     @NamedQuery(name = "Client.findById", query = "SELECT c FROM Client c WHERE c.id = :id"),
-    @NamedQuery(name = "Client.findByFirstName", query = "SELECT c FROM Client c WHERE c.firstName = :firstName"),
-    @NamedQuery(name = "Client.findByLastName", query = "SELECT c FROM Client c WHERE c.lastName = :lastName"),
+    @NamedQuery(name = "Client.findByFirstname", query = "SELECT c FROM Client c WHERE c.firstname = :firstname"),
+    @NamedQuery(name = "Client.findByLastname", query = "SELECT c FROM Client c WHERE c.lastname = :lastname"),
     @NamedQuery(name = "Client.findByBornDate", query = "SELECT c FROM Client c WHERE c.bornDate = :bornDate"),
-    @NamedQuery(name = "Client.findBySexTypeID", query = "SELECT c FROM Client c WHERE c.sexTypeID = :sexTypeID"),
     @NamedQuery(name = "Client.findByPhone", query = "SELECT c FROM Client c WHERE c.phone = :phone"),
     @NamedQuery(name = "Client.findByEmail", query = "SELECT c FROM Client c WHERE c.email = :email"),
-    @NamedQuery(name = "Client.findByIsEnable", query = "SELECT c FROM Client c WHERE c.isEnable = :isEnable"),
+    @NamedQuery(name = "Client.findByEnable", query = "SELECT c FROM Client c WHERE c.enable = :enable"),
     @NamedQuery(name = "Client.findByCreatedDate", query = "SELECT c FROM Client c WHERE c.createdDate = :createdDate"),
-    @NamedQuery(name = "Client.findByLastModifiedDate", query = "SELECT c FROM Client c WHERE c.lastModifiedDate = :lastModifiedDate")})
+    @NamedQuery(name = "Client.findByCreatedUser", query = "SELECT c FROM Client c WHERE c.createdUser = :createdUser"),
+    @NamedQuery(name = "Client.findByLastModifiedDate", query = "SELECT c FROM Client c WHERE c.lastModifiedDate = :lastModifiedDate"),
+    @NamedQuery(name = "Client.findByLastModifiedUser", query = "SELECT c FROM Client c WHERE c.lastModifiedUser = :lastModifiedUser")})
 public class Client implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,35 +54,43 @@ public class Client implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "FirstName")
-    private String firstName;
+    @Column(name = "FIRSTNAME")
+    private String firstname;
     @Basic(optional = false)
-    @Column(name = "LastName")
-    private String lastName;
+    @Column(name = "LASTNAME")
+    private String lastname;
     @Basic(optional = false)
-    @Column(name = "BornDate")
+    @Column(name = "BORN_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date bornDate;
     @Basic(optional = false)
-    @Column(name = "SexTypeID")
-    private long sexTypeID;
-    @Basic(optional = false)
-    @Column(name = "Phone")
+    @Column(name = "PHONE")
     private String phone;
     @Basic(optional = false)
-    @Column(name = "Email")
+    @Column(name = "EMAIL")
     private String email;
     @Basic(optional = false)
-    @Column(name = "isEnable")
-    private boolean isEnable;
+    @Column(name = "ENABLE")
+    private boolean enable;
     @Basic(optional = false)
-    @Column(name = "CreatedDate")
+    @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "LastModifiedDate")
+    @Column(name = "CREATED_USER")
+    private String createdUser;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
+    @Basic(optional = false)
+    @Column(name = "LAST_MODIFIED_USER")
+    private String lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+    private List<Invoice> invoiceList;
+    @JoinColumn(name = "SEX_TYPE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private SexType sexType;
 
     public Client() {
     }
@@ -86,29 +99,18 @@ public class Client implements Serializable {
         this.id = id;
     }
 
-    public Client(String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.bornDate = bornDate;
-        this.sexTypeID = sexTypeID;
-        this.phone = phone;
-        this.email = email;
-        this.isEnable = isEnable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public Client(Long id, String firstName, String lastName, Date bornDate, long sexTypeID, String phone, String email, boolean isEnable, Date createdDate, Date lastModifiedDate) {
+    public Client(Long id, String firstname, String lastname, Date bornDate, String phone, String email, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.bornDate = bornDate;
-        this.sexTypeID = sexTypeID;
         this.phone = phone;
         this.email = email;
-        this.isEnable = isEnable;
+        this.enable = enable;
         this.createdDate = createdDate;
+        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -119,20 +121,20 @@ public class Client implements Serializable {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Date getBornDate() {
@@ -141,14 +143,6 @@ public class Client implements Serializable {
 
     public void setBornDate(Date bornDate) {
         this.bornDate = bornDate;
-    }
-
-    public long getSexTypeID() {
-        return sexTypeID;
-    }
-
-    public void setSexTypeID(long sexTypeID) {
-        this.sexTypeID = sexTypeID;
     }
 
     public String getPhone() {
@@ -167,12 +161,12 @@ public class Client implements Serializable {
         this.email = email;
     }
 
-    public boolean getIsEnable() {
-        return isEnable;
+    public boolean getEnable() {
+        return enable;
     }
 
-    public void setIsEnable(boolean isEnable) {
-        this.isEnable = isEnable;
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 
     public Date getCreatedDate() {
@@ -183,12 +177,45 @@ public class Client implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public String getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(String createdUser) {
+        this.createdUser = createdUser;
+    }
+
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(String lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
+    public SexType getSexType() {
+        return sexType;
+    }
+
+    public void setSexType(SexType sexType) {
+        this.sexType = sexType;
     }
 
     @Override
@@ -199,42 +226,13 @@ public class Client implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Client)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Client other = (Client) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.firstName, other.firstName)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastName, other.lastName)) {
-            return false;
-        }
-        if (!Objects.equals(this.bornDate, other.bornDate)) {
-            return false;
-        }
-        if (this.sexTypeID != other.sexTypeID) {
-            return false;
-        }
-        if (!Objects.equals(this.phone, other.phone)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (this.isEnable != other.isEnable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+        Client other = (Client) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -242,7 +240,7 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "com.simplestockmanager.persistence.Client[ id=" + id + " ]";
+        return "com.development.simplestockmanager.business.persistence.Client[ id=" + id + " ]";
     }
-
+    
 }

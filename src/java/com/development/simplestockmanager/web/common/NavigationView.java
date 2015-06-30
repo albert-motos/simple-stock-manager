@@ -6,6 +6,8 @@
 package com.development.simplestockmanager.web.common;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
@@ -23,8 +25,12 @@ public class NavigationView {
         
     }
 
-    public void redirect(String url) throws IOException {
-        currentInstance.getExternalContext().redirect(url);
+    public void redirect(String url) {
+        try {
+            currentInstance.getExternalContext().redirect(url);
+        } catch (IOException ex) {
+            Logger.getLogger(NavigationView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }
