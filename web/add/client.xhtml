@@ -17,7 +17,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="First name :" style="font-weight: bold;" />
+                                        <p:outputLabel value="#{clientAddView.translator.labelFirstname}" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
                                         <p:inputText value="#{clientAddView.client.firstname}" style="width: 100%" />
@@ -29,7 +29,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Last name :" style="font-weight: bold;" />
+                                        <p:outputLabel value="#{clientAddView.translator.labelLastname}" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
                                         <p:inputText  value="#{clientAddView.client.lastname}" style="width: 100%" />
@@ -46,7 +46,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Sex type :" style="font-weight: bold;" />
+                                        <p:outputLabel value="#{clientAddView.translator.labelSexType}" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
                                         <p:selectOneMenu value="#{clientAddView.sexTypeSelector.selection}" style="width: 100%">
@@ -61,7 +61,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Born date :" style="font-weight: bold;" />
+                                        <p:outputLabel value="#{clientAddView.translator.labelBornDate}" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
                                         <p:calendar value="#{clientAddView.client.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true" />
@@ -73,7 +73,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Phone number :" style="font-weight: bold;" />
+                                        <p:outputLabel value="#{clientAddView.translator.labelPhoneNumber}" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
                                         <p:inputText value="#{clientAddView.client.phone}" style="width: 100%" />
@@ -90,7 +90,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Email :" style="font-weight: bold;" />
+                                        <p:outputLabel value="#{clientAddView.translator.labelEmail}" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
                                         <p:inputText  value="#{clientAddView.client.email}" style="width: 100%" />
@@ -102,14 +102,14 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="Client visibility">
+            <p:panel header="#{clientAddView.translator.headerVisibility}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column style="width: 250px; text-align: center">
-                                        <p:outputLabel value="Client could be found on queries" style="font-weight: bold;" />
+                                        <p:outputLabel value="#{clientAddView.translator.labelEnable}" style="font-weight: bold;" />
                                     </p:column>
                                     <p:column>
                                         <p:selectBooleanCheckbox value="#{clientAddView.client.enable}" />

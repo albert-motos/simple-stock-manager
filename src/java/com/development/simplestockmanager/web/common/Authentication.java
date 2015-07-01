@@ -20,8 +20,8 @@ public class Authentication {
         LanguageType languageType = new LanguageType();
         languageType.setId(Long.valueOf(1));
 //        languageType.setCode("en_US");
-//        languageType.setCode("ca_ES");
-        languageType.setCode("es_ES");
+        languageType.setCode("ca_ES");
+//        languageType.setCode("es_ES");
         e.setLanguageType(languageType);
         
         return e;

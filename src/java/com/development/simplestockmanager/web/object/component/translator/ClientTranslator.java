@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.web.object.component.translator;
 
 import com.development.simplestockmanager.common.Constant;
@@ -14,17 +9,29 @@ import com.development.simplestockmanager.common.language.LanguageController;
  */
 public class ClientTranslator {
     
-    private LanguageController controller;
+    private final String headerAttributes;
+    private final String headerVisibility;
+    
+    private final String labelEnable;
 
     public ClientTranslator(String language) {
-        controller = new LanguageController(language);
+        LanguageController controller = new LanguageController(language);
+        headerAttributes = controller.getWord(Constant.LANGUAGE.HEADER.CLIENT.ATTRIBUTES);
+        headerVisibility = controller.getWord(Constant.LANGUAGE.HEADER.CLIENT.VISIBILITY);
         
+        labelEnable = controller.getWord(Constant.LANGUAGE.LABEL.ENABLE.CLIENT);
     }
 
     public String getHeaderAttributes() {
-//        return controller.getWord(Constant.LANGUAGE.CLIENT.HEADER.ATTRIBUTES);
-        return controller.getWord("client.header.attributes");
+        return headerAttributes;
     }
-    
+
+    public String getHeaderVisibility() {
+        return headerVisibility;
+    }
+
+    public String getLabelEnable() {
+        return labelEnable;
+    }
     
 }
