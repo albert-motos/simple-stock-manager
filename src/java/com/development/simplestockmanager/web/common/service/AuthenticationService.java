@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.web.common.service;
 
+import com.development.simplestockmanager.business.object.controller.general.EmployeeGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeNull;
 import com.development.simplestockmanager.business.persistence.Employee;
@@ -24,19 +25,22 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class AuthenticationService implements Serializable {
 
-    private final EmployeeSpecificController controller;
+    private final EmployeeGeneralController generalController;
+    private final EmployeeSpecificController specificController;
+
     private Employee employee;
 
     public AuthenticationService() {
         System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.CONSTRUCTOR);
-        
-        controller = new EmployeeSpecificController();
+        System.out.println("#" + FacesContext.getCurrentInstance().getExternalContext().getSessionId(true));
+        generalController = new EmployeeGeneralController();
+        specificController = new EmployeeSpecificController();
         employee = new EmployeeNull();
     }
 
     public void redirect() {
         System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.REDIRECT);
-        
+
         if (employee.getId() != Constant.IDENTIFIER.INVALID) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(Constant.WEB.INDEX);
@@ -45,17 +49,26 @@ public class AuthenticationService implements Serializable {
             }
         }
     }
-    
+
     public void login() {
         System.out.println("#" + new Date() + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGIN);
-        
+
         FacesContext currentInstance = FacesContext.getCurrentInstance();
-        employee = controller.getEmployeeByCredencials(employee.getUsername(), employee.getPassword());
-        
+        employee = specificController.getEmployeeByCredencials(employee.getUsername(), employee.getPassword());
+
         if (employee.getId() != Constant.IDENTIFIER.INVALID) {
             try {
+                employee.setIsOnline(true);
+                employee.setLastOnlineDate(new Date());
+                employee.setSessionId(currentInstance.getExternalContext().getSessionId(true));
+                if (generalController.update(employee) == Constant.UPDATE.FAILURE) {
+                    throw new Exception();
+                }
+
                 currentInstance.getExternalContext().redirect(Constant.WEB.INDEX);
             } catch (IOException ex) {
+                Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
                 Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -66,13 +79,20 @@ public class AuthenticationService implements Serializable {
 
     public void logout() {
         System.out.println("#" + new Date() + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGOUT);
-        
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        externalContext.invalidateSession();
-        
+
         try {
+            employee.setIsOnline(false);
+
+            if (generalController.update(employee) == Constant.UPDATE.FAILURE) {
+                throw new Exception();
+            }
+
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.invalidateSession();
             externalContext.redirect(Constant.WEB.LOGIN);
         } catch (IOException ex) {
+            Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
