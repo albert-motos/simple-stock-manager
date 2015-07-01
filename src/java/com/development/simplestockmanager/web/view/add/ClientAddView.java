@@ -1,10 +1,12 @@
 package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.object.controller.general.ClientGeneralController;
+import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.web.object.Client;
 import com.development.simplestockmanager.common.converter.ClientConverter;
 import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.Constant;
+import com.development.simplestockmanager.web.common.service.AuthenticationService;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.object.component.translator.ClientTranslator;
 import com.development.simplestockmanager.web.object.validator.ClientValidator;
@@ -36,7 +38,8 @@ public class ClientAddView extends BaseAddView {
         controller = new ClientGeneralController();
         converter = new ClientConverter();
         translator = new ClientTranslator(user.getLanguageType().getCode());
-
+Employee e = new AuthenticationService().getCurrentEmployee();
+        System.out.println("#" + e);
         client = new Client();
         sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
     }

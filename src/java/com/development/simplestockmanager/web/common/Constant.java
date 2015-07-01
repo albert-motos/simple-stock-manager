@@ -68,6 +68,7 @@ public interface Constant {
                 public static String LOGIN = CLASS + " -> login function";
                 public static String LOGOUT = CLASS + " -> logout function";
                 public static String REDIRECT = CLASS + " -> redirect function";
+                public static String GET_CURRENT_EMPLOYEE = CLASS + " -> getCurrentEmployee function";
             }
         }
     }

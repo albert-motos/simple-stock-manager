@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -95,6 +96,13 @@ public class AuthenticationService implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public Employee getCurrentEmployee() {
+        System.out.println("#" + new Date() + Constant.LOGGER.SERVICE.AUTHENTICATION.GET_CURRENT_EMPLOYEE);
+        
+        String session = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+        return specificController.getEmployeeBySession(session);
     }
 
     public Employee getEmployee() {
