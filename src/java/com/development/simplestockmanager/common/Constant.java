@@ -39,5 +39,8 @@ public interface Constant {
                 public static String CLIENT = TEXT + "client";
             }
         }
+
     }
+
+    
 }

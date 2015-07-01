@@ -32,22 +32,7 @@ public interface Constant {
         public static long FAILURE = 0;
     }
 
-    public interface PROJECT {
-
-        public static String PERSISTENCE_UNIT = "SimpleStockManagerPU";
-        public static String WEB = "/SimpleStockManager";
-    }
-
-    public interface URL {
-
-        public static String INDEX = PROJECT.WEB + "/index.xhtml";
-
-        public interface ADD {
-
-            public static String ADD = PROJECT.WEB + "/add";
-            public static String CLIENT = ADD + "/client.xhtml";
-        }
-    }
+    
 
     public interface VIEW {
 
@@ -55,6 +40,35 @@ public interface Constant {
 
             public static String BEFORE = "Cancel";
             public static String AFTER = "Finish";
+        }
+    }
+    
+
+    public interface WEB {
+
+        public static String BASE = "/SimpleStockManager";
+        public static String INDEX = BASE + "/index.xhtml";
+        public static String LOGIN = BASE + "/login.xhtml";
+
+//        public interface ADD {
+//
+//            public static String ADD = PROJECT.WEB + "/add";
+//            public static String CLIENT = ADD + "/client.xhtml";
+//        }
+    }
+    
+    public interface LOGGER {
+
+        public interface SERVICE {
+
+            public interface AUTHENTICATION {
+
+                public static String CLASS = "AuthenticationService class";
+                public static String CONSTRUCTOR = CLASS + " -> constructor function";
+                public static String LOGIN = CLASS + " -> login function";
+                public static String LOGOUT = CLASS + " -> logout function";
+                public static String REDIRECT = CLASS + " -> redirect function";
+            }
         }
     }
 }
