@@ -4,7 +4,7 @@ import com.development.simplestockmanager.business.object.controller.general.Cli
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.web.object.Client;
 import com.development.simplestockmanager.common.converter.ClientConverter;
-import com.development.simplestockmanager.common.language.LanguageController;
+import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.web.common.service.AuthenticationService;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;

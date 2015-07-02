@@ -57,6 +57,8 @@ public interface Constant {
 //        }
     }
     
+    
+    
     public interface LOGGER {
 
         public interface SERVICE {
@@ -69,6 +71,12 @@ public interface Constant {
                 public static String LOGOUT = CLASS + " -> logout function";
                 public static String REDIRECT = CLASS + " -> redirect function";
                 public static String GET_CURRENT_EMPLOYEE = CLASS + " -> getCurrentEmployee function";
+            }
+            
+            public interface MENU {
+
+                public static String CLASS = "MenuService class";
+                public static String CONSTRUCTOR = CLASS + " -> constructor function";
             }
         }
     }

@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -33,7 +32,7 @@ public class AuthenticationService implements Serializable {
 
     public AuthenticationService() {
         System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.CONSTRUCTOR);
-        System.out.println("#" + FacesContext.getCurrentInstance().getExternalContext().getSessionId(true));
+        
         generalController = new EmployeeGeneralController();
         specificController = new EmployeeSpecificController();
         employee = new EmployeeNull();
@@ -52,7 +51,7 @@ public class AuthenticationService implements Serializable {
     }
 
     public void login() {
-        System.out.println("#" + new Date() + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGIN);
+        System.out.println("#" + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGIN);
 
         FacesContext currentInstance = FacesContext.getCurrentInstance();
         employee = specificController.getEmployeeByCredencials(employee.getUsername(), employee.getPassword());
@@ -79,7 +78,7 @@ public class AuthenticationService implements Serializable {
     }
 
     public void logout() {
-        System.out.println("#" + new Date() + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGOUT);
+        System.out.println("#" + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGOUT);
 
         try {
             employee.setIsOnline(false);
@@ -99,7 +98,7 @@ public class AuthenticationService implements Serializable {
     }
     
     public Employee getCurrentEmployee() {
-        System.out.println("#" + new Date() + Constant.LOGGER.SERVICE.AUTHENTICATION.GET_CURRENT_EMPLOYEE);
+        System.out.println("#" + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.GET_CURRENT_EMPLOYEE);
         
         String session = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
         return specificController.getEmployeeBySession(session);

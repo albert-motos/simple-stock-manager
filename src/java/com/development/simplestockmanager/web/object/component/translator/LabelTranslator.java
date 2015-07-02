@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.web.object.component.translator;
 
-import com.development.simplestockmanager.common.Constant;
+import com.development.simplestockmanager.common.InternationalizationConstant;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 

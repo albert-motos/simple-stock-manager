@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.common.language;
+package com.development.simplestockmanager.common.internationalization;
 
-import com.development.simplestockmanager.common.Constant;
+import com.development.simplestockmanager.common.InternationalizationConstant;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -15,12 +15,12 @@ import java.util.ResourceBundle;
  *
  * @author foxtrot
  */
-public class LanguageController {
+public class InternationalizationController {
     
     private Map<String, Locale> supportedLanguages;
     private ResourceBundle translation;
 
-    public LanguageController() {
+    public InternationalizationController() {
         supportedLanguages = new HashMap();
         supportedLanguages.put("en_US", Locale.ENGLISH);
         supportedLanguages.put("es_ES", new Locale("es","ES"));
@@ -28,9 +28,9 @@ public class LanguageController {
     }
 
     
-    public LanguageController(String language){
+    public InternationalizationController(String language){
         this();
-        translation = ResourceBundle.getBundle(Constant.LANGUAGE.PATH, supportedLanguages.get(language));
+        translation = ResourceBundle.getBundle(InternationalizationConstant.PATH, supportedLanguages.get(language));
         
     }
 
