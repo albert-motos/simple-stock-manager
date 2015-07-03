@@ -9,17 +9,17 @@
     <ui:define name="content">
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
-            <!--            <p:panel header="Client attributes" >-->
-            <p:panel header="#{clientAddView.translator.headerAttributes}" >
+
+            <p:panel header="#{clientLabel.attributes}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 35%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="#{clientAddView.translator.labelFirstname}" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
+                                        <p:outputLabel value="#{label.firstname}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
                                         <p:inputText value="#{clientAddView.client.firstname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
@@ -28,10 +28,10 @@
                         <p:column style="width: 65%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="#{clientAddView.translator.labelLastname}" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
+                                        <p:outputLabel value="#{label.lastname}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
                                         <p:inputText  value="#{clientAddView.client.lastname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
@@ -45,10 +45,10 @@
                         <p:column style="width: 30%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="#{clientAddView.translator.labelSexType}" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
+                                        <p:outputLabel value="#{label.sexType}" />
+                                    </p:column>
+                                    <p:column style="width: 100%" >
                                         <p:selectOneMenu value="#{clientAddView.sexTypeSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="Select one" itemValue="" />
                                             <f:selectItems value="#{clientAddView.sexTypeSelector.list}" />
@@ -60,11 +60,11 @@
                         <p:column style="width: 20%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="#{clientAddView.translator.labelBornDate}" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:calendar value="#{clientAddView.client.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true" />
+                                        <p:outputLabel value="#{label.bornDate}" />
+                                    </p:column>
+                                    <p:column style="width: 100%" >
+                                        <p:calendar value="#{clientAddView.client.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true"  style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -72,10 +72,10 @@
                         <p:column style="width: 40%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="#{clientAddView.translator.labelPhoneNumber}" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
+                                        <p:outputLabel value="#{label.phoneNumber}" />
+                                    </p:column>
+                                    <p:column style="width: 100%" >
                                         <p:inputText value="#{clientAddView.client.phone}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
@@ -89,29 +89,30 @@
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="#{clientAddView.translator.labelEmail}" style="font-weight: bold;" />
+                                    <p:column style="text-align: center">
+                                        <p:outputLabel value="#{label.email}" />
                                     </p:column>
-                                    <p:column>
+                                    <p:column style="width: 100%">
                                         <p:inputText  value="#{clientAddView.client.email}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
+
                     </p:row>
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="#{clientAddView.translator.headerVisibility}">
+            <p:panel header="#{clientLabel.visibility}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 250px; text-align: center">
-                                        <p:outputLabel value="#{clientAddView.translator.labelEnable}" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
+                                        <p:outputLabel value="#{clientLabel.enable}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
                                         <p:selectBooleanCheckbox value="#{clientAddView.client.enable}" />
                                     </p:column>
                                 </p:row>
@@ -122,8 +123,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="Create" rendered="#{not clientAddView.added}" actionListener="#{clientAddView.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{languageView.backButtonValue(clientAddView.added)}" actionListener="#{clientAddView.back()}"
+                <p:commandButton value="#{button.add}" rendered="#{not clientAddView.added}" actionListener="#{clientAddView.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(clientAddView.added)}" actionListener="#{clientAddView.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

@@ -6,7 +6,7 @@ import com.development.simplestockmanager.web.object.Client;
 import com.development.simplestockmanager.common.converter.ClientConverter;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import com.development.simplestockmanager.web.common.Constant;
-import com.development.simplestockmanager.web.common.service.AuthenticationService;
+import com.development.simplestockmanager.web.common.service.general.AuthenticationService;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.object.component.translator.ClientTranslator;
 import com.development.simplestockmanager.web.object.validator.ClientValidator;
@@ -28,7 +28,6 @@ public class ClientAddView extends BaseAddView {
     private final ClientValidator validator;
     private final ClientGeneralController controller;
     private final ClientConverter converter;
-    private final ClientTranslator translator;
 
     private final SexTypeSelector sexTypeSelector;
     private final Client client;
@@ -37,9 +36,7 @@ public class ClientAddView extends BaseAddView {
         validator = new ClientValidator(Constant.VALIDATOR.MODE.CREATE);
         controller = new ClientGeneralController();
         converter = new ClientConverter();
-        translator = new ClientTranslator(user.getLanguageType().getCode());
-Employee e = new AuthenticationService().getCurrentEmployee();
-        System.out.println("#" + e);
+        
         client = new Client();
         sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
     }
@@ -79,10 +76,6 @@ Employee e = new AuthenticationService().getCurrentEmployee();
 
     public Client getClient() {
         return client;
-    }
-
-    public ClientTranslator getTranslator() {
-        return translator;
     }
 
 }

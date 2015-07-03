@@ -78,6 +78,18 @@ public interface Constant {
                 public static String CLASS = "MenuService class";
                 public static String CONSTRUCTOR = CLASS + " -> constructor function";
             }
+            
+            public interface LABEL {
+
+                public static String CLASS = "LabelService class";
+                public static String CONSTRUCTOR = CLASS + " -> constructor function";
+            }
+            
+            public interface BUTTON {
+
+                public static String CLASS = "ButtonService class";
+                public static String CONSTRUCTOR = CLASS + " -> constructor function";
+            }
         }
     }
 }

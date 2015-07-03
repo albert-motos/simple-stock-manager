@@ -45,12 +45,4 @@ public interface Constant {
         }
     }
 
-    public interface VIEW {
-
-        public interface BUTTON {
-
-            public static String BEFORE = "Cancel";
-            public static String AFTER = "Finish";
-        }
-    }
 }

@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.common.service;
+package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.object.controller.general.EmployeeGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class AuthenticationService implements Serializable {
 
+    private final NavigationService navigation;
     private final EmployeeGeneralController generalController;
     private final EmployeeSpecificController specificController;
 
@@ -32,7 +33,8 @@ public class AuthenticationService implements Serializable {
 
     public AuthenticationService() {
         System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.CONSTRUCTOR);
-        
+
+        navigation = new NavigationService();
         generalController = new EmployeeGeneralController();
         specificController = new EmployeeSpecificController();
         employee = new EmployeeNull();
@@ -42,45 +44,43 @@ public class AuthenticationService implements Serializable {
         System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.REDIRECT);
 
         if (employee.getId() != Constant.IDENTIFIER.INVALID) {
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect(Constant.WEB.INDEX);
-            } catch (IOException ex) {
-                Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            navigation.redirect(Constant.WEB.INDEX);
         }
     }
 
     public void login() {
-        System.out.println("#" + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGIN);
+        System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGIN);
 
-        FacesContext currentInstance = FacesContext.getCurrentInstance();
         employee = specificController.getEmployeeByCredencials(employee.getUsername(), employee.getPassword());
+        FacesContext currentInstance = FacesContext.getCurrentInstance();
+        FacesMessage message = null;
 
-        if (employee.getId() != Constant.IDENTIFIER.INVALID) {
-            try {
-                employee.setIsOnline(true);
-                employee.setLastOnlineDate(new Date());
-                employee.setSessionId(currentInstance.getExternalContext().getSessionId(true));
-                if (generalController.update(employee) == Constant.UPDATE.FAILURE) {
-                    throw new Exception();
-                }
-
-                currentInstance.getExternalContext().redirect(Constant.WEB.INDEX);
-            } catch (IOException ex) {
-                Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if (employee.getId() == Constant.IDENTIFIER.INVALID) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The username or password is wrong");
+                throw new Exception();
             }
-        } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The username or password is wrong");
+
+            employee.setIsOnline(true);
+            employee.setLastOnlineDate(new Date());
+            employee.setSessionId(currentInstance.getExternalContext().getSessionId(false));
+
+            if (generalController.update(employee) == Constant.UPDATE.FAILURE) {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The server don't work properly");
+                throw new Exception();
+            }
+
+            navigation.redirect(Constant.WEB.INDEX);
+        } catch (Exception e) {
             currentInstance.addMessage(null, message);
         }
     }
 
     public void logout() {
-        System.out.println("#" + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGOUT);
+        System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.LOGOUT);
 
         try {
+            employee.setSessionId("");
             employee.setIsOnline(false);
 
             if (generalController.update(employee) == Constant.UPDATE.FAILURE) {
@@ -89,18 +89,18 @@ public class AuthenticationService implements Serializable {
 
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             externalContext.invalidateSession();
-            externalContext.redirect(Constant.WEB.LOGIN);
+            navigation.redirect(Constant.WEB.LOGIN);
         } catch (IOException ex) {
             Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(AuthenticationService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public Employee getCurrentEmployee() {
-        System.out.println("#" + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.GET_CURRENT_EMPLOYEE);
-        
-        String session = FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+        System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.AUTHENTICATION.GET_CURRENT_EMPLOYEE);
+
+        String session = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
         return specificController.getEmployeeBySession(session);
     }
 

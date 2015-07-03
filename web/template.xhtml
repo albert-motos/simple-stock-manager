@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -19,32 +20,35 @@
             <ui:insert name="top">
                 <h:form>
                     <p:menubar>
-                        <p:submenu label="Entity management">
-                            <p:submenu label="Brand">
-                                <p:menuitem value="Create brand" url="/add/brand.xhtml" />
-                                <p:menuitem value="Search brand" url="/find/brand.xhtml" />
+                        <p:submenu label="#{menu.entity}">
+                            <p:submenu label="#{menu.brand}">
+                                <p:menuitem value="#{menu.brandCreate}" url="/add/brand.xhtml" />
+                                <p:menuitem value="#{menu.brandSearch}" url="/find/brand.xhtml" />
                             </p:submenu>
-                            <p:submenu label="Client">
-                                <p:menuitem value="Create client" url="/add/client.xhtml" />
-                                <p:menuitem value="Search client" url="/find/client.xhtml" />
+                            <p:submenu label="#{menu.client}">
+                                <p:menuitem value="#{menu.clientCreate}" url="/add/client.xhtml" />
+                                <p:menuitem value="#{menu.clientSearch}" url="/find/client.xhtml" />
                             </p:submenu>
-                            <p:submenu label="Employee">
-                                <p:menuitem value="Create employee" url="/add/employee.xhtml" />
-                                <p:menuitem value="Search employee" url="/find/employee.xhtml" />
+                            <p:submenu label="#{menu.employee}">
+                                <p:menuitem value="#{menu.employeeCreate}" url="/add/employee.xhtml" />
+                                <p:menuitem value="#{menu.employeeSearch}" url="/find/employee.xhtml" />
                             </p:submenu>
-                            <p:submenu label="Product">
-                                <p:menuitem value="Create product" url="/add/product.xhtml" />
-                                <p:menuitem value="Search product" url="/find/product.xhtml" />
+                            <p:submenu label="#{menu.product}">
+                                <p:menuitem value="#{menu.productCreate}" url="/add/product.xhtml" />
+                                <p:menuitem value="#{menu.productSearch}" url="/find/product.xhtml" />
                             </p:submenu>
-                            <p:submenu label="Provider">
-                                <p:menuitem value="Create provider" url="/add/provider.xhtml" />
-                                <p:menuitem value="Search provider" url="/find/provider.xhtml" />
+                            <p:submenu label="#{menu.provider}">
+                                <p:menuitem value="#{menu.providerCreate}" url="/add/provider.xhtml" />
+                                <p:menuitem value="#{menu.providerSearch}" url="/find/provider.xhtml" />
                             </p:submenu>
-                            <p:submenu label="Store">
-                                <p:menuitem value="Create store" url="/add/store.xhtml" />
-                                <p:menuitem value="Search store" url="/find/store.xhtml" />
+                            <p:submenu label="#{menu.store}">
+                                <p:menuitem value="#{menu.storeCreate}" url="/add/store.xhtml" />
+                                <p:menuitem value="#{menu.storeSearch}" url="/find/store.xhtml" />
                             </p:submenu>
                         </p:submenu>
+                        <f:facet name="options" >
+                            <p:commandButton value="CLOSE_SESSION" actionListener="#{authentication.logout()}" />
+                        </f:facet>
                     </p:menubar>
                 </h:form>
             </ui:insert>

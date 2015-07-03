@@ -2,8 +2,8 @@ package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.web.common.Authentication;
-import com.development.simplestockmanager.web.common.NavigationView;
+import com.development.simplestockmanager.web.common.service.general.AuthenticationService;
+import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 
@@ -19,7 +19,7 @@ abstract class BaseAddView implements Serializable {
     protected Employee user;
 
     public BaseAddView() {
-        user = new Authentication().getCurrentUser();
+        user = new AuthenticationService().getCurrentEmployee();
         added = false;
     }
 
@@ -33,7 +33,7 @@ abstract class BaseAddView implements Serializable {
     }
     
     public void back() {
-        new NavigationView().redirect(Constant.URL.INDEX);
+        new NavigationService().redirect(Constant.URL.INDEX);
     }
 
 }

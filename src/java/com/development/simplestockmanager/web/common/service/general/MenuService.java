@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.common.service;
+package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.InternationalizationConstant;
@@ -10,13 +10,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
+ * Service class for menu internationalization functionality
  *
  * @author foxtrot
  */
 @ManagedBean(name = "menu")
 @SessionScoped
 public class MenuService implements Serializable {
-    
+
     private final String entity;
     private final String brand;
     private final String brandCreate;
@@ -36,14 +37,13 @@ public class MenuService implements Serializable {
     private final String store;
     private final String storeCreate;
     private final String storeSearch;
-    
 
     public MenuService() {
         System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.MENU.CONSTRUCTOR);
-        
+
         Employee user = new AuthenticationService().getCurrentEmployee();
         InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
-        
+
         entity = controller.getWord(InternationalizationConstant.MENU.ENTITY.TEXT);
         brand = controller.getWord(InternationalizationConstant.MENU.ENTITY.BRAND.TEXT);
         brandCreate = controller.getWord(InternationalizationConstant.MENU.ENTITY.BRAND.CREATE);

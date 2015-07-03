@@ -19,3 +19,8 @@ and open the template in the editor.
 .ui-messages-info, .ui-messages-warn, .ui-messages-error, .ui-messages-fatal {
     margin: 0px !important;
 }
+
+.ui-outputlabel {
+    white-space: nowrap;
+    font-weight: bold;
+}
