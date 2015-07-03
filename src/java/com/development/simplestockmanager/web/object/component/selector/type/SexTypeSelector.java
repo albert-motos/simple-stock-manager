@@ -22,7 +22,7 @@ public class SexTypeSelector extends BaseTypeSelector {
 
         for (SexType sexType : controller.fillSelector()) {
             String key = sexType.getType();
-            hashMap.put(key, sexType);
+            hashMap.put(key, sexType.getReferencedType());
             list.add(key);
         }
     }

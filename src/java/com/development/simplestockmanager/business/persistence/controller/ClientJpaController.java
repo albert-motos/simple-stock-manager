@@ -11,7 +11,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.Invoice;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -43,11 +42,6 @@ public class ClientJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            SexType sexType = client.getSexType();
-            if (sexType != null) {
-                sexType = em.getReference(sexType.getClass(), sexType.getId());
-                client.setSexType(sexType);
-            }
             List<Invoice> attachedInvoiceList = new ArrayList<Invoice>();
             for (Invoice invoiceListInvoiceToAttach : client.getInvoiceList()) {
                 invoiceListInvoiceToAttach = em.getReference(invoiceListInvoiceToAttach.getClass(), invoiceListInvoiceToAttach.getId());
@@ -55,10 +49,6 @@ public class ClientJpaController implements Serializable {
             }
             client.setInvoiceList(attachedInvoiceList);
             em.persist(client);
-            if (sexType != null) {
-                sexType.getClientList().add(client);
-                sexType = em.merge(sexType);
-            }
             for (Invoice invoiceListInvoice : client.getInvoiceList()) {
                 Client oldClientOfInvoiceListInvoice = invoiceListInvoice.getClient();
                 invoiceListInvoice.setClient(client);
@@ -82,8 +72,6 @@ public class ClientJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Client persistentClient = em.find(Client.class, client.getId());
-            SexType sexTypeOld = persistentClient.getSexType();
-            SexType sexTypeNew = client.getSexType();
             List<Invoice> invoiceListOld = persistentClient.getInvoiceList();
             List<Invoice> invoiceListNew = client.getInvoiceList();
             List<String> illegalOrphanMessages = null;
@@ -98,10 +86,6 @@ public class ClientJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (sexTypeNew != null) {
-                sexTypeNew = em.getReference(sexTypeNew.getClass(), sexTypeNew.getId());
-                client.setSexType(sexTypeNew);
-            }
             List<Invoice> attachedInvoiceListNew = new ArrayList<Invoice>();
             for (Invoice invoiceListNewInvoiceToAttach : invoiceListNew) {
                 invoiceListNewInvoiceToAttach = em.getReference(invoiceListNewInvoiceToAttach.getClass(), invoiceListNewInvoiceToAttach.getId());
@@ -110,14 +94,6 @@ public class ClientJpaController implements Serializable {
             invoiceListNew = attachedInvoiceListNew;
             client.setInvoiceList(invoiceListNew);
             client = em.merge(client);
-            if (sexTypeOld != null && !sexTypeOld.equals(sexTypeNew)) {
-                sexTypeOld.getClientList().remove(client);
-                sexTypeOld = em.merge(sexTypeOld);
-            }
-            if (sexTypeNew != null && !sexTypeNew.equals(sexTypeOld)) {
-                sexTypeNew.getClientList().add(client);
-                sexTypeNew = em.merge(sexTypeNew);
-            }
             for (Invoice invoiceListNewInvoice : invoiceListNew) {
                 if (!invoiceListOld.contains(invoiceListNewInvoice)) {
                     Client oldClientOfInvoiceListNewInvoice = invoiceListNewInvoice.getClient();
@@ -168,11 +144,6 @@ public class ClientJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            SexType sexType = client.getSexType();
-            if (sexType != null) {
-                sexType.getClientList().remove(client);
-                sexType = em.merge(sexType);
             }
             em.remove(client);
             em.getTransaction().commit();

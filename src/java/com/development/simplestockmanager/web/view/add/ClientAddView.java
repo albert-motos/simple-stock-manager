@@ -1,8 +1,7 @@
 package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.object.controller.general.ClientGeneralController;
-import com.development.simplestockmanager.web.object.Client;
-import com.development.simplestockmanager.common.converter.ClientConverter;
+import com.development.simplestockmanager.business.persistence.Client;
 import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.object.validator.ClientValidator;
@@ -17,13 +16,12 @@ import javax.faces.context.FacesContext;
  *
  * @author foxtrot
  */
-@ViewScoped
-@ManagedBean
+@ManagedBean(name = "cliendAdd")
+@ViewScoped 
 public class ClientAddView extends BaseAddView {
 
     private final ClientValidator validator;
     private final ClientGeneralController controller;
-    private final ClientConverter converter;
 
     private final SexTypeSelector sexTypeSelector;
     private final Client client;
@@ -31,7 +29,6 @@ public class ClientAddView extends BaseAddView {
     public ClientAddView() {        
         validator = new ClientValidator(Constant.VALIDATOR.MODE.CREATE, user.getLanguageType().getCode());
         controller = new ClientGeneralController();
-        converter = new ClientConverter();
         
         client = new Client();
         sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
@@ -40,18 +37,17 @@ public class ClientAddView extends BaseAddView {
     @Override
     public void add() {
         FacesContext context = FacesContext.getCurrentInstance();
-        System.out.println(sexTypeSelector.getSelectedValue().getId());
-        client.setSexType(sexTypeSelector.getSelectedValue().getId());
+        
+        client.setSexType(sexTypeSelector.getSelectedValue());
         validator.setObject(client);
 
         if (validator.validate()) {
-            com.development.simplestockmanager.business.persistence.Client businessObject = converter.getBusinessObject(client);
-            businessObject.setCreatedDate(new Date());
-            businessObject.setLastModifiedDate(new Date());
-            businessObject.setCreatedUser(user.getUsername());
-            businessObject.setLastModifiedUser(user.getUsername());
+            client.setCreatedDate(new Date());
+            client.setLastModifiedDate(new Date());
+            client.setCreatedUser(user.getUsername());
+            client.setLastModifiedUser(user.getUsername());
 
-            Long id = controller.create(businessObject);
+            Long id = controller.create(client);
 
             if (id == Constant.IDENTIFIER.INVALID) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "Database server doesn't work properly"));

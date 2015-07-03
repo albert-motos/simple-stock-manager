@@ -12,7 +12,7 @@ import javax.faces.bean.ManagedBean;
  *
  * @author foxtrot
  */
-@ManagedBean
+//@ManagedBean
 abstract class BaseAddView implements Serializable {
 
     protected boolean added;

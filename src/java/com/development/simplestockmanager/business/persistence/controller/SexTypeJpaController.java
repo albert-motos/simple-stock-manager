@@ -12,12 +12,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.LanguageType;
 import com.development.simplestockmanager.business.persistence.SexType;
-import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
 import java.util.List;
-import com.development.simplestockmanager.business.persistence.Client;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -37,12 +34,6 @@ public class SexTypeJpaController implements Serializable {
     }
 
     public void create(SexType sexType) {
-        if (sexType.getEmployeeList() == null) {
-            sexType.setEmployeeList(new ArrayList<Employee>());
-        }
-        if (sexType.getClientList() == null) {
-            sexType.setClientList(new ArrayList<Client>());
-        }
         if (sexType.getSexTypeList() == null) {
             sexType.setSexTypeList(new ArrayList<SexType>());
         }
@@ -60,18 +51,6 @@ public class SexTypeJpaController implements Serializable {
                 referencedType = em.getReference(referencedType.getClass(), referencedType.getId());
                 sexType.setReferencedType(referencedType);
             }
-            List<Employee> attachedEmployeeList = new ArrayList<Employee>();
-            for (Employee employeeListEmployeeToAttach : sexType.getEmployeeList()) {
-                employeeListEmployeeToAttach = em.getReference(employeeListEmployeeToAttach.getClass(), employeeListEmployeeToAttach.getId());
-                attachedEmployeeList.add(employeeListEmployeeToAttach);
-            }
-            sexType.setEmployeeList(attachedEmployeeList);
-            List<Client> attachedClientList = new ArrayList<Client>();
-            for (Client clientListClientToAttach : sexType.getClientList()) {
-                clientListClientToAttach = em.getReference(clientListClientToAttach.getClass(), clientListClientToAttach.getId());
-                attachedClientList.add(clientListClientToAttach);
-            }
-            sexType.setClientList(attachedClientList);
             List<SexType> attachedSexTypeList = new ArrayList<SexType>();
             for (SexType sexTypeListSexTypeToAttach : sexType.getSexTypeList()) {
                 sexTypeListSexTypeToAttach = em.getReference(sexTypeListSexTypeToAttach.getClass(), sexTypeListSexTypeToAttach.getId());
@@ -86,24 +65,6 @@ public class SexTypeJpaController implements Serializable {
             if (referencedType != null) {
                 referencedType.getSexTypeList().add(sexType);
                 referencedType = em.merge(referencedType);
-            }
-            for (Employee employeeListEmployee : sexType.getEmployeeList()) {
-                SexType oldSexTypeOfEmployeeListEmployee = employeeListEmployee.getSexType();
-                employeeListEmployee.setSexType(sexType);
-                employeeListEmployee = em.merge(employeeListEmployee);
-                if (oldSexTypeOfEmployeeListEmployee != null) {
-                    oldSexTypeOfEmployeeListEmployee.getEmployeeList().remove(employeeListEmployee);
-                    oldSexTypeOfEmployeeListEmployee = em.merge(oldSexTypeOfEmployeeListEmployee);
-                }
-            }
-            for (Client clientListClient : sexType.getClientList()) {
-                SexType oldSexTypeOfClientListClient = clientListClient.getSexType();
-                clientListClient.setSexType(sexType);
-                clientListClient = em.merge(clientListClient);
-                if (oldSexTypeOfClientListClient != null) {
-                    oldSexTypeOfClientListClient.getClientList().remove(clientListClient);
-                    oldSexTypeOfClientListClient = em.merge(oldSexTypeOfClientListClient);
-                }
             }
             for (SexType sexTypeListSexType : sexType.getSexTypeList()) {
                 SexType oldReferencedTypeOfSexTypeListSexType = sexTypeListSexType.getReferencedType();
@@ -122,7 +83,7 @@ public class SexTypeJpaController implements Serializable {
         }
     }
 
-    public void edit(SexType sexType) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(SexType sexType) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -132,32 +93,8 @@ public class SexTypeJpaController implements Serializable {
             LanguageType languageTypeNew = sexType.getLanguageType();
             SexType referencedTypeOld = persistentSexType.getReferencedType();
             SexType referencedTypeNew = sexType.getReferencedType();
-            List<Employee> employeeListOld = persistentSexType.getEmployeeList();
-            List<Employee> employeeListNew = sexType.getEmployeeList();
-            List<Client> clientListOld = persistentSexType.getClientList();
-            List<Client> clientListNew = sexType.getClientList();
             List<SexType> sexTypeListOld = persistentSexType.getSexTypeList();
             List<SexType> sexTypeListNew = sexType.getSexTypeList();
-            List<String> illegalOrphanMessages = null;
-            for (Employee employeeListOldEmployee : employeeListOld) {
-                if (!employeeListNew.contains(employeeListOldEmployee)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Employee " + employeeListOldEmployee + " since its sexType field is not nullable.");
-                }
-            }
-            for (Client clientListOldClient : clientListOld) {
-                if (!clientListNew.contains(clientListOldClient)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Client " + clientListOldClient + " since its sexType field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             if (languageTypeNew != null) {
                 languageTypeNew = em.getReference(languageTypeNew.getClass(), languageTypeNew.getId());
                 sexType.setLanguageType(languageTypeNew);
@@ -166,20 +103,6 @@ public class SexTypeJpaController implements Serializable {
                 referencedTypeNew = em.getReference(referencedTypeNew.getClass(), referencedTypeNew.getId());
                 sexType.setReferencedType(referencedTypeNew);
             }
-            List<Employee> attachedEmployeeListNew = new ArrayList<Employee>();
-            for (Employee employeeListNewEmployeeToAttach : employeeListNew) {
-                employeeListNewEmployeeToAttach = em.getReference(employeeListNewEmployeeToAttach.getClass(), employeeListNewEmployeeToAttach.getId());
-                attachedEmployeeListNew.add(employeeListNewEmployeeToAttach);
-            }
-            employeeListNew = attachedEmployeeListNew;
-            sexType.setEmployeeList(employeeListNew);
-            List<Client> attachedClientListNew = new ArrayList<Client>();
-            for (Client clientListNewClientToAttach : clientListNew) {
-                clientListNewClientToAttach = em.getReference(clientListNewClientToAttach.getClass(), clientListNewClientToAttach.getId());
-                attachedClientListNew.add(clientListNewClientToAttach);
-            }
-            clientListNew = attachedClientListNew;
-            sexType.setClientList(clientListNew);
             List<SexType> attachedSexTypeListNew = new ArrayList<SexType>();
             for (SexType sexTypeListNewSexTypeToAttach : sexTypeListNew) {
                 sexTypeListNewSexTypeToAttach = em.getReference(sexTypeListNewSexTypeToAttach.getClass(), sexTypeListNewSexTypeToAttach.getId());
@@ -203,28 +126,6 @@ public class SexTypeJpaController implements Serializable {
             if (referencedTypeNew != null && !referencedTypeNew.equals(referencedTypeOld)) {
                 referencedTypeNew.getSexTypeList().add(sexType);
                 referencedTypeNew = em.merge(referencedTypeNew);
-            }
-            for (Employee employeeListNewEmployee : employeeListNew) {
-                if (!employeeListOld.contains(employeeListNewEmployee)) {
-                    SexType oldSexTypeOfEmployeeListNewEmployee = employeeListNewEmployee.getSexType();
-                    employeeListNewEmployee.setSexType(sexType);
-                    employeeListNewEmployee = em.merge(employeeListNewEmployee);
-                    if (oldSexTypeOfEmployeeListNewEmployee != null && !oldSexTypeOfEmployeeListNewEmployee.equals(sexType)) {
-                        oldSexTypeOfEmployeeListNewEmployee.getEmployeeList().remove(employeeListNewEmployee);
-                        oldSexTypeOfEmployeeListNewEmployee = em.merge(oldSexTypeOfEmployeeListNewEmployee);
-                    }
-                }
-            }
-            for (Client clientListNewClient : clientListNew) {
-                if (!clientListOld.contains(clientListNewClient)) {
-                    SexType oldSexTypeOfClientListNewClient = clientListNewClient.getSexType();
-                    clientListNewClient.setSexType(sexType);
-                    clientListNewClient = em.merge(clientListNewClient);
-                    if (oldSexTypeOfClientListNewClient != null && !oldSexTypeOfClientListNewClient.equals(sexType)) {
-                        oldSexTypeOfClientListNewClient.getClientList().remove(clientListNewClient);
-                        oldSexTypeOfClientListNewClient = em.merge(oldSexTypeOfClientListNewClient);
-                    }
-                }
             }
             for (SexType sexTypeListOldSexType : sexTypeListOld) {
                 if (!sexTypeListNew.contains(sexTypeListOldSexType)) {
@@ -260,7 +161,7 @@ public class SexTypeJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -271,24 +172,6 @@ public class SexTypeJpaController implements Serializable {
                 sexType.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The sexType with id " + id + " no longer exists.", enfe);
-            }
-            List<String> illegalOrphanMessages = null;
-            List<Employee> employeeListOrphanCheck = sexType.getEmployeeList();
-            for (Employee employeeListOrphanCheckEmployee : employeeListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This SexType (" + sexType + ") cannot be destroyed since the Employee " + employeeListOrphanCheckEmployee + " in its employeeList field has a non-nullable sexType field.");
-            }
-            List<Client> clientListOrphanCheck = sexType.getClientList();
-            for (Client clientListOrphanCheckClient : clientListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This SexType (" + sexType + ") cannot be destroyed since the Client " + clientListOrphanCheckClient + " in its clientList field has a non-nullable sexType field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             LanguageType languageType = sexType.getLanguageType();
             if (languageType != null) {

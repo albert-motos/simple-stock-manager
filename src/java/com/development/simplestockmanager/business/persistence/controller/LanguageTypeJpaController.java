@@ -227,14 +227,6 @@ public class LanguageTypeJpaController implements Serializable {
                     illegalOrphanMessages.add("You must retain PriceType " + priceTypeListOldPriceType + " since its languageType field is not nullable.");
                 }
             }
-            for (SexType sexTypeListOldSexType : sexTypeListOld) {
-                if (!sexTypeListNew.contains(sexTypeListOldSexType)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain SexType " + sexTypeListOldSexType + " since its languageType field is not nullable.");
-                }
-            }
             for (PaymentType paymentTypeListOldPaymentType : paymentTypeListOld) {
                 if (!paymentTypeListNew.contains(paymentTypeListOldPaymentType)) {
                     if (illegalOrphanMessages == null) {
@@ -363,6 +355,12 @@ public class LanguageTypeJpaController implements Serializable {
                     }
                 }
             }
+            for (SexType sexTypeListOldSexType : sexTypeListOld) {
+                if (!sexTypeListNew.contains(sexTypeListOldSexType)) {
+                    sexTypeListOldSexType.setLanguageType(null);
+                    sexTypeListOldSexType = em.merge(sexTypeListOldSexType);
+                }
+            }
             for (SexType sexTypeListNewSexType : sexTypeListNew) {
                 if (!sexTypeListOld.contains(sexTypeListNewSexType)) {
                     LanguageType oldLanguageTypeOfSexTypeListNewSexType = sexTypeListNewSexType.getLanguageType();
@@ -451,13 +449,6 @@ public class LanguageTypeJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the PriceType " + priceTypeListOrphanCheckPriceType + " in its priceTypeList field has a non-nullable languageType field.");
             }
-            List<SexType> sexTypeListOrphanCheck = languageType.getSexTypeList();
-            for (SexType sexTypeListOrphanCheckSexType : sexTypeListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the SexType " + sexTypeListOrphanCheckSexType + " in its sexTypeList field has a non-nullable languageType field.");
-            }
             List<PaymentType> paymentTypeListOrphanCheck = languageType.getPaymentTypeList();
             for (PaymentType paymentTypeListOrphanCheckPaymentType : paymentTypeListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -491,6 +482,11 @@ public class LanguageTypeJpaController implements Serializable {
             for (LanguageType languageTypeListLanguageType : languageTypeList) {
                 languageTypeListLanguageType.setReferencedType(null);
                 languageTypeListLanguageType = em.merge(languageTypeListLanguageType);
+            }
+            List<SexType> sexTypeList = languageType.getSexTypeList();
+            for (SexType sexTypeListSexType : sexTypeList) {
+                sexTypeListSexType.setLanguageType(null);
+                sexTypeListSexType = em.merge(sexTypeListSexType);
             }
             em.remove(languageType);
             em.getTransaction().commit();

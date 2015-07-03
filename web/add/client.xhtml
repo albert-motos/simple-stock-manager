@@ -20,7 +20,7 @@
                                         <p:outputLabel value="#{label.firstname}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{clientAddView.client.firstname}" style="width: 100%" />
+                                        <p:inputText value="#{cliendAdd.client.firstname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -32,7 +32,7 @@
                                         <p:outputLabel value="#{label.lastname}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText  value="#{clientAddView.client.lastname}" style="width: 100%" />
+                                        <p:inputText value="#{cliendAdd.client.lastname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -49,9 +49,9 @@
                                         <p:outputLabel value="#{label.sexType}" />
                                     </p:column>
                                     <p:column style="width: 100%" >
-                                        <p:selectOneMenu value="#{clientAddView.sexTypeSelector.selection}" style="width: 100%">
+                                        <p:selectOneMenu value="#{cliendAdd.sexTypeSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="Select one" itemValue="" />
-                                            <f:selectItems value="#{clientAddView.sexTypeSelector.list}" />
+                                            <f:selectItems value="#{cliendAdd.sexTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -64,7 +64,7 @@
                                         <p:outputLabel value="#{label.bornDate}" />
                                     </p:column>
                                     <p:column style="width: 100%" >
-                                        <p:calendar value="#{clientAddView.client.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true"  style="width: 100%" />
+                                        <p:calendar value="#{cliendAdd.client.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true"  style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -76,7 +76,7 @@
                                         <p:outputLabel value="#{label.phoneNumber}" />
                                     </p:column>
                                     <p:column style="width: 100%" >
-                                        <p:inputText value="#{clientAddView.client.phone}" style="width: 100%" />
+                                        <p:inputText value="#{cliendAdd.client.phone}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -93,7 +93,7 @@
                                         <p:outputLabel value="#{label.email}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText  value="#{clientAddView.client.email}" style="width: 100%" />
+                                        <p:inputText  value="#{cliendAdd.client.email}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -113,7 +113,7 @@
                                         <p:outputLabel value="#{clientLabel.enable}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{clientAddView.client.enable}" />
+                                        <p:selectBooleanCheckbox value="#{cliendAdd.client.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -123,8 +123,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{button.add}" rendered="#{not clientAddView.added}" actionListener="#{clientAddView.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{button.back(clientAddView.added)}" actionListener="#{clientAddView.back()}"
+                <p:commandButton value="#{button.add}" rendered="#{not cliendAdd.added}" actionListener="#{cliendAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(cliendAdd.added)}" actionListener="#{cliendAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

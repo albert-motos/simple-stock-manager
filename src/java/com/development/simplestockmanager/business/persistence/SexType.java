@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -69,12 +68,8 @@ public class SexType implements Serializable {
     @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_USER")
     private String lastModifiedUser;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sexType")
-    private List<Employee> employeeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sexType")
-    private List<Client> clientList;
     @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private LanguageType languageType;
     @OneToMany(mappedBy = "referencedType")
     private List<SexType> sexTypeList;
@@ -153,24 +148,6 @@ public class SexType implements Serializable {
 
     public void setLastModifiedUser(String lastModifiedUser) {
         this.lastModifiedUser = lastModifiedUser;
-    }
-
-    @XmlTransient
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
-    }
-
-    @XmlTransient
-    public List<Client> getClientList() {
-        return clientList;
-    }
-
-    public void setClientList(List<Client> clientList) {
-        this.clientList = clientList;
     }
 
     public LanguageType getLanguageType() {

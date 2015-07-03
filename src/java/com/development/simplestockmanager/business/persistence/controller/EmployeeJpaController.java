@@ -12,7 +12,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
-import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.LanguageType;
 import com.development.simplestockmanager.business.persistence.Record;
 import java.util.ArrayList;
@@ -58,11 +57,6 @@ public class EmployeeJpaController implements Serializable {
                 employeeType = em.getReference(employeeType.getClass(), employeeType.getId());
                 employee.setEmployeeType(employeeType);
             }
-            SexType sexType = employee.getSexType();
-            if (sexType != null) {
-                sexType = em.getReference(sexType.getClass(), sexType.getId());
-                employee.setSexType(sexType);
-            }
             LanguageType languageType = employee.getLanguageType();
             if (languageType != null) {
                 languageType = em.getReference(languageType.getClass(), languageType.getId());
@@ -90,10 +84,6 @@ public class EmployeeJpaController implements Serializable {
             if (employeeType != null) {
                 employeeType.getEmployeeList().add(employee);
                 employeeType = em.merge(employeeType);
-            }
-            if (sexType != null) {
-                sexType.getEmployeeList().add(employee);
-                sexType = em.merge(sexType);
             }
             if (languageType != null) {
                 languageType.getEmployeeList().add(employee);
@@ -142,8 +132,6 @@ public class EmployeeJpaController implements Serializable {
             Employee persistentEmployee = em.find(Employee.class, employee.getId());
             EmployeeType employeeTypeOld = persistentEmployee.getEmployeeType();
             EmployeeType employeeTypeNew = employee.getEmployeeType();
-            SexType sexTypeOld = persistentEmployee.getSexType();
-            SexType sexTypeNew = employee.getSexType();
             LanguageType languageTypeOld = persistentEmployee.getLanguageType();
             LanguageType languageTypeNew = employee.getLanguageType();
             List<Record> recordListOld = persistentEmployee.getRecordList();
@@ -184,10 +172,6 @@ public class EmployeeJpaController implements Serializable {
                 employeeTypeNew = em.getReference(employeeTypeNew.getClass(), employeeTypeNew.getId());
                 employee.setEmployeeType(employeeTypeNew);
             }
-            if (sexTypeNew != null) {
-                sexTypeNew = em.getReference(sexTypeNew.getClass(), sexTypeNew.getId());
-                employee.setSexType(sexTypeNew);
-            }
             if (languageTypeNew != null) {
                 languageTypeNew = em.getReference(languageTypeNew.getClass(), languageTypeNew.getId());
                 employee.setLanguageType(languageTypeNew);
@@ -221,14 +205,6 @@ public class EmployeeJpaController implements Serializable {
             if (employeeTypeNew != null && !employeeTypeNew.equals(employeeTypeOld)) {
                 employeeTypeNew.getEmployeeList().add(employee);
                 employeeTypeNew = em.merge(employeeTypeNew);
-            }
-            if (sexTypeOld != null && !sexTypeOld.equals(sexTypeNew)) {
-                sexTypeOld.getEmployeeList().remove(employee);
-                sexTypeOld = em.merge(sexTypeOld);
-            }
-            if (sexTypeNew != null && !sexTypeNew.equals(sexTypeOld)) {
-                sexTypeNew.getEmployeeList().add(employee);
-                sexTypeNew = em.merge(sexTypeNew);
             }
             if (languageTypeOld != null && !languageTypeOld.equals(languageTypeNew)) {
                 languageTypeOld.getEmployeeList().remove(employee);
@@ -329,11 +305,6 @@ public class EmployeeJpaController implements Serializable {
             if (employeeType != null) {
                 employeeType.getEmployeeList().remove(employee);
                 employeeType = em.merge(employeeType);
-            }
-            SexType sexType = employee.getSexType();
-            if (sexType != null) {
-                sexType.getEmployeeList().remove(employee);
-                sexType = em.merge(sexType);
             }
             LanguageType languageType = employee.getLanguageType();
             if (languageType != null) {
