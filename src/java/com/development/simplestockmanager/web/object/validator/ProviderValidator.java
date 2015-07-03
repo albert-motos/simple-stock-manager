@@ -9,7 +9,7 @@ public class ProviderValidator extends BaseValidator {
     private Provider provider;
 
     public ProviderValidator(long mode) {
-        super(mode);
+        super(mode, "");
     }
 
     @Override

@@ -9,7 +9,7 @@ public class ProductValidator extends BaseValidator {
     private Product product;
 
     public ProductValidator(long mode) {
-        super(mode);
+        super(mode, "");
     }
     
     @Override

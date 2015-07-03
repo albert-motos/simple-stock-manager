@@ -9,7 +9,7 @@ public class StoreValidator extends BaseValidator {
     private Store store;
 
     public StoreValidator(long mode) {
-        super(mode);
+        super(mode, "");
     }
     
     @Override

@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.web.object.validator;
 
+import com.development.simplestockmanager.common.InternationalizationConstant;
 import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.web.object.Client;
 import java.util.ArrayList;
@@ -10,8 +11,8 @@ public class ClientValidator extends BaseValidator {
 
     private Client client;
 
-    public ClientValidator(long mode) {
-        super(mode);
+    public ClientValidator(long mode, String language) {
+        super(mode, language);
     }
 
     @Override
@@ -30,27 +31,27 @@ public class ClientValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (client.getFirstname().isEmpty()) {
-            fieldsEmptyList.add("First name");
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.FIRSTNAME));
         }
 
         if (client.getLastname().isEmpty()) {
-            fieldsEmptyList.add("Last name");
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.LASTNAME));
         }
 
         if (client.getPhone().isEmpty()) {
-            fieldsEmptyList.add("Phone number");
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.PHONE_NUMBER));
         }
 
         if (client.getEmail().isEmpty()) {
-            fieldsEmptyList.add("Email");
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.EMAIL));
         }
 
         if (client.getBornDate() == null) {
-            fieldsEmptyList.add("Born date");
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.BORN_DATE));
         }
 
         if (client.getSexType() == Constant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add("Sex type selector: this selector is not indicated");
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.SEX_TYPE));
         }
 
         return fieldsEmptyList;
@@ -62,7 +63,7 @@ public class ClientValidator extends BaseValidator {
 
         if (client.getBornDate() != null) {
             if (client.getBornDate().after(new Date())) {
-                causeList.add("Born date: The date may not be later than today");
+                causeList.add(controller.getWord(InternationalizationConstant.MESSAGE.ERROR.BORN_DATE));
             }
         }
 

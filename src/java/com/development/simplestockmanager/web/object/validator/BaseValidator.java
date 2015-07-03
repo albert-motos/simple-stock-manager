@@ -5,6 +5,8 @@
  */
 package com.development.simplestockmanager.web.object.validator;
 
+import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -14,51 +16,69 @@ import javax.faces.application.FacesMessage;
  * @author Monica
  */
 abstract class BaseValidator {
-    
+
+    protected InternationalizationController controller;
     protected long mode;
     protected Object object;
     private List<FacesMessage> messageList;
 
-    public BaseValidator(long mode) {
+    public BaseValidator(long mode, String language) {
         this.mode = mode;
+        this.controller = new InternationalizationController(language);
     }
-    
+
     public void setObject(Object object) {
         this.object = object;
     }
-    
+
     public List<FacesMessage> getMessageList() {
         return messageList;
     }
-    
+
     abstract protected void convertObject();
-    
+
     abstract public boolean validate();
-    
+
     protected boolean validate(List<String> warningList, List<String> errorList) {
         messageList = new ArrayList<>();
-        
+        String detail;
+        String summary;
+
         if (!warningList.isEmpty()) {
-            messageList.add(new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next " + (warningList.size() > 1 ? "fields" : "field") + " couldn't be empty:"));
+            summary = controller.getWord(InternationalizationConstant.MESSAGE.WARNING.SUMMARY);
+            if (warningList.size() == 1) {
+                detail = controller.getWord(InternationalizationConstant.MESSAGE.WARNING.DETAIL.SINGULAR);
+            } else {
+                detail = controller.getWord(InternationalizationConstant.MESSAGE.WARNING.DETAIL.PLURAL);
+            }
             
+            messageList.add(new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
+
             for (String warning : warningList) {
-                messageList.add(new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "   -   " + warning));
+                messageList.add(new FacesMessage(FacesMessage.SEVERITY_WARN, summary, "   -   " + warning));
             }
         }
-        
+
         if (!errorList.isEmpty()) {
-            messageList.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The next " + (errorList.size() > 1 ? "fields have" : "field has") + " erroneous information:"));
+            summary = controller.getWord(InternationalizationConstant.MESSAGE.ERROR.SUMMARY);
+            if (errorList.size() == 1) {
+                detail = controller.getWord(InternationalizationConstant.MESSAGE.ERROR.DETAIL.SINGULAR);
+            } else {
+                detail = controller.getWord(InternationalizationConstant.MESSAGE.ERROR.DETAIL.PLURAL);
+            }
             
+            messageList.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
+
             for (String error : errorList) {
-                messageList.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "   -   " + error));
+                messageList.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, "   -   " + error));
             }
         }
-        
+
         return messageList.isEmpty();
     }
-    
+
     abstract protected List<String> checkFields();
-    
+
     protected List<String> inconsistenceFields() {
         return new ArrayList<>();
     }

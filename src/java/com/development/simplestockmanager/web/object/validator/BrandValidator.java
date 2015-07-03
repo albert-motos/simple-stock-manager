@@ -10,7 +10,7 @@ public class BrandValidator extends BaseValidator {
     private Brand brand;
 
     public BrandValidator(long mode) {
-        super(mode);
+        super(mode, "");
     }
     
     @Override

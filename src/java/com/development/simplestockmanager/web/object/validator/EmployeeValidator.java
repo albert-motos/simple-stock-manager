@@ -16,7 +16,7 @@ public class EmployeeValidator extends BaseValidator {
     private Employee employee;
 
     public EmployeeValidator(long mode) {
-        super(mode);
+        super(mode, "");
     }
 
     @Override

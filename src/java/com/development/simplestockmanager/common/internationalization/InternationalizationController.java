@@ -20,7 +20,7 @@ public class InternationalizationController {
     private Map<String, Locale> supportedLanguages;
     private ResourceBundle translation;
 
-    public InternationalizationController() {
+    private InternationalizationController() {
         supportedLanguages = new HashMap();
         supportedLanguages.put("en_US", Locale.ENGLISH);
         supportedLanguages.put("es_ES", new Locale("es","ES"));

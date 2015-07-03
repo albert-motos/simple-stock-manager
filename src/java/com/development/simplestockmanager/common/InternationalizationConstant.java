@@ -96,4 +96,43 @@ public interface InternationalizationConstant {
         public static String CANCEL = TEXT + ".cancel";
         public static String FINISH = TEXT + ".finish";
     }
+
+    public interface MESSAGE {
+
+        public static String TEXT = "message";
+
+        public interface WARNING {
+
+            public static String TEXT = MESSAGE.TEXT + ".warning";
+            public static String FIRSTNAME = TEXT + ".firstname";
+            public static String LASTNAME = TEXT + ".lastname";
+            public static String SEX_TYPE = TEXT + ".sextype";
+            public static String BORN_DATE = TEXT + ".borndate";
+            public static String PHONE_NUMBER = TEXT + ".phonenumber";
+            public static String EMAIL = TEXT + ".email";
+            public static String SUMMARY = TEXT + ".summary";
+
+            public interface DETAIL {
+
+                public static String TEXT = WARNING.TEXT + ".detail";
+                public static String SINGULAR = TEXT + ".singular";
+                public static String PLURAL = TEXT + ".plural";
+            }
+        }
+
+        public interface ERROR {
+
+            public static String TEXT = MESSAGE.TEXT + ".error";
+            public static String BORN_DATE = TEXT + ".borndate";
+            
+            public static String SUMMARY = TEXT + ".summary";
+
+            public interface DETAIL {
+
+                public static String TEXT = ERROR.TEXT + ".detail";
+                public static String SINGULAR = TEXT + ".singular";
+                public static String PLURAL = TEXT + ".plural";
+            }
+        }
+    }
 }
