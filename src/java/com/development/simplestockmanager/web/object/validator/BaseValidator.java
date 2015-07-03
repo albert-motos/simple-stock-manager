@@ -22,9 +22,9 @@ abstract class BaseValidator {
     protected Object object;
     private List<FacesMessage> messageList;
 
-    public BaseValidator(long mode, String language) {
+    public BaseValidator(long mode, InternationalizationController controller) {
         this.mode = mode;
-        this.controller = new InternationalizationController(language);
+        this.controller = controller;
     }
 
     public void setObject(Object object) {

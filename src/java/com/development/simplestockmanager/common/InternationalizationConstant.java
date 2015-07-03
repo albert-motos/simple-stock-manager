@@ -124,7 +124,7 @@ public interface InternationalizationConstant {
 
             public static String TEXT = MESSAGE.TEXT + ".error";
             public static String BORN_DATE = TEXT + ".borndate";
-            
+
             public static String SUMMARY = TEXT + ".summary";
 
             public interface DETAIL {
@@ -132,6 +132,43 @@ public interface InternationalizationConstant {
                 public static String TEXT = ERROR.TEXT + ".detail";
                 public static String SINGULAR = TEXT + ".singular";
                 public static String PLURAL = TEXT + ".plural";
+            }
+        }
+
+        public interface FATAL {
+
+            public static String TEXT = MESSAGE.TEXT + ".fatal";
+
+            public static String SUMMARY = TEXT + ".summary";
+
+            public interface DETAIL {
+
+                public static String TEXT = FATAL.TEXT + ".detail";
+                public static String DATABASE = TEXT + ".database";
+            }
+        }
+
+        public interface INFO {
+
+            public static String TEXT = MESSAGE.TEXT + ".info";
+
+            public static String SUMMARY = TEXT + ".summary";
+
+            public interface DETAIL {
+
+                public static String TEXT = INFO.TEXT + ".detail";
+
+                public interface OBJECT {
+
+                    public static String TEXT = DETAIL.TEXT + ".object";
+                    public static String CLIENT = TEXT + ".client";
+                }
+
+                public interface ACTION {
+
+                    public static String TEXT = DETAIL.TEXT + ".action";
+                    public static String CREATE = TEXT + ".create";
+                }
             }
         }
     }

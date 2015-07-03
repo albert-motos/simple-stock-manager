@@ -2,11 +2,13 @@ package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.object.controller.general.ClientGeneralController;
 import com.development.simplestockmanager.business.persistence.Client;
+import com.development.simplestockmanager.common.InternationalizationConstant;
 import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.object.validator.ClientValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -17,27 +19,27 @@ import javax.faces.context.FacesContext;
  * @author foxtrot
  */
 @ManagedBean(name = "cliendAdd")
-@ViewScoped 
+@ViewScoped
 public class ClientAddView extends BaseAddView {
 
     private final ClientValidator validator;
-    private final ClientGeneralController controller;
+    private final ClientGeneralController generalController;
 
     private final SexTypeSelector sexTypeSelector;
     private final Client client;
 
-    public ClientAddView() {        
-        validator = new ClientValidator(Constant.VALIDATOR.MODE.CREATE, user.getLanguageType().getCode());
-        controller = new ClientGeneralController();
-        
+    public ClientAddView() {
+        validator = new ClientValidator(Constant.VALIDATOR.MODE.CREATE, internationalizationController);
+        generalController = new ClientGeneralController();
+
         client = new Client();
-        sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
+        sexTypeSelector = new SexTypeSelector(internationalizationController.getLanguage());
     }
 
     @Override
     public void add() {
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         client.setSexType(sexTypeSelector.getSelectedValue());
         validator.setObject(client);
 
@@ -47,14 +49,26 @@ public class ClientAddView extends BaseAddView {
             client.setCreatedUser(user.getUsername());
             client.setLastModifiedUser(user.getUsername());
 
-            Long id = controller.create(client);
+            Long id = generalController.create(client);
+
+            Severity severity;
+            String summary;
+            String detail;
 
             if (id == Constant.IDENTIFIER.INVALID) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "Database server doesn't work properly"));
+                severity = FacesMessage.SEVERITY_FATAL;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.DETAIL.DATABASE);
             } else {
                 added = true;
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Client [" + id + "] is created properly"));
+                severity = FacesMessage.SEVERITY_INFO;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.OBJECT.CLIENT) + id +
+                        internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
             }
+
+            context.addMessage(null, new FacesMessage(severity, summary, detail));
+
         } else {
             for (FacesMessage message : validator.getMessageList()) {
                 context.addMessage(null, message);

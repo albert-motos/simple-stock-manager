@@ -1,8 +1,9 @@
 package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import com.development.simplestockmanager.web.common.Constant;
-import com.development.simplestockmanager.web.object.Client;
+import com.development.simplestockmanager.business.persistence.Client;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +12,8 @@ public class ClientValidator extends BaseValidator {
 
     private Client client;
 
-    public ClientValidator(long mode, String language) {
-        super(mode, language);
+    public ClientValidator(long mode, InternationalizationController controller) {
+        super(mode, controller);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ClientValidator extends BaseValidator {
             fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.BORN_DATE));
         }
 
-        if (client.getSexType() == Constant.IDENTIFIER.INVALID) {
+        if (client.getSexType().getId() == Constant.IDENTIFIER.INVALID) {
             fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.SEX_TYPE));
         }
 

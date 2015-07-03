@@ -16,32 +16,35 @@ import java.util.ResourceBundle;
  * @author foxtrot
  */
 public class InternationalizationController {
-    
+
+    private final String language;
     private Map<String, Locale> supportedLanguages;
     private ResourceBundle translation;
 
-    private InternationalizationController() {
+    private void initialization() {
         supportedLanguages = new HashMap();
         supportedLanguages.put("en_US", Locale.ENGLISH);
-        supportedLanguages.put("es_ES", new Locale("es","ES"));
-        supportedLanguages.put("ca_ES", new Locale("ca","ES"));
+        supportedLanguages.put("es_ES", new Locale("es", "ES"));
+        supportedLanguages.put("ca_ES", new Locale("ca", "ES"));
     }
 
-    
-    public InternationalizationController(String language){
-        this();
+    public InternationalizationController(String language) {
+        this.language = language;
+        initialization();
+
         translation = ResourceBundle.getBundle(InternationalizationConstant.PATH, supportedLanguages.get(language));
-        
     }
 
-    public String getWord(String keyword)
-    {
+    public String getWord(String keyword) {
         try {
             return translation.getString(keyword);
         } catch (Exception e) {
             return "Undefined";
         }
-        
+    }
+
+    public String getLanguage() {
+        return language;
     }
 
 }
