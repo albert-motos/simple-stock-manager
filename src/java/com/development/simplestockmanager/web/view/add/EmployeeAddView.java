@@ -1,15 +1,16 @@
 package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.object.controller.general.EmployeeGeneralController;
-import com.development.simplestockmanager.common.converter.EmployeeConverter;
+import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.common.InternationalizationConstant;
 import com.development.simplestockmanager.web.common.Constant;
-import com.development.simplestockmanager.web.object.Employee;
 import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.LanguageTypeSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.object.validator.EmployeeValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -20,12 +21,11 @@ import javax.faces.context.FacesContext;
  * @author foxtrot
  */
 @ViewScoped
-@ManagedBean
+@ManagedBean(name = "employeeAdd")
 public class EmployeeAddView extends BaseAddView {
     
     private final EmployeeValidator validator;
-    private final EmployeeGeneralController controller;
-    private final EmployeeConverter converter;
+    private final EmployeeGeneralController generalController;
 
     private final EmployeeTypeSelector employeeTypeSelector;
     private final LanguageTypeSelector languageTypeSelector;
@@ -34,41 +34,49 @@ public class EmployeeAddView extends BaseAddView {
 
     public EmployeeAddView() {
         validator = new EmployeeValidator(Constant.VALIDATOR.MODE.CREATE);
-        controller = new EmployeeGeneralController();
-        converter = new EmployeeConverter();
+        generalController = new EmployeeGeneralController();
 
         employee = new Employee();
-        employeeTypeSelector = new EmployeeTypeSelector(user.getLanguageType().getCode());
-        languageTypeSelector = new LanguageTypeSelector(user.getLanguageType().getCode());
-        sexTypeSelector = new SexTypeSelector(user.getLanguageType().getCode());
+        employeeTypeSelector = new EmployeeTypeSelector(internationalizationController.getLanguage());
+        languageTypeSelector = new LanguageTypeSelector(internationalizationController.getLanguage());
+        sexTypeSelector = new SexTypeSelector(internationalizationController.getLanguage());
     }
 
     @Override
     public void add() {
         FacesContext context = FacesContext.getCurrentInstance();
         
-        
-        employee.setEmployeeType(employeeTypeSelector.getSelectedValue().getId());
+        employee.setEmployeeType(employeeTypeSelector.getSelectedValue());
         employee.setLanguageType(languageTypeSelector.getSelectedValue());
-        employee.setSexType(sexTypeSelector.getSelectedValue().getId());
+        employee.setSexType(sexTypeSelector.getSelectedValue());
         validator.setObject(employee);
 
         if (validator.validate()) {
-            com.development.simplestockmanager.business.persistence.Employee businessObject = converter.getBusinessObject(employee);
-            businessObject.setCreatedDate(new Date());
-            businessObject.setLastModifiedDate(new Date());
-            businessObject.setCreatedUser(user.getUsername());
-            businessObject.setLastModifiedUser(user.getUsername());
-            businessObject.setLastOnlineDate(new Date(0));
+            employee.setCreatedDate(new Date());
+            employee.setLastModifiedDate(new Date());
+            employee.setCreatedUser(user.getUsername());
+            employee.setLastModifiedUser(user.getUsername());
+            employee.setLastOnlineDate(new Date(0));
 
-            Long id = controller.create(businessObject);
+            Long id = generalController.create(employee);
+
+            Severity severity;
+            String summary;
+            String detail;
 
             if (id == Constant.IDENTIFIER.INVALID) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "Database server doesn't work properly"));
+                severity = FacesMessage.SEVERITY_FATAL;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.DETAIL.DATABASE);
             } else {
                 added = true;
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Employee [" + id + "] is created properly"));
+                severity = FacesMessage.SEVERITY_INFO;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + id +
+                        internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
             }
+
+            context.addMessage(null, new FacesMessage(severity, summary, detail));
         } else {
             for (FacesMessage message : validator.getMessageList()) {
                 context.addMessage(null, message);

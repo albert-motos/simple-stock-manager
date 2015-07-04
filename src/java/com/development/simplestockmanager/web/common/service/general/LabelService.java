@@ -24,6 +24,11 @@ public class LabelService implements Serializable {
     private final String bornDate;
     private final String phoneNumber;
     private final String email;
+    private final String usernamme;
+    private final String password;
+    private final String languageType;
+    private final String employeeType;
+    private final String nonSelection;
 
     public LabelService() {
         System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.LABEL.CONSTRUCTOR);
@@ -37,6 +42,11 @@ public class LabelService implements Serializable {
         bornDate = controller.getWord(InternationalizationConstant.LABEL.BORN_DATE);
         phoneNumber = controller.getWord(InternationalizationConstant.LABEL.PHONE_NUMBER);
         email = controller.getWord(InternationalizationConstant.LABEL.EMAIL);
+        usernamme = controller.getWord(InternationalizationConstant.LABEL.USERNAME);
+        password = controller.getWord(InternationalizationConstant.LABEL.PASSWORD);
+        languageType = controller.getWord(InternationalizationConstant.LABEL.LANGUAGE_TYPE);
+        employeeType = controller.getWord(InternationalizationConstant.LABEL.EMPLOYEE_TYPE);
+        nonSelection = controller.getWord(InternationalizationConstant.LABEL.NON_SELECTION);
     }
 
     public String getFirstname() {
@@ -61,6 +71,26 @@ public class LabelService implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getUsernamme() {
+        return usernamme;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getLanguageType() {
+        return languageType;
+    }
+
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public String getNonSelection() {
+        return nonSelection;
     }
 
 }

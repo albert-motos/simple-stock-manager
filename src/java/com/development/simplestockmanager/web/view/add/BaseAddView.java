@@ -6,14 +6,12 @@ import com.development.simplestockmanager.common.internationalization.Internatio
 import com.development.simplestockmanager.web.common.service.general.AuthenticationService;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
 
 /**
  * Base class for add view controller
  *
  * @author foxtrot
  */
-//@ManagedBean
 abstract class BaseAddView implements Serializable {
 
     protected InternationalizationController internationalizationController;

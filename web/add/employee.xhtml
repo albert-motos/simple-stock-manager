@@ -9,17 +9,18 @@
     <ui:define name="content">
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
-            <p:panel header="Employee attributes" >
+
+            <p:panel header="#{employeeLabel.attributes}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 35%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="First name :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{employeeAddView.employee.firstname}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.firstname}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText  value="#{employeeAdd.employee.firstname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -27,11 +28,11 @@
                         <p:column style="width: 65%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Last name :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{employeeAddView.employee.lastname}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.lastname}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText  value="#{employeeAdd.employee.lastname}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -44,13 +45,13 @@
                         <p:column style="width: 30%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Sex type :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:selectOneMenu value="#{employeeAddView.sexTypeSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="Select one" itemValue="" />
-                                            <f:selectItems value="#{employeeAddView.sexTypeSelector.list}" />
+                                        <p:outputLabel value="#{label.sexType}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectOneMenu value="#{employeeAdd.sexTypeSelector.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItems value="#{employeeAdd.sexTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -59,11 +60,11 @@
                         <p:column style="width: 20%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Born date :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:calendar value="#{employeeAddView.employee.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true" />
+                                        <p:outputLabel value="#{label.bornDate}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:calendar value="#{employeeAdd.employee.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -71,11 +72,11 @@
                         <p:column style="width: 40%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Phone number :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText value="#{employeeAddView.employee.phone}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.phoneNumber}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{employeeAdd.employee.phone}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -85,80 +86,28 @@
 
                 <p:panelGrid style="width: 100%">
                     <p:row>
-                        <p:column style="width: 100%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 50%">
-                                        <p:panelGrid style="width: 100%">
-                                            <p:row>
-                                                <p:column style="width: 100px; text-align: center">
-                                                    <p:outputLabel value="Email :" style="font-weight: bold;" />
-                                                </p:column>
-                                                <p:column>
-                                                    <p:inputText  value="#{employeeAddView.employee.email}" style="width: 100%" />
-                                                </p:column>
-                                            </p:row>
-                                        </p:panelGrid>
+                                    <p:column>
+                                        <p:outputLabel value="#{label.email}" />
                                     </p:column>
-                                    <p:column style="width: 50%">
-                                        <p:panelGrid style="width: 100%">
-                                            <p:row>
-                                                <p:column style="width: 100px; text-align: center">
-                                                    <p:outputLabel value="Language :" style="font-weight: bold;" />
-                                                </p:column>
-                                                <p:column>
-                                                    <p:selectOneMenu value="#{employeeAddView.languageTypeSelector.selection}" style="width: 100%">
-                                                        <f:selectItem itemLabel="Select one" itemValue="-1" />
-                                                        <f:selectItems value="#{employeeAddView.languageTypeSelector.list}" />
-                                                    </p:selectOneMenu>
-                                                </p:column>
-                                            </p:row>
-                                        </p:panelGrid>
+                                    <p:column style="width: 100%">
+                                        <p:inputText  value="#{employeeAdd.employee.email}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
-                    </p:row>
-                </p:panelGrid>
-            </p:panel>
-
-            <p:panel header="Employee credentials">
-                <p:panelGrid style="width: 100%">
-                    <p:row>
-                        <p:column style="width: 30%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="User name :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText value="#{employeeAddView.employee.username}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.languageType}" />
                                     </p:column>
-                                </p:row>
-                            </p:panelGrid>
-                        </p:column>
-                        <p:column style="width: 30%">
-                            <p:panelGrid style="width: 100%">
-                                <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Password :" style="font-weight: bold;" />
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText value="#{employeeAddView.employee.password}" style="width: 100%" />
-                                    </p:column>
-                                </p:row>
-                            </p:panelGrid>
-                        </p:column>
-                        <p:column style="width: 40%">
-                            <p:panelGrid style="width: 100%">
-                                <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Employee type :" style="font-weight: bold;" />
-                                    </p:column>
-                                    <p:column>
-                                        <p:selectOneMenu value="#{employeeAddView.employeeTypeSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="Select one" itemValue="" />
-                                            <f:selectItems value="#{employeeAddView.employeeTypeSelector.list}" />
+                                    <p:column style="width: 100%">
+                                        <p:selectOneMenu value="#{employeeAdd.languageTypeSelector.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItems value="#{employeeAdd.languageTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -168,17 +117,44 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="Employee visibility">
+            <p:panel header="#{employeeLabel.credentials}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
-                        <p:column style="width: 100%">
+                        <p:column style="width: 30%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 250px; text-align: center">
-                                        <p:outputLabel value="Employee could be found on queries" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:selectBooleanCheckbox value="#{employeeAddView.employee.enable}" />
+                                        <p:outputLabel value="#{label.usernamme}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{employeeAdd.employee.username}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 30%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{label.password}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{employeeAdd.employee.password}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 40%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{label.employeeType}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectOneMenu value="#{employeeAdd.employeeTypeSelector.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItems value="#{employeeAdd.employeeTypeSelector.list}" />
+                                        </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -187,9 +163,29 @@
                 </p:panelGrid>
             </p:panel>
 
+            <p:panel header="#{employeeLabel.visibility}">
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 100%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{employeeLabel.enable}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectBooleanCheckbox value="#{employeeAdd.employee.enable}" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
+
+
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="Create" rendered="#{not employeeAddView.added}" actionListener="#{employeeAddView.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{languageView.backButtonValue(employeeAddView.added)}" actionListener="#{employeeAddView.back()}"
+                <p:commandButton value="#{button.add}" rendered="#{not employeeAdd.added}" actionListener="#{employeeAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(employeeAdd.added)}" actionListener="#{employeeAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

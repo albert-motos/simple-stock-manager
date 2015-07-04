@@ -5,33 +5,42 @@ import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.InternationalizationConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import java.io.Serializable;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
- * Service class for specific client label internationalization functionality
+ * Service class for specific employee label internationalization functionality
  *
  * @author foxtrot
  */
-@ManagedBean(name = "clientLabel")
+@ManagedBean(name = "employeeLabel")
 @SessionScoped
-public class ClientLabelService implements Serializable {
+public class EmployeeLabelService implements Serializable {
 
     private final String attributes;
+    private final String credentials;
     private final String visibility;
     private final String enable;
 
-    public ClientLabelService() {
+    public EmployeeLabelService() {
+        System.out.println("# " + new Date() + " | " + EmployeeLabelService.class.getCanonicalName());
+
         Employee user = new AuthenticationService().getCurrentEmployee();
         InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
 
-        attributes = controller.getWord(InternationalizationConstant.HEADER.CLIENT.ATTRIBUTES);
-        visibility = controller.getWord(InternationalizationConstant.HEADER.CLIENT.VISIBILITY);
-        enable = controller.getWord(InternationalizationConstant.LABEL.ENABLE.CLIENT);
+        attributes = controller.getWord(InternationalizationConstant.HEADER.EMPLOYE.ATTRIBUTES);
+        credentials = controller.getWord(InternationalizationConstant.HEADER.EMPLOYE.CREDENTIALS);
+        visibility = controller.getWord(InternationalizationConstant.HEADER.EMPLOYE.VISIBILITY);
+        enable = controller.getWord(InternationalizationConstant.LABEL.ENABLE.EMPLOYEE);
     }
 
     public String getAttributes() {
         return attributes;
+    }
+
+    public String getCredentials() {
+        return credentials;
     }
 
     public String getVisibility() {

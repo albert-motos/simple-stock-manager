@@ -69,11 +69,18 @@ public interface InternationalizationConstant {
         public static String BORN_DATE = TEXT + ".borndate";
         public static String PHONE_NUMBER = TEXT + ".phonenumber";
         public static String EMAIL = TEXT + ".email";
+        public static String USERNAME = TEXT + ".username";
+        public static String PASSWORD = TEXT + ".password";
+        public static String EMPLOYEE_TYPE = TEXT + ".employeetype";
+        public static String LANGUAGE_TYPE = TEXT + ".languagetype";
 
+        public static String NON_SELECTION = TEXT + ".nonselection";
+        
         public interface ENABLE {
 
             public static String TEXT = LABEL.TEXT + ".enable";
             public static String CLIENT = TEXT + ".client";
+            public static String EMPLOYEE = TEXT + ".employee";
         }
     }
 
@@ -85,6 +92,14 @@ public interface InternationalizationConstant {
 
             public static String TEXT = HEADER.TEXT + ".client";
             public static String ATTRIBUTES = TEXT + ".attributes";
+            public static String VISIBILITY = TEXT + ".visibility";
+        }
+        
+        public interface EMPLOYE {
+
+            public static String TEXT = HEADER.TEXT + ".employee";
+            public static String ATTRIBUTES = TEXT + ".attributes";
+            public static String CREDENTIALS = TEXT + ".credentials";
             public static String VISIBILITY = TEXT + ".visibility";
         }
     }
@@ -162,6 +177,7 @@ public interface InternationalizationConstant {
 
                     public static String TEXT = DETAIL.TEXT + ".object";
                     public static String CLIENT = TEXT + ".client";
+                    public static String EMPLOYEE = TEXT + ".employee";
                 }
 
                 public interface ACTION {
