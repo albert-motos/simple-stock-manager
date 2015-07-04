@@ -2,15 +2,24 @@ package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
+import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Validator class for Brand object
+ *
+ * @author foxtrot
+ */
 public class BrandValidator extends BaseValidator {
 
+    private final BrandSpecificController specificController;
     private Brand brand;
 
-    public BrandValidator(long mode) {
-        super(mode, null);
+    public BrandValidator(long mode, InternationalizationController controller) {
+        super(mode, controller);
+        specificController = new BrandSpecificController();
     }
     
     @Override
@@ -29,7 +38,11 @@ public class BrandValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (brand.getName().isEmpty()) {
-            fieldsEmptyList.add("Name");
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.NAME));
+        }
+        
+        if (brand.getDescription().isEmpty()) {
+            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.DESCRIPTION));
         }
 
         return fieldsEmptyList;
@@ -40,8 +53,8 @@ public class BrandValidator extends BaseValidator {
         List<String> causeList = new ArrayList<>();
 
         if (!brand.getName().isEmpty()) {
-            if (!BrandSpecificController.nameIsAvailable(brand.getName())) {
-                causeList.add("Name: This name is already in use, change it");
+            if (!specificController.nameIsAvailable(brand.getName())) {
+                causeList.add(controller.getWord(InternationalizationConstant.MESSAGE.ERROR.NAME));
             }
         }
 

@@ -73,12 +73,15 @@ public interface InternationalizationConstant {
         public static String PASSWORD = TEXT + ".password";
         public static String EMPLOYEE_TYPE = TEXT + ".employeetype";
         public static String LANGUAGE_TYPE = TEXT + ".languagetype";
+        public static String NAME = TEXT + ".name";
+        public static String DESCRIPTION = TEXT + ".description";
 
         public static String NON_SELECTION = TEXT + ".nonselection";
         
         public interface ENABLE {
 
             public static String TEXT = LABEL.TEXT + ".enable";
+            public static String BRAND = TEXT + ".brand";
             public static String CLIENT = TEXT + ".client";
             public static String EMPLOYEE = TEXT + ".employee";
         }
@@ -88,6 +91,13 @@ public interface InternationalizationConstant {
 
         public static String TEXT = "header";
 
+        public interface BRAND {
+
+            public static String TEXT = HEADER.TEXT + ".brand";
+            public static String ATTRIBUTES = TEXT + ".attributes";
+            public static String VISIBILITY = TEXT + ".visibility";
+        }
+        
         public interface CLIENT {
 
             public static String TEXT = HEADER.TEXT + ".client";
@@ -130,6 +140,8 @@ public interface InternationalizationConstant {
             public static String LANGUAGE_TYPE = TEXT + ".languagetype";
             public static String USERNAME = TEXT + ".username";
             public static String PASSWORD = TEXT + ".password";
+            public static String NAME = TEXT + ".name";
+            public static String DESCRIPTION = TEXT + ".description";
 
             public interface DETAIL {
 
@@ -144,6 +156,7 @@ public interface InternationalizationConstant {
             public static String TEXT = MESSAGE.TEXT + ".error";
             public static String BORN_DATE = TEXT + ".borndate";
             public static String USERNAME = TEXT + ".username";
+            public static String NAME = TEXT + ".name";
 
             public static String SUMMARY = TEXT + ".summary";
 
@@ -181,6 +194,7 @@ public interface InternationalizationConstant {
                 public interface OBJECT {
 
                     public static String TEXT = DETAIL.TEXT + ".object";
+                    public static String BRAND = TEXT + ".brand";
                     public static String CLIENT = TEXT + ".client";
                     public static String EMPLOYEE = TEXT + ".employee";
                 }

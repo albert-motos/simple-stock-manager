@@ -1,84 +1,79 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.web.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.BrandGeneralController;
-import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
+import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.web.object.validator.BrandValidator;
+import java.util.Date;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
+ * Add view controller class for Brand object
  *
  * @author foxtrot
  */
-@ManagedBean
+@ManagedBean(name = "brandAdd")
 @ViewScoped
 public class BrandAddView extends BaseAddView {
 
-    private Brand brand;
-    private boolean added;
+    private final BrandValidator validator;
+    private final BrandGeneralController generalController;
+
+    private final Brand brand;
 
     public BrandAddView() {
+        validator = new BrandValidator(Constant.VALIDATOR.MODE.CREATE, internationalizationController);
+        generalController = new BrandGeneralController();
+
         brand = new Brand();
-        added = false;
     }
 
     @Override
     public void add() {
-        if (validate()) {
-//            long id = BrandGeneralController.create(brand.getName(), brand.getIsEnable());
-//
-//            if (id == Constant.IDENTIFIER.INVALID) {
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create brand right now"));
-//            } else {
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Brand [" + id + "] is created properly"));
-//                added = true;
-//            }
-        }
-    }
+        FacesContext context = FacesContext.getCurrentInstance();
 
-//    @Override
-    public boolean validate() {
+        validator.setObject(brand);
 
-        FacesContext currentInstance = FacesContext.getCurrentInstance();
-        String fields_empty = "";
+        if (validator.validate()) {
+            brand.setCreatedDate(new Date());
+            brand.setLastModifiedDate(new Date());
+            brand.setCreatedUser(user.getUsername());
+            brand.setLastModifiedUser(user.getUsername());
 
-        fields_empty = fields_empty.concat((brand.getName().isEmpty() ? "Name" : ""));
+            Long id = generalController.create(brand);
 
-        if (!fields_empty.isEmpty()) {
-            currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
-        }
+            Severity severity;
+            String summary;
+            String detail;
 
-        if (!brand.getName().isEmpty()) {
-            if (!BrandSpecificController.nameIsAvailable(brand.getName())) {
-                currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The name is already in use, change it"));
+            if (id == Constant.IDENTIFIER.INVALID) {
+                severity = FacesMessage.SEVERITY_FATAL;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+            } else {
+                added = true;
+                severity = FacesMessage.SEVERITY_INFO;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.OBJECT.BRAND) + id +
+                        internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+            }
+
+            context.addMessage(null, new FacesMessage(severity, summary, detail));
+        } else {
+            for (FacesMessage message : validator.getMessageList()) {
+                context.addMessage(null, message);
             }
         }
-
-        return currentInstance.getMessageList().isEmpty();
     }
 
     public Brand getBrand() {
         return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public boolean isAdded() {
-        return added;
-    }
-
-    public void setAdded(boolean added) {
-        this.added = added;
     }
 
 }

@@ -5,26 +5,27 @@ import com.development.simplestockmanager.business.object.nullpackage.BrandNull;
 import com.development.simplestockmanager.business.object.helper.BrandHelper;
 import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.business.persistence.controller.BrandJpaController;
-import javax.persistence.Query;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 
 /**
- * TESTED
+ * General controller class for Brand object
  *
  * @author foxtrot
  */
 public class BrandGeneralController {
 
-    public long create(Brand brand) {
-        Query query = BrandHelper.getFindByNameQuery(brand.getName());
+    private final BrandJpaController controller;
 
-        if (query.getResultList().isEmpty()) {
-            try {
-                BrandJpaController brandJpaController = BrandHelper.getJpaController();
-                brandJpaController.create(brand);
-            } catch (Exception e) {
-                brand = new BrandNull();
-            }
-        } else {
+    public BrandGeneralController() {
+        BrandHelper helper = new BrandHelper();
+        controller = helper.getJpaController();
+    }
+
+    public long create(Brand brand) {
+        try {
+            controller.create(brand);
+        } catch (Exception e) {
             brand = new BrandNull();
         }
 
@@ -33,8 +34,11 @@ public class BrandGeneralController {
 
     public Brand read(Brand brand) {
         try {
-            Query query = BrandHelper.getFindByIdQuery(brand.getId());
-            brand = (Brand) query.getSingleResult();
+            brand = controller.findBrand(brand.getId());
+
+            if (brand == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             brand = new BrandNull();
         }
@@ -42,46 +46,31 @@ public class BrandGeneralController {
         return brand;
     }
 
+//    
     public long update(Brand brand) {
-        long status = Constant.UPDATE.FAILURE;
+        long status;
 
-        if (read(brand).getId() != Constant.IDENTIFIER.INVALID) {
-            Query query = BrandHelper.getFindByNameQuery(brand.getName());
-            boolean uniqueName = true;
-
-            if (!query.getResultList().isEmpty()) {
-                Brand otherBrand = (Brand) query.getSingleResult();
-                uniqueName = brand.getId().equals(otherBrand.getId());
-            }
-
-            if (uniqueName) {
-                try {
-                    BrandJpaController brandJpaController = BrandHelper.getJpaController();
-                    brandJpaController.edit(brand);
-                    status = Constant.UPDATE.SUCCESS;
-                } catch (Exception e) {
-
-                }
-            }
+        try {
+            controller.edit(brand);
+            status = Constant.UPDATE.SUCCESS;
+        } catch (Exception e) {
+            status = Constant.UPDATE.FAILURE;
         }
 
         return status;
     }
 
     public long delete(Brand brand) {
-        long status = Constant.DELETE.FAILURE;
+        long status;
 
-        if (read(brand).getId() != Constant.IDENTIFIER.INVALID) {
-            try {
-                BrandJpaController brandJpaController = BrandHelper.getJpaController();
-                brandJpaController.destroy(brand.getId());
-                status = Constant.DELETE.SUCCESS;
-            } catch (Exception e) {
-
-            }
+        try {
+            controller.destroy(brand.getId());
+            status = Constant.DELETE.SUCCESS;
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
+            status = Constant.DELETE.FAILURE;
         }
 
         return status;
     }
-
+    
 }

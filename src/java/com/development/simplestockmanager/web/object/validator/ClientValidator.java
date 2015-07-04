@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Validator class for Client object
+ *
+ * @author foxtrot
+ */
 public class ClientValidator extends BaseValidator {
 
     private Client client;
