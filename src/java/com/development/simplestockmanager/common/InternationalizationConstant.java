@@ -75,15 +75,17 @@ public interface InternationalizationConstant {
         public static String LANGUAGE_TYPE = TEXT + ".languagetype";
         public static String NAME = TEXT + ".name";
         public static String DESCRIPTION = TEXT + ".description";
+        public static String IDENTIFIER = TEXT + ".identifier";
 
         public static String NON_SELECTION = TEXT + ".nonselection";
-        
+
         public interface ENABLE {
 
             public static String TEXT = LABEL.TEXT + ".enable";
             public static String BRAND = TEXT + ".brand";
             public static String CLIENT = TEXT + ".client";
             public static String EMPLOYEE = TEXT + ".employee";
+            public static String PROVIDER = TEXT + ".provider";
         }
     }
 
@@ -97,19 +99,26 @@ public interface InternationalizationConstant {
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
         }
-        
+
         public interface CLIENT {
 
             public static String TEXT = HEADER.TEXT + ".client";
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
         }
-        
+
         public interface EMPLOYE {
 
             public static String TEXT = HEADER.TEXT + ".employee";
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String CREDENTIALS = TEXT + ".credentials";
+            public static String VISIBILITY = TEXT + ".visibility";
+        }
+        
+        public interface PROVIDER {
+
+            public static String TEXT = HEADER.TEXT + ".provider";
+            public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
         }
     }
@@ -142,6 +151,7 @@ public interface InternationalizationConstant {
             public static String PASSWORD = TEXT + ".password";
             public static String NAME = TEXT + ".name";
             public static String DESCRIPTION = TEXT + ".description";
+            public static String IDENTIFIER = TEXT + ".identifier";
 
             public interface DETAIL {
 
@@ -197,6 +207,7 @@ public interface InternationalizationConstant {
                     public static String BRAND = TEXT + ".brand";
                     public static String CLIENT = TEXT + ".client";
                     public static String EMPLOYEE = TEXT + ".employee";
+                    public static String PROVIDER = TEXT + ".provider";
                 }
 
                 public interface ACTION {

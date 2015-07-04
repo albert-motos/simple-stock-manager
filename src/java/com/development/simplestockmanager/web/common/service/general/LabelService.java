@@ -30,6 +30,8 @@ public class LabelService implements Serializable {
     private final String employeeType;
     private final String name;
     private final String description;
+    private final String identifier;
+    
     private final String nonSelection;
 
     public LabelService() {
@@ -50,6 +52,7 @@ public class LabelService implements Serializable {
         employeeType = controller.getWord(InternationalizationConstant.LABEL.EMPLOYEE_TYPE);
         name = controller.getWord(InternationalizationConstant.LABEL.NAME);
         description = controller.getWord(InternationalizationConstant.LABEL.DESCRIPTION);
+        identifier = controller.getWord(InternationalizationConstant.LABEL.IDENTIFIER);
         
         nonSelection = controller.getWord(InternationalizationConstant.LABEL.NON_SELECTION);
     }
@@ -104,6 +107,10 @@ public class LabelService implements Serializable {
 
     public String getNonSelection() {
         return nonSelection;
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 
 }

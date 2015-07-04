@@ -7,18 +7,31 @@
 
     <ui:define name="content">
         <h:form>
-            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
-            <p:panel header="Provider attributes" >
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important" />
+
+            <p:panel header="#{providerLabel.attributes}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
-                        <p:column colspan="2">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Name :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{providerAddView.provider.name}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.name}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText  value="#{providerAdd.provider.name}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{label.identifier}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText  value="#{providerAdd.provider.identifier}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -28,11 +41,11 @@
                         <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Identifier :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{providerAddView.provider.identifier}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.phoneNumber}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText  value="#{providerAdd.provider.phone}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -40,25 +53,11 @@
                         <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Phone number :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{providerAddView.provider.phone}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.email}" />
                                     </p:column>
-                                </p:row>
-                            </p:panelGrid>
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column colspan="2">
-                            <p:panelGrid style="width: 100%">
-                                <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Email :" style="font-weight: bold;" />
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText  value="#{providerAddView.provider.email}" style="width: 100%" />
+                                    <p:column style="width: 100%">
+                                        <p:inputText  value="#{providerAdd.provider.email}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -67,17 +66,17 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="Provider visibility">
+            <p:panel header="#{providerLabel.visibility}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 250px; text-align: center">
-                                        <p:outputLabel value="Provider could be found on queries" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:selectBooleanCheckbox value="#{providerAddView.provider.isEnable}" />
+                                        <p:outputLabel value="#{providerLabel.enable}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectBooleanCheckbox value="#{providerAdd.provider.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -87,8 +86,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="Create" rendered="#{not providerAddView.added}" actionListener="#{providerAddView.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{languageView.backButtonValue(providerAddView.added)}" actionListener="#{navigationView.redirect(urlView.index())}"
+                <p:commandButton value="#{button.add}" rendered="#{not providerAdd.added}" actionListener="#{providerAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(providerAdd.added)}" actionListener="#{providerAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>
