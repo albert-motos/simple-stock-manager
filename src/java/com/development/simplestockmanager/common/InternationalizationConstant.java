@@ -126,6 +126,10 @@ public interface InternationalizationConstant {
             public static String PHONE_NUMBER = TEXT + ".phonenumber";
             public static String EMAIL = TEXT + ".email";
             public static String SUMMARY = TEXT + ".summary";
+            public static String EMPLOYEE_TYPE = TEXT + ".employeetype";
+            public static String LANGUAGE_TYPE = TEXT + ".languagetype";
+            public static String USERNAME = TEXT + ".username";
+            public static String PASSWORD = TEXT + ".password";
 
             public interface DETAIL {
 
@@ -139,6 +143,7 @@ public interface InternationalizationConstant {
 
             public static String TEXT = MESSAGE.TEXT + ".error";
             public static String BORN_DATE = TEXT + ".borndate";
+            public static String USERNAME = TEXT + ".username";
 
             public static String SUMMARY = TEXT + ".summary";
 

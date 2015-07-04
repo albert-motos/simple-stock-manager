@@ -16,7 +16,7 @@ import javax.persistence.Query;
  */
 public class EmployeeSpecificController {
 
-    private EmployeeHelper helper;
+    private final EmployeeHelper helper;
 
     public EmployeeSpecificController() {
         helper = new EmployeeHelper();

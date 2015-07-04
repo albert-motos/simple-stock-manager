@@ -33,7 +33,7 @@ public class EmployeeAddView extends BaseAddView {
     private final Employee employee;
 
     public EmployeeAddView() {
-        validator = new EmployeeValidator(Constant.VALIDATOR.MODE.CREATE);
+        validator = new EmployeeValidator(Constant.VALIDATOR.MODE.CREATE, internationalizationController);
         generalController = new EmployeeGeneralController();
 
         employee = new Employee();
