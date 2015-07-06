@@ -5,8 +5,8 @@ import com.development.simplestockmanager.business.object.nullpackage.StoreNull;
 import com.development.simplestockmanager.business.object.helper.StoreHelper;
 import com.development.simplestockmanager.business.persistence.Store;
 import com.development.simplestockmanager.business.persistence.controller.StoreJpaController;
-import java.util.Date;
-import javax.persistence.Query;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 
 /**
  * TESTED
@@ -15,10 +15,16 @@ import javax.persistence.Query;
  */
 public class StoreGeneralController {
 
+    private final StoreJpaController controller;
+
+    public StoreGeneralController() {
+        StoreHelper helper = new StoreHelper();
+        controller = helper.getJpaController();
+    }
+
     public long create(Store store) {
         try {
-            StoreJpaController storeJpaController = StoreHelper.getJpaController();
-            storeJpaController.create(store);
+            controller.create(store);
         } catch (Exception e) {
             store = new StoreNull();
         }
@@ -28,8 +34,11 @@ public class StoreGeneralController {
 
     public Store read(Store store) {
         try {
-            Query query = StoreHelper.getFindByIdQuery(store.getId());
-            store = (Store) query.getSingleResult();
+            store = controller.findStore(store.getId());
+
+            if (store == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             store = new StoreNull();
         }
@@ -37,33 +46,28 @@ public class StoreGeneralController {
         return store;
     }
 
+//    
     public long update(Store store) {
-        long status = BusinessConstant.UPDATE.FAILURE;
+        long status;
 
-        if (read(store).getId() != BusinessConstant.IDENTIFIER.INVALID) {
-            try {
-                StoreJpaController storeJpaController = StoreHelper.getJpaController();
-                storeJpaController.edit(store);
-                status = BusinessConstant.UPDATE.SUCCESS;
-            } catch (Exception e) {
-
-            }
+        try {
+            controller.edit(store);
+            status = BusinessConstant.UPDATE.SUCCESS;
+        } catch (Exception e) {
+            status = BusinessConstant.UPDATE.FAILURE;
         }
 
         return status;
     }
 
     public long delete(Store store) {
-        long status = BusinessConstant.DELETE.FAILURE;
+        long status;
 
-        if (read(store).getId() != BusinessConstant.IDENTIFIER.INVALID) {
-            try {
-                StoreJpaController storeJpaController = StoreHelper.getJpaController();
-                storeJpaController.destroy(store.getId());
-                status = BusinessConstant.DELETE.SUCCESS;
-            } catch (Exception e) {
-
-            }
+        try {
+            controller.destroy(store.getId());
+            status = BusinessConstant.DELETE.SUCCESS;
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
+            status = BusinessConstant.DELETE.FAILURE;
         }
 
         return status;

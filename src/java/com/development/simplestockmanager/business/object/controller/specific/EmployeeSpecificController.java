@@ -3,6 +3,8 @@ package com.development.simplestockmanager.business.object.controller.specific;
 import com.development.simplestockmanager.business.object.helper.EmployeeHelper;
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeNull;
 import com.development.simplestockmanager.business.persistence.Employee;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Query;
 
 /**
@@ -49,4 +51,19 @@ public class EmployeeSpecificController {
         return query.getResultList().isEmpty();
     }
 
+    public List<Employee> fillSelectorByName(String name) {
+        List<Employee> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindByNameForSelectorQuery(name);
+            for (Object object : query.getResultList()) {
+                list.add((Employee) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
 }

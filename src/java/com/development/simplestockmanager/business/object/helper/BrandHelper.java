@@ -4,7 +4,7 @@ import com.development.simplestockmanager.business.persistence.controller.BrandJ
 import javax.persistence.Query;
 
 /**
- *
+ * Helper class for Brand object
  * @author foxtrot
  */
 public class BrandHelper {
@@ -16,8 +16,6 @@ public class BrandHelper {
     public Query getFindByNameForSelectorQuery(String name) {
         Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Brand.getFindByNameForSelector");
         query.setParameter("name","%" + name + "%");
-        System.out.println("# " + query.toString());
-        System.out.println("# " + query.getParameters());
         
         return query;
     }

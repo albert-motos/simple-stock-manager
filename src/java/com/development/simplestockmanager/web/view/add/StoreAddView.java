@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.web.view.add;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.general.StoreGeneralController;
 import com.development.simplestockmanager.business.persistence.Store;
-import com.development.simplestockmanager.web.object.component.selector.EmployeeSelectorView;
+import com.development.simplestockmanager.common.CommonConstant;
+import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.object.component.selector.EmployeeSelector;
+import com.development.simplestockmanager.web.object.validator.StoreValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -16,84 +14,74 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
+ * Add view controller class for Store object
  *
  * @author foxtrot
  */
-@ManagedBean
+@ManagedBean(name = "storeAdd")
 @ViewScoped
 public class StoreAddView extends BaseAddView {
-    
-    private Store store;
-    private boolean added;
-    private EmployeeSelectorView employeeSelectorView;
+
+    private final StoreValidator validator;
+    private final StoreGeneralController generalController;
+
+    private final Store store;
+    private final EmployeeSelector employeeSelector;
 
     public StoreAddView() {
+        validator = new StoreValidator(WebConstant.VALIDATOR.MODE.CREATE, internationalizationController);
+        generalController = new StoreGeneralController();
+        
         store = new Store();
-        added = false;
-        employeeSelectorView = new EmployeeSelectorView();
+        employeeSelector = new EmployeeSelector();
     }
 
     @Override
     public void add() {
-//        if (validate()) {
-//            long id = StoreGeneralController.create(store.getName(), store.getStreet(), store.getCity(), store.getState(), store.getCountry(), store.getPhone(),
-//                    employeeSelectorView.getSelectedValue().getId(), store.getIsEnable(), new Date(), new Date());
-//
-//            if (id == Constant.IDENTIFIER.INVALID) {
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create store right now"));
-//            } else {
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Store [" + id + "] is created properly"));
-//                added = true;
-//            }
-//        }
-    }
+        FacesContext context = FacesContext.getCurrentInstance();
 
-//    @Override
-    public boolean validate() {
+        store.setEmployee(employeeSelector.getSelectedValue());
+        validator.setObject(store);
 
-        FacesContext currentInstance = FacesContext.getCurrentInstance();
-        String fields_empty = "";
+        if (validator.validate()) {
+            store.setCreatedDate(new Date());
+            store.setLastModifiedDate(new Date());
+            store.setCreatedUser(user.getUsername());
+            store.setLastModifiedUser(user.getUsername());
 
-        fields_empty = fields_empty.concat((store.getName().isEmpty() ? "Name " : ""));
-        fields_empty = fields_empty.concat((store.getStreet().isEmpty() ? "Street " : ""));
-        fields_empty = fields_empty.concat((store.getCity().isEmpty() ? "City " : ""));
-        fields_empty = fields_empty.concat((store.getState().isEmpty() ? "State " : ""));
-        fields_empty = fields_empty.concat((store.getCountry().isEmpty() ? "Country " : ""));
-        fields_empty = fields_empty.concat((store.getPhone().isEmpty() ? "Phone " : ""));
-        
-        if (!fields_empty.isEmpty()) {
-            currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
+            Long id = generalController.create(store);
+
+            FacesMessage.Severity severity;
+            String summary;
+            String detail;
+
+            if (id == BusinessConstant.IDENTIFIER.INVALID) {
+                severity = FacesMessage.SEVERITY_FATAL;
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+            } else {
+                added = true;
+                severity = FacesMessage.SEVERITY_INFO;
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.STORE) + id +
+                        internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+            }
+
+            context.addMessage(null, new FacesMessage(severity, summary, detail));
+
+        } else {
+            for (FacesMessage message : validator.getMessageList()) {
+                context.addMessage(null, message);
+            }
         }
-        
-        if (employeeSelectorView.getSelectedValue().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The employee_selector is not indicated"));
-        }
-
-        return currentInstance.getMessageList().isEmpty();
     }
 
     public Store getStore() {
         return store;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
-    }
-
-    public boolean isAdded() {
-        return added;
-    }
-
-    public void setAdded(boolean added) {
-        this.added = added;
-    }
-
-    public EmployeeSelectorView getEmployeeSelectorView() {
-        return employeeSelectorView;
-    }
-
-    public void setEmployeeSelectorView(EmployeeSelectorView employeeSelectorView) {
-        this.employeeSelectorView = employeeSelectorView;
+    public EmployeeSelector getEmployeeSelector() {
+        return employeeSelector;
     }
 
 }

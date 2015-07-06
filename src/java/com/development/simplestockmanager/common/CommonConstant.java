@@ -79,6 +79,11 @@ public interface CommonConstant {
         public static String PRODUCT_TYPE = TEXT + ".producttype";
         public static String BRAND = TEXT + ".brand";
         public static String PROVIDER = TEXT + ".provider";
+        public static String STREET = TEXT + ".street";
+        public static String CITY = TEXT + ".city";
+        public static String STATE = TEXT + ".state";
+        public static String COUNTRY = TEXT + ".country";
+        public static String EMPLOYEE = TEXT + ".employee";
 
         public static String NON_SELECTION = TEXT + ".nonselection";
 
@@ -90,6 +95,7 @@ public interface CommonConstant {
             public static String EMPLOYEE = TEXT + ".employee";
             public static String PROVIDER = TEXT + ".provider";
             public static String PRODUCT = TEXT + ".product";
+            public static String STORE = TEXT + ".store";
         }
     }
 
@@ -118,18 +124,26 @@ public interface CommonConstant {
             public static String CREDENTIALS = TEXT + ".credentials";
             public static String VISIBILITY = TEXT + ".visibility";
         }
-        
+
         public interface PRODUCT {
 
             public static String TEXT = HEADER.TEXT + ".product";
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
         }
-        
+
         public interface PROVIDER {
 
             public static String TEXT = HEADER.TEXT + ".provider";
             public static String ATTRIBUTES = TEXT + ".attributes";
+            public static String VISIBILITY = TEXT + ".visibility";
+        }
+
+        public interface STORE {
+
+            public static String TEXT = HEADER.TEXT + ".store";
+            public static String ATTRIBUTES = TEXT + ".attributes";
+            public static String MANAGER = TEXT + ".manager";
             public static String VISIBILITY = TEXT + ".visibility";
         }
     }
@@ -167,6 +181,11 @@ public interface CommonConstant {
             public static String PRODUCT_TYPE = TEXT + ".producttype";
             public static String PROVIDER = TEXT + ".provider";
             public static String BRAND = TEXT + ".brand";
+            public static String STREET = TEXT + ".street";
+            public static String CITY = TEXT + ".city";
+            public static String STATE = TEXT + ".state";
+            public static String COUNTRY = TEXT + ".country";
+            public static String EMPLOYEE = TEXT + ".employee";
 
             public interface DETAIL {
 
@@ -225,6 +244,7 @@ public interface CommonConstant {
                     public static String EMPLOYEE = TEXT + ".employee";
                     public static String PRODUCT = TEXT + ".product";
                     public static String PROVIDER = TEXT + ".provider";
+                    public static String STORE = TEXT + ".store";
                 }
 
                 public interface ACTION {

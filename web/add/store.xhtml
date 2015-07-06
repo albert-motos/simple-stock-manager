@@ -9,83 +9,84 @@
     <ui:define name="content">
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
-            <p:panel header="Store attributes" >
+
+            <p:panel header="#{storeLabel.attributes}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
-                        <p:column colspan="2">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Name :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{storeAddView.store.name}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.name}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{storeAdd.store.name}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{label.phoneNumber}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{storeAdd.store.phone}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
                     </p:row>
+
                     <p:row>
-                        <p:column style="width: 60%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Street :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{storeAddView.store.street}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.street}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{storeAdd.store.street}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
-                        <p:column style="width: 40%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="City :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{storeAddView.store.city}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.city}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{storeAdd.store.city}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
                     </p:row>
-                </p:panelGrid>
-                <p:panelGrid style="width: 100%">
+
                     <p:row>
-                        <p:column style="width: 40%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="State :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{storeAddView.store.state}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.state}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{storeAdd.store.state}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
-                        <p:column style="width: 30%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Country :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{storeAddView.store.country}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.country}" />
                                     </p:column>
-                                </p:row>
-                            </p:panelGrid>
-                        </p:column>
-                        <p:column style="width: 30%">
-                            <p:panelGrid style="width: 100%">
-                                <p:row>
-                                    <p:column style="width: 100px; text-align: center">
-                                        <p:outputLabel value="Phone number :" style="font-weight: bold;" />
-                                    </p:column>
-                                    <p:column>
-                                        <p:inputText  value="#{storeAddView.store.phone}" style="width: 100%" />
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{storeAdd.store.country}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -94,31 +95,31 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="Store manager">
+            <p:panel header="#{storeLabel.manager}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
-                        <p:column style="width: 45%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 170px; text-align: center">
-                                        <p:outputLabel value="Employee name browser :" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:inputText  value="#{storeAddView.employeeSelectorView.browser}" style="width: 100%" />
+                                        <p:outputLabel value="#{label.employee}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{storeAdd.employeeSelector.browser}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
-                        <p:column style="width: 10%; text-align: center">
-                            <p:commandButton value="Find" actionListener="#{storeAddView.employeeSelectorView.find}" style="width: 100px" update="selector" />
-                        </p:column>
-                        <p:column style="width: 45%">
+                        <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:selectOneMenu id="selector" value="#{storeAddView.employeeSelectorView.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="Select one" itemValue="" />
-                                            <f:selectItems value="#{storeAddView.employeeSelectorView.list}" />
+                                        <p:commandButton value="#{button.find}" actionListener="#{storeAdd.employeeSelector.find()}" update="providerList" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectOneMenu id="providerList" value="#{storeAdd.employeeSelector.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItems value="#{storeAdd.employeeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -128,17 +129,17 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="Store visibility">
+            <p:panel header="#{storeLabel.visibility}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
-                                    <p:column style="width: 250px; text-align: center">
-                                        <p:outputLabel value="Store could be found on queries" style="font-weight: bold;" />
-                                    </p:column>
                                     <p:column>
-                                        <p:selectBooleanCheckbox value="#{storeAddView.store.enable}" />
+                                        <p:outputLabel value="#{storeLabel.enable}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectBooleanCheckbox value="#{storeAdd.store.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -148,8 +149,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="Create" rendered="#{not storeAddView.added}" actionListener="#{storeAddView.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{languageView.backButtonValue(storeAddView.added)}" actionListener="#{navigationView.redirect(urlView.index())}"
+                <p:commandButton value="#{button.add}" rendered="#{not storeAdd.added}" actionListener="#{storeAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(storeAdd.added)}" actionListener="#{storeAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>
