@@ -1,13 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.business.common.Constant;
 import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
 import com.development.simplestockmanager.business.persistence.Product;
+import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.web.common.Constant;
+import com.development.simplestockmanager.web.object.component.selector.BrandSelector;
+import com.development.simplestockmanager.web.object.component.selector.ProviderSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.ProductTypeSelector;
+import com.development.simplestockmanager.web.object.validator.ProductValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,65 +15,87 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
- *
+ * Add view controller class for Product object
  * @author foxtrot
  */
-@ManagedBean
+@ManagedBean(name = "productAdd")
 @ViewScoped
 public class ProductAddView extends BaseAddView {
     
-    private Product product;
-    private boolean added;
+    private final ProductValidator validator;
+    private final ProductGeneralController generalController;
+    
+    private final BrandSelector brandSelector;
+    private final ProviderSelector providerSelector;
+    private final ProductTypeSelector productTypeSelector;
+    private final Product product;
 
     public ProductAddView() {
+        validator = new ProductValidator(Constant.VALIDATOR.MODE.CREATE, internationalizationController);
+        generalController = new ProductGeneralController();
+        
         product = new Product();
-        added = false;
+        brandSelector = new BrandSelector();
+        providerSelector = new ProviderSelector();
+        productTypeSelector = new ProductTypeSelector(internationalizationController.getLanguage());
     }
 
     @Override
     public void add() {
-        if (validate()) {
-//            long id = ProductGeneralController.create(product.getName(), product.getDescription(), product.getIsEnable(), new Date(), new Date());
-//
-//            if (id == Constant.IDENTIFIER.INVALID) {
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal", "You can not create product right now"));
-//            } else {
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Product [" + id + "] is created properly"));
-//                added = true;
-//            }
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        product.setBrand(brandSelector.getSelectedValue());
+        product.setProvider(providerSelector.getSelectedValue());
+        product.setProductType(productTypeSelector.getSelectedValue());
+        validator.setObject(product);
+
+        if (validator.validate()) {
+            product.setCreatedDate(new Date());
+            product.setLastModifiedDate(new Date());
+            product.setCreatedUser(user.getUsername());
+            product.setLastModifiedUser(user.getUsername());
+
+            Long id = generalController.create(product);
+
+            FacesMessage.Severity severity;
+            String summary;
+            String detail;
+
+            if (id == Constant.IDENTIFIER.INVALID) {
+                severity = FacesMessage.SEVERITY_FATAL;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+            } else {
+                added = true;
+                severity = FacesMessage.SEVERITY_INFO;
+                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.OBJECT.PRODUCT) + id +
+                        internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+            }
+
+            context.addMessage(null, new FacesMessage(severity, summary, detail));
+
+        } else {
+            for (FacesMessage message : validator.getMessageList()) {
+                context.addMessage(null, message);
+            }
         }
     }
 
-//    @Override
-    public boolean validate() {
+    public BrandSelector getBrandSelector() {
+        return brandSelector;
+    }
 
-        FacesContext currentInstance = FacesContext.getCurrentInstance();
-        String fields_empty = "";
+    public ProviderSelector getProviderSelector() {
+        return providerSelector;
+    }
 
-        fields_empty = fields_empty.concat((product.getName().isEmpty() ? "Name " : ""));
-        fields_empty = fields_empty.concat((product.getDescription().isEmpty() ? "Description " : ""));
-        
-        if (!fields_empty.isEmpty()) {
-            currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
-        }
-
-        return currentInstance.getMessageList().isEmpty();
+    public ProductTypeSelector getProductTypeSelector() {
+        return productTypeSelector;
     }
 
     public Product getProduct() {
         return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public boolean isAdded() {
-        return added;
-    }
-
-    public void setAdded(boolean added) {
-        this.added = added;
     }
 
 }

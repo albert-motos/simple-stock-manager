@@ -76,6 +76,9 @@ public interface InternationalizationConstant {
         public static String NAME = TEXT + ".name";
         public static String DESCRIPTION = TEXT + ".description";
         public static String IDENTIFIER = TEXT + ".identifier";
+        public static String PRODUCT_TYPE = TEXT + ".producttype";
+        public static String BRAND = TEXT + ".brand";
+        public static String PROVIDER = TEXT + ".provider";
 
         public static String NON_SELECTION = TEXT + ".nonselection";
 
@@ -86,6 +89,7 @@ public interface InternationalizationConstant {
             public static String CLIENT = TEXT + ".client";
             public static String EMPLOYEE = TEXT + ".employee";
             public static String PROVIDER = TEXT + ".provider";
+            public static String PRODUCT = TEXT + ".product";
         }
     }
 
@@ -115,6 +119,13 @@ public interface InternationalizationConstant {
             public static String VISIBILITY = TEXT + ".visibility";
         }
         
+        public interface PRODUCT {
+
+            public static String TEXT = HEADER.TEXT + ".product";
+            public static String ATTRIBUTES = TEXT + ".attributes";
+            public static String VISIBILITY = TEXT + ".visibility";
+        }
+        
         public interface PROVIDER {
 
             public static String TEXT = HEADER.TEXT + ".provider";
@@ -127,6 +138,7 @@ public interface InternationalizationConstant {
 
         public static String TEXT = "button";
         public static String ADD = TEXT + ".add";
+        public static String FIND = TEXT + ".find";
         public static String CANCEL = TEXT + ".cancel";
         public static String FINISH = TEXT + ".finish";
     }
@@ -152,6 +164,9 @@ public interface InternationalizationConstant {
             public static String NAME = TEXT + ".name";
             public static String DESCRIPTION = TEXT + ".description";
             public static String IDENTIFIER = TEXT + ".identifier";
+            public static String PRODUCT_TYPE = TEXT + ".producttype";
+            public static String PROVIDER = TEXT + ".provider";
+            public static String BRAND = TEXT + ".brand";
 
             public interface DETAIL {
 
@@ -167,6 +182,7 @@ public interface InternationalizationConstant {
             public static String BORN_DATE = TEXT + ".borndate";
             public static String USERNAME = TEXT + ".username";
             public static String NAME = TEXT + ".name";
+            public static String PRODUCT = TEXT + ".product";
 
             public static String SUMMARY = TEXT + ".summary";
 
@@ -207,6 +223,7 @@ public interface InternationalizationConstant {
                     public static String BRAND = TEXT + ".brand";
                     public static String CLIENT = TEXT + ".client";
                     public static String EMPLOYEE = TEXT + ".employee";
+                    public static String PRODUCT = TEXT + ".product";
                     public static String PROVIDER = TEXT + ".provider";
                 }
 

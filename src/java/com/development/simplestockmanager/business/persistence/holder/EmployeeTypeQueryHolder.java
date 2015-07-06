@@ -12,14 +12,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
- *
+ * Query holder for Product object
  * @author foxtrot
  */
 @Entity
 @NamedQueries({
     @NamedQuery(name = "EmployeeType.findAllForSelector", query = "SELECT e FROM EmployeeType e WHERE e.languageType.code = :language AND e.enable = TRUE")
     })
-public class NamedQueryHolder implements Serializable {
+public class EmployeeTypeQueryHolder implements Serializable {
 
     @Id
     private Integer id;

@@ -19,6 +19,7 @@ import javax.faces.bean.SessionScoped;
 public class ButtonService implements Serializable {
 
     private final String add;
+    private final String find;
     private final String cancel;
     private final String finish;
 
@@ -31,10 +32,15 @@ public class ButtonService implements Serializable {
         add = controller.getWord(InternationalizationConstant.BUTTON.ADD);
         cancel = controller.getWord(InternationalizationConstant.BUTTON.CANCEL);
         finish = controller.getWord(InternationalizationConstant.BUTTON.FINISH);
+        find = controller.getWord(InternationalizationConstant.BUTTON.FIND);;
     }
 
     public String getAdd() {
         return add;
+    }
+
+    public String getFind() {
+        return find;
     }
 
     public String back(boolean end) {

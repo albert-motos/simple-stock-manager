@@ -5,19 +5,24 @@ import com.development.simplestockmanager.business.object.nullpackage.ProductNul
 import com.development.simplestockmanager.business.object.helper.ProductHelper;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.controller.ProductJpaController;
-import javax.persistence.Query;
 
 /**
- * TESTED
+ * General controller class for Product object
  *
  * @author foxtrot
  */
 public class ProductGeneralController {
 
+    private final ProductJpaController controller;
+
+    public ProductGeneralController() {
+        ProductHelper helper = new ProductHelper();
+        controller = helper.getJpaController();
+    }
+
     public long create(Product product) {
         try {
-            ProductJpaController productJpaController = ProductHelper.getJpaController();
-            productJpaController.create(product);
+            controller.create(product);
         } catch (Exception e) {
             product = new ProductNull();
         }
@@ -27,8 +32,11 @@ public class ProductGeneralController {
 
     public Product read(Product product) {
         try {
-            Query query = ProductHelper.getFindByIdQuery(product.getId());
-            product = (Product) query.getSingleResult();
+            product = controller.findProduct(product.getId());
+
+            if (product == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             product = new ProductNull();
         }
@@ -37,32 +45,26 @@ public class ProductGeneralController {
     }
 
     public long update(Product product) {
-        long status = Constant.UPDATE.FAILURE;
+        long status;
 
-        if (read(product).getId() != Constant.IDENTIFIER.INVALID) {
-            try {
-                ProductJpaController productJpaController = ProductHelper.getJpaController();
-                productJpaController.edit(product);
-                status = Constant.UPDATE.SUCCESS;
-            } catch (Exception e) {
-
-            }
+        try {
+            controller.edit(product);
+            status = Constant.UPDATE.SUCCESS;
+        } catch (Exception e) {
+            status = Constant.UPDATE.FAILURE;
         }
 
         return status;
     }
 
     public long delete(Product product) {
-        long status = Constant.DELETE.FAILURE;
+        long status;
 
-        if (read(product).getId() != Constant.IDENTIFIER.INVALID) {
-            try {
-                ProductJpaController productJpaController = ProductHelper.getJpaController();
-                productJpaController.destroy(product.getId());
-                status = Constant.DELETE.SUCCESS;
-            } catch (Exception e) {
-
-            }
+        try {
+            controller.destroy(product.getId());
+            status = Constant.DELETE.SUCCESS;
+        } catch (Exception e) {
+            status = Constant.DELETE.FAILURE;
         }
 
         return status;

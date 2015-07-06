@@ -31,6 +31,9 @@ public class LabelService implements Serializable {
     private final String name;
     private final String description;
     private final String identifier;
+    private final String productType;
+    private final String brand;
+    private final String provider;
     
     private final String nonSelection;
 
@@ -53,6 +56,9 @@ public class LabelService implements Serializable {
         name = controller.getWord(InternationalizationConstant.LABEL.NAME);
         description = controller.getWord(InternationalizationConstant.LABEL.DESCRIPTION);
         identifier = controller.getWord(InternationalizationConstant.LABEL.IDENTIFIER);
+        productType = controller.getWord(InternationalizationConstant.LABEL.PRODUCT_TYPE);
+        brand = controller.getWord(InternationalizationConstant.LABEL.BRAND);
+        provider = controller.getWord(InternationalizationConstant.LABEL.PROVIDER);
         
         nonSelection = controller.getWord(InternationalizationConstant.LABEL.NON_SELECTION);
     }
@@ -111,6 +117,18 @@ public class LabelService implements Serializable {
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getProvider() {
+        return provider;
     }
 
 }

@@ -13,9 +13,11 @@ public class BrandHelper {
         return new BrandJpaController(EntityManagerHelper.getEntityManagerFactory());
     }
 
-    public Query getFindByNameQuery(String name) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Brand.findByName");
-        query.setParameter("name", name);
+    public Query getFindByNameForSelectorQuery(String name) {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Brand.getFindByNameForSelector");
+        query.setParameter("name","%" + name + "%");
+        System.out.println("# " + query.toString());
+        System.out.println("# " + query.getParameters());
         
         return query;
     }
