@@ -1,9 +1,10 @@
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.web.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.business.object.controller.general.ProviderGeneralController;
 import com.development.simplestockmanager.business.persistence.Provider;
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.object.validator.ProviderValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -27,7 +28,7 @@ public class ProviderAddView extends BaseAddView {
     private final Provider provider;
 
     public ProviderAddView() {
-        validator = new ProviderValidator(Constant.VALIDATOR.MODE.CREATE, internationalizationController);
+        validator = new ProviderValidator(WebConstant.VALIDATOR.MODE.CREATE, internationalizationController);
         generalController = new ProviderGeneralController();
 
         provider = new Provider();
@@ -51,16 +52,16 @@ public class ProviderAddView extends BaseAddView {
             String summary;
             String detail;
 
-            if (id == Constant.IDENTIFIER.INVALID) {
+            if (id == BusinessConstant.IDENTIFIER.INVALID) {
                 severity = FacesMessage.SEVERITY_FATAL;
-                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.SUMMARY);
-                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
             } else {
                 added = true;
                 severity = FacesMessage.SEVERITY_INFO;
-                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.SUMMARY);
-                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.OBJECT.PROVIDER) + id +
-                        internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.PROVIDER) + id +
+                        internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
             }
 
             context.addMessage(null, new FacesMessage(severity, summary, detail));

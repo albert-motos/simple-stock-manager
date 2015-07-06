@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeNull;
 import com.development.simplestockmanager.business.object.helper.EmployeeHelper;
 import com.development.simplestockmanager.business.persistence.Employee;
@@ -52,9 +52,9 @@ public class EmployeeGeneralController {
 
         try {
             controller.edit(employee);
-            status = Constant.UPDATE.SUCCESS;
+            status = BusinessConstant.UPDATE.SUCCESS;
         } catch (Exception e) {
-            status = Constant.UPDATE.FAILURE;
+            status = BusinessConstant.UPDATE.FAILURE;
         }
 
         return status;
@@ -65,9 +65,9 @@ public class EmployeeGeneralController {
 
         try {
             controller.destroy(employee.getId());
-            status = Constant.DELETE.SUCCESS;
+            status = BusinessConstant.DELETE.SUCCESS;
         } catch (IllegalOrphanException | NonexistentEntityException e) {
-            status = Constant.DELETE.FAILURE;
+            status = BusinessConstant.DELETE.FAILURE;
         }
 
         return status;

@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.web.object.validator;
 
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +45,11 @@ abstract class BaseValidator {
         String summary;
 
         if (!warningList.isEmpty()) {
-            summary = controller.getWord(InternationalizationConstant.MESSAGE.WARNING.SUMMARY);
+            summary = controller.getWord(CommonConstant.MESSAGE.WARNING.SUMMARY);
             if (warningList.size() == 1) {
-                detail = controller.getWord(InternationalizationConstant.MESSAGE.WARNING.DETAIL.SINGULAR);
+                detail = controller.getWord(CommonConstant.MESSAGE.WARNING.DETAIL.SINGULAR);
             } else {
-                detail = controller.getWord(InternationalizationConstant.MESSAGE.WARNING.DETAIL.PLURAL);
+                detail = controller.getWord(CommonConstant.MESSAGE.WARNING.DETAIL.PLURAL);
             }
             
             messageList.add(new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
@@ -60,11 +60,11 @@ abstract class BaseValidator {
         }
 
         if (!errorList.isEmpty()) {
-            summary = controller.getWord(InternationalizationConstant.MESSAGE.ERROR.SUMMARY);
+            summary = controller.getWord(CommonConstant.MESSAGE.ERROR.SUMMARY);
             if (errorList.size() == 1) {
-                detail = controller.getWord(InternationalizationConstant.MESSAGE.ERROR.DETAIL.SINGULAR);
+                detail = controller.getWord(CommonConstant.MESSAGE.ERROR.DETAIL.SINGULAR);
             } else {
-                detail = controller.getWord(InternationalizationConstant.MESSAGE.ERROR.DETAIL.PLURAL);
+                detail = controller.getWord(CommonConstant.MESSAGE.ERROR.DETAIL.PLURAL);
             }
             
             messageList.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));

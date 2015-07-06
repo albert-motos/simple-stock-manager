@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.general.StoreGeneralController;
 import com.development.simplestockmanager.business.persistence.Store;
 import com.development.simplestockmanager.web.object.component.selector.EmployeeSelectorView;
@@ -65,7 +65,7 @@ public class StoreAddView extends BaseAddView {
             currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The next field/s couldn't be empty: " + fields_empty));
         }
         
-        if (employeeSelectorView.getSelectedValue().getId() == Constant.IDENTIFIER.INVALID) {
+        if (employeeSelectorView.getSelectedValue().getId() == BusinessConstant.IDENTIFIER.INVALID) {
             currentInstance.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning", "The employee_selector is not indicated"));
         }
 

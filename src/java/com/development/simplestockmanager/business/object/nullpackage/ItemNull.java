@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.business.object.nullpackage;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Item;
 
 /**
@@ -11,6 +11,6 @@ import com.development.simplestockmanager.business.persistence.Item;
 public class ItemNull extends Item {
 
     public ItemNull() {
-        super(Constant.IDENTIFIER.INVALID);
+        super(BusinessConstant.IDENTIFIER.INVALID);
     }
 }

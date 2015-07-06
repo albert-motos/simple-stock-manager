@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.nullpackage.RecordNull;
 import com.development.simplestockmanager.business.object.helper.RecordHelper;
 import com.development.simplestockmanager.business.persistence.Record;

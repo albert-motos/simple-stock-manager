@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import com.development.simplestockmanager.web.common.service.general.AuthenticationService;
@@ -34,7 +34,7 @@ abstract class BaseAddView implements Serializable {
     }
     
     public void back() {
-        new NavigationService().redirect(Constant.URL.INDEX);
+        new NavigationService().redirect(BusinessConstant.URL.INDEX);
     }
 
 }

@@ -1,10 +1,11 @@
 
 package com.development.simplestockmanager.web.view.add;
 
-import com.development.simplestockmanager.web.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.business.object.controller.general.BrandGeneralController;
 import com.development.simplestockmanager.business.persistence.Brand;
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.object.validator.BrandValidator;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -28,7 +29,7 @@ public class BrandAddView extends BaseAddView {
     private final Brand brand;
 
     public BrandAddView() {
-        validator = new BrandValidator(Constant.VALIDATOR.MODE.CREATE, internationalizationController);
+        validator = new BrandValidator(WebConstant.VALIDATOR.MODE.CREATE, internationalizationController);
         generalController = new BrandGeneralController();
 
         brand = new Brand();
@@ -52,16 +53,16 @@ public class BrandAddView extends BaseAddView {
             String summary;
             String detail;
 
-            if (id == Constant.IDENTIFIER.INVALID) {
+            if (id == BusinessConstant.IDENTIFIER.INVALID) {
                 severity = FacesMessage.SEVERITY_FATAL;
-                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.SUMMARY);
-                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
             } else {
                 added = true;
                 severity = FacesMessage.SEVERITY_INFO;
-                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.SUMMARY);
-                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.OBJECT.BRAND) + id +
-                        internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.BRAND) + id +
+                        internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
             }
 
             context.addMessage(null, new FacesMessage(severity, summary, detail));

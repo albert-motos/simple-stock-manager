@@ -4,7 +4,7 @@ package com.development.simplestockmanager.web.common;
  *
  * @author foxtrot
  */
-public interface Constant {
+public interface WebConstant {
 
     public interface VALIDATOR {
 
@@ -14,36 +14,7 @@ public interface Constant {
             public static long EDIT = 1;
         }
     }
-
-    public interface IDENTIFIER {
-
-        public static long INVALID = -1;
-    }
-
-    public interface DELETE {
-
-        public static long SUCCESS = 1;
-        public static long FAILURE = 0;
-    }
-
-    public interface UPDATE {
-
-        public static long SUCCESS = 1;
-        public static long FAILURE = 0;
-    }
-
     
-
-    public interface VIEW {
-
-        public interface BUTTON {
-
-            public static String BEFORE = "Cancel";
-            public static String AFTER = "Finish";
-        }
-    }
-    
-
     public interface WEB {
 
         public static String BASE = "/SimpleStockManager";

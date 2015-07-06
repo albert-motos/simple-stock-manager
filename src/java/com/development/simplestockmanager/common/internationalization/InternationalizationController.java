@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.common.internationalization;
 
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class InternationalizationController {
         this.language = language;
         initialization();
 
-        translation = ResourceBundle.getBundle(InternationalizationConstant.PATH, supportedLanguages.get(language));
+        translation = ResourceBundle.getBundle(CommonConstant.PATH, supportedLanguages.get(language));
     }
 
     public String getWord(String keyword) {

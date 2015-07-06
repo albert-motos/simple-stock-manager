@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.nullpackage.StoreNull;
 import com.development.simplestockmanager.business.object.helper.StoreHelper;
 import com.development.simplestockmanager.business.persistence.Store;
@@ -38,13 +38,13 @@ public class StoreGeneralController {
     }
 
     public long update(Store store) {
-        long status = Constant.UPDATE.FAILURE;
+        long status = BusinessConstant.UPDATE.FAILURE;
 
-        if (read(store).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(store).getId() != BusinessConstant.IDENTIFIER.INVALID) {
             try {
                 StoreJpaController storeJpaController = StoreHelper.getJpaController();
                 storeJpaController.edit(store);
-                status = Constant.UPDATE.SUCCESS;
+                status = BusinessConstant.UPDATE.SUCCESS;
             } catch (Exception e) {
 
             }
@@ -54,13 +54,13 @@ public class StoreGeneralController {
     }
 
     public long delete(Store store) {
-        long status = Constant.DELETE.FAILURE;
+        long status = BusinessConstant.DELETE.FAILURE;
 
-        if (read(store).getId() != Constant.IDENTIFIER.INVALID) {
+        if (read(store).getId() != BusinessConstant.IDENTIFIER.INVALID) {
             try {
                 StoreJpaController storeJpaController = StoreHelper.getJpaController();
                 storeJpaController.destroy(store.getId());
-                status = Constant.DELETE.SUCCESS;
+                status = BusinessConstant.DELETE.SUCCESS;
             } catch (Exception e) {
 
             }

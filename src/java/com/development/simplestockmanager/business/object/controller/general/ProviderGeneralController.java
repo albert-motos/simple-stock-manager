@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.nullpackage.ProviderNull;
 import com.development.simplestockmanager.business.object.helper.ProviderHelper;
 import com.development.simplestockmanager.business.persistence.Provider;
@@ -54,9 +54,9 @@ public class ProviderGeneralController {
 
         try {
             controller.edit(provider);
-            status = Constant.UPDATE.SUCCESS;
+            status = BusinessConstant.UPDATE.SUCCESS;
         } catch (Exception e) {
-            status = Constant.UPDATE.FAILURE;
+            status = BusinessConstant.UPDATE.FAILURE;
         }
 
         return status;
@@ -67,9 +67,9 @@ public class ProviderGeneralController {
 
         try {
             controller.destroy(provider.getId());
-            status = Constant.DELETE.SUCCESS;
+            status = BusinessConstant.DELETE.SUCCESS;
         } catch (IllegalOrphanException | NonexistentEntityException e) {
-            status = Constant.DELETE.FAILURE;
+            status = BusinessConstant.DELETE.FAILURE;
         }
 
         return status;

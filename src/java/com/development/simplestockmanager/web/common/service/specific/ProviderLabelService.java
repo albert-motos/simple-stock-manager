@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.common.service.specific;
 
 import com.development.simplestockmanager.web.common.service.general.*;
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -25,9 +25,9 @@ public class ProviderLabelService implements Serializable {
         Employee user = new AuthenticationService().getCurrentEmployee();
         InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
 
-        attributes = controller.getWord(InternationalizationConstant.HEADER.PROVIDER.ATTRIBUTES);
-        visibility = controller.getWord(InternationalizationConstant.HEADER.PROVIDER.VISIBILITY);
-        enable = controller.getWord(InternationalizationConstant.LABEL.ENABLE.PROVIDER);
+        attributes = controller.getWord(CommonConstant.HEADER.PROVIDER.ATTRIBUTES);
+        visibility = controller.getWord(CommonConstant.HEADER.PROVIDER.VISIBILITY);
+        enable = controller.getWord(CommonConstant.LABEL.ENABLE.PROVIDER);
     }
 
     public String getAttributes() {

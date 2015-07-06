@@ -1,10 +1,10 @@
 package com.development.simplestockmanager.web.object.validator;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
-import com.development.simplestockmanager.web.common.Constant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,43 +40,43 @@ public class EmployeeValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (employee.getFirstname().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.FIRSTNAME));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.FIRSTNAME));
         }
 
         if (employee.getLastname().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.LASTNAME));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.LASTNAME));
         }
 
         if (employee.getPhone().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.PHONE_NUMBER));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
         }
 
         if (employee.getEmail().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.EMAIL));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
         }
 
         if (employee.getUsername().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.USERNAME));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.USERNAME));
         }
 
         if (employee.getPassword().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.PASSWORD));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.PASSWORD));
         }
 
         if (employee.getBornDate() == null) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.BORN_DATE));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.BORN_DATE));
         }
 
-        if (employee.getSexType().getId() == Constant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.SEX_TYPE));
+        if (employee.getSexType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.SEX_TYPE));
         }
         
-        if (employee.getEmployeeType().getId() == Constant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.EMPLOYEE_TYPE));
+        if (employee.getEmployeeType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE_TYPE));
         }
         
-        if (employee.getLanguageType().getId() == Constant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.LANGUAGE_TYPE));
+        if (employee.getLanguageType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.LANGUAGE_TYPE));
         }
 
         return fieldsEmptyList;
@@ -88,13 +88,13 @@ public class EmployeeValidator extends BaseValidator {
 
         if (employee.getBornDate() != null) {
             if (employee.getBornDate().after(new Date())) {
-                causeList.add(controller.getWord(InternationalizationConstant.MESSAGE.ERROR.BORN_DATE));
+                causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.BORN_DATE));
             }
         }
 
         if (!employee.getUsername().isEmpty()) {
             if (!specificController.usernameIsAvailable(employee.getUsername())) {
-                causeList.add(controller.getWord(InternationalizationConstant.MESSAGE.ERROR.USERNAME));
+                causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.USERNAME));
             }
         }
 

@@ -1,9 +1,10 @@
 package com.development.simplestockmanager.web.view.add;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
 import com.development.simplestockmanager.business.persistence.Product;
-import com.development.simplestockmanager.common.InternationalizationConstant;
-import com.development.simplestockmanager.web.common.Constant;
+import com.development.simplestockmanager.common.CommonConstant;
+import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.object.component.selector.BrandSelector;
 import com.development.simplestockmanager.web.object.component.selector.ProviderSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.ProductTypeSelector;
@@ -31,7 +32,7 @@ public class ProductAddView extends BaseAddView {
     private final Product product;
 
     public ProductAddView() {
-        validator = new ProductValidator(Constant.VALIDATOR.MODE.CREATE, internationalizationController);
+        validator = new ProductValidator(WebConstant.VALIDATOR.MODE.CREATE, internationalizationController);
         generalController = new ProductGeneralController();
         
         product = new Product();
@@ -61,16 +62,16 @@ public class ProductAddView extends BaseAddView {
             String summary;
             String detail;
 
-            if (id == Constant.IDENTIFIER.INVALID) {
+            if (id == BusinessConstant.IDENTIFIER.INVALID) {
                 severity = FacesMessage.SEVERITY_FATAL;
-                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.SUMMARY);
-                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
             } else {
                 added = true;
                 severity = FacesMessage.SEVERITY_INFO;
-                summary = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.SUMMARY);
-                detail = internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.OBJECT.PRODUCT) + id +
-                        internationalizationController.getWord(InternationalizationConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+                summary = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
+                detail = internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.PRODUCT) + id +
+                        internationalizationController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
             }
 
             context.addMessage(null, new FacesMessage(severity, summary, detail));

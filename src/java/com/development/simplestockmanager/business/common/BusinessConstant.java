@@ -9,7 +9,7 @@ package com.development.simplestockmanager.business.common;
  *
  * @author foxtrot
  */
-public interface Constant {
+public interface BusinessConstant {
 
     public interface IDENTIFIER {
 

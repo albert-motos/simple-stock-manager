@@ -4,7 +4,7 @@ package com.development.simplestockmanager.common;
  *
  * @author foxtrot
  */
-public interface InternationalizationConstant {
+public interface CommonConstant {
 
     public static String PATH = "com.development.simplestockmanager.common.internationalization.internationalization";
 

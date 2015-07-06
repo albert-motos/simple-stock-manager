@@ -1,9 +1,9 @@
 package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
-import com.development.simplestockmanager.web.common.Constant;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.io.Serializable;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
@@ -39,30 +39,30 @@ public class MenuService implements Serializable {
     private final String storeSearch;
 
     public MenuService() {
-        System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.MENU.CONSTRUCTOR);
+        System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.MENU.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
         InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
 
-        entity = controller.getWord(InternationalizationConstant.MENU.ENTITY.TEXT);
-        brand = controller.getWord(InternationalizationConstant.MENU.ENTITY.BRAND.TEXT);
-        brandCreate = controller.getWord(InternationalizationConstant.MENU.ENTITY.BRAND.CREATE);
-        brandSearch = controller.getWord(InternationalizationConstant.MENU.ENTITY.BRAND.SEARCH);
-        client = controller.getWord(InternationalizationConstant.MENU.ENTITY.CLIENT.TEXT);
-        clientCreate = controller.getWord(InternationalizationConstant.MENU.ENTITY.CLIENT.CREATE);
-        clientSearch = controller.getWord(InternationalizationConstant.MENU.ENTITY.CLIENT.SEARCH);
-        employee = controller.getWord(InternationalizationConstant.MENU.ENTITY.EMPLOYEE.TEXT);
-        employeeCreate = controller.getWord(InternationalizationConstant.MENU.ENTITY.EMPLOYEE.CREATE);
-        employeeSearch = controller.getWord(InternationalizationConstant.MENU.ENTITY.EMPLOYEE.SEARCH);
-        product = controller.getWord(InternationalizationConstant.MENU.ENTITY.PRODUCT.TEXT);
-        productCreate = controller.getWord(InternationalizationConstant.MENU.ENTITY.PRODUCT.CREATE);
-        productSearch = controller.getWord(InternationalizationConstant.MENU.ENTITY.PRODUCT.SEARCH);
-        provider = controller.getWord(InternationalizationConstant.MENU.ENTITY.PROVIDER.TEXT);
-        providerCreate = controller.getWord(InternationalizationConstant.MENU.ENTITY.PROVIDER.CREATE);
-        providerSearch = controller.getWord(InternationalizationConstant.MENU.ENTITY.PROVIDER.SEARCH);
-        store = controller.getWord(InternationalizationConstant.MENU.ENTITY.STORE.TEXT);
-        storeCreate = controller.getWord(InternationalizationConstant.MENU.ENTITY.STORE.CREATE);
-        storeSearch = controller.getWord(InternationalizationConstant.MENU.ENTITY.STORE.SEARCH);
+        entity = controller.getWord(CommonConstant.MENU.ENTITY.TEXT);
+        brand = controller.getWord(CommonConstant.MENU.ENTITY.BRAND.TEXT);
+        brandCreate = controller.getWord(CommonConstant.MENU.ENTITY.BRAND.CREATE);
+        brandSearch = controller.getWord(CommonConstant.MENU.ENTITY.BRAND.SEARCH);
+        client = controller.getWord(CommonConstant.MENU.ENTITY.CLIENT.TEXT);
+        clientCreate = controller.getWord(CommonConstant.MENU.ENTITY.CLIENT.CREATE);
+        clientSearch = controller.getWord(CommonConstant.MENU.ENTITY.CLIENT.SEARCH);
+        employee = controller.getWord(CommonConstant.MENU.ENTITY.EMPLOYEE.TEXT);
+        employeeCreate = controller.getWord(CommonConstant.MENU.ENTITY.EMPLOYEE.CREATE);
+        employeeSearch = controller.getWord(CommonConstant.MENU.ENTITY.EMPLOYEE.SEARCH);
+        product = controller.getWord(CommonConstant.MENU.ENTITY.PRODUCT.TEXT);
+        productCreate = controller.getWord(CommonConstant.MENU.ENTITY.PRODUCT.CREATE);
+        productSearch = controller.getWord(CommonConstant.MENU.ENTITY.PRODUCT.SEARCH);
+        provider = controller.getWord(CommonConstant.MENU.ENTITY.PROVIDER.TEXT);
+        providerCreate = controller.getWord(CommonConstant.MENU.ENTITY.PROVIDER.CREATE);
+        providerSearch = controller.getWord(CommonConstant.MENU.ENTITY.PROVIDER.SEARCH);
+        store = controller.getWord(CommonConstant.MENU.ENTITY.STORE.TEXT);
+        storeCreate = controller.getWord(CommonConstant.MENU.ENTITY.STORE.CREATE);
+        storeSearch = controller.getWord(CommonConstant.MENU.ENTITY.STORE.SEARCH);
     }
 
     public String getEntity() {

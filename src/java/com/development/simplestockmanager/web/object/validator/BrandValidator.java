@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,11 @@ public class BrandValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (brand.getName().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.NAME));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.NAME));
         }
         
         if (brand.getDescription().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(InternationalizationConstant.MESSAGE.WARNING.DESCRIPTION));
+            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.DESCRIPTION));
         }
 
         return fieldsEmptyList;
@@ -54,7 +54,7 @@ public class BrandValidator extends BaseValidator {
 
         if (!brand.getName().isEmpty()) {
             if (!specificController.nameIsAvailable(brand.getName())) {
-                causeList.add(controller.getWord(InternationalizationConstant.MESSAGE.ERROR.NAME));
+                causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.NAME));
             }
         }
 

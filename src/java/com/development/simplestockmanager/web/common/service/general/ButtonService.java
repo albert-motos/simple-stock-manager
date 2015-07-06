@@ -1,9 +1,9 @@
 package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.common.InternationalizationConstant;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
-import com.development.simplestockmanager.web.common.Constant;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.io.Serializable;
 import java.util.Date;
 import javax.faces.bean.ManagedBean;
@@ -24,15 +24,15 @@ public class ButtonService implements Serializable {
     private final String finish;
 
     public ButtonService() {
-        System.out.println("# " + new Date() + " | " + Constant.LOGGER.SERVICE.BUTTON.CONSTRUCTOR);
+        System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.BUTTON.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
         InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
 
-        add = controller.getWord(InternationalizationConstant.BUTTON.ADD);
-        cancel = controller.getWord(InternationalizationConstant.BUTTON.CANCEL);
-        finish = controller.getWord(InternationalizationConstant.BUTTON.FINISH);
-        find = controller.getWord(InternationalizationConstant.BUTTON.FIND);;
+        add = controller.getWord(CommonConstant.BUTTON.ADD);
+        cancel = controller.getWord(CommonConstant.BUTTON.CANCEL);
+        finish = controller.getWord(CommonConstant.BUTTON.FINISH);
+        find = controller.getWord(CommonConstant.BUTTON.FIND);;
     }
 
     public String getAdd() {

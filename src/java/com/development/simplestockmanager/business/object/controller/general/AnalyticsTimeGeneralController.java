@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.Constant;
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.specific.AnalyticsTimeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.AnalyticsTimeNull;
 import com.development.simplestockmanager.business.object.helper.AnalyticsTimeHelper;
