@@ -8,6 +8,7 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -189,22 +190,53 @@ public class PaymentType implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.type);
+        hash = 13 * hash + (this.enable ? 1 : 0);
+        hash = 13 * hash + Objects.hashCode(this.createdDate);
+        hash = 13 * hash + Objects.hashCode(this.createdUser);
+        hash = 13 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 13 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 13 * hash + Objects.hashCode(this.languageType);
+        hash = 13 * hash + Objects.hashCode(this.referencedType);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PaymentType)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        PaymentType other = (PaymentType) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final PaymentType other = (PaymentType) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.languageType, other.languageType)) {
+            return false;
+        }
+        return Objects.equals(this.referencedType, other.referencedType);
     }
 
     @Override

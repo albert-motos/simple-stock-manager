@@ -8,6 +8,7 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -220,24 +221,67 @@ public class Client implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.firstname);
+        hash = 53 * hash + Objects.hashCode(this.lastname);
+        hash = 53 * hash + Objects.hashCode(this.bornDate);
+        hash = 53 * hash + Objects.hashCode(this.phone);
+        hash = 53 * hash + Objects.hashCode(this.email);
+        hash = 53 * hash + (this.enable ? 1 : 0);
+        hash = 53 * hash + Objects.hashCode(this.createdDate);
+        hash = 53 * hash + Objects.hashCode(this.createdUser);
+        hash = 53 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 53 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 53 * hash + Objects.hashCode(this.sexType);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Client other = (Client) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Client other = (Client) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstname, other.firstname)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastname, other.lastname)) {
+            return false;
+        }
+        if (!Objects.equals(this.bornDate, other.bornDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+            return false;
+        }
+        return Objects.equals(this.sexType, other.sexType);
     }
-
+    
     @Override
     public String toString() {
         return "com.development.simplestockmanager.business.persistence.Client[ id=" + id + " ]";

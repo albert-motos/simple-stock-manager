@@ -8,6 +8,7 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -189,25 +190,55 @@ public class ProductType implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.type);
+        hash = 37 * hash + (this.enable ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.createdDate);
+        hash = 37 * hash + Objects.hashCode(this.createdUser);
+        hash = 37 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 37 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 37 * hash + Objects.hashCode(this.languageType);
+        hash = 37 * hash + Objects.hashCode(this.referencedType);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductType)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProductType other = (ProductType) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProductType other = (ProductType) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.languageType, other.languageType)) {
+            return false;
+        }
+        return Objects.equals(this.referencedType, other.referencedType);
     }
-
-    @Override
+    
     public String toString() {
         return "com.development.simplestockmanager.business.persistence.ProductType[ id=" + id + " ]";
     }

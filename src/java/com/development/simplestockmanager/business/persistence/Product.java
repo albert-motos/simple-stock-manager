@@ -8,6 +8,7 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -202,22 +203,61 @@ public class Product implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.name);
+        hash = 17 * hash + Objects.hashCode(this.description);
+        hash = 17 * hash + (this.enable ? 1 : 0);
+        hash = 17 * hash + Objects.hashCode(this.createdDate);
+        hash = 17 * hash + Objects.hashCode(this.createdUser);
+        hash = 17 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 17 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 17 * hash + Objects.hashCode(this.brand);
+        hash = 17 * hash + Objects.hashCode(this.productType);
+        hash = 17 * hash + Objects.hashCode(this.provider);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Product)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Product other = (Product) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Product other = (Product) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.brand, other.brand)) {
+            return false;
+        }
+        if (!Objects.equals(this.productType, other.productType)) {
+            return false;
+        }
+        return Objects.equals(this.provider, other.provider);
     }
 
     @Override

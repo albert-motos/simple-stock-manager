@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -239,22 +240,73 @@ public class Price implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.title);
+        hash = 71 * hash + Objects.hashCode(this.cost);
+        hash = 71 * hash + Objects.hashCode(this.initialAMOUNT);
+        hash = 71 * hash + Objects.hashCode(this.endAMOUNT);
+        hash = 71 * hash + Objects.hashCode(this.initialDate);
+        hash = 71 * hash + Objects.hashCode(this.endDate);
+        hash = 71 * hash + (this.enable ? 1 : 0);
+        hash = 71 * hash + Objects.hashCode(this.createdDate);
+        hash = 71 * hash + Objects.hashCode(this.createdUser);
+        hash = 71 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 71 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 71 * hash + Objects.hashCode(this.priceType);
+        hash = 71 * hash + Objects.hashCode(this.stock);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Price)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Price other = (Price) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Price other = (Price) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.cost, other.cost)) {
+            return false;
+        }
+        if (!Objects.equals(this.initialAMOUNT, other.initialAMOUNT)) {
+            return false;
+        }
+        if (!Objects.equals(this.endAMOUNT, other.endAMOUNT)) {
+            return false;
+        }
+        if (!Objects.equals(this.initialDate, other.initialDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.endDate, other.endDate)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.priceType, other.priceType)) {
+            return false;
+        }
+        return Objects.equals(this.stock, other.stock);
     }
 
     @Override

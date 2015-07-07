@@ -8,6 +8,7 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -328,22 +329,93 @@ public class Employee implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.firstname);
+        hash = 53 * hash + Objects.hashCode(this.lastname);
+        hash = 53 * hash + Objects.hashCode(this.bornDate);
+        hash = 53 * hash + Objects.hashCode(this.phone);
+        hash = 53 * hash + Objects.hashCode(this.email);
+        hash = 53 * hash + Objects.hashCode(this.username);
+        hash = 53 * hash + Objects.hashCode(this.password);
+        hash = 53 * hash + (this.isOnline ? 1 : 0);
+        hash = 53 * hash + Objects.hashCode(this.lastOnlineDate);
+        hash = 53 * hash + Objects.hashCode(this.sessionId);
+        hash = 53 * hash + (this.enable ? 1 : 0);
+        hash = 53 * hash + Objects.hashCode(this.createdDate);
+        hash = 53 * hash + Objects.hashCode(this.createdUser);
+        hash = 53 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 53 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 53 * hash + Objects.hashCode(this.employeeType);
+        hash = 53 * hash + Objects.hashCode(this.sexType);
+        hash = 53 * hash + Objects.hashCode(this.languageType);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employee)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Employee other = (Employee) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Employee other = (Employee) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstname, other.firstname)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastname, other.lastname)) {
+            return false;
+        }
+        if (!Objects.equals(this.bornDate, other.bornDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (this.isOnline != other.isOnline) {
+            return false;
+        }
+        if (!Objects.equals(this.lastOnlineDate, other.lastOnlineDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.sessionId, other.sessionId)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+            return false;
+        }
+        if (!Objects.equals(this.employeeType, other.employeeType)) {
+            return false;
+        }
+        if (!Objects.equals(this.sexType, other.sexType)) {
+            return false;
+        }
+        return Objects.equals(this.languageType, other.languageType);
     }
 
     @Override
