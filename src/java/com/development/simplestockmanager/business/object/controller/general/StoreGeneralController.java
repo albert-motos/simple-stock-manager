@@ -9,7 +9,7 @@ import com.development.simplestockmanager.business.persistence.controller.except
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 
 /**
- * TESTED
+ * General controller class for Store object
  *
  * @author foxtrot
  */

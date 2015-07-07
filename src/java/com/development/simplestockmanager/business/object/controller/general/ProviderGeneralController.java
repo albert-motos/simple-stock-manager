@@ -7,8 +7,6 @@ import com.development.simplestockmanager.business.persistence.Provider;
 import com.development.simplestockmanager.business.persistence.controller.ProviderJpaController;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
-import java.util.Date;
-import javax.persistence.Query;
 
 /**
  * General controller class for Provider object

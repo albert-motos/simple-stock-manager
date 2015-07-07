@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.object.controller.general;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
@@ -10,80 +5,71 @@ import com.development.simplestockmanager.business.object.nullpackage.StockNull;
 import com.development.simplestockmanager.business.object.helper.StockHelper;
 import com.development.simplestockmanager.business.persistence.Stock;
 import com.development.simplestockmanager.business.persistence.controller.StockJpaController;
-import java.math.BigDecimal;
-import java.util.Date;
-import javax.persistence.Query;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 
 /**
- * TESTED
+ * General controller class for Stock object
  *
  * @author foxtrot
  */
 public class StockGeneralController {
 
-//    public static long create(long productID, long brandID, long storeID, long providerID, BigDecimal actualAmount, BigDecimal totalAmount, Date createdDate,
-//            Date lastModifiedDate) {
-//
-////        Stock stock = new Stock(productID, brandID, storeID, providerID, actualAmount, totalAmount, createdDate, lastModifiedDate);
-////
-////        try {
-////            StockJpaController stockJpaController = StockHelper.getJpaController();
-////            stockJpaController.create(stock);
-////        } catch (Exception e) {
-////            stock = new StockNull();
-////        }
-//
-//        return stock.getId();
-//    }
-//
-//    public static Stock read(long id) {
-//
-//        Stock stock;
-//
-//        try {
-//            Query query = StockHelper.getFindByIdQuery(id);
-//            stock = (Stock) query.getSingleResult();
-//        } catch (Exception e) {
-//            stock = new StockNull();
-//        }
-//
-//        return stock;
-//    }
-//
-//    public static long update(long id, long productID, long brandID, long storeID, long providerID, BigDecimal actualAmount, BigDecimal totalAmount,
-//            Date createdDate, Date lastModifiedDate) {
-//
-//        long status = Constant.UPDATE.FAILURE;
-//
-//        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-//            Stock stock = new Stock(id, productID, brandID, storeID, providerID, actualAmount, totalAmount, createdDate, lastModifiedDate);
-//
-//            try {
-//                StockJpaController stockJpaController = StockHelper.getJpaController();
-//                stockJpaController.edit(stock);
-//                status = Constant.UPDATE.SUCCESS;
-//            } catch (Exception e) {
-//
-//            }
-//        }
-//
-//        return status;
-//    }
-//
-//    public static long delete(long id) {
-//
-//        long status = Constant.DELETE.FAILURE;
-//
-//        if (read(id).getId() != Constant.IDENTIFIER.INVALID) {
-//            try {
-//                StockJpaController stockJpaController = StockHelper.getJpaController();
-//                stockJpaController.destroy(id);
-//                status = Constant.DELETE.SUCCESS;
-//            } catch (Exception e) {
-//
-//            }
-//        }
-//
-//        return status;
-//    }
+    private final StockJpaController controller;
+
+    public StockGeneralController() {
+        StockHelper helper = new StockHelper();
+        controller = helper.getJpaController();
+    }
+
+    public long create(Stock stock) {
+        try {
+            controller.create(stock);
+        } catch (Exception e) {
+            stock = new StockNull();
+        }
+
+        return stock.getId();
+    }
+
+    public Stock read(Stock stock) {
+        try {
+            stock = controller.findStock(stock.getId());
+
+            if (stock == null) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            stock = new StockNull();
+        }
+
+        return stock;
+    }
+
+    public long update(Stock stock) {
+        long status;
+
+        try {
+            controller.edit(stock);
+            status = BusinessConstant.UPDATE.SUCCESS;
+        } catch (Exception e) {
+            status = BusinessConstant.UPDATE.FAILURE;
+        }
+
+        return status;
+    }
+
+    public long delete(Stock stock) {
+        long status;
+
+        try {
+            controller.destroy(stock.getId());
+            status = BusinessConstant.DELETE.SUCCESS;
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
+            status = BusinessConstant.DELETE.FAILURE;
+        }
+
+        return status;
+    }
+
 }

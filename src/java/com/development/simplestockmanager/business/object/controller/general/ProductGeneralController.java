@@ -5,6 +5,8 @@ import com.development.simplestockmanager.business.object.nullpackage.ProductNul
 import com.development.simplestockmanager.business.object.helper.ProductHelper;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.controller.ProductJpaController;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 
 /**
  * General controller class for Product object
@@ -63,7 +65,7 @@ public class ProductGeneralController {
         try {
             controller.destroy(product.getId());
             status = BusinessConstant.DELETE.SUCCESS;
-        } catch (Exception e) {
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
             status = BusinessConstant.DELETE.FAILURE;
         }
 

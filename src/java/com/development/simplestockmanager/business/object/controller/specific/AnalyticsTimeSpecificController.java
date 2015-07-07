@@ -16,16 +16,4 @@ import javax.persistence.Query;
  */
 public class AnalyticsTimeSpecificController {
 
-    static public AnalyticsTime find(int minute, int hour, int day, long dayTypeID, int month, long monthTypeID, int year) {
-        AnalyticsTime analyticsTime;
-
-        try {
-            Query query = AnalyticsTimeHelper.getFindByAllQuery(minute, hour, day, dayTypeID, month, monthTypeID, year);
-            analyticsTime = (AnalyticsTime) query.getSingleResult();
-        } catch (Exception e) {
-            analyticsTime = new AnalyticsTimeNull();
-        }
-        
-        return analyticsTime;
-    }
 }

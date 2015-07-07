@@ -1,4 +1,3 @@
-
 package com.development.simplestockmanager.business.object.controller.general;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
@@ -15,14 +14,14 @@ import com.development.simplestockmanager.business.persistence.controller.except
  * @author foxtrot
  */
 public class EmployeeTypeGeneralController {
-    
+
     private final EmployeeTypeJpaController controller;
 
     public EmployeeTypeGeneralController() {
         EmployeeTypeHelper helper = new EmployeeTypeHelper();
         controller = helper.getJpaController();
     }
-    
+
     public long client(EmployeeType employeeType) {
         try {
             controller.create(employeeType);
@@ -72,5 +71,5 @@ public class EmployeeTypeGeneralController {
 
         return status;
     }
-    
+
 }

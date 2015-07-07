@@ -7,7 +7,6 @@ import com.development.simplestockmanager.business.persistence.Client;
 import com.development.simplestockmanager.business.persistence.controller.ClientJpaController;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
-import javax.persistence.Query;
 
 /**
  * General controller class for Client object
@@ -16,10 +15,16 @@ import javax.persistence.Query;
  */
 public class ClientGeneralController {
 
+    private final ClientJpaController controller;
+
+    public ClientGeneralController() {
+        ClientHelper helper = new ClientHelper();
+        controller = helper.getJpaController();
+    }
+
     public long create(Client client) {
         try {
-            ClientJpaController clientJpaController = ClientHelper.getJpaController();
-            clientJpaController.create(client);
+            controller.create(client);
         } catch (Exception e) {
             client = new ClientNull();
         }
@@ -29,8 +34,11 @@ public class ClientGeneralController {
 
     public Client read(Client client) {
         try {
-            Query query = ClientHelper.getFindByIdQuery(client.getId());
-            client = (Client) query.getSingleResult();
+            client = controller.findClient(client.getId());
+
+            if (client == null) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             client = new ClientNull();
         }
@@ -38,36 +46,30 @@ public class ClientGeneralController {
         return client;
     }
 
+//    
     public long update(Client client) {
-        long status = BusinessConstant.UPDATE.FAILURE;
+        long status;
 
-        if (read(client).getId() != BusinessConstant.IDENTIFIER.INVALID) {
-            try {
-                ClientJpaController clientJpaController = ClientHelper.getJpaController();
-                clientJpaController.edit(client);
-                status = BusinessConstant.UPDATE.SUCCESS;
-            } catch (Exception e) {
-
-            }
+        try {
+            controller.edit(client);
+            status = BusinessConstant.UPDATE.SUCCESS;
+        } catch (Exception e) {
+            status = BusinessConstant.UPDATE.FAILURE;
         }
 
         return status;
     }
 
     public long delete(Client client) {
-        long status = BusinessConstant.DELETE.FAILURE;
+        long status;
 
-        if (read(client).getId() != BusinessConstant.IDENTIFIER.INVALID) {
-            try {
-                ClientJpaController clientJpaController = ClientHelper.getJpaController();
-                clientJpaController.destroy(client.getId());
-                status = BusinessConstant.DELETE.SUCCESS;
-            } catch (IllegalOrphanException | NonexistentEntityException e) {
-
-            }
+        try {
+            controller.destroy(client.getId());
+            status = BusinessConstant.DELETE.SUCCESS;
+        } catch (IllegalOrphanException | NonexistentEntityException e) {
+            status = BusinessConstant.DELETE.FAILURE;
         }
 
         return status;
     }
-
 }
