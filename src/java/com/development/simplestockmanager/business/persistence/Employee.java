@@ -49,9 +49,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employee.findBySessionId", query = "SELECT e FROM Employee e WHERE e.sessionId = :sessionId"),
     @NamedQuery(name = "Employee.findByEnable", query = "SELECT e FROM Employee e WHERE e.enable = :enable"),
     @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
-    @NamedQuery(name = "Employee.findByCreatedUser", query = "SELECT e FROM Employee e WHERE e.createdUser = :createdUser"),
-    @NamedQuery(name = "Employee.findByLastModifiedDate", query = "SELECT e FROM Employee e WHERE e.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Employee.findByLastModifiedUser", query = "SELECT e FROM Employee e WHERE e.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Employee.findByLastModifiedDate", query = "SELECT e FROM Employee e WHERE e.lastModifiedDate = :lastModifiedDate")})
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -98,30 +96,98 @@ public class Employee implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Price> priceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Price> priceList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Employee> employeeList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "EMPLOYEE_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private EmployeeType employeeType;
     @JoinColumn(name = "SEX_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private SexType sexType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Employee> employeeList1;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
     @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private LanguageType languageType;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<PriceType> priceTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<PriceType> priceTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
     private List<Record> recordList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Record> recordList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Record> recordList2;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
     private List<Invoice> invoiceList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Invoice> invoiceList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Invoice> invoiceList2;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Client> clientList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Client> clientList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Stock> stockList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Stock> stockList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Brand> brandList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Brand> brandList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<SexType> sexTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<SexType> sexTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<PaymentType> paymentTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<PaymentType> paymentTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<EmployeeType> employeeTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<EmployeeType> employeeTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Item> itemList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Item> itemList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<ProductType> productTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<ProductType> productTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<AnalyticsTime> analyticsTimeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<AnalyticsTime> analyticsTimeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Product> productList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Product> productList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Provider> providerList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Provider> providerList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
     private List<Store> storeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Store> storeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Store> storeList2;
 
     public Employee() {
     }
@@ -130,7 +196,7 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public Employee(Long id, String firstname, String lastname, Date bornDate, String phone, String email, String username, String password, boolean isOnline, Date lastOnlineDate, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Employee(Long id, String firstname, String lastname, Date bornDate, String phone, String email, String username, String password, boolean isOnline, Date lastOnlineDate, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -143,9 +209,7 @@ public class Employee implements Serializable {
         this.lastOnlineDate = lastOnlineDate;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -252,14 +316,6 @@ public class Employee implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -268,12 +324,39 @@ public class Employee implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
+    @XmlTransient
+    public List<Price> getPriceList() {
+        return priceList;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
+    public void setPriceList(List<Price> priceList) {
+        this.priceList = priceList;
+    }
+
+    @XmlTransient
+    public List<Price> getPriceList1() {
+        return priceList1;
+    }
+
+    public void setPriceList1(List<Price> priceList1) {
+        this.priceList1 = priceList1;
+    }
+
+    @XmlTransient
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public EmployeeType getEmployeeType() {
@@ -292,12 +375,47 @@ public class Employee implements Serializable {
         this.sexType = sexType;
     }
 
+    @XmlTransient
+    public List<Employee> getEmployeeList1() {
+        return employeeList1;
+    }
+
+    public void setEmployeeList1(List<Employee> employeeList1) {
+        this.employeeList1 = employeeList1;
+    }
+
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     public LanguageType getLanguageType() {
         return languageType;
     }
 
     public void setLanguageType(LanguageType languageType) {
         this.languageType = languageType;
+    }
+
+    @XmlTransient
+    public List<PriceType> getPriceTypeList() {
+        return priceTypeList;
+    }
+
+    public void setPriceTypeList(List<PriceType> priceTypeList) {
+        this.priceTypeList = priceTypeList;
+    }
+
+    @XmlTransient
+    public List<PriceType> getPriceTypeList1() {
+        return priceTypeList1;
+    }
+
+    public void setPriceTypeList1(List<PriceType> priceTypeList1) {
+        this.priceTypeList1 = priceTypeList1;
     }
 
     @XmlTransient
@@ -310,12 +428,246 @@ public class Employee implements Serializable {
     }
 
     @XmlTransient
+    public List<Record> getRecordList1() {
+        return recordList1;
+    }
+
+    public void setRecordList1(List<Record> recordList1) {
+        this.recordList1 = recordList1;
+    }
+
+    @XmlTransient
+    public List<Record> getRecordList2() {
+        return recordList2;
+    }
+
+    public void setRecordList2(List<Record> recordList2) {
+        this.recordList2 = recordList2;
+    }
+
+    @XmlTransient
     public List<Invoice> getInvoiceList() {
         return invoiceList;
     }
 
     public void setInvoiceList(List<Invoice> invoiceList) {
         this.invoiceList = invoiceList;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList1() {
+        return invoiceList1;
+    }
+
+    public void setInvoiceList1(List<Invoice> invoiceList1) {
+        this.invoiceList1 = invoiceList1;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList2() {
+        return invoiceList2;
+    }
+
+    public void setInvoiceList2(List<Invoice> invoiceList2) {
+        this.invoiceList2 = invoiceList2;
+    }
+
+    @XmlTransient
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Client> clientList) {
+        this.clientList = clientList;
+    }
+
+    @XmlTransient
+    public List<Client> getClientList1() {
+        return clientList1;
+    }
+
+    public void setClientList1(List<Client> clientList1) {
+        this.clientList1 = clientList1;
+    }
+
+    @XmlTransient
+    public List<Stock> getStockList() {
+        return stockList;
+    }
+
+    public void setStockList(List<Stock> stockList) {
+        this.stockList = stockList;
+    }
+
+    @XmlTransient
+    public List<Stock> getStockList1() {
+        return stockList1;
+    }
+
+    public void setStockList1(List<Stock> stockList1) {
+        this.stockList1 = stockList1;
+    }
+
+    @XmlTransient
+    public List<Brand> getBrandList() {
+        return brandList;
+    }
+
+    public void setBrandList(List<Brand> brandList) {
+        this.brandList = brandList;
+    }
+
+    @XmlTransient
+    public List<Brand> getBrandList1() {
+        return brandList1;
+    }
+
+    public void setBrandList1(List<Brand> brandList1) {
+        this.brandList1 = brandList1;
+    }
+
+    @XmlTransient
+    public List<SexType> getSexTypeList() {
+        return sexTypeList;
+    }
+
+    public void setSexTypeList(List<SexType> sexTypeList) {
+        this.sexTypeList = sexTypeList;
+    }
+
+    @XmlTransient
+    public List<SexType> getSexTypeList1() {
+        return sexTypeList1;
+    }
+
+    public void setSexTypeList1(List<SexType> sexTypeList1) {
+        this.sexTypeList1 = sexTypeList1;
+    }
+
+    @XmlTransient
+    public List<PaymentType> getPaymentTypeList() {
+        return paymentTypeList;
+    }
+
+    public void setPaymentTypeList(List<PaymentType> paymentTypeList) {
+        this.paymentTypeList = paymentTypeList;
+    }
+
+    @XmlTransient
+    public List<PaymentType> getPaymentTypeList1() {
+        return paymentTypeList1;
+    }
+
+    public void setPaymentTypeList1(List<PaymentType> paymentTypeList1) {
+        this.paymentTypeList1 = paymentTypeList1;
+    }
+
+    @XmlTransient
+    public List<EmployeeType> getEmployeeTypeList() {
+        return employeeTypeList;
+    }
+
+    public void setEmployeeTypeList(List<EmployeeType> employeeTypeList) {
+        this.employeeTypeList = employeeTypeList;
+    }
+
+    @XmlTransient
+    public List<EmployeeType> getEmployeeTypeList1() {
+        return employeeTypeList1;
+    }
+
+    public void setEmployeeTypeList1(List<EmployeeType> employeeTypeList1) {
+        this.employeeTypeList1 = employeeTypeList1;
+    }
+
+    @XmlTransient
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
+    }
+
+    @XmlTransient
+    public List<Item> getItemList1() {
+        return itemList1;
+    }
+
+    public void setItemList1(List<Item> itemList1) {
+        this.itemList1 = itemList1;
+    }
+
+    @XmlTransient
+    public List<ProductType> getProductTypeList() {
+        return productTypeList;
+    }
+
+    public void setProductTypeList(List<ProductType> productTypeList) {
+        this.productTypeList = productTypeList;
+    }
+
+    @XmlTransient
+    public List<ProductType> getProductTypeList1() {
+        return productTypeList1;
+    }
+
+    public void setProductTypeList1(List<ProductType> productTypeList1) {
+        this.productTypeList1 = productTypeList1;
+    }
+
+    @XmlTransient
+    public List<AnalyticsTime> getAnalyticsTimeList() {
+        return analyticsTimeList;
+    }
+
+    public void setAnalyticsTimeList(List<AnalyticsTime> analyticsTimeList) {
+        this.analyticsTimeList = analyticsTimeList;
+    }
+
+    @XmlTransient
+    public List<AnalyticsTime> getAnalyticsTimeList1() {
+        return analyticsTimeList1;
+    }
+
+    public void setAnalyticsTimeList1(List<AnalyticsTime> analyticsTimeList1) {
+        this.analyticsTimeList1 = analyticsTimeList1;
+    }
+
+    @XmlTransient
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    @XmlTransient
+    public List<Product> getProductList1() {
+        return productList1;
+    }
+
+    public void setProductList1(List<Product> productList1) {
+        this.productList1 = productList1;
+    }
+
+    @XmlTransient
+    public List<Provider> getProviderList() {
+        return providerList;
+    }
+
+    public void setProviderList(List<Provider> providerList) {
+        this.providerList = providerList;
+    }
+
+    @XmlTransient
+    public List<Provider> getProviderList1() {
+        return providerList1;
+    }
+
+    public void setProviderList1(List<Provider> providerList1) {
+        this.providerList1 = providerList1;
     }
 
     @XmlTransient
@@ -327,28 +679,46 @@ public class Employee implements Serializable {
         this.storeList = storeList;
     }
 
+    @XmlTransient
+    public List<Store> getStoreList1() {
+        return storeList1;
+    }
+
+    public void setStoreList1(List<Store> storeList1) {
+        this.storeList1 = storeList1;
+    }
+
+    @XmlTransient
+    public List<Store> getStoreList2() {
+        return storeList2;
+    }
+
+    public void setStoreList2(List<Store> storeList2) {
+        this.storeList2 = storeList2;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.firstname);
-        hash = 53 * hash + Objects.hashCode(this.lastname);
-        hash = 53 * hash + Objects.hashCode(this.bornDate);
-        hash = 53 * hash + Objects.hashCode(this.phone);
-        hash = 53 * hash + Objects.hashCode(this.email);
-        hash = 53 * hash + Objects.hashCode(this.username);
-        hash = 53 * hash + Objects.hashCode(this.password);
-        hash = 53 * hash + (this.isOnline ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.lastOnlineDate);
-        hash = 53 * hash + Objects.hashCode(this.sessionId);
-        hash = 53 * hash + (this.enable ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.createdDate);
-        hash = 53 * hash + Objects.hashCode(this.createdUser);
-        hash = 53 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 53 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 53 * hash + Objects.hashCode(this.employeeType);
-        hash = 53 * hash + Objects.hashCode(this.sexType);
-        hash = 53 * hash + Objects.hashCode(this.languageType);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.firstname);
+        hash = 29 * hash + Objects.hashCode(this.lastname);
+        hash = 29 * hash + Objects.hashCode(this.bornDate);
+        hash = 29 * hash + Objects.hashCode(this.phone);
+        hash = 29 * hash + Objects.hashCode(this.email);
+        hash = 29 * hash + Objects.hashCode(this.username);
+        hash = 29 * hash + Objects.hashCode(this.password);
+        hash = 29 * hash + (this.isOnline ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.lastOnlineDate);
+        hash = 29 * hash + Objects.hashCode(this.sessionId);
+        hash = 29 * hash + (this.enable ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.createdDate);
+        hash = 29 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 29 * hash + Objects.hashCode(this.createdUser);
+        hash = 29 * hash + Objects.hashCode(this.employeeType);
+        hash = 29 * hash + Objects.hashCode(this.sexType);
+        hash = 29 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 29 * hash + Objects.hashCode(this.languageType);
         return hash;
     }
 
@@ -400,19 +770,19 @@ public class Employee implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.employeeType, other.employeeType)) {
             return false;
         }
         if (!Objects.equals(this.sexType, other.sexType)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
             return false;
         }
         return Objects.equals(this.languageType, other.languageType);

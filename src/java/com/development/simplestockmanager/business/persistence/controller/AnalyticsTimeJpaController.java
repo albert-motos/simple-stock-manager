@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Record;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,16 @@ public class AnalyticsTimeJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee createdUser = analyticsTime.getCreatedUser();
+            if (createdUser != null) {
+                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
+                analyticsTime.setCreatedUser(createdUser);
+            }
+            Employee lastModifiedUser = analyticsTime.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
+                analyticsTime.setLastModifiedUser(lastModifiedUser);
+            }
             List<Record> attachedRecordList = new ArrayList<Record>();
             for (Record recordListRecordToAttach : analyticsTime.getRecordList()) {
                 recordListRecordToAttach = em.getReference(recordListRecordToAttach.getClass(), recordListRecordToAttach.getId());
@@ -59,6 +70,14 @@ public class AnalyticsTimeJpaController implements Serializable {
             }
             analyticsTime.setInvoiceList(attachedInvoiceList);
             em.persist(analyticsTime);
+            if (createdUser != null) {
+                createdUser.getAnalyticsTimeList().add(analyticsTime);
+                createdUser = em.merge(createdUser);
+            }
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getAnalyticsTimeList().add(analyticsTime);
+                lastModifiedUser = em.merge(lastModifiedUser);
+            }
             for (Record recordListRecord : analyticsTime.getRecordList()) {
                 AnalyticsTime oldAnalitycsTimeOfRecordListRecord = recordListRecord.getAnalitycsTime();
                 recordListRecord.setAnalitycsTime(analyticsTime);
@@ -91,6 +110,10 @@ public class AnalyticsTimeJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             AnalyticsTime persistentAnalyticsTime = em.find(AnalyticsTime.class, analyticsTime.getId());
+            Employee createdUserOld = persistentAnalyticsTime.getCreatedUser();
+            Employee createdUserNew = analyticsTime.getCreatedUser();
+            Employee lastModifiedUserOld = persistentAnalyticsTime.getLastModifiedUser();
+            Employee lastModifiedUserNew = analyticsTime.getLastModifiedUser();
             List<Record> recordListOld = persistentAnalyticsTime.getRecordList();
             List<Record> recordListNew = analyticsTime.getRecordList();
             List<Invoice> invoiceListOld = persistentAnalyticsTime.getInvoiceList();
@@ -115,6 +138,14 @@ public class AnalyticsTimeJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (createdUserNew != null) {
+                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
+                analyticsTime.setCreatedUser(createdUserNew);
+            }
+            if (lastModifiedUserNew != null) {
+                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
+                analyticsTime.setLastModifiedUser(lastModifiedUserNew);
+            }
             List<Record> attachedRecordListNew = new ArrayList<Record>();
             for (Record recordListNewRecordToAttach : recordListNew) {
                 recordListNewRecordToAttach = em.getReference(recordListNewRecordToAttach.getClass(), recordListNewRecordToAttach.getId());
@@ -130,6 +161,22 @@ public class AnalyticsTimeJpaController implements Serializable {
             invoiceListNew = attachedInvoiceListNew;
             analyticsTime.setInvoiceList(invoiceListNew);
             analyticsTime = em.merge(analyticsTime);
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                createdUserOld.getAnalyticsTimeList().remove(analyticsTime);
+                createdUserOld = em.merge(createdUserOld);
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                createdUserNew.getAnalyticsTimeList().add(analyticsTime);
+                createdUserNew = em.merge(createdUserNew);
+            }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                lastModifiedUserOld.getAnalyticsTimeList().remove(analyticsTime);
+                lastModifiedUserOld = em.merge(lastModifiedUserOld);
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                lastModifiedUserNew.getAnalyticsTimeList().add(analyticsTime);
+                lastModifiedUserNew = em.merge(lastModifiedUserNew);
+            }
             for (Record recordListNewRecord : recordListNew) {
                 if (!recordListOld.contains(recordListNewRecord)) {
                     AnalyticsTime oldAnalitycsTimeOfRecordListNewRecord = recordListNewRecord.getAnalitycsTime();
@@ -198,6 +245,16 @@ public class AnalyticsTimeJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Employee createdUser = analyticsTime.getCreatedUser();
+            if (createdUser != null) {
+                createdUser.getAnalyticsTimeList().remove(analyticsTime);
+                createdUser = em.merge(createdUser);
+            }
+            Employee lastModifiedUser = analyticsTime.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getAnalyticsTimeList().remove(analyticsTime);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(analyticsTime);
             em.getTransaction().commit();

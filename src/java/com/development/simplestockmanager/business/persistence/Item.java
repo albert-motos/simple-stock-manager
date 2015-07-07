@@ -37,9 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Item.findByAmount", query = "SELECT i FROM Item i WHERE i.amount = :amount"),
     @NamedQuery(name = "Item.findByEnable", query = "SELECT i FROM Item i WHERE i.enable = :enable"),
     @NamedQuery(name = "Item.findByCreatedDate", query = "SELECT i FROM Item i WHERE i.createdDate = :createdDate"),
-    @NamedQuery(name = "Item.findByCreatedUser", query = "SELECT i FROM Item i WHERE i.createdUser = :createdUser"),
-    @NamedQuery(name = "Item.findByLastModifiedDate", query = "SELECT i FROM Item i WHERE i.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Item.findByLastModifiedUser", query = "SELECT i FROM Item i WHERE i.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Item.findByLastModifiedDate", query = "SELECT i FROM Item i WHERE i.lastModifiedDate = :lastModifiedDate")})
 public class Item implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,15 +57,12 @@ public class Item implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "INVOICE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Invoice invoice;
@@ -77,6 +72,9 @@ public class Item implements Serializable {
     @JoinColumn(name = "STOCK", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Stock stock;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public Item() {
     }
@@ -85,14 +83,12 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public Item(Long id, BigDecimal amount, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Item(Long id, BigDecimal amount, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.amount = amount;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -127,14 +123,6 @@ public class Item implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -143,12 +131,12 @@ public class Item implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
+    public Employee getCreatedUser() {
+        return createdUser;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public Invoice getInvoice() {
@@ -175,19 +163,27 @@ public class Item implements Serializable {
         this.stock = stock;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.amount);
-        hash = 97 * hash + (this.enable ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.createdDate);
-        hash = 97 * hash + Objects.hashCode(this.createdUser);
-        hash = 97 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 97 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 97 * hash + Objects.hashCode(this.invoice);
-        hash = 97 * hash + Objects.hashCode(this.price);
-        hash = 97 * hash + Objects.hashCode(this.stock);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.amount);
+        hash = 59 * hash + (this.enable ? 1 : 0);
+        hash = 59 * hash + Objects.hashCode(this.createdDate);
+        hash = 59 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 59 * hash + Objects.hashCode(this.createdUser);
+        hash = 59 * hash + Objects.hashCode(this.invoice);
+        hash = 59 * hash + Objects.hashCode(this.price);
+        hash = 59 * hash + Objects.hashCode(this.stock);
+        hash = 59 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -212,13 +208,10 @@ public class Item implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.invoice, other.invoice)) {
@@ -227,7 +220,10 @@ public class Item implements Serializable {
         if (!Objects.equals(this.price, other.price)) {
             return false;
         }
-        return Objects.equals(this.stock, other.stock);
+        if (!Objects.equals(this.stock, other.stock)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

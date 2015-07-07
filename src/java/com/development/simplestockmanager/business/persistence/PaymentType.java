@@ -40,9 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "PaymentType.findByType", query = "SELECT p FROM PaymentType p WHERE p.type = :type"),
     @NamedQuery(name = "PaymentType.findByEnable", query = "SELECT p FROM PaymentType p WHERE p.enable = :enable"),
     @NamedQuery(name = "PaymentType.findByCreatedDate", query = "SELECT p FROM PaymentType p WHERE p.createdDate = :createdDate"),
-    @NamedQuery(name = "PaymentType.findByCreatedUser", query = "SELECT p FROM PaymentType p WHERE p.createdUser = :createdUser"),
-    @NamedQuery(name = "PaymentType.findByLastModifiedDate", query = "SELECT p FROM PaymentType p WHERE p.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "PaymentType.findByLastModifiedUser", query = "SELECT p FROM PaymentType p WHERE p.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "PaymentType.findByLastModifiedDate", query = "SELECT p FROM PaymentType p WHERE p.lastModifiedDate = :lastModifiedDate")})
 public class PaymentType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,25 +59,25 @@ public class PaymentType implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paymentType")
     private List<Invoice> invoiceList;
-    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
+    private Employee createdUser;
+    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @ManyToOne
     private LanguageType languageType;
     @OneToMany(mappedBy = "referencedType")
     private List<PaymentType> paymentTypeList;
     @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
     @ManyToOne
     private PaymentType referencedType;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public PaymentType() {
     }
@@ -88,14 +86,12 @@ public class PaymentType implements Serializable {
         this.id = id;
     }
 
-    public PaymentType(Long id, String type, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public PaymentType(Long id, String type, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.type = type;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -130,28 +126,12 @@ public class PaymentType implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
-    }
-
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     @XmlTransient
@@ -161,6 +141,14 @@ public class PaymentType implements Serializable {
 
     public void setInvoiceList(List<Invoice> invoiceList) {
         this.invoiceList = invoiceList;
+    }
+
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public LanguageType getLanguageType() {
@@ -188,18 +176,26 @@ public class PaymentType implements Serializable {
         this.referencedType = referencedType;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 13 * hash + Objects.hashCode(this.id);
-        hash = 13 * hash + Objects.hashCode(this.type);
-        hash = 13 * hash + (this.enable ? 1 : 0);
-        hash = 13 * hash + Objects.hashCode(this.createdDate);
-        hash = 13 * hash + Objects.hashCode(this.createdUser);
-        hash = 13 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 13 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 13 * hash + Objects.hashCode(this.languageType);
-        hash = 13 * hash + Objects.hashCode(this.referencedType);
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.type);
+        hash = 37 * hash + (this.enable ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.createdDate);
+        hash = 37 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 37 * hash + Objects.hashCode(this.createdUser);
+        hash = 37 * hash + Objects.hashCode(this.languageType);
+        hash = 37 * hash + Objects.hashCode(this.referencedType);
+        hash = 37 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -224,19 +220,19 @@ public class PaymentType implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.languageType, other.languageType)) {
             return false;
         }
-        return Objects.equals(this.referencedType, other.referencedType);
+        if (!Objects.equals(this.referencedType, other.referencedType)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

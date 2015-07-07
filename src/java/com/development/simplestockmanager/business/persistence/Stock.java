@@ -42,9 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Stock.findByTotalAmount", query = "SELECT s FROM Stock s WHERE s.totalAmount = :totalAmount"),
     @NamedQuery(name = "Stock.findByEnable", query = "SELECT s FROM Stock s WHERE s.enable = :enable"),
     @NamedQuery(name = "Stock.findByCreatedDate", query = "SELECT s FROM Stock s WHERE s.createdDate = :createdDate"),
-    @NamedQuery(name = "Stock.findByCreatedUser", query = "SELECT s FROM Stock s WHERE s.createdUser = :createdUser"),
-    @NamedQuery(name = "Stock.findByLastModifiedDate", query = "SELECT s FROM Stock s WHERE s.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Stock.findByLastModifiedUser", query = "SELECT s FROM Stock s WHERE s.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Stock.findByLastModifiedDate", query = "SELECT s FROM Stock s WHERE s.lastModifiedDate = :lastModifiedDate")})
 public class Stock implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,25 +65,25 @@ public class Stock implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
     private List<Price> priceList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
     private List<Record> recordList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "PRODUCT", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Product product;
     @JoinColumn(name = "STORE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Store store;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "stock")
     private List<Item> itemList;
 
@@ -96,15 +94,13 @@ public class Stock implements Serializable {
         this.id = id;
     }
 
-    public Stock(Long id, BigDecimal actualAmount, BigDecimal totalAmount, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Stock(Long id, BigDecimal actualAmount, BigDecimal totalAmount, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.actualAmount = actualAmount;
         this.totalAmount = totalAmount;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -147,28 +143,12 @@ public class Stock implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
-    }
-
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     @XmlTransient
@@ -189,6 +169,14 @@ public class Stock implements Serializable {
         this.recordList = recordList;
     }
 
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
+    }
+
     public Product getProduct() {
         return product;
     }
@@ -205,6 +193,14 @@ public class Stock implements Serializable {
         this.store = store;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @XmlTransient
     public List<Item> getItemList() {
         return itemList;
@@ -216,17 +212,17 @@ public class Stock implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.actualAmount);
-        hash = 29 * hash + Objects.hashCode(this.totalAmount);
-        hash = 29 * hash + (this.enable ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.createdDate);
-        hash = 29 * hash + Objects.hashCode(this.createdUser);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 29 * hash + Objects.hashCode(this.product);
-        hash = 29 * hash + Objects.hashCode(this.store);
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.actualAmount);
+        hash = 97 * hash + Objects.hashCode(this.totalAmount);
+        hash = 97 * hash + (this.enable ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.createdDate);
+        hash = 97 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 97 * hash + Objects.hashCode(this.createdUser);
+        hash = 97 * hash + Objects.hashCode(this.product);
+        hash = 97 * hash + Objects.hashCode(this.store);
+        hash = 97 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -254,19 +250,19 @@ public class Stock implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.product, other.product)) {
             return false;
         }
-        return Objects.equals(this.store, other.store);
+        if (!Objects.equals(this.store, other.store)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

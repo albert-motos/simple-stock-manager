@@ -40,9 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "EmployeeType.findByType", query = "SELECT e FROM EmployeeType e WHERE e.type = :type"),
     @NamedQuery(name = "EmployeeType.findByEnable", query = "SELECT e FROM EmployeeType e WHERE e.enable = :enable"),
     @NamedQuery(name = "EmployeeType.findByCreatedDate", query = "SELECT e FROM EmployeeType e WHERE e.createdDate = :createdDate"),
-    @NamedQuery(name = "EmployeeType.findByCreatedUser", query = "SELECT e FROM EmployeeType e WHERE e.createdUser = :createdUser"),
-    @NamedQuery(name = "EmployeeType.findByLastModifiedDate", query = "SELECT e FROM EmployeeType e WHERE e.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "EmployeeType.findByLastModifiedUser", query = "SELECT e FROM EmployeeType e WHERE e.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "EmployeeType.findByLastModifiedDate", query = "SELECT e FROM EmployeeType e WHERE e.lastModifiedDate = :lastModifiedDate")})
 public class EmployeeType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,25 +59,25 @@ public class EmployeeType implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeType")
     private List<Employee> employeeList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @OneToMany(mappedBy = "referencedType")
     private List<EmployeeType> employeeTypeList;
     @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
     @ManyToOne
     private EmployeeType referencedType;
     @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private LanguageType languageType;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public EmployeeType() {
     }
@@ -88,14 +86,12 @@ public class EmployeeType implements Serializable {
         this.id = id;
     }
 
-    public EmployeeType(Long id, String type, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public EmployeeType(Long id, String type, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.type = type;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -130,28 +126,12 @@ public class EmployeeType implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
-    }
-
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     @XmlTransient
@@ -161,6 +141,14 @@ public class EmployeeType implements Serializable {
 
     public void setEmployeeList(List<Employee> employeeList) {
         this.employeeList = employeeList;
+    }
+
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     @XmlTransient
@@ -188,18 +176,26 @@ public class EmployeeType implements Serializable {
         this.languageType = languageType;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.type);
-        hash = 53 * hash + (this.enable ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.createdDate);
-        hash = 53 * hash + Objects.hashCode(this.createdUser);
-        hash = 53 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 53 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 53 * hash + Objects.hashCode(this.referencedType);
-        hash = 53 * hash + Objects.hashCode(this.languageType);
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.type);
+        hash = 97 * hash + (this.enable ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.createdDate);
+        hash = 97 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 97 * hash + Objects.hashCode(this.createdUser);
+        hash = 97 * hash + Objects.hashCode(this.referencedType);
+        hash = 97 * hash + Objects.hashCode(this.languageType);
+        hash = 97 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -224,19 +220,19 @@ public class EmployeeType implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.referencedType, other.referencedType)) {
             return false;
         }
-        return Objects.equals(this.languageType, other.languageType);
+        if (!Objects.equals(this.languageType, other.languageType)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

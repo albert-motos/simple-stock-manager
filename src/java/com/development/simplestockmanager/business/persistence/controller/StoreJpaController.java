@@ -43,10 +43,20 @@ public class StoreJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee createdUser = store.getCreatedUser();
+            if (createdUser != null) {
+                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
+                store.setCreatedUser(createdUser);
+            }
             Employee employee = store.getEmployee();
             if (employee != null) {
                 employee = em.getReference(employee.getClass(), employee.getId());
                 store.setEmployee(employee);
+            }
+            Employee lastModifiedUser = store.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
+                store.setLastModifiedUser(lastModifiedUser);
             }
             List<Stock> attachedStockList = new ArrayList<Stock>();
             for (Stock stockListStockToAttach : store.getStockList()) {
@@ -55,9 +65,17 @@ public class StoreJpaController implements Serializable {
             }
             store.setStockList(attachedStockList);
             em.persist(store);
+            if (createdUser != null) {
+                createdUser.getStoreList().add(store);
+                createdUser = em.merge(createdUser);
+            }
             if (employee != null) {
                 employee.getStoreList().add(store);
                 employee = em.merge(employee);
+            }
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getStoreList().add(store);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             for (Stock stockListStock : store.getStockList()) {
                 Store oldStoreOfStockListStock = stockListStock.getStore();
@@ -82,8 +100,12 @@ public class StoreJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Store persistentStore = em.find(Store.class, store.getId());
+            Employee createdUserOld = persistentStore.getCreatedUser();
+            Employee createdUserNew = store.getCreatedUser();
             Employee employeeOld = persistentStore.getEmployee();
             Employee employeeNew = store.getEmployee();
+            Employee lastModifiedUserOld = persistentStore.getLastModifiedUser();
+            Employee lastModifiedUserNew = store.getLastModifiedUser();
             List<Stock> stockListOld = persistentStore.getStockList();
             List<Stock> stockListNew = store.getStockList();
             List<String> illegalOrphanMessages = null;
@@ -98,9 +120,17 @@ public class StoreJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (createdUserNew != null) {
+                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
+                store.setCreatedUser(createdUserNew);
+            }
             if (employeeNew != null) {
                 employeeNew = em.getReference(employeeNew.getClass(), employeeNew.getId());
                 store.setEmployee(employeeNew);
+            }
+            if (lastModifiedUserNew != null) {
+                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
+                store.setLastModifiedUser(lastModifiedUserNew);
             }
             List<Stock> attachedStockListNew = new ArrayList<Stock>();
             for (Stock stockListNewStockToAttach : stockListNew) {
@@ -110,6 +140,14 @@ public class StoreJpaController implements Serializable {
             stockListNew = attachedStockListNew;
             store.setStockList(stockListNew);
             store = em.merge(store);
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                createdUserOld.getStoreList().remove(store);
+                createdUserOld = em.merge(createdUserOld);
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                createdUserNew.getStoreList().add(store);
+                createdUserNew = em.merge(createdUserNew);
+            }
             if (employeeOld != null && !employeeOld.equals(employeeNew)) {
                 employeeOld.getStoreList().remove(store);
                 employeeOld = em.merge(employeeOld);
@@ -117,6 +155,14 @@ public class StoreJpaController implements Serializable {
             if (employeeNew != null && !employeeNew.equals(employeeOld)) {
                 employeeNew.getStoreList().add(store);
                 employeeNew = em.merge(employeeNew);
+            }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                lastModifiedUserOld.getStoreList().remove(store);
+                lastModifiedUserOld = em.merge(lastModifiedUserOld);
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                lastModifiedUserNew.getStoreList().add(store);
+                lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             for (Stock stockListNewStock : stockListNew) {
                 if (!stockListOld.contains(stockListNewStock)) {
@@ -169,10 +215,20 @@ public class StoreJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            Employee createdUser = store.getCreatedUser();
+            if (createdUser != null) {
+                createdUser.getStoreList().remove(store);
+                createdUser = em.merge(createdUser);
+            }
             Employee employee = store.getEmployee();
             if (employee != null) {
                 employee.getStoreList().remove(store);
                 employee = em.merge(employee);
+            }
+            Employee lastModifiedUser = store.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getStoreList().remove(store);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(store);
             em.getTransaction().commit();

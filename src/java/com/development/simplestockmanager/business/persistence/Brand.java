@@ -16,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -39,9 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Brand.findByDescription", query = "SELECT b FROM Brand b WHERE b.description = :description"),
     @NamedQuery(name = "Brand.findByEnable", query = "SELECT b FROM Brand b WHERE b.enable = :enable"),
     @NamedQuery(name = "Brand.findByCreatedDate", query = "SELECT b FROM Brand b WHERE b.createdDate = :createdDate"),
-    @NamedQuery(name = "Brand.findByCreatedUser", query = "SELECT b FROM Brand b WHERE b.createdUser = :createdUser"),
-    @NamedQuery(name = "Brand.findByLastModifiedDate", query = "SELECT b FROM Brand b WHERE b.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Brand.findByLastModifiedUser", query = "SELECT b FROM Brand b WHERE b.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Brand.findByLastModifiedDate", query = "SELECT b FROM Brand b WHERE b.lastModifiedDate = :lastModifiedDate")})
 public class Brand implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,15 +62,15 @@ public class Brand implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
     private List<Product> productList;
 
@@ -81,14 +81,12 @@ public class Brand implements Serializable {
         this.id = id;
     }
 
-    public Brand(Long id, String name, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Brand(Long id, String name, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.name = name;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -131,14 +129,6 @@ public class Brand implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -147,11 +137,19 @@ public class Brand implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public Employee getLastModifiedUser() {
         return lastModifiedUser;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
+    public void setLastModifiedUser(Employee lastModifiedUser) {
         this.lastModifiedUser = lastModifiedUser;
     }
 
@@ -166,15 +164,15 @@ public class Brand implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.description);
-        hash = 67 * hash + (this.enable ? 1 : 0);
-        hash = 67 * hash + Objects.hashCode(this.createdDate);
-        hash = 67 * hash + Objects.hashCode(this.createdUser);
-        hash = 67 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 67 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        hash = 11 * hash + Objects.hashCode(this.name);
+        hash = 11 * hash + Objects.hashCode(this.description);
+        hash = 11 * hash + (this.enable ? 1 : 0);
+        hash = 11 * hash + Objects.hashCode(this.createdDate);
+        hash = 11 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 11 * hash + Objects.hashCode(this.createdUser);
+        hash = 11 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -202,10 +200,10 @@ public class Brand implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);

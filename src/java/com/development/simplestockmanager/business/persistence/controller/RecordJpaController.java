@@ -10,8 +10,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.AnalyticsTime;
 import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.AnalyticsTime;
 import com.development.simplestockmanager.business.persistence.Record;
 import com.development.simplestockmanager.business.persistence.Stock;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -39,6 +39,11 @@ public class RecordJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee createdUser = record.getCreatedUser();
+            if (createdUser != null) {
+                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
+                record.setCreatedUser(createdUser);
+            }
             AnalyticsTime analitycsTime = record.getAnalitycsTime();
             if (analitycsTime != null) {
                 analitycsTime = em.getReference(analitycsTime.getClass(), analitycsTime.getId());
@@ -54,7 +59,16 @@ public class RecordJpaController implements Serializable {
                 stock = em.getReference(stock.getClass(), stock.getId());
                 record.setStock(stock);
             }
+            Employee lastModifiedUser = record.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
+                record.setLastModifiedUser(lastModifiedUser);
+            }
             em.persist(record);
+            if (createdUser != null) {
+                createdUser.getRecordList().add(record);
+                createdUser = em.merge(createdUser);
+            }
             if (analitycsTime != null) {
                 analitycsTime.getRecordList().add(record);
                 analitycsTime = em.merge(analitycsTime);
@@ -66,6 +80,10 @@ public class RecordJpaController implements Serializable {
             if (stock != null) {
                 stock.getRecordList().add(record);
                 stock = em.merge(stock);
+            }
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getRecordList().add(record);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.getTransaction().commit();
         } finally {
@@ -81,12 +99,20 @@ public class RecordJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Record persistentRecord = em.find(Record.class, record.getId());
+            Employee createdUserOld = persistentRecord.getCreatedUser();
+            Employee createdUserNew = record.getCreatedUser();
             AnalyticsTime analitycsTimeOld = persistentRecord.getAnalitycsTime();
             AnalyticsTime analitycsTimeNew = record.getAnalitycsTime();
             Employee employeeOld = persistentRecord.getEmployee();
             Employee employeeNew = record.getEmployee();
             Stock stockOld = persistentRecord.getStock();
             Stock stockNew = record.getStock();
+            Employee lastModifiedUserOld = persistentRecord.getLastModifiedUser();
+            Employee lastModifiedUserNew = record.getLastModifiedUser();
+            if (createdUserNew != null) {
+                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
+                record.setCreatedUser(createdUserNew);
+            }
             if (analitycsTimeNew != null) {
                 analitycsTimeNew = em.getReference(analitycsTimeNew.getClass(), analitycsTimeNew.getId());
                 record.setAnalitycsTime(analitycsTimeNew);
@@ -99,7 +125,19 @@ public class RecordJpaController implements Serializable {
                 stockNew = em.getReference(stockNew.getClass(), stockNew.getId());
                 record.setStock(stockNew);
             }
+            if (lastModifiedUserNew != null) {
+                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
+                record.setLastModifiedUser(lastModifiedUserNew);
+            }
             record = em.merge(record);
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                createdUserOld.getRecordList().remove(record);
+                createdUserOld = em.merge(createdUserOld);
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                createdUserNew.getRecordList().add(record);
+                createdUserNew = em.merge(createdUserNew);
+            }
             if (analitycsTimeOld != null && !analitycsTimeOld.equals(analitycsTimeNew)) {
                 analitycsTimeOld.getRecordList().remove(record);
                 analitycsTimeOld = em.merge(analitycsTimeOld);
@@ -123,6 +161,14 @@ public class RecordJpaController implements Serializable {
             if (stockNew != null && !stockNew.equals(stockOld)) {
                 stockNew.getRecordList().add(record);
                 stockNew = em.merge(stockNew);
+            }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                lastModifiedUserOld.getRecordList().remove(record);
+                lastModifiedUserOld = em.merge(lastModifiedUserOld);
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                lastModifiedUserNew.getRecordList().add(record);
+                lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -153,6 +199,11 @@ public class RecordJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The record with id " + id + " no longer exists.", enfe);
             }
+            Employee createdUser = record.getCreatedUser();
+            if (createdUser != null) {
+                createdUser.getRecordList().remove(record);
+                createdUser = em.merge(createdUser);
+            }
             AnalyticsTime analitycsTime = record.getAnalitycsTime();
             if (analitycsTime != null) {
                 analitycsTime.getRecordList().remove(record);
@@ -167,6 +218,11 @@ public class RecordJpaController implements Serializable {
             if (stock != null) {
                 stock.getRecordList().remove(record);
                 stock = em.merge(stock);
+            }
+            Employee lastModifiedUser = record.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getRecordList().remove(record);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(record);
             em.getTransaction().commit();

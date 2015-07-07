@@ -41,9 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findByDescription", query = "SELECT p FROM Product p WHERE p.description = :description"),
     @NamedQuery(name = "Product.findByEnable", query = "SELECT p FROM Product p WHERE p.enable = :enable"),
     @NamedQuery(name = "Product.findByCreatedDate", query = "SELECT p FROM Product p WHERE p.createdDate = :createdDate"),
-    @NamedQuery(name = "Product.findByCreatedUser", query = "SELECT p FROM Product p WHERE p.createdUser = :createdUser"),
-    @NamedQuery(name = "Product.findByLastModifiedDate", query = "SELECT p FROM Product p WHERE p.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Product.findByLastModifiedUser", query = "SELECT p FROM Product p WHERE p.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Product.findByLastModifiedDate", query = "SELECT p FROM Product p WHERE p.lastModifiedDate = :lastModifiedDate")})
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -65,17 +63,14 @@ public class Product implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
     private List<Stock> stockList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "BRAND", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Brand brand;
@@ -85,6 +80,9 @@ public class Product implements Serializable {
     @JoinColumn(name = "PROVIDER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Provider provider;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public Product() {
     }
@@ -93,15 +91,13 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public Product(Long id, String name, String description, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Product(Long id, String name, String description, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -144,28 +140,12 @@ public class Product implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
-    }
-
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     @XmlTransient
@@ -175,6 +155,14 @@ public class Product implements Serializable {
 
     public void setStockList(List<Stock> stockList) {
         this.stockList = stockList;
+    }
+
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public Brand getBrand() {
@@ -201,20 +189,28 @@ public class Product implements Serializable {
         this.provider = provider;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 17 * hash + Objects.hashCode(this.id);
-        hash = 17 * hash + Objects.hashCode(this.name);
-        hash = 17 * hash + Objects.hashCode(this.description);
-        hash = 17 * hash + (this.enable ? 1 : 0);
-        hash = 17 * hash + Objects.hashCode(this.createdDate);
-        hash = 17 * hash + Objects.hashCode(this.createdUser);
-        hash = 17 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 17 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 17 * hash + Objects.hashCode(this.brand);
-        hash = 17 * hash + Objects.hashCode(this.productType);
-        hash = 17 * hash + Objects.hashCode(this.provider);
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.id);
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + Objects.hashCode(this.description);
+        hash = 61 * hash + (this.enable ? 1 : 0);
+        hash = 61 * hash + Objects.hashCode(this.createdDate);
+        hash = 61 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 61 * hash + Objects.hashCode(this.createdUser);
+        hash = 61 * hash + Objects.hashCode(this.brand);
+        hash = 61 * hash + Objects.hashCode(this.productType);
+        hash = 61 * hash + Objects.hashCode(this.provider);
+        hash = 61 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -242,13 +238,10 @@ public class Product implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.brand, other.brand)) {
@@ -257,7 +250,10 @@ public class Product implements Serializable {
         if (!Objects.equals(this.productType, other.productType)) {
             return false;
         }
-        return Objects.equals(this.provider, other.provider);
+        if (!Objects.equals(this.provider, other.provider)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

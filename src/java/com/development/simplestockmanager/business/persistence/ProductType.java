@@ -40,9 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ProductType.findByType", query = "SELECT p FROM ProductType p WHERE p.type = :type"),
     @NamedQuery(name = "ProductType.findByEnable", query = "SELECT p FROM ProductType p WHERE p.enable = :enable"),
     @NamedQuery(name = "ProductType.findByCreatedDate", query = "SELECT p FROM ProductType p WHERE p.createdDate = :createdDate"),
-    @NamedQuery(name = "ProductType.findByCreatedUser", query = "SELECT p FROM ProductType p WHERE p.createdUser = :createdUser"),
-    @NamedQuery(name = "ProductType.findByLastModifiedDate", query = "SELECT p FROM ProductType p WHERE p.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "ProductType.findByLastModifiedUser", query = "SELECT p FROM ProductType p WHERE p.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "ProductType.findByLastModifiedDate", query = "SELECT p FROM ProductType p WHERE p.lastModifiedDate = :lastModifiedDate")})
 public class ProductType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,23 +59,23 @@ public class ProductType implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
-    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
+    private Employee createdUser;
+    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
+    @ManyToOne
     private LanguageType languageType;
     @OneToMany(mappedBy = "referencedType")
     private List<ProductType> productTypeList;
     @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
     @ManyToOne
     private ProductType referencedType;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productType")
     private List<Product> productList;
 
@@ -88,14 +86,12 @@ public class ProductType implements Serializable {
         this.id = id;
     }
 
-    public ProductType(Long id, String type, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public ProductType(Long id, String type, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.type = type;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -130,14 +126,6 @@ public class ProductType implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -146,12 +134,12 @@ public class ProductType implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
+    public Employee getCreatedUser() {
+        return createdUser;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public LanguageType getLanguageType() {
@@ -179,6 +167,14 @@ public class ProductType implements Serializable {
         this.referencedType = referencedType;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @XmlTransient
     public List<Product> getProductList() {
         return productList;
@@ -190,16 +186,16 @@ public class ProductType implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.type);
-        hash = 37 * hash + (this.enable ? 1 : 0);
-        hash = 37 * hash + Objects.hashCode(this.createdDate);
-        hash = 37 * hash + Objects.hashCode(this.createdUser);
-        hash = 37 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 37 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 37 * hash + Objects.hashCode(this.languageType);
-        hash = 37 * hash + Objects.hashCode(this.referencedType);
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.type);
+        hash = 17 * hash + (this.enable ? 1 : 0);
+        hash = 17 * hash + Objects.hashCode(this.createdDate);
+        hash = 17 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 17 * hash + Objects.hashCode(this.createdUser);
+        hash = 17 * hash + Objects.hashCode(this.languageType);
+        hash = 17 * hash + Objects.hashCode(this.referencedType);
+        hash = 17 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -224,21 +220,22 @@ public class ProductType implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.languageType, other.languageType)) {
             return false;
         }
-        return Objects.equals(this.referencedType, other.referencedType);
+        if (!Objects.equals(this.referencedType, other.referencedType)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
-    
+
+    @Override
     public String toString() {
         return "com.development.simplestockmanager.business.persistence.ProductType[ id=" + id + " ]";
     }

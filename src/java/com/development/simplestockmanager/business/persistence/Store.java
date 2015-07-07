@@ -45,9 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Store.findByPhone", query = "SELECT s FROM Store s WHERE s.phone = :phone"),
     @NamedQuery(name = "Store.findByEnable", query = "SELECT s FROM Store s WHERE s.enable = :enable"),
     @NamedQuery(name = "Store.findByCreatedDate", query = "SELECT s FROM Store s WHERE s.createdDate = :createdDate"),
-    @NamedQuery(name = "Store.findByCreatedUser", query = "SELECT s FROM Store s WHERE s.createdUser = :createdUser"),
-    @NamedQuery(name = "Store.findByLastModifiedDate", query = "SELECT s FROM Store s WHERE s.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Store.findByLastModifiedUser", query = "SELECT s FROM Store s WHERE s.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Store.findByLastModifiedDate", query = "SELECT s FROM Store s WHERE s.lastModifiedDate = :lastModifiedDate")})
 public class Store implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -81,20 +79,20 @@ public class Store implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "store")
     private List<Stock> stockList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "EMPLOYEE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee employee;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public Store() {
     }
@@ -103,7 +101,7 @@ public class Store implements Serializable {
         this.id = id;
     }
 
-    public Store(Long id, String name, String street, String city, String state, String country, String phone, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Store(Long id, String name, String street, String city, String state, String country, String phone, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.name = name;
         this.street = street;
@@ -113,9 +111,7 @@ public class Store implements Serializable {
         this.phone = phone;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -190,28 +186,12 @@ public class Store implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
-    }
-
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     @XmlTransient
@@ -223,6 +203,14 @@ public class Store implements Serializable {
         this.stockList = stockList;
     }
 
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
+    }
+
     public Employee getEmployee() {
         return employee;
     }
@@ -231,22 +219,30 @@ public class Store implements Serializable {
         this.employee = employee;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.name);
-        hash = 89 * hash + Objects.hashCode(this.street);
-        hash = 89 * hash + Objects.hashCode(this.city);
-        hash = 89 * hash + Objects.hashCode(this.state);
-        hash = 89 * hash + Objects.hashCode(this.country);
-        hash = 89 * hash + Objects.hashCode(this.phone);
-        hash = 89 * hash + (this.enable ? 1 : 0);
-        hash = 89 * hash + Objects.hashCode(this.createdDate);
-        hash = 89 * hash + Objects.hashCode(this.createdUser);
-        hash = 89 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 89 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 89 * hash + Objects.hashCode(this.employee);
+        int hash = 3;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.name);
+        hash = 83 * hash + Objects.hashCode(this.street);
+        hash = 83 * hash + Objects.hashCode(this.city);
+        hash = 83 * hash + Objects.hashCode(this.state);
+        hash = 83 * hash + Objects.hashCode(this.country);
+        hash = 83 * hash + Objects.hashCode(this.phone);
+        hash = 83 * hash + (this.enable ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.createdDate);
+        hash = 83 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 83 * hash + Objects.hashCode(this.createdUser);
+        hash = 83 * hash + Objects.hashCode(this.employee);
+        hash = 83 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -286,16 +282,16 @@ public class Store implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
-        return Objects.equals(this.employee, other.employee);
+        if (!Objects.equals(this.employee, other.employee)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

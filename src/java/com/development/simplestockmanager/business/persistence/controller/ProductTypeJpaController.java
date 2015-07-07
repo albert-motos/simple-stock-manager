@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.LanguageType;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import java.util.ArrayList;
@@ -46,6 +47,11 @@ public class ProductTypeJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee createdUser = productType.getCreatedUser();
+            if (createdUser != null) {
+                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
+                productType.setCreatedUser(createdUser);
+            }
             LanguageType languageType = productType.getLanguageType();
             if (languageType != null) {
                 languageType = em.getReference(languageType.getClass(), languageType.getId());
@@ -55,6 +61,11 @@ public class ProductTypeJpaController implements Serializable {
             if (referencedType != null) {
                 referencedType = em.getReference(referencedType.getClass(), referencedType.getId());
                 productType.setReferencedType(referencedType);
+            }
+            Employee lastModifiedUser = productType.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
+                productType.setLastModifiedUser(lastModifiedUser);
             }
             List<ProductType> attachedProductTypeList = new ArrayList<ProductType>();
             for (ProductType productTypeListProductTypeToAttach : productType.getProductTypeList()) {
@@ -69,6 +80,10 @@ public class ProductTypeJpaController implements Serializable {
             }
             productType.setProductList(attachedProductList);
             em.persist(productType);
+            if (createdUser != null) {
+                createdUser.getProductTypeList().add(productType);
+                createdUser = em.merge(createdUser);
+            }
             if (languageType != null) {
                 languageType.getProductTypeList().add(productType);
                 languageType = em.merge(languageType);
@@ -76,6 +91,10 @@ public class ProductTypeJpaController implements Serializable {
             if (referencedType != null) {
                 referencedType.getProductTypeList().add(productType);
                 referencedType = em.merge(referencedType);
+            }
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getProductTypeList().add(productType);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             for (ProductType productTypeListProductType : productType.getProductTypeList()) {
                 ProductType oldReferencedTypeOfProductTypeListProductType = productTypeListProductType.getReferencedType();
@@ -109,10 +128,14 @@ public class ProductTypeJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             ProductType persistentProductType = em.find(ProductType.class, productType.getId());
+            Employee createdUserOld = persistentProductType.getCreatedUser();
+            Employee createdUserNew = productType.getCreatedUser();
             LanguageType languageTypeOld = persistentProductType.getLanguageType();
             LanguageType languageTypeNew = productType.getLanguageType();
             ProductType referencedTypeOld = persistentProductType.getReferencedType();
             ProductType referencedTypeNew = productType.getReferencedType();
+            Employee lastModifiedUserOld = persistentProductType.getLastModifiedUser();
+            Employee lastModifiedUserNew = productType.getLastModifiedUser();
             List<ProductType> productTypeListOld = persistentProductType.getProductTypeList();
             List<ProductType> productTypeListNew = productType.getProductTypeList();
             List<Product> productListOld = persistentProductType.getProductList();
@@ -129,6 +152,10 @@ public class ProductTypeJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (createdUserNew != null) {
+                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
+                productType.setCreatedUser(createdUserNew);
+            }
             if (languageTypeNew != null) {
                 languageTypeNew = em.getReference(languageTypeNew.getClass(), languageTypeNew.getId());
                 productType.setLanguageType(languageTypeNew);
@@ -136,6 +163,10 @@ public class ProductTypeJpaController implements Serializable {
             if (referencedTypeNew != null) {
                 referencedTypeNew = em.getReference(referencedTypeNew.getClass(), referencedTypeNew.getId());
                 productType.setReferencedType(referencedTypeNew);
+            }
+            if (lastModifiedUserNew != null) {
+                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
+                productType.setLastModifiedUser(lastModifiedUserNew);
             }
             List<ProductType> attachedProductTypeListNew = new ArrayList<ProductType>();
             for (ProductType productTypeListNewProductTypeToAttach : productTypeListNew) {
@@ -152,6 +183,14 @@ public class ProductTypeJpaController implements Serializable {
             productListNew = attachedProductListNew;
             productType.setProductList(productListNew);
             productType = em.merge(productType);
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                createdUserOld.getProductTypeList().remove(productType);
+                createdUserOld = em.merge(createdUserOld);
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                createdUserNew.getProductTypeList().add(productType);
+                createdUserNew = em.merge(createdUserNew);
+            }
             if (languageTypeOld != null && !languageTypeOld.equals(languageTypeNew)) {
                 languageTypeOld.getProductTypeList().remove(productType);
                 languageTypeOld = em.merge(languageTypeOld);
@@ -167,6 +206,14 @@ public class ProductTypeJpaController implements Serializable {
             if (referencedTypeNew != null && !referencedTypeNew.equals(referencedTypeOld)) {
                 referencedTypeNew.getProductTypeList().add(productType);
                 referencedTypeNew = em.merge(referencedTypeNew);
+            }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                lastModifiedUserOld.getProductTypeList().remove(productType);
+                lastModifiedUserOld = em.merge(lastModifiedUserOld);
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                lastModifiedUserNew.getProductTypeList().add(productType);
+                lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             for (ProductType productTypeListOldProductType : productTypeListOld) {
                 if (!productTypeListNew.contains(productTypeListOldProductType)) {
@@ -236,6 +283,11 @@ public class ProductTypeJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            Employee createdUser = productType.getCreatedUser();
+            if (createdUser != null) {
+                createdUser.getProductTypeList().remove(productType);
+                createdUser = em.merge(createdUser);
+            }
             LanguageType languageType = productType.getLanguageType();
             if (languageType != null) {
                 languageType.getProductTypeList().remove(productType);
@@ -245,6 +297,11 @@ public class ProductTypeJpaController implements Serializable {
             if (referencedType != null) {
                 referencedType.getProductTypeList().remove(productType);
                 referencedType = em.merge(referencedType);
+            }
+            Employee lastModifiedUser = productType.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getProductTypeList().remove(productType);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             List<ProductType> productTypeList = productType.getProductTypeList();
             for (ProductType productTypeListProductType : productTypeList) {

@@ -41,9 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Invoice.findByCost", query = "SELECT i FROM Invoice i WHERE i.cost = :cost"),
     @NamedQuery(name = "Invoice.findByEnable", query = "SELECT i FROM Invoice i WHERE i.enable = :enable"),
     @NamedQuery(name = "Invoice.findByCreatedDate", query = "SELECT i FROM Invoice i WHERE i.createdDate = :createdDate"),
-    @NamedQuery(name = "Invoice.findByCreatedUser", query = "SELECT i FROM Invoice i WHERE i.createdUser = :createdUser"),
-    @NamedQuery(name = "Invoice.findByLastModifiedDate", query = "SELECT i FROM Invoice i WHERE i.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Invoice.findByLastModifiedUser", query = "SELECT i FROM Invoice i WHERE i.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Invoice.findByLastModifiedDate", query = "SELECT i FROM Invoice i WHERE i.lastModifiedDate = :lastModifiedDate")})
 public class Invoice implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,15 +60,12 @@ public class Invoice implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "ANALITYCS_TIME", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private AnalyticsTime analitycsTime;
@@ -83,6 +78,9 @@ public class Invoice implements Serializable {
     @JoinColumn(name = "PAYMENT_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private PaymentType paymentType;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice")
     private List<Item> itemList;
 
@@ -93,13 +91,11 @@ public class Invoice implements Serializable {
         this.id = id;
     }
 
-    public Invoice(Long id, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Invoice(Long id, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -134,14 +130,6 @@ public class Invoice implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -150,12 +138,12 @@ public class Invoice implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
+    public Employee getCreatedUser() {
+        return createdUser;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public AnalyticsTime getAnalitycsTime() {
@@ -190,6 +178,14 @@ public class Invoice implements Serializable {
         this.paymentType = paymentType;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @XmlTransient
     public List<Item> getItemList() {
         return itemList;
@@ -201,18 +197,18 @@ public class Invoice implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.cost);
-        hash = 71 * hash + (this.enable ? 1 : 0);
-        hash = 71 * hash + Objects.hashCode(this.createdDate);
-        hash = 71 * hash + Objects.hashCode(this.createdUser);
-        hash = 71 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 71 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 71 * hash + Objects.hashCode(this.analitycsTime);
-        hash = 71 * hash + Objects.hashCode(this.client);
-        hash = 71 * hash + Objects.hashCode(this.employee);
-        hash = 71 * hash + Objects.hashCode(this.paymentType);
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.cost);
+        hash = 67 * hash + (this.enable ? 1 : 0);
+        hash = 67 * hash + Objects.hashCode(this.createdDate);
+        hash = 67 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 67 * hash + Objects.hashCode(this.createdUser);
+        hash = 67 * hash + Objects.hashCode(this.analitycsTime);
+        hash = 67 * hash + Objects.hashCode(this.client);
+        hash = 67 * hash + Objects.hashCode(this.employee);
+        hash = 67 * hash + Objects.hashCode(this.paymentType);
+        hash = 67 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -237,13 +233,10 @@ public class Invoice implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.analitycsTime, other.analitycsTime)) {
@@ -255,7 +248,10 @@ public class Invoice implements Serializable {
         if (!Objects.equals(this.employee, other.employee)) {
             return false;
         }
-        return Objects.equals(this.paymentType, other.paymentType);
+        if (!Objects.equals(this.paymentType, other.paymentType)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

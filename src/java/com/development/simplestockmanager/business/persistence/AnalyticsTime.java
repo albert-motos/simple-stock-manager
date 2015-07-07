@@ -16,6 +16,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -42,9 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AnalyticsTime.findByMonthTime", query = "SELECT a FROM AnalyticsTime a WHERE a.monthTime = :monthTime"),
     @NamedQuery(name = "AnalyticsTime.findByYearTime", query = "SELECT a FROM AnalyticsTime a WHERE a.yearTime = :yearTime"),
     @NamedQuery(name = "AnalyticsTime.findByCreatedDate", query = "SELECT a FROM AnalyticsTime a WHERE a.createdDate = :createdDate"),
-    @NamedQuery(name = "AnalyticsTime.findByCreatedUser", query = "SELECT a FROM AnalyticsTime a WHERE a.createdUser = :createdUser"),
-    @NamedQuery(name = "AnalyticsTime.findByLastModifiedDate", query = "SELECT a FROM AnalyticsTime a WHERE a.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "AnalyticsTime.findByLastModifiedUser", query = "SELECT a FROM AnalyticsTime a WHERE a.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "AnalyticsTime.findByLastModifiedDate", query = "SELECT a FROM AnalyticsTime a WHERE a.lastModifiedDate = :lastModifiedDate")})
 public class AnalyticsTime implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,19 +76,19 @@ public class AnalyticsTime implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "analitycsTime")
     private List<Record> recordList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "analitycsTime")
     private List<Invoice> invoiceList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public AnalyticsTime() {
     }
@@ -97,7 +97,7 @@ public class AnalyticsTime implements Serializable {
         this.id = id;
     }
 
-    public AnalyticsTime(Long id, Date fullTime, int minuteTime, int hourTime, int dayTime, int monthTime, int yearTime, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public AnalyticsTime(Long id, Date fullTime, int minuteTime, int hourTime, int dayTime, int monthTime, int yearTime, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.fullTime = fullTime;
         this.minuteTime = minuteTime;
@@ -106,9 +106,7 @@ public class AnalyticsTime implements Serializable {
         this.monthTime = monthTime;
         this.yearTime = yearTime;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -175,28 +173,12 @@ public class AnalyticsTime implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
-    }
-
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     @XmlTransient
@@ -217,20 +199,36 @@ public class AnalyticsTime implements Serializable {
         this.invoiceList = invoiceList;
     }
 
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
+    }
+
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.fullTime);
-        hash = 23 * hash + this.minuteTime;
-        hash = 23 * hash + this.hourTime;
-        hash = 23 * hash + this.dayTime;
-        hash = 23 * hash + this.monthTime;
-        hash = 23 * hash + this.yearTime;
-        hash = 23 * hash + Objects.hashCode(this.createdDate);
-        hash = 23 * hash + Objects.hashCode(this.createdUser);
-        hash = 23 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 23 * hash + Objects.hashCode(this.lastModifiedUser);
+        hash = 73 * hash + Objects.hashCode(this.id);
+        hash = 73 * hash + Objects.hashCode(this.fullTime);
+        hash = 73 * hash + this.minuteTime;
+        hash = 73 * hash + this.hourTime;
+        hash = 73 * hash + this.dayTime;
+        hash = 73 * hash + this.monthTime;
+        hash = 73 * hash + this.yearTime;
+        hash = 73 * hash + Objects.hashCode(this.createdDate);
+        hash = 73 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 73 * hash + Objects.hashCode(this.createdUser);
+        hash = 73 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -267,10 +265,10 @@ public class AnalyticsTime implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
+        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);

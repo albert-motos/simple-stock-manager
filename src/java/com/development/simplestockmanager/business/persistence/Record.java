@@ -38,9 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Record.findByNote", query = "SELECT r FROM Record r WHERE r.note = :note"),
     @NamedQuery(name = "Record.findByEnable", query = "SELECT r FROM Record r WHERE r.enable = :enable"),
     @NamedQuery(name = "Record.findByCreatedDate", query = "SELECT r FROM Record r WHERE r.createdDate = :createdDate"),
-    @NamedQuery(name = "Record.findByCreatedUser", query = "SELECT r FROM Record r WHERE r.createdUser = :createdUser"),
-    @NamedQuery(name = "Record.findByLastModifiedDate", query = "SELECT r FROM Record r WHERE r.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Record.findByLastModifiedUser", query = "SELECT r FROM Record r WHERE r.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Record.findByLastModifiedDate", query = "SELECT r FROM Record r WHERE r.lastModifiedDate = :lastModifiedDate")})
 public class Record implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,15 +60,12 @@ public class Record implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "ANALITYCS_TIME", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private AnalyticsTime analitycsTime;
@@ -80,6 +75,9 @@ public class Record implements Serializable {
     @JoinColumn(name = "STOCK", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Stock stock;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public Record() {
     }
@@ -88,14 +86,12 @@ public class Record implements Serializable {
         this.id = id;
     }
 
-    public Record(Long id, BigDecimal amount, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Record(Long id, BigDecimal amount, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.amount = amount;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -138,14 +134,6 @@ public class Record implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -154,12 +142,12 @@ public class Record implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
+    public Employee getCreatedUser() {
+        return createdUser;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public AnalyticsTime getAnalitycsTime() {
@@ -186,20 +174,28 @@ public class Record implements Serializable {
         this.stock = stock;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.amount);
-        hash = 83 * hash + Objects.hashCode(this.note);
-        hash = 83 * hash + (this.enable ? 1 : 0);
-        hash = 83 * hash + Objects.hashCode(this.createdDate);
-        hash = 83 * hash + Objects.hashCode(this.createdUser);
-        hash = 83 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 83 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 83 * hash + Objects.hashCode(this.analitycsTime);
-        hash = 83 * hash + Objects.hashCode(this.employee);
-        hash = 83 * hash + Objects.hashCode(this.stock);
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.amount);
+        hash = 29 * hash + Objects.hashCode(this.note);
+        hash = 29 * hash + (this.enable ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.createdDate);
+        hash = 29 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 29 * hash + Objects.hashCode(this.createdUser);
+        hash = 29 * hash + Objects.hashCode(this.analitycsTime);
+        hash = 29 * hash + Objects.hashCode(this.employee);
+        hash = 29 * hash + Objects.hashCode(this.stock);
+        hash = 29 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -227,13 +223,10 @@ public class Record implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.analitycsTime, other.analitycsTime)) {
@@ -242,7 +235,10 @@ public class Record implements Serializable {
         if (!Objects.equals(this.employee, other.employee)) {
             return false;
         }
-        return Objects.equals(this.stock, other.stock);
+        if (!Objects.equals(this.stock, other.stock)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

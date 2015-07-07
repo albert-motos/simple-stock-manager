@@ -11,6 +11,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.Invoice;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -42,6 +44,21 @@ public class ClientJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee createdUser = client.getCreatedUser();
+            if (createdUser != null) {
+                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
+                client.setCreatedUser(createdUser);
+            }
+            SexType sexType = client.getSexType();
+            if (sexType != null) {
+                sexType = em.getReference(sexType.getClass(), sexType.getId());
+                client.setSexType(sexType);
+            }
+            Employee lastModifiedUser = client.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
+                client.setLastModifiedUser(lastModifiedUser);
+            }
             List<Invoice> attachedInvoiceList = new ArrayList<Invoice>();
             for (Invoice invoiceListInvoiceToAttach : client.getInvoiceList()) {
                 invoiceListInvoiceToAttach = em.getReference(invoiceListInvoiceToAttach.getClass(), invoiceListInvoiceToAttach.getId());
@@ -49,6 +66,18 @@ public class ClientJpaController implements Serializable {
             }
             client.setInvoiceList(attachedInvoiceList);
             em.persist(client);
+            if (createdUser != null) {
+                createdUser.getClientList().add(client);
+                createdUser = em.merge(createdUser);
+            }
+            if (sexType != null) {
+                sexType.getClientList().add(client);
+                sexType = em.merge(sexType);
+            }
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getClientList().add(client);
+                lastModifiedUser = em.merge(lastModifiedUser);
+            }
             for (Invoice invoiceListInvoice : client.getInvoiceList()) {
                 Client oldClientOfInvoiceListInvoice = invoiceListInvoice.getClient();
                 invoiceListInvoice.setClient(client);
@@ -72,6 +101,12 @@ public class ClientJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Client persistentClient = em.find(Client.class, client.getId());
+            Employee createdUserOld = persistentClient.getCreatedUser();
+            Employee createdUserNew = client.getCreatedUser();
+            SexType sexTypeOld = persistentClient.getSexType();
+            SexType sexTypeNew = client.getSexType();
+            Employee lastModifiedUserOld = persistentClient.getLastModifiedUser();
+            Employee lastModifiedUserNew = client.getLastModifiedUser();
             List<Invoice> invoiceListOld = persistentClient.getInvoiceList();
             List<Invoice> invoiceListNew = client.getInvoiceList();
             List<String> illegalOrphanMessages = null;
@@ -86,6 +121,18 @@ public class ClientJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (createdUserNew != null) {
+                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
+                client.setCreatedUser(createdUserNew);
+            }
+            if (sexTypeNew != null) {
+                sexTypeNew = em.getReference(sexTypeNew.getClass(), sexTypeNew.getId());
+                client.setSexType(sexTypeNew);
+            }
+            if (lastModifiedUserNew != null) {
+                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
+                client.setLastModifiedUser(lastModifiedUserNew);
+            }
             List<Invoice> attachedInvoiceListNew = new ArrayList<Invoice>();
             for (Invoice invoiceListNewInvoiceToAttach : invoiceListNew) {
                 invoiceListNewInvoiceToAttach = em.getReference(invoiceListNewInvoiceToAttach.getClass(), invoiceListNewInvoiceToAttach.getId());
@@ -94,6 +141,30 @@ public class ClientJpaController implements Serializable {
             invoiceListNew = attachedInvoiceListNew;
             client.setInvoiceList(invoiceListNew);
             client = em.merge(client);
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                createdUserOld.getClientList().remove(client);
+                createdUserOld = em.merge(createdUserOld);
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                createdUserNew.getClientList().add(client);
+                createdUserNew = em.merge(createdUserNew);
+            }
+            if (sexTypeOld != null && !sexTypeOld.equals(sexTypeNew)) {
+                sexTypeOld.getClientList().remove(client);
+                sexTypeOld = em.merge(sexTypeOld);
+            }
+            if (sexTypeNew != null && !sexTypeNew.equals(sexTypeOld)) {
+                sexTypeNew.getClientList().add(client);
+                sexTypeNew = em.merge(sexTypeNew);
+            }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                lastModifiedUserOld.getClientList().remove(client);
+                lastModifiedUserOld = em.merge(lastModifiedUserOld);
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                lastModifiedUserNew.getClientList().add(client);
+                lastModifiedUserNew = em.merge(lastModifiedUserNew);
+            }
             for (Invoice invoiceListNewInvoice : invoiceListNew) {
                 if (!invoiceListOld.contains(invoiceListNewInvoice)) {
                     Client oldClientOfInvoiceListNewInvoice = invoiceListNewInvoice.getClient();
@@ -144,6 +215,21 @@ public class ClientJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Employee createdUser = client.getCreatedUser();
+            if (createdUser != null) {
+                createdUser.getClientList().remove(client);
+                createdUser = em.merge(createdUser);
+            }
+            SexType sexType = client.getSexType();
+            if (sexType != null) {
+                sexType.getClientList().remove(client);
+                sexType = em.merge(sexType);
+            }
+            Employee lastModifiedUser = client.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getClientList().remove(client);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(client);
             em.getTransaction().commit();

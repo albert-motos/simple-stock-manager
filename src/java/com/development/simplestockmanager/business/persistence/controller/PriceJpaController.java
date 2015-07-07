@@ -10,13 +10,11 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.Price;
 import com.development.simplestockmanager.business.persistence.PriceType;
 import com.development.simplestockmanager.business.persistence.Stock;
-import com.development.simplestockmanager.business.persistence.Item;
-import com.development.simplestockmanager.business.persistence.Price;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -37,13 +35,15 @@ public class PriceJpaController implements Serializable {
     }
 
     public void create(Price price) {
-        if (price.getItemList() == null) {
-            price.setItemList(new ArrayList<Item>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee createdUser = price.getCreatedUser();
+            if (createdUser != null) {
+                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
+                price.setCreatedUser(createdUser);
+            }
             PriceType priceType = price.getPriceType();
             if (priceType != null) {
                 priceType = em.getReference(priceType.getClass(), priceType.getId());
@@ -54,13 +54,16 @@ public class PriceJpaController implements Serializable {
                 stock = em.getReference(stock.getClass(), stock.getId());
                 price.setStock(stock);
             }
-            List<Item> attachedItemList = new ArrayList<Item>();
-            for (Item itemListItemToAttach : price.getItemList()) {
-                itemListItemToAttach = em.getReference(itemListItemToAttach.getClass(), itemListItemToAttach.getId());
-                attachedItemList.add(itemListItemToAttach);
+            Employee lastModifiedUser = price.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
+                price.setLastModifiedUser(lastModifiedUser);
             }
-            price.setItemList(attachedItemList);
             em.persist(price);
+            if (createdUser != null) {
+                createdUser.getPriceList().add(price);
+                createdUser = em.merge(createdUser);
+            }
             if (priceType != null) {
                 priceType.getPriceList().add(price);
                 priceType = em.merge(priceType);
@@ -69,14 +72,9 @@ public class PriceJpaController implements Serializable {
                 stock.getPriceList().add(price);
                 stock = em.merge(stock);
             }
-            for (Item itemListItem : price.getItemList()) {
-                Price oldPriceOfItemListItem = itemListItem.getPrice();
-                itemListItem.setPrice(price);
-                itemListItem = em.merge(itemListItem);
-                if (oldPriceOfItemListItem != null) {
-                    oldPriceOfItemListItem.getItemList().remove(itemListItem);
-                    oldPriceOfItemListItem = em.merge(oldPriceOfItemListItem);
-                }
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getPriceList().add(price);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.getTransaction().commit();
         } finally {
@@ -86,29 +84,23 @@ public class PriceJpaController implements Serializable {
         }
     }
 
-    public void edit(Price price) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(Price price) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Price persistentPrice = em.find(Price.class, price.getId());
+            Employee createdUserOld = persistentPrice.getCreatedUser();
+            Employee createdUserNew = price.getCreatedUser();
             PriceType priceTypeOld = persistentPrice.getPriceType();
             PriceType priceTypeNew = price.getPriceType();
             Stock stockOld = persistentPrice.getStock();
             Stock stockNew = price.getStock();
-            List<Item> itemListOld = persistentPrice.getItemList();
-            List<Item> itemListNew = price.getItemList();
-            List<String> illegalOrphanMessages = null;
-            for (Item itemListOldItem : itemListOld) {
-                if (!itemListNew.contains(itemListOldItem)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Item " + itemListOldItem + " since its price field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            Employee lastModifiedUserOld = persistentPrice.getLastModifiedUser();
+            Employee lastModifiedUserNew = price.getLastModifiedUser();
+            if (createdUserNew != null) {
+                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
+                price.setCreatedUser(createdUserNew);
             }
             if (priceTypeNew != null) {
                 priceTypeNew = em.getReference(priceTypeNew.getClass(), priceTypeNew.getId());
@@ -118,14 +110,19 @@ public class PriceJpaController implements Serializable {
                 stockNew = em.getReference(stockNew.getClass(), stockNew.getId());
                 price.setStock(stockNew);
             }
-            List<Item> attachedItemListNew = new ArrayList<Item>();
-            for (Item itemListNewItemToAttach : itemListNew) {
-                itemListNewItemToAttach = em.getReference(itemListNewItemToAttach.getClass(), itemListNewItemToAttach.getId());
-                attachedItemListNew.add(itemListNewItemToAttach);
+            if (lastModifiedUserNew != null) {
+                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
+                price.setLastModifiedUser(lastModifiedUserNew);
             }
-            itemListNew = attachedItemListNew;
-            price.setItemList(itemListNew);
             price = em.merge(price);
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                createdUserOld.getPriceList().remove(price);
+                createdUserOld = em.merge(createdUserOld);
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                createdUserNew.getPriceList().add(price);
+                createdUserNew = em.merge(createdUserNew);
+            }
             if (priceTypeOld != null && !priceTypeOld.equals(priceTypeNew)) {
                 priceTypeOld.getPriceList().remove(price);
                 priceTypeOld = em.merge(priceTypeOld);
@@ -142,16 +139,13 @@ public class PriceJpaController implements Serializable {
                 stockNew.getPriceList().add(price);
                 stockNew = em.merge(stockNew);
             }
-            for (Item itemListNewItem : itemListNew) {
-                if (!itemListOld.contains(itemListNewItem)) {
-                    Price oldPriceOfItemListNewItem = itemListNewItem.getPrice();
-                    itemListNewItem.setPrice(price);
-                    itemListNewItem = em.merge(itemListNewItem);
-                    if (oldPriceOfItemListNewItem != null && !oldPriceOfItemListNewItem.equals(price)) {
-                        oldPriceOfItemListNewItem.getItemList().remove(itemListNewItem);
-                        oldPriceOfItemListNewItem = em.merge(oldPriceOfItemListNewItem);
-                    }
-                }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                lastModifiedUserOld.getPriceList().remove(price);
+                lastModifiedUserOld = em.merge(lastModifiedUserOld);
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                lastModifiedUserNew.getPriceList().add(price);
+                lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -170,7 +164,7 @@ public class PriceJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -182,16 +176,10 @@ public class PriceJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The price with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<Item> itemListOrphanCheck = price.getItemList();
-            for (Item itemListOrphanCheckItem : itemListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Price (" + price + ") cannot be destroyed since the Item " + itemListOrphanCheckItem + " in its itemList field has a non-nullable price field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            Employee createdUser = price.getCreatedUser();
+            if (createdUser != null) {
+                createdUser.getPriceList().remove(price);
+                createdUser = em.merge(createdUser);
             }
             PriceType priceType = price.getPriceType();
             if (priceType != null) {
@@ -202,6 +190,11 @@ public class PriceJpaController implements Serializable {
             if (stock != null) {
                 stock.getPriceList().remove(price);
                 stock = em.merge(stock);
+            }
+            Employee lastModifiedUser = price.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getPriceList().remove(price);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(price);
             em.getTransaction().commit();

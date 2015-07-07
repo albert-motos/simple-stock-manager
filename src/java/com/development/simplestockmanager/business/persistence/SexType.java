@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,9 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SexType.findByType", query = "SELECT s FROM SexType s WHERE s.type = :type"),
     @NamedQuery(name = "SexType.findByEnable", query = "SELECT s FROM SexType s WHERE s.enable = :enable"),
     @NamedQuery(name = "SexType.findByCreatedDate", query = "SELECT s FROM SexType s WHERE s.createdDate = :createdDate"),
-    @NamedQuery(name = "SexType.findByCreatedUser", query = "SELECT s FROM SexType s WHERE s.createdUser = :createdUser"),
-    @NamedQuery(name = "SexType.findByLastModifiedDate", query = "SELECT s FROM SexType s WHERE s.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "SexType.findByLastModifiedUser", query = "SELECT s FROM SexType s WHERE s.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "SexType.findByLastModifiedDate", query = "SELECT s FROM SexType s WHERE s.lastModifiedDate = :lastModifiedDate")})
 public class SexType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -60,15 +59,16 @@ public class SexType implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sexType")
+    private List<Employee> employeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sexType")
+    private List<Client> clientList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
     @ManyToOne
     private LanguageType languageType;
@@ -77,6 +77,9 @@ public class SexType implements Serializable {
     @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
     @ManyToOne
     private SexType referencedType;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public SexType() {
     }
@@ -85,14 +88,12 @@ public class SexType implements Serializable {
         this.id = id;
     }
 
-    public SexType(Long id, String type, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public SexType(Long id, String type, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.type = type;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -127,14 +128,6 @@ public class SexType implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -143,12 +136,30 @@ public class SexType implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
+    @XmlTransient
+    public List<Employee> getEmployeeList() {
+        return employeeList;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    @XmlTransient
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Client> clientList) {
+        this.clientList = clientList;
+    }
+
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public LanguageType getLanguageType() {
@@ -176,18 +187,26 @@ public class SexType implements Serializable {
         this.referencedType = referencedType;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + Objects.hashCode(this.id);
-        hash = 59 * hash + Objects.hashCode(this.type);
-        hash = 59 * hash + (this.enable ? 1 : 0);
-        hash = 59 * hash + Objects.hashCode(this.createdDate);
-        hash = 59 * hash + Objects.hashCode(this.createdUser);
-        hash = 59 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 59 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 59 * hash + Objects.hashCode(this.languageType);
-        hash = 59 * hash + Objects.hashCode(this.referencedType);
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.type);
+        hash = 31 * hash + (this.enable ? 1 : 0);
+        hash = 31 * hash + Objects.hashCode(this.createdDate);
+        hash = 31 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 31 * hash + Objects.hashCode(this.createdUser);
+        hash = 31 * hash + Objects.hashCode(this.languageType);
+        hash = 31 * hash + Objects.hashCode(this.referencedType);
+        hash = 31 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -212,19 +231,19 @@ public class SexType implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.languageType, other.languageType)) {
             return false;
         }
-        return Objects.equals(this.referencedType, other.referencedType);
+        if (!Objects.equals(this.referencedType, other.referencedType)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

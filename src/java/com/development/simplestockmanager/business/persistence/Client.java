@@ -44,9 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Client.findByEmail", query = "SELECT c FROM Client c WHERE c.email = :email"),
     @NamedQuery(name = "Client.findByEnable", query = "SELECT c FROM Client c WHERE c.enable = :enable"),
     @NamedQuery(name = "Client.findByCreatedDate", query = "SELECT c FROM Client c WHERE c.createdDate = :createdDate"),
-    @NamedQuery(name = "Client.findByCreatedUser", query = "SELECT c FROM Client c WHERE c.createdUser = :createdUser"),
-    @NamedQuery(name = "Client.findByLastModifiedDate", query = "SELECT c FROM Client c WHERE c.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Client.findByLastModifiedUser", query = "SELECT c FROM Client c WHERE c.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Client.findByLastModifiedDate", query = "SELECT c FROM Client c WHERE c.lastModifiedDate = :lastModifiedDate")})
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -78,20 +76,20 @@ public class Client implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Invoice> invoiceList;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "SEX_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private SexType sexType;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public Client() {
     }
@@ -100,7 +98,7 @@ public class Client implements Serializable {
         this.id = id;
     }
 
-    public Client(Long id, String firstname, String lastname, Date bornDate, String phone, String email, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Client(Long id, String firstname, String lastname, Date bornDate, String phone, String email, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -109,9 +107,7 @@ public class Client implements Serializable {
         this.email = email;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -178,28 +174,12 @@ public class Client implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
-    }
-
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     @XmlTransient
@@ -211,6 +191,14 @@ public class Client implements Serializable {
         this.invoiceList = invoiceList;
     }
 
+    public Employee getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
+    }
+
     public SexType getSexType() {
         return sexType;
     }
@@ -219,21 +207,29 @@ public class Client implements Serializable {
         this.sexType = sexType;
     }
 
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
+    }
+
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.firstname);
-        hash = 53 * hash + Objects.hashCode(this.lastname);
-        hash = 53 * hash + Objects.hashCode(this.bornDate);
-        hash = 53 * hash + Objects.hashCode(this.phone);
-        hash = 53 * hash + Objects.hashCode(this.email);
-        hash = 53 * hash + (this.enable ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.createdDate);
-        hash = 53 * hash + Objects.hashCode(this.createdUser);
-        hash = 53 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 53 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 53 * hash + Objects.hashCode(this.sexType);
+        int hash = 3;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.firstname);
+        hash = 29 * hash + Objects.hashCode(this.lastname);
+        hash = 29 * hash + Objects.hashCode(this.bornDate);
+        hash = 29 * hash + Objects.hashCode(this.phone);
+        hash = 29 * hash + Objects.hashCode(this.email);
+        hash = 29 * hash + (this.enable ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.createdDate);
+        hash = 29 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 29 * hash + Objects.hashCode(this.createdUser);
+        hash = 29 * hash + Objects.hashCode(this.sexType);
+        hash = 29 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -270,18 +266,18 @@ public class Client implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
-        return Objects.equals(this.sexType, other.sexType);
+        if (!Objects.equals(this.sexType, other.sexType)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
-    
+
     @Override
     public String toString() {
         return "com.development.simplestockmanager.business.persistence.Client[ id=" + id + " ]";

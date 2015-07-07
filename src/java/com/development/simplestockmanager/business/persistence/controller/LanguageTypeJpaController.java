@@ -219,38 +219,6 @@ public class LanguageTypeJpaController implements Serializable {
                     illegalOrphanMessages.add("You must retain Employee " + employeeListOldEmployee + " since its languageType field is not nullable.");
                 }
             }
-            for (PriceType priceTypeListOldPriceType : priceTypeListOld) {
-                if (!priceTypeListNew.contains(priceTypeListOldPriceType)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain PriceType " + priceTypeListOldPriceType + " since its languageType field is not nullable.");
-                }
-            }
-            for (PaymentType paymentTypeListOldPaymentType : paymentTypeListOld) {
-                if (!paymentTypeListNew.contains(paymentTypeListOldPaymentType)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain PaymentType " + paymentTypeListOldPaymentType + " since its languageType field is not nullable.");
-                }
-            }
-            for (EmployeeType employeeTypeListOldEmployeeType : employeeTypeListOld) {
-                if (!employeeTypeListNew.contains(employeeTypeListOldEmployeeType)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain EmployeeType " + employeeTypeListOldEmployeeType + " since its languageType field is not nullable.");
-                }
-            }
-            for (ProductType productTypeListOldProductType : productTypeListOld) {
-                if (!productTypeListNew.contains(productTypeListOldProductType)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain ProductType " + productTypeListOldProductType + " since its languageType field is not nullable.");
-                }
-            }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
@@ -327,6 +295,12 @@ public class LanguageTypeJpaController implements Serializable {
                     }
                 }
             }
+            for (PriceType priceTypeListOldPriceType : priceTypeListOld) {
+                if (!priceTypeListNew.contains(priceTypeListOldPriceType)) {
+                    priceTypeListOldPriceType.setLanguageType(null);
+                    priceTypeListOldPriceType = em.merge(priceTypeListOldPriceType);
+                }
+            }
             for (PriceType priceTypeListNewPriceType : priceTypeListNew) {
                 if (!priceTypeListOld.contains(priceTypeListNewPriceType)) {
                     LanguageType oldLanguageTypeOfPriceTypeListNewPriceType = priceTypeListNewPriceType.getLanguageType();
@@ -372,6 +346,12 @@ public class LanguageTypeJpaController implements Serializable {
                     }
                 }
             }
+            for (PaymentType paymentTypeListOldPaymentType : paymentTypeListOld) {
+                if (!paymentTypeListNew.contains(paymentTypeListOldPaymentType)) {
+                    paymentTypeListOldPaymentType.setLanguageType(null);
+                    paymentTypeListOldPaymentType = em.merge(paymentTypeListOldPaymentType);
+                }
+            }
             for (PaymentType paymentTypeListNewPaymentType : paymentTypeListNew) {
                 if (!paymentTypeListOld.contains(paymentTypeListNewPaymentType)) {
                     LanguageType oldLanguageTypeOfPaymentTypeListNewPaymentType = paymentTypeListNewPaymentType.getLanguageType();
@@ -383,6 +363,12 @@ public class LanguageTypeJpaController implements Serializable {
                     }
                 }
             }
+            for (EmployeeType employeeTypeListOldEmployeeType : employeeTypeListOld) {
+                if (!employeeTypeListNew.contains(employeeTypeListOldEmployeeType)) {
+                    employeeTypeListOldEmployeeType.setLanguageType(null);
+                    employeeTypeListOldEmployeeType = em.merge(employeeTypeListOldEmployeeType);
+                }
+            }
             for (EmployeeType employeeTypeListNewEmployeeType : employeeTypeListNew) {
                 if (!employeeTypeListOld.contains(employeeTypeListNewEmployeeType)) {
                     LanguageType oldLanguageTypeOfEmployeeTypeListNewEmployeeType = employeeTypeListNewEmployeeType.getLanguageType();
@@ -392,6 +378,12 @@ public class LanguageTypeJpaController implements Serializable {
                         oldLanguageTypeOfEmployeeTypeListNewEmployeeType.getEmployeeTypeList().remove(employeeTypeListNewEmployeeType);
                         oldLanguageTypeOfEmployeeTypeListNewEmployeeType = em.merge(oldLanguageTypeOfEmployeeTypeListNewEmployeeType);
                     }
+                }
+            }
+            for (ProductType productTypeListOldProductType : productTypeListOld) {
+                if (!productTypeListNew.contains(productTypeListOldProductType)) {
+                    productTypeListOldProductType.setLanguageType(null);
+                    productTypeListOldProductType = em.merge(productTypeListOldProductType);
                 }
             }
             for (ProductType productTypeListNewProductType : productTypeListNew) {
@@ -442,34 +434,6 @@ public class LanguageTypeJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the Employee " + employeeListOrphanCheckEmployee + " in its employeeList field has a non-nullable languageType field.");
             }
-            List<PriceType> priceTypeListOrphanCheck = languageType.getPriceTypeList();
-            for (PriceType priceTypeListOrphanCheckPriceType : priceTypeListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the PriceType " + priceTypeListOrphanCheckPriceType + " in its priceTypeList field has a non-nullable languageType field.");
-            }
-            List<PaymentType> paymentTypeListOrphanCheck = languageType.getPaymentTypeList();
-            for (PaymentType paymentTypeListOrphanCheckPaymentType : paymentTypeListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the PaymentType " + paymentTypeListOrphanCheckPaymentType + " in its paymentTypeList field has a non-nullable languageType field.");
-            }
-            List<EmployeeType> employeeTypeListOrphanCheck = languageType.getEmployeeTypeList();
-            for (EmployeeType employeeTypeListOrphanCheckEmployeeType : employeeTypeListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the EmployeeType " + employeeTypeListOrphanCheckEmployeeType + " in its employeeTypeList field has a non-nullable languageType field.");
-            }
-            List<ProductType> productTypeListOrphanCheck = languageType.getProductTypeList();
-            for (ProductType productTypeListOrphanCheckProductType : productTypeListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This LanguageType (" + languageType + ") cannot be destroyed since the ProductType " + productTypeListOrphanCheckProductType + " in its productTypeList field has a non-nullable languageType field.");
-            }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
@@ -477,6 +441,11 @@ public class LanguageTypeJpaController implements Serializable {
             if (referencedType != null) {
                 referencedType.getLanguageTypeList().remove(languageType);
                 referencedType = em.merge(referencedType);
+            }
+            List<PriceType> priceTypeList = languageType.getPriceTypeList();
+            for (PriceType priceTypeListPriceType : priceTypeList) {
+                priceTypeListPriceType.setLanguageType(null);
+                priceTypeListPriceType = em.merge(priceTypeListPriceType);
             }
             List<LanguageType> languageTypeList = languageType.getLanguageTypeList();
             for (LanguageType languageTypeListLanguageType : languageTypeList) {
@@ -487,6 +456,21 @@ public class LanguageTypeJpaController implements Serializable {
             for (SexType sexTypeListSexType : sexTypeList) {
                 sexTypeListSexType.setLanguageType(null);
                 sexTypeListSexType = em.merge(sexTypeListSexType);
+            }
+            List<PaymentType> paymentTypeList = languageType.getPaymentTypeList();
+            for (PaymentType paymentTypeListPaymentType : paymentTypeList) {
+                paymentTypeListPaymentType.setLanguageType(null);
+                paymentTypeListPaymentType = em.merge(paymentTypeListPaymentType);
+            }
+            List<EmployeeType> employeeTypeList = languageType.getEmployeeTypeList();
+            for (EmployeeType employeeTypeListEmployeeType : employeeTypeList) {
+                employeeTypeListEmployeeType.setLanguageType(null);
+                employeeTypeListEmployeeType = em.merge(employeeTypeListEmployeeType);
+            }
+            List<ProductType> productTypeList = languageType.getProductTypeList();
+            for (ProductType productTypeListProductType : productTypeList) {
+                productTypeListProductType.setLanguageType(null);
+                productTypeListProductType = em.merge(productTypeListProductType);
             }
             em.remove(languageType);
             em.getTransaction().commit();

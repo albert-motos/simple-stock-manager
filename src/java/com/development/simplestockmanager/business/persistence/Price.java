@@ -8,10 +8,8 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,12 +19,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,15 +36,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Price.findById", query = "SELECT p FROM Price p WHERE p.id = :id"),
     @NamedQuery(name = "Price.findByTitle", query = "SELECT p FROM Price p WHERE p.title = :title"),
     @NamedQuery(name = "Price.findByCost", query = "SELECT p FROM Price p WHERE p.cost = :cost"),
-    @NamedQuery(name = "Price.findByInitialAMOUNT", query = "SELECT p FROM Price p WHERE p.initialAMOUNT = :initialAMOUNT"),
-    @NamedQuery(name = "Price.findByEndAMOUNT", query = "SELECT p FROM Price p WHERE p.endAMOUNT = :endAMOUNT"),
+    @NamedQuery(name = "Price.findByInitialAmount", query = "SELECT p FROM Price p WHERE p.initialAmount = :initialAmount"),
+    @NamedQuery(name = "Price.findByEndAmount", query = "SELECT p FROM Price p WHERE p.endAmount = :endAmount"),
     @NamedQuery(name = "Price.findByInitialDate", query = "SELECT p FROM Price p WHERE p.initialDate = :initialDate"),
     @NamedQuery(name = "Price.findByEndDate", query = "SELECT p FROM Price p WHERE p.endDate = :endDate"),
     @NamedQuery(name = "Price.findByEnable", query = "SELECT p FROM Price p WHERE p.enable = :enable"),
     @NamedQuery(name = "Price.findByCreatedDate", query = "SELECT p FROM Price p WHERE p.createdDate = :createdDate"),
-    @NamedQuery(name = "Price.findByCreatedUser", query = "SELECT p FROM Price p WHERE p.createdUser = :createdUser"),
-    @NamedQuery(name = "Price.findByLastModifiedDate", query = "SELECT p FROM Price p WHERE p.lastModifiedDate = :lastModifiedDate"),
-    @NamedQuery(name = "Price.findByLastModifiedUser", query = "SELECT p FROM Price p WHERE p.lastModifiedUser = :lastModifiedUser")})
+    @NamedQuery(name = "Price.findByLastModifiedDate", query = "SELECT p FROM Price p WHERE p.lastModifiedDate = :lastModifiedDate")})
 public class Price implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,10 +57,10 @@ public class Price implements Serializable {
     @Basic(optional = false)
     @Column(name = "COST")
     private BigDecimal cost;
-    @Column(name = "InitialAMOUNT")
-    private BigDecimal initialAMOUNT;
-    @Column(name = "EndAMOUNT")
-    private BigDecimal endAMOUNT;
+    @Column(name = "INITIAL_AMOUNT")
+    private BigDecimal initialAmount;
+    @Column(name = "END_AMOUNT")
+    private BigDecimal endAmount;
     @Column(name = "INITIAL_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date initialDate;
@@ -81,23 +75,21 @@ public class Price implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @Column(name = "CREATED_USER")
-    private String createdUser;
-    @Basic(optional = false)
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
-    @Basic(optional = false)
-    @Column(name = "LAST_MODIFIED_USER")
-    private String lastModifiedUser;
+    @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee createdUser;
     @JoinColumn(name = "PRICE_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private PriceType priceType;
     @JoinColumn(name = "STOCK", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Stock stock;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "price")
-    private List<Item> itemList;
+    @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Employee lastModifiedUser;
 
     public Price() {
     }
@@ -106,15 +98,13 @@ public class Price implements Serializable {
         this.id = id;
     }
 
-    public Price(Long id, String title, BigDecimal cost, boolean enable, Date createdDate, String createdUser, Date lastModifiedDate, String lastModifiedUser) {
+    public Price(Long id, String title, BigDecimal cost, boolean enable, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.cost = cost;
         this.enable = enable;
         this.createdDate = createdDate;
-        this.createdUser = createdUser;
         this.lastModifiedDate = lastModifiedDate;
-        this.lastModifiedUser = lastModifiedUser;
     }
 
     public Long getId() {
@@ -141,20 +131,20 @@ public class Price implements Serializable {
         this.cost = cost;
     }
 
-    public BigDecimal getInitialAMOUNT() {
-        return initialAMOUNT;
+    public BigDecimal getInitialAmount() {
+        return initialAmount;
     }
 
-    public void setInitialAMOUNT(BigDecimal initialAMOUNT) {
-        this.initialAMOUNT = initialAMOUNT;
+    public void setInitialAmount(BigDecimal initialAmount) {
+        this.initialAmount = initialAmount;
     }
 
-    public BigDecimal getEndAMOUNT() {
-        return endAMOUNT;
+    public BigDecimal getEndAmount() {
+        return endAmount;
     }
 
-    public void setEndAMOUNT(BigDecimal endAMOUNT) {
-        this.endAMOUNT = endAMOUNT;
+    public void setEndAmount(BigDecimal endAmount) {
+        this.endAmount = endAmount;
     }
 
     public Date getInitialDate() {
@@ -189,14 +179,6 @@ public class Price implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }
-
     public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
@@ -205,12 +187,12 @@ public class Price implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedUser() {
-        return lastModifiedUser;
+    public Employee getCreatedUser() {
+        return createdUser;
     }
 
-    public void setLastModifiedUser(String lastModifiedUser) {
-        this.lastModifiedUser = lastModifiedUser;
+    public void setCreatedUser(Employee createdUser) {
+        this.createdUser = createdUser;
     }
 
     public PriceType getPriceType() {
@@ -229,32 +211,31 @@ public class Price implements Serializable {
         this.stock = stock;
     }
 
-    @XmlTransient
-    public List<Item> getItemList() {
-        return itemList;
+    public Employee getLastModifiedUser() {
+        return lastModifiedUser;
     }
 
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
+    public void setLastModifiedUser(Employee lastModifiedUser) {
+        this.lastModifiedUser = lastModifiedUser;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.title);
-        hash = 71 * hash + Objects.hashCode(this.cost);
-        hash = 71 * hash + Objects.hashCode(this.initialAMOUNT);
-        hash = 71 * hash + Objects.hashCode(this.endAMOUNT);
-        hash = 71 * hash + Objects.hashCode(this.initialDate);
-        hash = 71 * hash + Objects.hashCode(this.endDate);
-        hash = 71 * hash + (this.enable ? 1 : 0);
-        hash = 71 * hash + Objects.hashCode(this.createdDate);
-        hash = 71 * hash + Objects.hashCode(this.createdUser);
-        hash = 71 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 71 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 71 * hash + Objects.hashCode(this.priceType);
-        hash = 71 * hash + Objects.hashCode(this.stock);
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.title);
+        hash = 83 * hash + Objects.hashCode(this.cost);
+        hash = 83 * hash + Objects.hashCode(this.initialAmount);
+        hash = 83 * hash + Objects.hashCode(this.endAmount);
+        hash = 83 * hash + Objects.hashCode(this.initialDate);
+        hash = 83 * hash + Objects.hashCode(this.endDate);
+        hash = 83 * hash + (this.enable ? 1 : 0);
+        hash = 83 * hash + Objects.hashCode(this.createdDate);
+        hash = 83 * hash + Objects.hashCode(this.lastModifiedDate);
+        hash = 83 * hash + Objects.hashCode(this.createdUser);
+        hash = 83 * hash + Objects.hashCode(this.priceType);
+        hash = 83 * hash + Objects.hashCode(this.stock);
+        hash = 83 * hash + Objects.hashCode(this.lastModifiedUser);
         return hash;
     }
 
@@ -276,10 +257,10 @@ public class Price implements Serializable {
         if (!Objects.equals(this.cost, other.cost)) {
             return false;
         }
-        if (!Objects.equals(this.initialAMOUNT, other.initialAMOUNT)) {
+        if (!Objects.equals(this.initialAmount, other.initialAmount)) {
             return false;
         }
-        if (!Objects.equals(this.endAMOUNT, other.endAMOUNT)) {
+        if (!Objects.equals(this.endAmount, other.endAmount)) {
             return false;
         }
         if (!Objects.equals(this.initialDate, other.initialDate)) {
@@ -294,19 +275,19 @@ public class Price implements Serializable {
         if (!Objects.equals(this.createdDate, other.createdDate)) {
             return false;
         }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
         if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
             return false;
         }
-        if (!Objects.equals(this.lastModifiedUser, other.lastModifiedUser)) {
+        if (!Objects.equals(this.createdUser, other.createdUser)) {
             return false;
         }
         if (!Objects.equals(this.priceType, other.priceType)) {
             return false;
         }
-        return Objects.equals(this.stock, other.stock);
+        if (!Objects.equals(this.stock, other.stock)) {
+            return false;
+        }
+        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
     }
 
     @Override

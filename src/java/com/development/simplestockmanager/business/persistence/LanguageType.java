@@ -49,20 +49,20 @@ public class LanguageType implements Serializable {
     private String language;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
     private List<Employee> employeeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
+    @OneToMany(mappedBy = "languageType")
     private List<PriceType> priceTypeList;
     @OneToMany(mappedBy = "referencedType")
     private List<LanguageType> languageTypeList;
     @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
     @ManyToOne
     private LanguageType referencedType;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
+    @OneToMany(mappedBy = "languageType")
     private List<SexType> sexTypeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
+    @OneToMany(mappedBy = "languageType")
     private List<PaymentType> paymentTypeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
+    @OneToMany(mappedBy = "languageType")
     private List<EmployeeType> employeeTypeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
+    @OneToMany(mappedBy = "languageType")
     private List<ProductType> productTypeList;
 
     public LanguageType() {
@@ -170,10 +170,10 @@ public class LanguageType implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.code);
-        hash = 53 * hash + Objects.hashCode(this.language);
-        hash = 53 * hash + Objects.hashCode(this.referencedType);
+        hash = 73 * hash + Objects.hashCode(this.id);
+        hash = 73 * hash + Objects.hashCode(this.code);
+        hash = 73 * hash + Objects.hashCode(this.language);
+        hash = 73 * hash + Objects.hashCode(this.referencedType);
         return hash;
     }
 
