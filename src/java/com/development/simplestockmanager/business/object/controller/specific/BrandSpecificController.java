@@ -19,6 +19,21 @@ public class BrandSpecificController {
         helper = new BrandHelper();
     }
 
+    public List<Brand> findAll() {
+        List<Brand> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindAllQuery();
+            for (Object object : query.getResultList()) {
+                list.add((Brand) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
     public Brand findByName(String name) {
         Brand brand;
         

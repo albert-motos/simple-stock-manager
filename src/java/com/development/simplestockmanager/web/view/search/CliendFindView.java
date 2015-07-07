@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.web.view.find;
+package com.development.simplestockmanager.web.view.search;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @ManagedBean
 @ApplicationScoped
-public class CliendFindView implements FindView {
+public class CliendFindView {
 
     private String value;
 
@@ -136,12 +136,10 @@ public class CliendFindView implements FindView {
 //    public void setEmployeeSelectorView(EmployeeSelectorView employeeSelectorView) {
 //        this.employeeSelectorView = employeeSelectorView;
 //    }
-    @Override
     public void find() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public void edit() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

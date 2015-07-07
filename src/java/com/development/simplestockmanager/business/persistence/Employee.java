@@ -699,26 +699,8 @@ public class Employee implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.firstname);
-        hash = 29 * hash + Objects.hashCode(this.lastname);
-        hash = 29 * hash + Objects.hashCode(this.bornDate);
-        hash = 29 * hash + Objects.hashCode(this.phone);
-        hash = 29 * hash + Objects.hashCode(this.email);
-        hash = 29 * hash + Objects.hashCode(this.username);
-        hash = 29 * hash + Objects.hashCode(this.password);
-        hash = 29 * hash + (this.isOnline ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.lastOnlineDate);
-        hash = 29 * hash + Objects.hashCode(this.sessionId);
-        hash = 29 * hash + (this.enable ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.createdDate);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 29 * hash + Objects.hashCode(this.createdUser);
-        hash = 29 * hash + Objects.hashCode(this.employeeType);
-        hash = 29 * hash + Objects.hashCode(this.sexType);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedUser);
-        hash = 29 * hash + Objects.hashCode(this.languageType);
         return hash;
     }
 

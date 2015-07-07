@@ -27,4 +27,10 @@ public class BrandHelper {
 
         return query;
     }
+    
+    public Query getFindAllQuery() {
+        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Brand.findAll");
+
+        return query;
+    }
 }

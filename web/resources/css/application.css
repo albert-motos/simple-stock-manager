@@ -24,3 +24,7 @@ and open the template in the editor.
     white-space: nowrap;
     font-weight: bold;
 }
+
+.ui-column-title {
+    font-size: small;
+}
