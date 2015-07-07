@@ -43,8 +43,8 @@ public class ProviderAddView extends BaseAddView {
         if (validator.validate()) {
             provider.setCreatedDate(new Date());
             provider.setLastModifiedDate(new Date());
-            provider.setCreatedUser(user.getUsername());
-            provider.setLastModifiedUser(user.getUsername());
+            provider.setCreatedUser(user);
+            provider.setLastModifiedUser(user);
 
             Long id = generalController.create(provider);
 

@@ -55,8 +55,8 @@ public class EmployeeAddView extends BaseAddView {
         if (validator.validate()) {
             employee.setCreatedDate(new Date());
             employee.setLastModifiedDate(new Date());
-            employee.setCreatedUser(user.getUsername());
-            employee.setLastModifiedUser(user.getUsername());
+            employee.setCreatedUser(user);
+            employee.setLastModifiedUser(user);
             employee.setLastOnlineDate(new Date(0));
 
             Long id = generalController.create(employee);

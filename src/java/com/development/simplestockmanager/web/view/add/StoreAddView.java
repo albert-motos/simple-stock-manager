@@ -46,8 +46,8 @@ public class StoreAddView extends BaseAddView {
         if (validator.validate()) {
             store.setCreatedDate(new Date());
             store.setLastModifiedDate(new Date());
-            store.setCreatedUser(user.getUsername());
-            store.setLastModifiedUser(user.getUsername());
+            store.setCreatedUser(user);
+            store.setLastModifiedUser(user);
 
             Long id = generalController.create(store);
 

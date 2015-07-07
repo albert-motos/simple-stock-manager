@@ -53,8 +53,8 @@ public class ProductAddView extends BaseAddView {
         if (validator.validate()) {
             product.setCreatedDate(new Date());
             product.setLastModifiedDate(new Date());
-            product.setCreatedUser(user.getUsername());
-            product.setLastModifiedUser(user.getUsername());
+            product.setCreatedUser(user);
+            product.setLastModifiedUser(user);
 
             Long id = generalController.create(product);
 

@@ -47,8 +47,8 @@ public class ClientAddView extends BaseAddView {
         if (validator.validate()) {
             client.setCreatedDate(new Date());
             client.setLastModifiedDate(new Date());
-            client.setCreatedUser(user.getUsername());
-            client.setLastModifiedUser(user.getUsername());
+            client.setCreatedUser(user);
+            client.setLastModifiedUser(user);
 
             Long id = generalController.create(client);
 

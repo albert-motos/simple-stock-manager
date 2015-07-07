@@ -44,8 +44,8 @@ public class BrandAddView extends BaseAddView {
         if (validator.validate()) {
             brand.setCreatedDate(new Date());
             brand.setLastModifiedDate(new Date());
-            brand.setCreatedUser(user.getUsername());
-            brand.setLastModifiedUser(user.getUsername());
+            brand.setCreatedUser(user);
+            brand.setLastModifiedUser(user);
 
             Long id = generalController.create(brand);
 
