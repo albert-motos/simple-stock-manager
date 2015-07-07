@@ -1,8 +1,9 @@
-
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.ProductHelper;
+import com.development.simplestockmanager.business.object.nullpackage.ProductNull;
 import com.development.simplestockmanager.business.persistence.Brand;
+import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.Provider;
 import javax.persistence.Query;
@@ -19,9 +20,16 @@ public class ProductSpecificController {
         helper = new ProductHelper();
     }
 
-    public boolean relationIsAvailable(ProductType productType, Brand brand, Provider provider) {
-        Query query = helper.getFindByRelationQuery(productType, brand, provider);
-
-        return query.getResultList().isEmpty();
+    public Product findByRelation(ProductType productType, Brand brand, Provider provider) {
+        Product product;
+        
+        try {
+            Query query = helper.getFindByRelationQuery(productType, brand, provider);
+            product = (Product) query.getSingleResult();
+        } catch (Exception e) {
+            product = new ProductNull();
+        }
+        
+        return product;
     }
 }

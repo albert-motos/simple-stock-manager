@@ -45,10 +45,17 @@ public class EmployeeSpecificController {
         return employee;
     }
 
-    public boolean usernameIsAvailable(String username) {
-        Query query = helper.getFindByUsernameQuery(username);
+    public Employee findByUsername(String username) {
+        Employee employee;
+        
+        try {
+            Query query = helper.getFindByUsernameQuery(username);
+            employee = (Employee) query.getSingleResult();
+        } catch (Exception e) {
+            employee = new EmployeeNull();
+        }
 
-        return query.getResultList().isEmpty();
+        return employee;
     }
 
     public List<Employee> fillSelectorByName(String name) {

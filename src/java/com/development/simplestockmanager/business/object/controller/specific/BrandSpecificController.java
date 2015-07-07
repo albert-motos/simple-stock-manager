@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.BrandHelper;
+import com.development.simplestockmanager.business.object.nullpackage.BrandNull;
 import com.development.simplestockmanager.business.persistence.Brand;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,17 @@ public class BrandSpecificController {
         helper = new BrandHelper();
     }
 
-    public boolean nameIsAvailable(String name) {
-        Query query = helper.getFindByNameForSelectorQuery(name);
-
-        return query.getResultList().isEmpty();
+    public Brand findByName(String name) {
+        Brand brand;
+        
+        try {
+            Query query = helper.getFindByNameQuery(name);
+            brand = (Brand) query.getSingleResult();
+        } catch (Exception e) {
+            brand = new BrandNull();
+        }
+        
+        return brand;
     }
     
     public List<Brand> fillSelectorByName(String name) {

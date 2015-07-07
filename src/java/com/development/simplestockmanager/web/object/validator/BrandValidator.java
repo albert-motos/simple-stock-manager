@@ -1,11 +1,14 @@
 package com.development.simplestockmanager.web.object.validator;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Validator class for Brand object
@@ -53,7 +56,11 @@ public class BrandValidator extends BaseValidator {
         List<String> causeList = new ArrayList<>();
 
         if (!brand.getName().isEmpty()) {
-            if (!specificController.nameIsAvailable(brand.getName())) {
+            Brand brandOfName = specificController.findByName(brand.getName());
+            
+            if ((mode == WebConstant.VALIDATOR.MODE.CREATE && brandOfName.getId() != BusinessConstant.IDENTIFIER.INVALID)
+                    || (mode == WebConstant.VALIDATOR.MODE.EDIT && brandOfName.getId() != BusinessConstant.IDENTIFIER.INVALID
+                    && !Objects.equals(brandOfName.getId(), brand.getId()))) {
                 causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.NAME));
             }
         }

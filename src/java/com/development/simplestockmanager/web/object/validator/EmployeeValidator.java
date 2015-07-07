@@ -5,9 +5,11 @@ import com.development.simplestockmanager.business.object.controller.specific.Em
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Validator class for Employee object
@@ -93,7 +95,11 @@ public class EmployeeValidator extends BaseValidator {
         }
 
         if (!employee.getUsername().isEmpty()) {
-            if (!specificController.usernameIsAvailable(employee.getUsername())) {
+            Employee employeeOfUsername = specificController.findByUsername(employee.getUsername());
+            
+            if ((mode == WebConstant.VALIDATOR.MODE.CREATE && employeeOfUsername.getId() != BusinessConstant.IDENTIFIER.INVALID)
+                    || (mode == WebConstant.VALIDATOR.MODE.EDIT && employeeOfUsername.getId() != BusinessConstant.IDENTIFIER.INVALID
+                    && !Objects.equals(employeeOfUsername.getId(), employee.getId()))) {
                 causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.USERNAME));
             }
         }

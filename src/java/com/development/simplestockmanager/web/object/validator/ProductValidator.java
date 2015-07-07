@@ -5,8 +5,10 @@ import com.development.simplestockmanager.business.object.controller.specific.Pr
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductValidator extends BaseValidator {
 
@@ -63,8 +65,13 @@ public class ProductValidator extends BaseValidator {
         if (product.getProvider().getId() != BusinessConstant.IDENTIFIER.INVALID
                 && product.getBrand().getId() != BusinessConstant.IDENTIFIER.INVALID
                 && product.getProductType().getId() != BusinessConstant.IDENTIFIER.INVALID) {
-            if (!specificController.relationIsAvailable(product.getProductType(), product.getBrand(), product.getProvider())) {
-                causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.PRODUCT));
+            
+            Product productOfRelation = specificController.findByRelation(product.getProductType(), product.getBrand(), product.getProvider());
+            
+            if ((mode == WebConstant.VALIDATOR.MODE.CREATE && productOfRelation.getId() != BusinessConstant.IDENTIFIER.INVALID)
+                    || (mode == WebConstant.VALIDATOR.MODE.EDIT && productOfRelation.getId() != BusinessConstant.IDENTIFIER.INVALID
+                    && !Objects.equals(productOfRelation.getId(), product.getId()))) {
+               causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.PRODUCT));
             }
         }
 
