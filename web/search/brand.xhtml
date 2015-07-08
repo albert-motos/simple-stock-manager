@@ -8,7 +8,98 @@
 
     <ui:define name="content">
         <h:form>
-            <p:commandButton value="#{button.find}" actionListener="#{brandSearch.find()}" style="width: 100px" update="list" />
+            <p:panel header="Brand browser" toggleable="true" collapsed="false" widgetVar="browser" style="margin-bottom: 15px">
+                <p:tabView>
+                    <p:tab title="#{brandLabel.attributes}">
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 30%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{label.name}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{brandSearch.browser.name}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 70%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{label.description}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{brandSearch.browser.description}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="auditory">
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Creation field: between " />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:calendar value="#{brandSearch.browser.createdDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="and" />
+                                            </p:column>
+                                            <p:column >
+                                                <p:calendar value="#{brandSearch.createdDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Modification field: between " />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:calendar value="#{brandSearch.browser.lastModifiedDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="and" />
+                                            </p:column>
+                                            <p:column >
+                                                <p:calendar value="#{brandSearch.lastModifiedDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:tabView>
+                <p:commandButton value="#{button.find}" actionListener="#{brandSearch.find()}" style="width: 100px; margin: 5px" update="list" />
+            </p:panel>
 
             <p:dataTable id="list" var="brand" value="#{brandSearch.list}" style="width: 100%" rows="10" paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -18,9 +109,10 @@
                 </f:facet>
 
                 <p:column headerText="Action" style="width: 200px">
+                    <p:commandButton value="asd" actionListener="#{brandSearch.initView(brand)}" style="width: 100px" update="@form" />
                     <h:outputText value="#{brand.name}" />
                 </p:column>
-                
+
                 <p:column headerText="Name" sortBy="#{brand.name}">
                     <h:outputText value="#{brand.name}" />
                 </p:column>

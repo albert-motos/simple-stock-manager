@@ -2,7 +2,10 @@ package com.development.simplestockmanager.web.view.search;
 
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
+import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -21,6 +24,9 @@ public class BrandSearchView extends BaseSearchView {
     private Brand browser;
     private Brand view;
     private List<Brand> list;
+    
+    private Date createdDate;
+    private Date lastModifiedDate;
 
     public BrandSearchView() {
         specificController = new BrandSpecificController();
@@ -30,6 +36,7 @@ public class BrandSearchView extends BaseSearchView {
 
     @Override
     public void find() {
+        System.out.println("#" + browser.getCreatedDate());
         list = specificController.findAll();
     }
 
@@ -41,15 +48,44 @@ public class BrandSearchView extends BaseSearchView {
     }
 
     public void initView(Brand brand) {
-        System.out.println(brand);
+        view = brand;
     }
 
     public void initEdit(Brand brand) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sendObjectToSession(WebConstant.SESSION.BRAND, brand);
+        new NavigationService().redirect(WebConstant.WEB.EDIT.BRAND);
     }
-
+    
     public List<Brand> getList() {
         return list;
+    }
+    
+    public Brand getView() {
+        return view;
+    }
+
+    public Brand getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(Brand browser) {
+        this.browser = browser;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
 }

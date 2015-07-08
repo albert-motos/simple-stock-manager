@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.view.search;
+package com.development.simplestockmanager.web.view.edit;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.internationalization.InternationalizationController;
@@ -13,30 +13,37 @@ import javax.servlet.http.HttpSession;
  *
  * @author foxtrot
  */
-abstract class BaseSearchView implements Serializable {
+abstract class BaseEditView implements Serializable {
 
     protected InternationalizationController internationalizationController;
     protected Employee user;
 
-    public BaseSearchView() {
+    public BaseEditView() {
         user = new AuthenticationService().getCurrentEmployee();
         internationalizationController = new InternationalizationController(user.getLanguageType().getCode());
     }
 
     /**
-     * Main function of find view for update list with browser fields
+     * Main function of edit view
      */
-    abstract public void find();
+    abstract public void edit();
 
     /**
-     * Main function of find view for clear browser
+     * Function for back to search view
      */
-    abstract public void clear();
+    abstract public void back();
     
-    protected void sendObjectToSession(String key, Object value) {
+    private HttpSession getSession(){
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        HttpSession session = request.getSession();
-        session.setAttribute(key, value);
+        return request.getSession();
+    }
+    
+    protected Object receiveObjectFromSession(String key) {
+        return getSession().getAttribute(key);
+    }
+    
+    protected void removeObjectFromSession(String key) {
+        getSession().removeAttribute(key);
     }
 }
