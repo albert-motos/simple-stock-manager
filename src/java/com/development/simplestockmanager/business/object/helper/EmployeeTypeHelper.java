@@ -4,18 +4,19 @@ import com.development.simplestockmanager.business.persistence.controller.Employ
 import javax.persistence.Query;
 
 /**
+ * Helper class for EmployeeType object
  *
  * @author foxtrot
  */
-public class EmployeeTypeHelper implements BaseTypeHelper {
+public class EmployeeTypeHelper extends BaseHelper implements BaseTypeHelper {
 
     public EmployeeTypeJpaController getJpaController() {
-        return new EmployeeTypeJpaController(EntityManagerHelper.getEntityManagerFactory());
+        return new EmployeeTypeJpaController(entityManagerFactory);
     }
 
     @Override
     public Query getFindAllForSelector(String language) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("EmployeeType.findAllForSelector");
+        Query query = entityManager.createNamedQuery("EmployeeType.findAllForSelector");
         query.setParameter("language", language);
 
         return query;
