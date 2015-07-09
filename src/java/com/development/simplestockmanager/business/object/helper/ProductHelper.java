@@ -11,14 +11,14 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ProductHelper {
+public class ProductHelper extends BaseHelper {
 
     public ProductJpaController getJpaController() {
-        return new ProductJpaController(EntityManagerHelper.getEntityManagerFactory());
+        return new ProductJpaController(entityManagerFactory);
     }
     
     public Query getFindByRelationQuery(ProductType productType, Brand brand, Provider provider) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Product.findByRelation");
+        Query query = entityManager.createNamedQuery("Product.findByRelation");
         query.setParameter("productType", productType);
         query.setParameter("brand", brand);
         query.setParameter("provider", provider);
