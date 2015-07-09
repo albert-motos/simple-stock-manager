@@ -8,15 +8,15 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ProductTypeHelper implements BaseTypeHelper {
+public class ProductTypeHelper extends BaseHelper implements BaseTypeHelper {
 
     public ProductTypeJpaController getJpaController() {
-        return new ProductTypeJpaController(EntityManagerHelper.getEntityManagerFactory());
+        return new ProductTypeJpaController(entityManagerFactory);
     }
 
     @Override
     public Query getFindAllForSelector(String language) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("ProductType.findAllForSelector");
+        Query query = entityManager.createNamedQuery("ProductType.findAllForSelector");
         query.setParameter("language", language);
 
         return query;
