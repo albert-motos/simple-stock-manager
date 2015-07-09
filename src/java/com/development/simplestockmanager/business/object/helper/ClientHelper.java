@@ -7,9 +7,9 @@ import com.development.simplestockmanager.business.persistence.controller.Client
  *
  * @author foxtrot
  */
-public class ClientHelper {
+public class ClientHelper extends BaseHelper {
 
     public ClientJpaController getJpaController() {
-        return new ClientJpaController(EntityManagerHelper.getEntityManagerFactory());
+        return new ClientJpaController(entityManagerFactory);
     }
 }
