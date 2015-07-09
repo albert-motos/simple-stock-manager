@@ -3,21 +3,23 @@ package com.development.simplestockmanager.web.object.component.selector;
 import java.util.List;
 
 /**
+ * Base class for selectors
  *
  * @author foxtrot
  */
 abstract class BaseSelector {
-    
+
     protected String browser;
     protected List<String> list;
     protected String selection;
-    
+    protected long mode;
+
     abstract public void find();
 
     public void setBrowser(String browser) {
         this.browser = browser;
     }
-    
+
     public String getBrowser() {
         return browser;
     }
@@ -33,5 +35,5 @@ abstract class BaseSelector {
     public void setSelection(String selection) {
         this.selection = selection;
     }
-    
+
 }
