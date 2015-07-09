@@ -1,7 +1,5 @@
 package com.development.simplestockmanager.web.common;
 
-import javax.faces.bean.ManagedBean;
-
 /**
  *
  * @author foxtrot
@@ -14,6 +12,15 @@ public interface WebConstant {
 
             public static long CREATE = 0;
             public static long EDIT = 1;
+        }
+    }
+    
+    public interface SELECTOR {
+
+        public interface MODE {
+
+            public static long VISIBLE = 0;
+            public static long ALL = 1;
         }
     }
 
