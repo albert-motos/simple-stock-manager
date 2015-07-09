@@ -5,7 +5,6 @@ import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -24,9 +23,6 @@ public class BrandSearchView extends BaseSearchView {
     private Brand browser;
     private Brand view;
     private List<Brand> list;
-    
-    private Date createdDate;
-    private Date lastModifiedDate;
 
     public BrandSearchView() {
         specificController = new BrandSpecificController();
@@ -36,8 +32,8 @@ public class BrandSearchView extends BaseSearchView {
 
     @Override
     public void find() {
-        System.out.println("#" + browser.getCreatedDate());
-        list = specificController.findAll();
+        list = specificController.findAllForBrowser(browser, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo,
+                createdUser.getSelectedValue().getId(), lastModifiedUser.getSelectedValue().getId());
     }
 
     @Override
@@ -70,22 +66,6 @@ public class BrandSearchView extends BaseSearchView {
 
     public void setBrowser(Brand browser) {
         this.browser = browser;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
     }
 
 }
