@@ -3,14 +3,15 @@ package com.development.simplestockmanager.business.object.helper;
 import javax.persistence.Query;
 
 /**
+ * Helper class for LanguageType object
  *
  * @author foxtrot
  */
-public class LanguageTypeHelper implements BaseTypeHelper{
+public class LanguageTypeHelper extends BaseHelper implements BaseTypeHelper {
 
     @Override
     public Query getFindAllForSelector(String language) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("LanguageType.findAllForSelector");
+        Query query = entityManager.createNamedQuery("LanguageType.findAllForSelector");
         query.setParameter("language", language);
 
         return query;

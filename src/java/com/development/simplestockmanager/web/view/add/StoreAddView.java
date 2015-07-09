@@ -33,7 +33,7 @@ public class StoreAddView extends BaseAddView {
         generalController = new StoreGeneralController();
         
         store = new Store();
-        employeeSelector = new EmployeeSelector();
+        employeeSelector = new EmployeeSelector(WebConstant.SELECTOR.MODE.VISIBLE);
     }
 
     @Override

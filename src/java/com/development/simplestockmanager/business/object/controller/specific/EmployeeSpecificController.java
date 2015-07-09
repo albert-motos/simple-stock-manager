@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Query;
 
 /**
+ * Specific controller class for Employee object
  *
  * @author foxtrot
  */
@@ -21,33 +22,33 @@ public class EmployeeSpecificController {
 
     public Employee getEmployeeByCredencials(String username, String password) {
         Employee employee;
-        
+
         try {
             Query query = helper.getFindByCredentialsQuery(username, password);
             employee = (Employee) query.getSingleResult();
         } catch (Exception e) {
             employee = new EmployeeNull();
         }
-        
+
         return employee;
     }
-    
+
     public Employee getEmployeeBySession(String session) {
         Employee employee;
-        
+
         try {
             Query query = helper.getFindBySessionQuery(session);
             employee = (Employee) query.getSingleResult();
         } catch (Exception e) {
             employee = new EmployeeNull();
         }
-        
+
         return employee;
     }
 
     public Employee findByUsername(String username) {
         Employee employee;
-        
+
         try {
             Query query = helper.getFindByUsernameQuery(username);
             employee = (Employee) query.getSingleResult();
@@ -72,5 +73,20 @@ public class EmployeeSpecificController {
 
         return list;
     }
-    
+
+    public List<Employee> fillSelector() {
+        List<Employee> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindAll();
+            for (Object object : query.getResultList()) {
+                list.add((Employee) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
 }

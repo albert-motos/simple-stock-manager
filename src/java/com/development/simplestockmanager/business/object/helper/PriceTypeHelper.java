@@ -7,9 +7,9 @@ import com.development.simplestockmanager.business.persistence.controller.PriceT
  *
  * @author foxtrot
  */
-public class PriceTypeHelper {
+public class PriceTypeHelper extends BaseHelper {
 
     public PriceTypeJpaController getJpaController() {
-        return new PriceTypeJpaController(EntityManagerHelper.getEntityManagerFactory());
+        return new PriceTypeJpaController(entityManagerFactory);
     }
 }
