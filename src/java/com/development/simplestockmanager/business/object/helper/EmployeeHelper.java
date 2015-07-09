@@ -8,14 +8,14 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class EmployeeHelper {
+public class EmployeeHelper extends BaseHelper {
 
     public EmployeeJpaController getJpaController() {
-        return new EmployeeJpaController(EntityManagerHelper.getEntityManagerFactory());
+        return new EmployeeJpaController(entityManagerFactory);
     }
 
     public Query getFindByCredentialsQuery(String username, String password) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Employee.findByCredentials");
+        Query query = entityManager.createNamedQuery("Employee.findByCredentials");
         query.setParameter("username", username);
         query.setParameter("password", password);
 
@@ -23,23 +23,27 @@ public class EmployeeHelper {
     }
 
     public Query getFindBySessionQuery(String session) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Employee.findBySession");
+        Query query = entityManager.createNamedQuery("Employee.findBySession");
         query.setParameter("session", session);
 
         return query;
     }
 
     public Query getFindByUsernameQuery(String username) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Employee.findByUsername");
+        Query query = entityManager.createNamedQuery("Employee.findByUsername");
         query.setParameter("username", username);
 
         return query;
     }
     
     public Query getFindByNameForSelectorQuery(String name) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Employee.getFindByNameForSelector");
+        Query query = entityManager.createNamedQuery("Employee.getFindByNameForSelector");
         query.setParameter("name","%" + name + "%");
         
         return query;
+    }
+
+    public Query getFindAll() {
+        return entityManager.createNamedQuery("Employee.findAll");
     }
 }
