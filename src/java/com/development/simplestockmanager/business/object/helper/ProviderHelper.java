@@ -8,13 +8,13 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ProviderHelper {
+public class ProviderHelper extends BaseHelper {
 
     public ProviderJpaController getJpaController() {
-        return new ProviderJpaController(EntityManagerHelper.getEntityManagerFactory());
+        return new ProviderJpaController(entityManagerFactory);
     }
     public Query getFindByNameForSelectorQuery(String name) {
-        Query query = EntityManagerHelper.getEntityManager().createNamedQuery("Provider.getFindByNameForSelector");
+        Query query = entityManager.createNamedQuery("Provider.getFindByNameForSelector");
         query.setParameter("name","%" + name + "%");
         
         return query;
