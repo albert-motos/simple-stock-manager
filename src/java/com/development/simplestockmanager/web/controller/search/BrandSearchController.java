@@ -1,10 +1,13 @@
-package com.development.simplestockmanager.web.view.search;
+package com.development.simplestockmanager.web.controller.search;
 
-import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
+import com.development.simplestockmanager.web.controller.common.BrandCommonController;
+import com.development.simplestockmanager.web.controller.common.SearchController;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -14,24 +17,19 @@ import javax.faces.bean.ViewScoped;
  *
  * @author foxtrot
  */
-@ManagedBean(name = "brandSearch2")
+@ManagedBean(name = "brandSearch")
 @ViewScoped
-public class BrandSearchView extends BaseSearchView {
-
-    private final BrandSpecificController specificController;
+public class BrandSearchController extends BrandCommonController implements SearchController {
 
     private Brand browser;
-    private Brand view;
     private List<Brand> list;
 
-    public BrandSearchView() {
-        specificController = new BrandSpecificController();
-
+    public BrandSearchController() {
         clear();
     }
 
     @Override
-    public void find() {
+    public void search() {
         list = specificController.findAllForBrowser(browser, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo,
                 createdUser.getSelectedValue().getId(), lastModifiedUser.getSelectedValue().getId());
     }
@@ -39,12 +37,11 @@ public class BrandSearchView extends BaseSearchView {
     @Override
     public final void clear() {
         browser = new Brand();
-        view = new Brand();
         list = new ArrayList<>();
     }
 
     public void initView(Brand brand) {
-        view = brand;
+        this.brand = brand;
     }
 
     public void initEdit(Brand brand) {
@@ -54,10 +51,6 @@ public class BrandSearchView extends BaseSearchView {
     
     public List<Brand> getList() {
         return list;
-    }
-    
-    public Brand getView() {
-        return view;
     }
 
     public Brand getBrowser() {

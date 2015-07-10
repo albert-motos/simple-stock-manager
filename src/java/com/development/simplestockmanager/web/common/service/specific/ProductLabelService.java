@@ -3,7 +3,7 @@ package com.development.simplestockmanager.web.common.service.specific;
 import com.development.simplestockmanager.web.common.service.general.*;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -23,7 +23,7 @@ public class ProductLabelService implements Serializable {
 
     public ProductLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
-        InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
 
         attributes = controller.getWord(CommonConstant.HEADER.PRODUCT.ATTRIBUTES);
         visibility = controller.getWord(CommonConstant.HEADER.PRODUCT.VISIBILITY);

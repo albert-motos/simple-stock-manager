@@ -4,7 +4,7 @@ import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +21,9 @@ public class EmployeeValidator extends BaseValidator {
     private final EmployeeSpecificController specificController;
     private Employee employee;
 
-    public EmployeeValidator(long mode, InternationalizationController controller) {
+    public EmployeeValidator(long mode, LanguageController controller, EmployeeSpecificController specificController) {
         super(mode, controller);
-        specificController = new EmployeeSpecificController();
+        this.specificController = specificController;
     }
 
     @Override
@@ -42,43 +42,43 @@ public class EmployeeValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (employee.getFirstname().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.FIRSTNAME));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.FIRSTNAME));
         }
 
         if (employee.getLastname().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.LASTNAME));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.LASTNAME));
         }
 
         if (employee.getPhone().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
         }
 
         if (employee.getEmail().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
         }
 
         if (employee.getUsername().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.USERNAME));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.USERNAME));
         }
 
         if (employee.getPassword().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.PASSWORD));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PASSWORD));
         }
 
         if (employee.getBornDate() == null) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.BORN_DATE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.BORN_DATE));
         }
 
         if (employee.getSexType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.SEX_TYPE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.SEX_TYPE));
         }
         
         if (employee.getEmployeeType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE_TYPE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE_TYPE));
         }
         
         if (employee.getLanguageType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.LANGUAGE_TYPE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.LANGUAGE_TYPE));
         }
 
         return fieldsEmptyList;
@@ -90,7 +90,7 @@ public class EmployeeValidator extends BaseValidator {
 
         if (employee.getBornDate() != null) {
             if (employee.getBornDate().after(new Date())) {
-                causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.BORN_DATE));
+                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.BORN_DATE));
             }
         }
 
@@ -100,7 +100,7 @@ public class EmployeeValidator extends BaseValidator {
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && employeeOfUsername.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && employeeOfUsername.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(employeeOfUsername.getId(), employee.getId()))) {
-                causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.USERNAME));
+                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.USERNAME));
             }
         }
 

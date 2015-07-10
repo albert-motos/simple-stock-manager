@@ -36,7 +36,8 @@ public class BrandHelper extends BaseHelper {
                 + (name.isEmpty() ? "" : " AND b.name LIKE '%" + name + "%'")
                 + (description.isEmpty() ? "" : " AND b.description LIKE '%" + description + "%'")
                 + getAuditoryQuery("b", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
-
-        return entityManager.createNamedQuery(query);
+        System.out.println("# " + query);
+        
+        return entityManager.createQuery(query);
     }
 }

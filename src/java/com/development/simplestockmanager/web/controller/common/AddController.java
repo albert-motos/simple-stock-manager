@@ -1,19 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.web.controller.common;
 
 /**
+ * Add controller interface
  *
- * @author albert.motos
+ * @author foxtrot
  */
 public interface AddController {
+
+    
     
     /**
-     * Main function of add view
+     * Main function of add controller interface
      */
     public void add();
-    
+
 }

@@ -1,7 +1,7 @@
 package com.development.simplestockmanager.web.view.search;
 
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.AuthenticationService;
 import com.development.simplestockmanager.web.object.component.selector.EmployeeSelector;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  */
 abstract class BaseSearchView implements Serializable {
 
-    protected InternationalizationController internationalizationController;
+    protected LanguageController internationalizationController;
     protected Employee user;
     
     protected Date createdDateFrom;
@@ -30,10 +30,10 @@ abstract class BaseSearchView implements Serializable {
     
     public BaseSearchView() {
         user = new AuthenticationService().getCurrentEmployee();
-        internationalizationController = new InternationalizationController(user.getLanguageType().getCode());
+        internationalizationController = new LanguageController(user.getLanguageType().getCode());
         
-        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
-        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, null);
+        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, null);
     }
 
     /**

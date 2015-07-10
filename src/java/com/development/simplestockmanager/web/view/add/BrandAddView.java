@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
  *
  * @author foxtrot
  */
-@ManagedBean(name = "brandAdd")
+@ManagedBean(name = "brandAdd2")
 @ViewScoped
 public class BrandAddView extends BaseAddView {
 
@@ -29,7 +29,7 @@ public class BrandAddView extends BaseAddView {
     private final Brand brand;
 
     public BrandAddView() {
-        validator = new BrandValidator(WebConstant.VALIDATOR.MODE.CREATE, internationalizationController);
+        validator = new BrandValidator(WebConstant.VALIDATOR.MODE.CREATE, internationalizationController, null);
         generalController = new BrandGeneralController();
 
         brand = new Brand();

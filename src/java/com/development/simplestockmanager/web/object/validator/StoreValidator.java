@@ -3,7 +3,7 @@ package com.development.simplestockmanager.web.object.validator;
 import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Store;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class StoreValidator extends BaseValidator {
 
     private Store store;
 
-    public StoreValidator(long mode, InternationalizationController controller) {
+    public StoreValidator(long mode, LanguageController controller) {
         super(mode, controller);
     }
 
@@ -36,31 +36,31 @@ public class StoreValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (store.getName().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.NAME));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.NAME));
         }
 
         if (store.getPhone().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
         }
         
         if (store.getStreet().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.STREET));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.STREET));
         }
 
         if (store.getCity().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.CITY));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.CITY));
         }
 
         if (store.getState().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.STATE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.STATE));
         }
 
         if (store.getCountry().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.COUNTRY));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.COUNTRY));
         }
 
         if (store.getEmployee().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE));
         }
         return fieldsEmptyList;
     }

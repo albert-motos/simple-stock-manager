@@ -40,7 +40,7 @@
                             </p:row>
                         </p:panelGrid>
                     </p:tab>
-                    <p:tab title="auditory">
+                    <p:tab title="#{label.auditory}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column>
@@ -56,19 +56,19 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:calendar value="#{brandSearch.browser.createdDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                                <p:calendar value="#{brandSearch.createdDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
                                                 <p:outputLabel value="and" />
                                             </p:column>
                                             <p:column >
-                                                <p:calendar value="#{brandSearch.createdDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                                <p:calendar value="#{brandSearch.createdDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
                             </p:row>
-                            
+
                             <p:row>
                                 <p:column>
                                     <p:panelGrid>
@@ -83,13 +83,75 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:calendar value="#{brandSearch.browser.lastModifiedDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                                <p:calendar value="#{brandSearch.lastModifiedDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
                                                 <p:outputLabel value="and" />
                                             </p:column>
                                             <p:column >
-                                                <p:calendar value="#{brandSearch.lastModifiedDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                                <p:calendar value="#{brandSearch.lastModifiedDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{label.employee}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{brandSearch.createdUser.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{button.search}" actionListener="#{brandSearch.createdUser.find()}" update="createdUserList" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu id="createdUserList" value="#{brandSearch.createdUser.selection}" style="width: 100%">
+                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItems value="#{brandSearch.createdUser.list}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{label.employee}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{brandSearch.lastModifiedUser.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{button.search}" actionListener="#{brandSearch.lastModifiedUser.find()}" update="lastModifiedUserList" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu id="lastModifiedUserList" value="#{brandSearch.lastModifiedUser.selection}" style="width: 100%">
+                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItems value="#{brandSearch.lastModifiedUser.list}" />
+                                                </p:selectOneMenu>
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -98,7 +160,7 @@
                         </p:panelGrid>
                     </p:tab>
                 </p:tabView>
-                <p:commandButton value="#{button.find}" actionListener="#{brandSearch.find()}" style="width: 100px; margin: 5px" update="list" />
+                <p:commandButton value="#{button.search}" actionListener="#{brandSearch.search()}" style="width: 100px; margin: 5px" update="list" />
             </p:panel>
 
             <p:dataTable id="list" var="brand" value="#{brandSearch.list}" style="width: 100%" rows="10" paginator="true"
@@ -108,12 +170,12 @@
                     Brand list
                 </f:facet>
 
-                <p:column headerText="Action" style="width: 200px">
+                <p:column headerText="#{label.actions}" style="width: 200px">
                     <p:commandButton value="asd" actionListener="#{brandSearch.initView(brand)}" style="width: 100px" update="@form" />
                     <h:outputText value="#{brand.name}" />
                 </p:column>
 
-                <p:column headerText="Name" sortBy="#{brand.name}">
+                <p:column headerText="#{label.name}" sortBy="#{brand.name}">
                     <h:outputText value="#{brand.name}" />
                 </p:column>
             </p:dataTable>

@@ -6,7 +6,7 @@ package com.development.simplestockmanager.common;
  */
 public interface CommonConstant {
 
-    public static String PATH = "com.development.simplestockmanager.common.internationalization.internationalization";
+    public static String LANGUAGE_PATH = "com.development.simplestockmanager.common.language.language";
 
     public interface MENU {
 
@@ -86,6 +86,8 @@ public interface CommonConstant {
         public static String EMPLOYEE = TEXT + ".employee";
 
         public static String NON_SELECTION = TEXT + ".nonselection";
+        public static String AUDITORY = TEXT + ".auditory";
+        public static String ACTIONS = TEXT + ".actions";
 
         public interface ENABLE {
 
@@ -152,9 +154,10 @@ public interface CommonConstant {
 
         public static String TEXT = "button";
         public static String ADD = TEXT + ".add";
-        public static String FIND = TEXT + ".find";
         public static String CANCEL = TEXT + ".cancel";
+        public static String EDIT = TEXT + ".edit";
         public static String FINISH = TEXT + ".finish";
+        public static String SEARCH = TEXT + ".search";
     }
 
     public interface MESSAGE {

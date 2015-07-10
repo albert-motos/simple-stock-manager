@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.web.controller.common;
 
 import com.development.simplestockmanager.business.object.controller.general.BrandGeneralController;
@@ -12,8 +7,9 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.object.validator.BrandValidator;
 
 /**
+ * Common controller class for Brand object
  *
- * @author albert.motos
+ * @author foxtrot
  */
 public class BrandCommonController extends BaseCommonController {
 
@@ -21,15 +17,17 @@ public class BrandCommonController extends BaseCommonController {
     protected final BrandGeneralController generalController;
     protected final BrandSpecificController specificController;
 
-    protected final Brand brand;
+    protected Brand brand;
 
     public BrandCommonController() {
-        validator = new BrandValidator(WebConstant.VALIDATOR.MODE.CREATE, internationalizationController);
         generalController = new BrandGeneralController();
         specificController = new BrandSpecificController();
-
+        validator = new BrandValidator(WebConstant.VALIDATOR.MODE.CREATE, languageController, specificController);
         brand = new Brand();
     }
-    
-    
+
+    public Brand getBrand() {
+        return brand;
+    }
+
 }

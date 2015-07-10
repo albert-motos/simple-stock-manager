@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.development.simplestockmanager.common.internationalization;
+package com.development.simplestockmanager.common.language;
 
 import com.development.simplestockmanager.common.CommonConstant;
 import java.util.HashMap;
@@ -15,11 +15,11 @@ import java.util.ResourceBundle;
  *
  * @author foxtrot
  */
-public class InternationalizationController {
+public class LanguageController {
 
     private final String language;
     private Map<String, Locale> supportedLanguages;
-    private ResourceBundle translation;
+    private final ResourceBundle translation;
 
     private void initialization() {
         supportedLanguages = new HashMap();
@@ -28,11 +28,11 @@ public class InternationalizationController {
         supportedLanguages.put("ca_ES", new Locale("ca", "ES"));
     }
 
-    public InternationalizationController(String language) {
+    public LanguageController(String language) {
         this.language = language;
         initialization();
 
-        translation = ResourceBundle.getBundle(CommonConstant.PATH, supportedLanguages.get(language));
+        translation = ResourceBundle.getBundle(CommonConstant.LANGUAGE_PATH, supportedLanguages.get(language));
     }
 
     public String getWord(String keyword) {

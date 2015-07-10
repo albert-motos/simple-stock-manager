@@ -6,7 +6,7 @@
 package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -17,14 +17,14 @@ import javax.faces.application.FacesMessage;
  */
 abstract class BaseValidator {
 
-    protected InternationalizationController controller;
+    protected LanguageController languageController;
     protected long mode;
     protected Object object;
     private List<FacesMessage> messageList;
 
-    public BaseValidator(long mode, InternationalizationController controller) {
+    public BaseValidator(long mode, LanguageController controller) {
         this.mode = mode;
-        this.controller = controller;
+        this.languageController = controller;
     }
 
     public void setObject(Object object) {
@@ -45,11 +45,11 @@ abstract class BaseValidator {
         String summary;
 
         if (!warningList.isEmpty()) {
-            summary = controller.getWord(CommonConstant.MESSAGE.WARNING.SUMMARY);
+            summary = languageController.getWord(CommonConstant.MESSAGE.WARNING.SUMMARY);
             if (warningList.size() == 1) {
-                detail = controller.getWord(CommonConstant.MESSAGE.WARNING.DETAIL.SINGULAR);
+                detail = languageController.getWord(CommonConstant.MESSAGE.WARNING.DETAIL.SINGULAR);
             } else {
-                detail = controller.getWord(CommonConstant.MESSAGE.WARNING.DETAIL.PLURAL);
+                detail = languageController.getWord(CommonConstant.MESSAGE.WARNING.DETAIL.PLURAL);
             }
             
             messageList.add(new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
@@ -60,11 +60,11 @@ abstract class BaseValidator {
         }
 
         if (!errorList.isEmpty()) {
-            summary = controller.getWord(CommonConstant.MESSAGE.ERROR.SUMMARY);
+            summary = languageController.getWord(CommonConstant.MESSAGE.ERROR.SUMMARY);
             if (errorList.size() == 1) {
-                detail = controller.getWord(CommonConstant.MESSAGE.ERROR.DETAIL.SINGULAR);
+                detail = languageController.getWord(CommonConstant.MESSAGE.ERROR.DETAIL.SINGULAR);
             } else {
-                detail = controller.getWord(CommonConstant.MESSAGE.ERROR.DETAIL.PLURAL);
+                detail = languageController.getWord(CommonConstant.MESSAGE.ERROR.DETAIL.PLURAL);
             }
             
             messageList.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));

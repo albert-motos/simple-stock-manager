@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import java.io.Serializable;
 import java.util.Date;
@@ -41,12 +41,14 @@ public class LabelService implements Serializable {
     private final String employee;
     
     private final String nonSelection;
+    private final String auditory;
+    private final String actions;
 
     public LabelService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.LABEL.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
 
         firstname = controller.getWord(CommonConstant.LABEL.FIRSTNAME);
         lastname = controller.getWord(CommonConstant.LABEL.LASTNAME);
@@ -71,6 +73,8 @@ public class LabelService implements Serializable {
         employee = controller.getWord(CommonConstant.LABEL.EMPLOYEE);
         
         nonSelection = controller.getWord(CommonConstant.LABEL.NON_SELECTION);
+        auditory = controller.getWord(CommonConstant.LABEL.AUDITORY);
+        actions = controller.getWord(CommonConstant.LABEL.ACTIONS);
     }
 
     public String getFirstname() {
@@ -159,6 +163,14 @@ public class LabelService implements Serializable {
 
     public String getEmployee() {
         return employee;
+    }
+
+    public String getAuditory() {
+        return auditory;
+    }
+
+    public String getActions() {
+        return actions;
     }
 
 }

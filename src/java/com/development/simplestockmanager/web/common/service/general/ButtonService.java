@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import java.io.Serializable;
 import java.util.Date;
@@ -19,28 +19,34 @@ import javax.faces.bean.SessionScoped;
 public class ButtonService implements Serializable {
 
     private final String add;
-    private final String find;
     private final String cancel;
+    private final String edit;
     private final String finish;
+    private final String search;
 
     public ButtonService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.BUTTON.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
 
         add = controller.getWord(CommonConstant.BUTTON.ADD);
         cancel = controller.getWord(CommonConstant.BUTTON.CANCEL);
+        edit = controller.getWord(CommonConstant.BUTTON.EDIT);
         finish = controller.getWord(CommonConstant.BUTTON.FINISH);
-        find = controller.getWord(CommonConstant.BUTTON.FIND);;
+        search = controller.getWord(CommonConstant.BUTTON.SEARCH);
     }
 
     public String getAdd() {
         return add;
     }
 
-    public String getFind() {
-        return find;
+    public String getEdit() {
+        return edit;
+    }
+
+    public String getSearch() {
+        return search;
     }
 
     public String back(boolean end) {

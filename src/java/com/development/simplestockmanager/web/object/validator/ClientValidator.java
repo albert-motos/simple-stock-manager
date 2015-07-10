@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.business.persistence.Client;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +17,7 @@ public class ClientValidator extends BaseValidator {
 
     private Client client;
 
-    public ClientValidator(long mode, InternationalizationController controller) {
+    public ClientValidator(long mode, LanguageController controller) {
         super(mode, controller);
     }
 
@@ -37,27 +37,27 @@ public class ClientValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (client.getFirstname().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.FIRSTNAME));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.FIRSTNAME));
         }
 
         if (client.getLastname().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.LASTNAME));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.LASTNAME));
         }
 
         if (client.getPhone().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
         }
 
         if (client.getEmail().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
         }
 
         if (client.getBornDate() == null) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.BORN_DATE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.BORN_DATE));
         }
 
         if (client.getSexType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.SEX_TYPE));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.SEX_TYPE));
         }
 
         return fieldsEmptyList;
@@ -69,7 +69,7 @@ public class ClientValidator extends BaseValidator {
 
         if (client.getBornDate() != null) {
             if (client.getBornDate().after(new Date())) {
-                causeList.add(controller.getWord(CommonConstant.MESSAGE.ERROR.BORN_DATE));
+                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.BORN_DATE));
             }
         }
 

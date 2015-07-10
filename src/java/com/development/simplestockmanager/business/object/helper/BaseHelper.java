@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.helper;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -35,7 +36,8 @@ public class BaseHelper {
                 createdDateTo = new Date();
             }
 
-            query = query.concat(" " + type + ".createdDate BETWEEN '" + createdDateFrom + "' AND '" + createdDateTo + "'");
+            query = query.concat(" AND " + type + ".createdDate BETWEEN '" + new Timestamp(createdDateFrom.getTime())
+                    + "' AND '" + new Timestamp(createdDateTo.getTime()) + "'");
         }
 
         if (lastModifiedDateFrom != null || lastModifiedDateTo != null) {
@@ -47,15 +49,16 @@ public class BaseHelper {
                 lastModifiedDateTo = new Date();
             }
 
-            query = query.concat(" " + type + ".lastModifiedDate BETWEEN '" + lastModifiedDateFrom + "' AND '" + lastModifiedDateTo + "'");
+            query = query.concat(" AND " + type + ".lastModifiedDate BETWEEN '" + new Timestamp(lastModifiedDateFrom.getTime())
+                    + "' AND '" + new Timestamp(lastModifiedDateTo.getTime()) + "'");
         }
 
         if (createdUserID != BusinessConstant.IDENTIFIER.INVALID) {
-            query = query.concat(" " + type + ".createdUser.id = " + createdUserID);
+            query = query.concat(" AND " + type + ".createdUser.id = " + createdUserID);
         }
 
         if (lastModifiedUserID != BusinessConstant.IDENTIFIER.INVALID) {
-            query = query.concat(" " + type + ".lastModifiedUser.id = " + lastModifiedUserID);
+            query = query.concat(" AND " + type + ".lastModifiedUser.id = " + lastModifiedUserID);
         }
 
         return query;
