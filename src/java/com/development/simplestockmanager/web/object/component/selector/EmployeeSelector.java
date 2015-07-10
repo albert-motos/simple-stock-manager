@@ -18,12 +18,23 @@ public class EmployeeSelector extends BaseSelector {
     private HashMap<String, Employee> hashMap;
     private final EmployeeSpecificController controller;
 
-    public EmployeeSelector(long mode) {
-        this.mode = mode;
-
+    private EmployeeSelector() {
         controller = new EmployeeSpecificController();
         hashMap = new HashMap<>();
         list = new ArrayList<>();
+    }
+
+    public EmployeeSelector(long mode) {
+        this();
+        this.mode = mode;
+    }
+
+    public EmployeeSelector(long mode, Employee employee) {
+        this();
+        this.mode = mode;
+        String key = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
+        hashMap.put(key, employee);
+        list.add(key);
     }
 
     @Override
