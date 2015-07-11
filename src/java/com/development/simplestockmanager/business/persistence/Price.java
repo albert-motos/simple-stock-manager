@@ -8,8 +8,9 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +20,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -90,6 +93,8 @@ public class Price implements Serializable {
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "price")
+    private List<Item> itemList;
 
     public Price() {
     }
@@ -219,75 +224,33 @@ public class Price implements Serializable {
         this.lastModifiedUser = lastModifiedUser;
     }
 
+    @XmlTransient
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.title);
-        hash = 83 * hash + Objects.hashCode(this.cost);
-        hash = 83 * hash + Objects.hashCode(this.initialAmount);
-        hash = 83 * hash + Objects.hashCode(this.endAmount);
-        hash = 83 * hash + Objects.hashCode(this.initialDate);
-        hash = 83 * hash + Objects.hashCode(this.endDate);
-        hash = 83 * hash + (this.enable ? 1 : 0);
-        hash = 83 * hash + Objects.hashCode(this.createdDate);
-        hash = 83 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 83 * hash + Objects.hashCode(this.createdUser);
-        hash = 83 * hash + Objects.hashCode(this.priceType);
-        hash = 83 * hash + Objects.hashCode(this.stock);
-        hash = 83 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Price)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        Price other = (Price) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final Price other = (Price) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.title, other.title)) {
-            return false;
-        }
-        if (!Objects.equals(this.cost, other.cost)) {
-            return false;
-        }
-        if (!Objects.equals(this.initialAmount, other.initialAmount)) {
-            return false;
-        }
-        if (!Objects.equals(this.endAmount, other.endAmount)) {
-            return false;
-        }
-        if (!Objects.equals(this.initialDate, other.initialDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.endDate, other.endDate)) {
-            return false;
-        }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.priceType, other.priceType)) {
-            return false;
-        }
-        if (!Objects.equals(this.stock, other.stock)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

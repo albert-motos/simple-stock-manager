@@ -8,7 +8,6 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -229,69 +228,22 @@ public class Store implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.name);
-        hash = 83 * hash + Objects.hashCode(this.street);
-        hash = 83 * hash + Objects.hashCode(this.city);
-        hash = 83 * hash + Objects.hashCode(this.state);
-        hash = 83 * hash + Objects.hashCode(this.country);
-        hash = 83 * hash + Objects.hashCode(this.phone);
-        hash = 83 * hash + (this.enable ? 1 : 0);
-        hash = 83 * hash + Objects.hashCode(this.createdDate);
-        hash = 83 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 83 * hash + Objects.hashCode(this.createdUser);
-        hash = 83 * hash + Objects.hashCode(this.employee);
-        hash = 83 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Store)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        Store other = (Store) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final Store other = (Store) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.street, other.street)) {
-            return false;
-        }
-        if (!Objects.equals(this.city, other.city)) {
-            return false;
-        }
-        if (!Objects.equals(this.state, other.state)) {
-            return false;
-        }
-        if (!Objects.equals(this.country, other.country)) {
-            return false;
-        }
-        if (!Objects.equals(this.phone, other.phone)) {
-            return false;
-        }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.employee, other.employee)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

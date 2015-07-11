@@ -5,9 +5,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.BrandCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -25,6 +23,7 @@ public class BrandSearchController extends BrandCommonController implements Sear
     private List<Brand> list;
 
     public BrandSearchController() {
+        super(WebConstant.VALIDATOR.MODE.SEARCH);
         clear();
     }
 

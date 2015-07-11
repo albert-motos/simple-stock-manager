@@ -19,10 +19,10 @@ public class BrandCommonController extends BaseCommonController {
 
     protected Brand brand;
 
-    public BrandCommonController() {
+    public BrandCommonController(long mode) {
         generalController = new BrandGeneralController();
         specificController = new BrandSpecificController();
-        validator = new BrandValidator(WebConstant.VALIDATOR.MODE.CREATE, languageController, specificController);
+        validator = new BrandValidator(mode, languageController, specificController);
         brand = new Brand();
     }
 

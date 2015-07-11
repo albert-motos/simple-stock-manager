@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Invoice;
 import com.development.simplestockmanager.business.persistence.Item;
+import com.development.simplestockmanager.business.persistence.Price;
 import com.development.simplestockmanager.business.persistence.Stock;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.util.List;
@@ -49,6 +50,11 @@ public class ItemJpaController implements Serializable {
                 invoice = em.getReference(invoice.getClass(), invoice.getId());
                 item.setInvoice(invoice);
             }
+            Price price = item.getPrice();
+            if (price != null) {
+                price = em.getReference(price.getClass(), price.getId());
+                item.setPrice(price);
+            }
             Stock stock = item.getStock();
             if (stock != null) {
                 stock = em.getReference(stock.getClass(), stock.getId());
@@ -67,6 +73,10 @@ public class ItemJpaController implements Serializable {
             if (invoice != null) {
                 invoice.getItemList().add(item);
                 invoice = em.merge(invoice);
+            }
+            if (price != null) {
+                price.getItemList().add(item);
+                price = em.merge(price);
             }
             if (stock != null) {
                 stock.getItemList().add(item);
@@ -94,6 +104,8 @@ public class ItemJpaController implements Serializable {
             Employee createdUserNew = item.getCreatedUser();
             Invoice invoiceOld = persistentItem.getInvoice();
             Invoice invoiceNew = item.getInvoice();
+            Price priceOld = persistentItem.getPrice();
+            Price priceNew = item.getPrice();
             Stock stockOld = persistentItem.getStock();
             Stock stockNew = item.getStock();
             Employee lastModifiedUserOld = persistentItem.getLastModifiedUser();
@@ -105,6 +117,10 @@ public class ItemJpaController implements Serializable {
             if (invoiceNew != null) {
                 invoiceNew = em.getReference(invoiceNew.getClass(), invoiceNew.getId());
                 item.setInvoice(invoiceNew);
+            }
+            if (priceNew != null) {
+                priceNew = em.getReference(priceNew.getClass(), priceNew.getId());
+                item.setPrice(priceNew);
             }
             if (stockNew != null) {
                 stockNew = em.getReference(stockNew.getClass(), stockNew.getId());
@@ -130,6 +146,14 @@ public class ItemJpaController implements Serializable {
             if (invoiceNew != null && !invoiceNew.equals(invoiceOld)) {
                 invoiceNew.getItemList().add(item);
                 invoiceNew = em.merge(invoiceNew);
+            }
+            if (priceOld != null && !priceOld.equals(priceNew)) {
+                priceOld.getItemList().remove(item);
+                priceOld = em.merge(priceOld);
+            }
+            if (priceNew != null && !priceNew.equals(priceOld)) {
+                priceNew.getItemList().add(item);
+                priceNew = em.merge(priceNew);
             }
             if (stockOld != null && !stockOld.equals(stockNew)) {
                 stockOld.getItemList().remove(item);
@@ -185,6 +209,11 @@ public class ItemJpaController implements Serializable {
             if (invoice != null) {
                 invoice.getItemList().remove(item);
                 invoice = em.merge(invoice);
+            }
+            Price price = item.getPrice();
+            if (price != null) {
+                price.getItemList().remove(item);
+                price = em.merge(price);
             }
             Stock stock = item.getStock();
             if (stock != null) {

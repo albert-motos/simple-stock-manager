@@ -46,7 +46,7 @@ public class BrandGeneralController {
         return brand;
     }
 
-//    
+    
     public long update(Brand brand) {
         long status;
 
@@ -54,6 +54,7 @@ public class BrandGeneralController {
             controller.edit(brand);
             status = BusinessConstant.UPDATE.SUCCESS;
         } catch (Exception e) {
+            System.out.println(e);
             status = BusinessConstant.UPDATE.FAILURE;
         }
 

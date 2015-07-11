@@ -54,6 +54,7 @@ public class EmployeeGeneralController {
             controller.edit(employee);
             status = BusinessConstant.UPDATE.SUCCESS;
         } catch (Exception e) {
+            System.out.println(e);
             status = BusinessConstant.UPDATE.FAILURE;
         }
 

@@ -8,7 +8,6 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -217,61 +216,22 @@ public class AnalyticsTime implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 73 * hash + Objects.hashCode(this.id);
-        hash = 73 * hash + Objects.hashCode(this.fullTime);
-        hash = 73 * hash + this.minuteTime;
-        hash = 73 * hash + this.hourTime;
-        hash = 73 * hash + this.dayTime;
-        hash = 73 * hash + this.monthTime;
-        hash = 73 * hash + this.yearTime;
-        hash = 73 * hash + Objects.hashCode(this.createdDate);
-        hash = 73 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 73 * hash + Objects.hashCode(this.createdUser);
-        hash = 73 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof AnalyticsTime)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        AnalyticsTime other = (AnalyticsTime) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final AnalyticsTime other = (AnalyticsTime) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.fullTime, other.fullTime)) {
-            return false;
-        }
-        if (this.minuteTime != other.minuteTime) {
-            return false;
-        }
-        if (this.hourTime != other.hourTime) {
-            return false;
-        }
-        if (this.dayTime != other.dayTime) {
-            return false;
-        }
-        if (this.monthTime != other.monthTime) {
-            return false;
-        }
-        if (this.yearTime != other.yearTime) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

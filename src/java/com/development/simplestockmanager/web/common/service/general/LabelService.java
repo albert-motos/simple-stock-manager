@@ -39,10 +39,16 @@ public class LabelService implements Serializable {
     private final String state;
     private final String country;
     private final String employee;
-    
+
     private final String nonSelection;
-    private final String auditory;
-    private final String actions;
+
+    private final String auditoryHeader;
+    private final String auditoryBetween;
+    private final String auditoryAnd;
+    private final String auditoryCreatedUser;
+    private final String auditoryLastModifiedUser;
+    private final String auditoryCreatedDate;
+    private final String auditoryLastModifiedDate;
 
     public LabelService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.LABEL.CONSTRUCTOR);
@@ -71,10 +77,16 @@ public class LabelService implements Serializable {
         state = controller.getWord(CommonConstant.LABEL.STATE);
         country = controller.getWord(CommonConstant.LABEL.COUNTRY);
         employee = controller.getWord(CommonConstant.LABEL.EMPLOYEE);
-        
+
         nonSelection = controller.getWord(CommonConstant.LABEL.NON_SELECTION);
-        auditory = controller.getWord(CommonConstant.LABEL.AUDITORY);
-        actions = controller.getWord(CommonConstant.LABEL.ACTIONS);
+
+        auditoryAnd = controller.getWord(CommonConstant.LABEL.AUDITORY.AND);
+        auditoryBetween = controller.getWord(CommonConstant.LABEL.AUDITORY.BETWEEN);
+        auditoryCreatedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_DATE);
+        auditoryCreatedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_USER);
+        auditoryHeader = controller.getWord(CommonConstant.LABEL.AUDITORY.HEADER);
+        auditoryLastModifiedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_DATE);
+        auditoryLastModifiedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_USER);
     }
 
     public String getFirstname() {
@@ -165,12 +177,31 @@ public class LabelService implements Serializable {
         return employee;
     }
 
-    public String getAuditory() {
-        return auditory;
+    public String getAuditoryHeader() {
+        return auditoryHeader;
     }
 
-    public String getActions() {
-        return actions;
+    public String getAuditoryBetween() {
+        return auditoryBetween;
     }
 
+    public String getAuditoryAnd() {
+        return auditoryAnd;
+    }
+
+    public String getAuditoryCreatedUser() {
+        return auditoryCreatedUser;
+    }
+
+    public String getAuditoryLastModifiedUser() {
+        return auditoryLastModifiedUser;
+    }
+
+    public String getAuditoryCreatedDate() {
+        return auditoryCreatedDate;
+    }
+
+    public String getAuditoryLastModifiedDate() {
+        return auditoryLastModifiedDate;
+    }
 }

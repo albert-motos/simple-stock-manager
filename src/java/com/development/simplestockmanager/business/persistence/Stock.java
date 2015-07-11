@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -212,57 +211,22 @@ public class Stock implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.actualAmount);
-        hash = 97 * hash + Objects.hashCode(this.totalAmount);
-        hash = 97 * hash + (this.enable ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.createdDate);
-        hash = 97 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 97 * hash + Objects.hashCode(this.createdUser);
-        hash = 97 * hash + Objects.hashCode(this.product);
-        hash = 97 * hash + Objects.hashCode(this.store);
-        hash = 97 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Stock)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        Stock other = (Stock) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final Stock other = (Stock) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.actualAmount, other.actualAmount)) {
-            return false;
-        }
-        if (!Objects.equals(this.totalAmount, other.totalAmount)) {
-            return false;
-        }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.product, other.product)) {
-            return false;
-        }
-        if (!Objects.equals(this.store, other.store)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

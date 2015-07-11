@@ -2,6 +2,7 @@ package com.development.simplestockmanager.web.controller.add;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.common.CommonConstant;
+import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.AddController;
 import com.development.simplestockmanager.web.controller.common.BrandCommonController;
 import java.util.Date;
@@ -17,6 +18,10 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean(name = "brandAdd")
 @ViewScoped
 public class BrandAddController extends BrandCommonController implements AddController {
+
+    public BrandAddController() {
+        super(WebConstant.VALIDATOR.MODE.CREATE);
+    }
 
     @Override
     public void add() {

@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -197,61 +196,22 @@ public class Invoice implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.cost);
-        hash = 67 * hash + (this.enable ? 1 : 0);
-        hash = 67 * hash + Objects.hashCode(this.createdDate);
-        hash = 67 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 67 * hash + Objects.hashCode(this.createdUser);
-        hash = 67 * hash + Objects.hashCode(this.analitycsTime);
-        hash = 67 * hash + Objects.hashCode(this.client);
-        hash = 67 * hash + Objects.hashCode(this.employee);
-        hash = 67 * hash + Objects.hashCode(this.paymentType);
-        hash = 67 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Invoice)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        Invoice other = (Invoice) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final Invoice other = (Invoice) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.cost, other.cost)) {
-            return false;
-        }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.analitycsTime, other.analitycsTime)) {
-            return false;
-        }
-        if (!Objects.equals(this.client, other.client)) {
-            return false;
-        }
-        if (!Objects.equals(this.employee, other.employee)) {
-            return false;
-        }
-        if (!Objects.equals(this.paymentType, other.paymentType)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

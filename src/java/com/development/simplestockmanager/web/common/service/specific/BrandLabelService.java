@@ -20,6 +20,7 @@ public class BrandLabelService implements Serializable {
     private final String attributes;
     private final String visibility;
     private final String enable;
+    private final String viewer;
 
     public BrandLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
@@ -28,6 +29,7 @@ public class BrandLabelService implements Serializable {
         attributes = controller.getWord(CommonConstant.HEADER.BRAND.ATTRIBUTES);
         visibility = controller.getWord(CommonConstant.HEADER.BRAND.VISIBILITY);
         enable = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        viewer = controller.getWord(CommonConstant.HEADER.BRAND.VIEWER);
     }
 
     public String getAttributes() {
@@ -40,6 +42,10 @@ public class BrandLabelService implements Serializable {
 
     public String getEnable() {
         return enable;
+    }
+
+    public String getViewer() {
+        return viewer;
     }
 
 }

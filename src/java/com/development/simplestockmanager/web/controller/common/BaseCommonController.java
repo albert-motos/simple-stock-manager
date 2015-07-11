@@ -39,7 +39,7 @@ public class BaseCommonController extends SessionController implements Serializa
         user = new AuthenticationService().getCurrentEmployee();
         languageController = new LanguageController(user.getLanguageType().getCode());
         action = false;
-        System.out.println("#erre");
+
         EmployeeSpecificController employeeSpecificController = new EmployeeSpecificController();
         createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, employeeSpecificController);
         lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, employeeSpecificController);

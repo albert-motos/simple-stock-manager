@@ -40,14 +40,14 @@
                             </p:row>
                         </p:panelGrid>
                     </p:tab>
-                    <p:tab title="#{label.auditory}">
+                    <p:tab title="#{label.auditoryHeader}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column>
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="Creation field: between " />
+                                                <p:outputLabel value="#{label.auditoryCreatedDate}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -56,10 +56,13 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
+                                                <p:outputLabel value="#{label.auditoryBetween}" />
+                                            </p:column>
+                                            <p:column>
                                                 <p:calendar value="#{brandSearch.createdDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
-                                                <p:outputLabel value="and" />
+                                                <p:outputLabel value="#{label.auditoryAnd}" />
                                             </p:column>
                                             <p:column >
                                                 <p:calendar value="#{brandSearch.createdDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
@@ -74,7 +77,7 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="Modification field: between " />
+                                                <p:outputLabel value="#{label.auditoryLastModifiedDate}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -83,10 +86,13 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
+                                                <p:outputLabel value="#{label.auditoryBetween}" />
+                                            </p:column>
+                                            <p:column>
                                                 <p:calendar value="#{brandSearch.lastModifiedDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
-                                                <p:outputLabel value="and" />
+                                                <p:outputLabel value="#{label.auditoryAnd}" />
                                             </p:column>
                                             <p:column >
                                                 <p:calendar value="#{brandSearch.lastModifiedDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
@@ -103,7 +109,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.employee}" />
+                                                <p:outputLabel value="#{label.auditoryCreatedUser}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{brandSearch.createdUser.browser}" style="width: 100%" />
@@ -127,13 +133,13 @@
                                     </p:panelGrid>
                                 </p:column>
                             </p:row>
-                            
+
                             <p:row>
                                 <p:column style="width: 50%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.employee}" />
+                                                <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{brandSearch.lastModifiedUser.browser}" style="width: 100%" />
@@ -163,22 +169,30 @@
                 <p:commandButton value="#{button.search}" actionListener="#{brandSearch.search()}" style="width: 100px; margin: 5px" update="list" />
             </p:panel>
 
-            <p:dataTable id="list" var="brand" value="#{brandSearch.list}" style="width: 100%" rows="10" paginator="true"
-                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="10,15,20">
+            <p:dataTable id="list" var="brand" value="#{brandSearch.list}" style="width: 100%" rows="10" paginator="true" rowsPerPageTemplate="10,15,20"
+                         paginatorTemplate="#{list.counter} #{brandSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                         
                 <f:facet name="header">
-                    Brand list
+                    #{list.brand}
                 </f:facet>
 
-                <p:column headerText="#{label.actions}" style="width: 200px">
-                    <p:commandButton value="asd" actionListener="#{brandSearch.initView(brand)}" style="width: 100px" update="@form" />
-                    <h:outputText value="#{brand.name}" />
+                <p:column headerText="#{list.actions}" style="width: 85px; text-align: center">
+                    <p:commandButton icon="ui-icon-search" actionListener="#{brandSearch.initView(brand)}"  update="@form" oncomplete="PF('dlg').show();" />
+                    <p:commandButton icon="ui-icon-pencil" actionListener="#{brandSearch.initEdit(brand)}"  update="@form" style="margin-left: 5px"/>
                 </p:column>
 
-                <p:column headerText="#{label.name}" sortBy="#{brand.name}">
+                <p:column headerText="#{list.status}" style="width: 100px; text-align: center">
+                    <h:outputText value="#{list.getStatus(brand.enable)}" />
+                </p:column>
+
+                <p:column headerText="#{list.name}" sortBy="#{brand.name}">
                     <h:outputText value="#{brand.name}" />
                 </p:column>
             </p:dataTable>
+
+            <p:dialog header="#{brandLabel.viewer}" widgetVar="dlg" draggable="false" resizable="false">
+                <h:outputText value="#{brandSearch.brand}" />
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

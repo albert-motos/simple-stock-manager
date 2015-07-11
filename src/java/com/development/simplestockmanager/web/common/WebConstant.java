@@ -12,6 +12,7 @@ public interface WebConstant {
 
             public static long CREATE = 0;
             public static long EDIT = 1;
+            public static long SEARCH = 2;
         }
     }
     
