@@ -8,7 +8,6 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -197,53 +196,22 @@ public class SexType implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.type);
-        hash = 31 * hash + (this.enable ? 1 : 0);
-        hash = 31 * hash + Objects.hashCode(this.createdDate);
-        hash = 31 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 31 * hash + Objects.hashCode(this.createdUser);
-        hash = 31 * hash + Objects.hashCode(this.languageType);
-        hash = 31 * hash + Objects.hashCode(this.referencedType);
-        hash = 31 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SexType)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        SexType other = (SexType) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final SexType other = (SexType) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.type, other.type)) {
-            return false;
-        }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.languageType, other.languageType)) {
-            return false;
-        }
-        if (!Objects.equals(this.referencedType, other.referencedType)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

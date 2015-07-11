@@ -8,7 +8,6 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -217,65 +216,22 @@ public class Client implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.firstname);
-        hash = 29 * hash + Objects.hashCode(this.lastname);
-        hash = 29 * hash + Objects.hashCode(this.bornDate);
-        hash = 29 * hash + Objects.hashCode(this.phone);
-        hash = 29 * hash + Objects.hashCode(this.email);
-        hash = 29 * hash + (this.enable ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.createdDate);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 29 * hash + Objects.hashCode(this.createdUser);
-        hash = 29 * hash + Objects.hashCode(this.sexType);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Client)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        Client other = (Client) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final Client other = (Client) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.firstname, other.firstname)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastname, other.lastname)) {
-            return false;
-        }
-        if (!Objects.equals(this.bornDate, other.bornDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.phone, other.phone)) {
-            return false;
-        }
-        if (!Objects.equals(this.email, other.email)) {
-            return false;
-        }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.sexType, other.sexType)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

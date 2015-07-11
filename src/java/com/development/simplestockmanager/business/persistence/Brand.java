@@ -81,12 +81,11 @@ public class Brand implements Serializable {
         this.id = id;
     }
 
-    public Brand(Long id, String name, boolean enable, Date createdDate, Date lastModifiedDate) {
-        this.id = id;
-        this.name = name;
-        this.enable = enable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
+    public Brand(Brand brand) {
+        this.description = brand.description;
+        this.enable = brand.enable;
+        this.id = brand.id;
+        this.name = brand.name;
     }
 
     public Long getId() {
@@ -164,15 +163,11 @@ public class Brand implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 11 * hash + Objects.hashCode(this.id);
-        hash = 11 * hash + Objects.hashCode(this.name);
-        hash = 11 * hash + Objects.hashCode(this.description);
-        hash = 11 * hash + (this.enable ? 1 : 0);
-        hash = 11 * hash + Objects.hashCode(this.createdDate);
-        hash = 11 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 11 * hash + Objects.hashCode(this.createdUser);
-        hash = 11 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.description);
+        hash = 89 * hash + (this.enable ? 1 : 0);
         return hash;
     }
 
@@ -194,19 +189,7 @@ public class Brand implements Serializable {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return this.enable == other.enable;
     }
 
     @Override

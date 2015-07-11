@@ -1,56 +1,56 @@
-package com.development.simplestockmanager.web.view.search;
+package com.development.simplestockmanager.web.controller.common;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.AuthenticationService;
+import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.object.component.selector.EmployeeSelector;
 import java.io.Serializable;
 import java.util.Date;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
 
 /**
- * Base class for search view controller
+ * Base class for web controller
  *
  * @author foxtrot
  */
-abstract class BaseSearchView implements Serializable {
+public class BaseCommonController extends SessionController implements Serializable {
 
-    protected LanguageController internationalizationController;
+    protected LanguageController languageController;
     protected Employee user;
+    
+    protected boolean action;
+    
+    protected FacesMessage.Severity severity;
+    protected String summary;
+    protected String detail;
     
     protected Date createdDateFrom;
     protected Date lastModifiedDateFrom;
     protected Date createdDateTo;
     protected Date lastModifiedDateTo;
     protected EmployeeSelector createdUser;
-    protected EmployeeSelector lastModifiedUser;    
-    
-    public BaseSearchView() {
+    protected EmployeeSelector lastModifiedUser;
+
+    public BaseCommonController() {
         user = new AuthenticationService().getCurrentEmployee();
-        internationalizationController = new LanguageController(user.getLanguageType().getCode());
-        
-        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, null);
-        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, null);
+        languageController = new LanguageController(user.getLanguageType().getCode());
+        action = false;
+
+        EmployeeSpecificController employeeSpecificController = new EmployeeSpecificController();
+        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, employeeSpecificController);
+        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL, employeeSpecificController);
+    }
+    
+    public void back() {
+        new NavigationService().redirect(BusinessConstant.URL.INDEX);
     }
 
-    /**
-     * Main function of find view for update list with browser fields
-     */
-    abstract public void find();
-
-    /**
-     * Main function of find view for clear browser
-     */
-    abstract public void clear();
-    
-    protected void sendObjectToSession(String key, Object value) {
-        FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        HttpSession session = request.getSession();
-        session.setAttribute(key, value);
+    public boolean isAction() {
+        return action;
     }
 
     public Date getCreatedDateFrom() {
@@ -92,4 +92,5 @@ abstract class BaseSearchView implements Serializable {
     public EmployeeSelector getLastModifiedUser() {
         return lastModifiedUser;
     }
+
 }

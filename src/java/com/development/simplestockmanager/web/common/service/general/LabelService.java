@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import java.io.Serializable;
 import java.util.Date;
@@ -39,14 +39,22 @@ public class LabelService implements Serializable {
     private final String state;
     private final String country;
     private final String employee;
-    
+
     private final String nonSelection;
+
+    private final String auditoryHeader;
+    private final String auditoryBetween;
+    private final String auditoryAnd;
+    private final String auditoryCreatedUser;
+    private final String auditoryLastModifiedUser;
+    private final String auditoryCreatedDate;
+    private final String auditoryLastModifiedDate;
 
     public LabelService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.LABEL.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
 
         firstname = controller.getWord(CommonConstant.LABEL.FIRSTNAME);
         lastname = controller.getWord(CommonConstant.LABEL.LASTNAME);
@@ -69,8 +77,16 @@ public class LabelService implements Serializable {
         state = controller.getWord(CommonConstant.LABEL.STATE);
         country = controller.getWord(CommonConstant.LABEL.COUNTRY);
         employee = controller.getWord(CommonConstant.LABEL.EMPLOYEE);
-        
+
         nonSelection = controller.getWord(CommonConstant.LABEL.NON_SELECTION);
+
+        auditoryAnd = controller.getWord(CommonConstant.LABEL.AUDITORY.AND);
+        auditoryBetween = controller.getWord(CommonConstant.LABEL.AUDITORY.BETWEEN);
+        auditoryCreatedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_DATE);
+        auditoryCreatedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_USER);
+        auditoryHeader = controller.getWord(CommonConstant.LABEL.AUDITORY.HEADER);
+        auditoryLastModifiedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_DATE);
+        auditoryLastModifiedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_USER);
     }
 
     public String getFirstname() {
@@ -161,4 +177,31 @@ public class LabelService implements Serializable {
         return employee;
     }
 
+    public String getAuditoryHeader() {
+        return auditoryHeader;
+    }
+
+    public String getAuditoryBetween() {
+        return auditoryBetween;
+    }
+
+    public String getAuditoryAnd() {
+        return auditoryAnd;
+    }
+
+    public String getAuditoryCreatedUser() {
+        return auditoryCreatedUser;
+    }
+
+    public String getAuditoryLastModifiedUser() {
+        return auditoryLastModifiedUser;
+    }
+
+    public String getAuditoryCreatedDate() {
+        return auditoryCreatedDate;
+    }
+
+    public String getAuditoryLastModifiedDate() {
+        return auditoryLastModifiedDate;
+    }
 }

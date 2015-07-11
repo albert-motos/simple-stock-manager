@@ -5,7 +5,10 @@ import com.development.simplestockmanager.business.object.nullpackage.PriceNull;
 import com.development.simplestockmanager.business.object.helper.PriceHelper;
 import com.development.simplestockmanager.business.persistence.Price;
 import com.development.simplestockmanager.business.persistence.controller.PriceJpaController;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * General controller class for Price object
@@ -64,7 +67,7 @@ public class PriceGeneralController {
         try {
             controller.destroy(price.getId());
             status = BusinessConstant.DELETE.SUCCESS;
-        } catch (NonexistentEntityException e) {
+        } catch (NonexistentEntityException | IllegalOrphanException e) {
             status = BusinessConstant.DELETE.FAILURE;
         }
 

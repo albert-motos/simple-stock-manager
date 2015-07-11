@@ -8,7 +8,6 @@ package com.development.simplestockmanager.business.persistence;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -184,61 +183,22 @@ public class Record implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this.amount);
-        hash = 29 * hash + Objects.hashCode(this.note);
-        hash = 29 * hash + (this.enable ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.createdDate);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedDate);
-        hash = 29 * hash + Objects.hashCode(this.createdUser);
-        hash = 29 * hash + Objects.hashCode(this.analitycsTime);
-        hash = 29 * hash + Objects.hashCode(this.employee);
-        hash = 29 * hash + Objects.hashCode(this.stock);
-        hash = 29 * hash + Objects.hashCode(this.lastModifiedUser);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Record)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        Record other = (Record) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
-        final Record other = (Record) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.amount, other.amount)) {
-            return false;
-        }
-        if (!Objects.equals(this.note, other.note)) {
-            return false;
-        }
-        if (this.enable != other.enable) {
-            return false;
-        }
-        if (!Objects.equals(this.createdDate, other.createdDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastModifiedDate, other.lastModifiedDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.createdUser, other.createdUser)) {
-            return false;
-        }
-        if (!Objects.equals(this.analitycsTime, other.analitycsTime)) {
-            return false;
-        }
-        if (!Objects.equals(this.employee, other.employee)) {
-            return false;
-        }
-        if (!Objects.equals(this.stock, other.stock)) {
-            return false;
-        }
-        return Objects.equals(this.lastModifiedUser, other.lastModifiedUser);
+        return true;
     }
 
     @Override

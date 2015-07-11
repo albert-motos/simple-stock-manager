@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.business.persistence.Provider;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class ProviderValidator extends BaseValidator {
 
     private Provider provider;
 
-    public ProviderValidator(long mode, InternationalizationController controller) {
+    public ProviderValidator(long mode, LanguageController controller) {
         super(mode, controller);
     }
 
@@ -35,19 +35,19 @@ public class ProviderValidator extends BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (provider.getName().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.NAME));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.NAME));
         }
 
         if (provider.getIdentifier().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.IDENTIFIER));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.IDENTIFIER));
         }
 
         if (provider.getPhone().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
         }
 
         if (provider.getEmail().isEmpty()) {
-            fieldsEmptyList.add(controller.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
         }
 
         return fieldsEmptyList;

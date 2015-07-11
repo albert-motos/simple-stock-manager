@@ -2,7 +2,7 @@ package com.development.simplestockmanager.web.common.service.general;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import java.io.Serializable;
 import java.util.Date;
@@ -42,7 +42,7 @@ public class MenuService implements Serializable {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.MENU.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        InternationalizationController controller = new InternationalizationController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
 
         entity = controller.getWord(CommonConstant.MENU.ENTITY.TEXT);
         brand = controller.getWord(CommonConstant.MENU.ENTITY.BRAND.TEXT);
