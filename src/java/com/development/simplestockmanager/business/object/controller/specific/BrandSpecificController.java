@@ -3,6 +3,7 @@ package com.development.simplestockmanager.business.object.controller.specific;
 import com.development.simplestockmanager.business.object.helper.BrandHelper;
 import com.development.simplestockmanager.business.object.nullpackage.BrandNull;
 import com.development.simplestockmanager.business.persistence.Brand;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,12 +22,12 @@ public class BrandSpecificController {
         helper = new BrandHelper();
     }
 
-    public List<Brand> findAllForBrowser(Brand browser, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
+    public List<Brand> findAllForBrowser(Brand browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
             long createdUserID, long lastModifiedUserID) {
         List<Brand> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindForBrowserQuery(browser.getName(), browser.getDescription(), createdDateFrom, createdDateTo, lastModifiedDateFrom,
+            Query query = helper.getFindForBrowserQuery(browser.getName(), browser.getDescription(), status, createdDateFrom, createdDateTo, lastModifiedDateFrom,
                     lastModifiedDateTo, createdUserID, lastModifiedUserID);
             for (Object object : query.getResultList()) {
                 list.add((Brand) object);

@@ -15,7 +15,7 @@ public interface WebConstant {
             public static long SEARCH = 2;
         }
     }
-    
+
     public interface SELECTOR {
 
         public interface MODE {
@@ -91,5 +91,12 @@ public interface WebConstant {
                 public static String CONSTRUCTOR = CLASS + " -> constructor function";
             }
         }
+    }
+
+    public interface STATUS {
+
+        public static long INDETERMINATE = 0;
+        public static long HIDDEN = 1;
+        public static long VISIBLE = 2;
     }
 }

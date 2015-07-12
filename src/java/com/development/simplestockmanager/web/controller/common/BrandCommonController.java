@@ -3,7 +3,6 @@ package com.development.simplestockmanager.web.controller.common;
 import com.development.simplestockmanager.business.object.controller.general.BrandGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
-import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.object.validator.BrandValidator;
 
 /**
