@@ -86,6 +86,7 @@ public interface CommonConstant {
         public static String EMPLOYEE = TEXT + ".employee";
 
         public static String NON_SELECTION = TEXT + ".nonselection";
+        public static String STATUS = TEXT + ".status";
 
         public interface AUDITORY {
 
@@ -202,6 +203,7 @@ public interface CommonConstant {
         public static String EDIT = TEXT + ".edit";
         public static String FINISH = TEXT + ".finish";
         public static String SEARCH = TEXT + ".search";
+        public static String CLEAR = TEXT + ".clear";
     }
 
     public interface MESSAGE {

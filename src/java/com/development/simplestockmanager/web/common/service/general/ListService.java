@@ -97,5 +97,13 @@ public class ListService implements Serializable {
     public String getCounter() {
         return counter;
     }
+
+    public String getStatusHidden() {
+        return statusHidden;
+    }
+
+    public String getStatusVisible() {
+        return statusVisible;
+    }
     
 }

@@ -42,6 +42,7 @@ public class LabelService implements Serializable {
 
     private final String nonSelection;
 
+    private final String status;
     private final String auditoryHeader;
     private final String auditoryBetween;
     private final String auditoryAnd;
@@ -79,6 +80,7 @@ public class LabelService implements Serializable {
         employee = controller.getWord(CommonConstant.LABEL.EMPLOYEE);
 
         nonSelection = controller.getWord(CommonConstant.LABEL.NON_SELECTION);
+        status = controller.getWord(CommonConstant.LABEL.STATUS);
 
         auditoryAnd = controller.getWord(CommonConstant.LABEL.AUDITORY.AND);
         auditoryBetween = controller.getWord(CommonConstant.LABEL.AUDITORY.BETWEEN);
@@ -203,5 +205,21 @@ public class LabelService implements Serializable {
 
     public String getAuditoryLastModifiedDate() {
         return auditoryLastModifiedDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    
+    public long getStatusIndeterminate(){
+        return WebConstant.STATUS.INDETERMINATE;
+    }
+    
+    public long getStatusHidden(){
+        return WebConstant.STATUS.HIDDEN;
+    }
+    
+    public long getStatusVisible(){
+        return WebConstant.STATUS.VISIBLE;
     }
 }

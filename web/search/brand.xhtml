@@ -39,6 +39,26 @@
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{label.status}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu value="#{brandSearch.status}" style="width: 100px">
+                                                    <f:selectItem itemLabel="" itemValue="#{label.statusIndeterminate}" />
+                                                    <f:selectItem itemLabel="#{list.statusVisible}" itemValue="#{label.statusVisible}" />
+                                                    <f:selectItem itemLabel="#{list.statusHidden}" itemValue="#{label.statusHidden}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
                     </p:tab>
                     <p:tab title="#{label.auditoryHeader}">
                         <p:panelGrid style="width: 100%">
@@ -167,11 +187,12 @@
                     </p:tab>
                 </p:tabView>
                 <p:commandButton value="#{button.search}" actionListener="#{brandSearch.search()}" style="width: 100px; margin: 5px" update="list" />
+                <p:commandButton value="#{button.clear}" actionListener="#{brandSearch.clear()}" style="width: 100px; margin: 5px" update="@form" />
             </p:panel>
 
             <p:dataTable id="list" var="brand" value="#{brandSearch.list}" style="width: 100%" rows="10" paginator="true" rowsPerPageTemplate="10,15,20"
                          paginatorTemplate="#{list.counter} #{brandSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
-                         
+
                 <f:facet name="header">
                     #{list.brand}
                 </f:facet>
@@ -190,8 +211,93 @@
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="#{brandLabel.viewer}" widgetVar="dlg" draggable="false" resizable="false">
-                <h:outputText value="#{brandSearch.brand}" />
+            <p:dialog header="#{brandLabel.viewer}" widgetVar="dlg" draggable="false" resizable="false" width="600">
+                <p:panel header="#{brandLabel.attributes}" >
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{label.name}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{brandSearch.brand.name}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{label.description}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{brandSearch.brand.description}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel header="#{brandLabel.visibility}">
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{label.status}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{list.getStatus(brandSearch.brand.enable)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel header="#{label.auditoryHeader}" >
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{label.auditoryCreatedUser}" />
+                                        </p:column>
+                                        <p:column styleClass="info-only">
+                                            <p:outputLabel value="#{employeeLabel.getDisplayableInfo(brandSearch.brand.createdUser)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{label.auditoryCreatedDate}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{brandSearch.brand.createdDate}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
+                                        </p:column>
+                                        <p:column styleClass="info-only">
+                                            <p:outputLabel value="#{employeeLabel.getDisplayableInfo(brandSearch.brand.lastModifiedUser)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{label.auditoryLastModifiedDate}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{brandSearch.brand.lastModifiedDate}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
             </p:dialog>
         </h:form>
     </ui:define>

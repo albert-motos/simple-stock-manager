@@ -23,6 +23,7 @@ public class ButtonService implements Serializable {
     private final String edit;
     private final String finish;
     private final String search;
+    private final String clear;
 
     public ButtonService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.BUTTON.CONSTRUCTOR);
@@ -35,6 +36,7 @@ public class ButtonService implements Serializable {
         edit = controller.getWord(CommonConstant.BUTTON.EDIT);
         finish = controller.getWord(CommonConstant.BUTTON.FINISH);
         search = controller.getWord(CommonConstant.BUTTON.SEARCH);
+        clear = controller.getWord(CommonConstant.BUTTON.CLEAR);
     }
 
     public String getAdd() {
@@ -52,4 +54,9 @@ public class ButtonService implements Serializable {
     public String back(boolean end) {
         return (end ? finish : cancel);
     }
+
+    public String getClear() {
+        return clear;
+    }
+    
 }
