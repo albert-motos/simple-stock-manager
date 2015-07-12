@@ -15,9 +15,9 @@ public class ProductValidator extends BaseValidator {
     private final ProductSpecificController specificController;
     private Product product;
 
-    public ProductValidator(long mode, LanguageController controller) {
+    public ProductValidator(long mode, LanguageController controller, ProductSpecificController specificController) {
         super(mode, controller);
-        specificController = new ProductSpecificController();
+        this.specificController = specificController;
     }
 
     @Override

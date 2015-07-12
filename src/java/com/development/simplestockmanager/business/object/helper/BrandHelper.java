@@ -44,4 +44,8 @@ public class BrandHelper extends BaseHelper {
         
         return entityManager.createQuery(query);
     }
+    
+    public Query getFindAll() {
+        return entityManager.createNamedQuery("Brand.findAll");
+    }
 }

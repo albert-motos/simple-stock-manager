@@ -1,6 +1,15 @@
 
 import com.development.simplestockmanager.business.object.controller.general.BrandGeneralController;
+import com.development.simplestockmanager.business.object.controller.general.EmployeeGeneralController;
+import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
 import com.development.simplestockmanager.business.persistence.Brand;
+import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.Product;
+import com.development.simplestockmanager.common.internationalization.InternationalizationController;
+import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.object.validator.BrandValidator;
+import com.development.simplestockmanager.web.object.validator.EmployeeValidator;
+import com.development.simplestockmanager.web.object.validator.ProductValidator;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,6 +30,16 @@ import java.util.logging.Logger;
 public class TEST {
 
     public static void main(String[] args) {
+        InternationalizationController ic = new InternationalizationController("es_ES");
+        BrandGeneralController controller = new BrandGeneralController();
+        BrandValidator validator = new BrandValidator(WebConstant.VALIDATOR.MODE.EDIT, ic);
+        Brand brand = controller.read(new Brand((long) 1));
+        brand.setId((long) 100);
+        validator.setObject(brand);
+        System.out.println(validator.validate());
+        
+        
+        
 //        Brand b = new Brand("asd", true);
 //        
 //        BrandGeneralController controller = new BrandGeneralController();

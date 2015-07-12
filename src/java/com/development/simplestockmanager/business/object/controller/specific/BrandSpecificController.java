@@ -3,7 +3,6 @@ package com.development.simplestockmanager.business.object.controller.specific;
 import com.development.simplestockmanager.business.object.helper.BrandHelper;
 import com.development.simplestockmanager.business.object.nullpackage.BrandNull;
 import com.development.simplestockmanager.business.persistence.Brand;
-import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +56,21 @@ public class BrandSpecificController {
 
         try {
             Query query = helper.getFindByNameForSelectorQuery(name);
+            for (Object object : query.getResultList()) {
+                list.add((Brand) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
+    public List<Brand> fillSelector() {
+        List<Brand> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindAll();
             for (Object object : query.getResultList()) {
                 list.add((Brand) object);
             }

@@ -20,4 +20,8 @@ public class ProviderHelper extends BaseHelper {
         return query;
     }
     
+    public Query getFindAll() {
+        return entityManager.createNamedQuery("Provider.findAll");
+    }
+    
 }
