@@ -20,6 +20,12 @@
     <class>com.development.simplestockmanager.business.persistence.SexType</class>
     <class>com.development.simplestockmanager.business.persistence.Price</class>
     <class>com.development.simplestockmanager.business.persistence.Store</class>
+    <class>com.development.simplestockmanager.business.persistence.PriceTypeTranslation</class>
+    <class>com.development.simplestockmanager.business.persistence.ProductTypeTranslation</class>
+    <class>com.development.simplestockmanager.business.persistence.Language</class>
+    <class>com.development.simplestockmanager.business.persistence.SexTypeTranslation</class>
+    <class>com.development.simplestockmanager.business.persistence.PaymentTypeTranslation</class>
+    <class>com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.16.8.129:3306/STOCK?zeroDateTimeBehavior=convertToNull"/>

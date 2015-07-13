@@ -11,13 +11,13 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.business.persistence.LanguageType;
-import com.development.simplestockmanager.business.persistence.PaymentType;
 import com.development.simplestockmanager.business.persistence.Invoice;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import com.development.simplestockmanager.business.persistence.PaymentType;
 import java.util.ArrayList;
 import java.util.List;
+import com.development.simplestockmanager.business.persistence.PaymentTypeTranslation;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -40,8 +40,8 @@ public class PaymentTypeJpaController implements Serializable {
         if (paymentType.getInvoiceList() == null) {
             paymentType.setInvoiceList(new ArrayList<Invoice>());
         }
-        if (paymentType.getPaymentTypeList() == null) {
-            paymentType.setPaymentTypeList(new ArrayList<PaymentType>());
+        if (paymentType.getPaymentTypeTranslationList() == null) {
+            paymentType.setPaymentTypeTranslationList(new ArrayList<PaymentTypeTranslation>());
         }
         EntityManager em = null;
         try {
@@ -51,16 +51,6 @@ public class PaymentTypeJpaController implements Serializable {
             if (createdUser != null) {
                 createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
                 paymentType.setCreatedUser(createdUser);
-            }
-            LanguageType languageType = paymentType.getLanguageType();
-            if (languageType != null) {
-                languageType = em.getReference(languageType.getClass(), languageType.getId());
-                paymentType.setLanguageType(languageType);
-            }
-            PaymentType referencedType = paymentType.getReferencedType();
-            if (referencedType != null) {
-                referencedType = em.getReference(referencedType.getClass(), referencedType.getId());
-                paymentType.setReferencedType(referencedType);
             }
             Employee lastModifiedUser = paymentType.getLastModifiedUser();
             if (lastModifiedUser != null) {
@@ -73,24 +63,16 @@ public class PaymentTypeJpaController implements Serializable {
                 attachedInvoiceList.add(invoiceListInvoiceToAttach);
             }
             paymentType.setInvoiceList(attachedInvoiceList);
-            List<PaymentType> attachedPaymentTypeList = new ArrayList<PaymentType>();
-            for (PaymentType paymentTypeListPaymentTypeToAttach : paymentType.getPaymentTypeList()) {
-                paymentTypeListPaymentTypeToAttach = em.getReference(paymentTypeListPaymentTypeToAttach.getClass(), paymentTypeListPaymentTypeToAttach.getId());
-                attachedPaymentTypeList.add(paymentTypeListPaymentTypeToAttach);
+            List<PaymentTypeTranslation> attachedPaymentTypeTranslationList = new ArrayList<PaymentTypeTranslation>();
+            for (PaymentTypeTranslation paymentTypeTranslationListPaymentTypeTranslationToAttach : paymentType.getPaymentTypeTranslationList()) {
+                paymentTypeTranslationListPaymentTypeTranslationToAttach = em.getReference(paymentTypeTranslationListPaymentTypeTranslationToAttach.getClass(), paymentTypeTranslationListPaymentTypeTranslationToAttach.getId());
+                attachedPaymentTypeTranslationList.add(paymentTypeTranslationListPaymentTypeTranslationToAttach);
             }
-            paymentType.setPaymentTypeList(attachedPaymentTypeList);
+            paymentType.setPaymentTypeTranslationList(attachedPaymentTypeTranslationList);
             em.persist(paymentType);
             if (createdUser != null) {
                 createdUser.getPaymentTypeList().add(paymentType);
                 createdUser = em.merge(createdUser);
-            }
-            if (languageType != null) {
-                languageType.getPaymentTypeList().add(paymentType);
-                languageType = em.merge(languageType);
-            }
-            if (referencedType != null) {
-                referencedType.getPaymentTypeList().add(paymentType);
-                referencedType = em.merge(referencedType);
             }
             if (lastModifiedUser != null) {
                 lastModifiedUser.getPaymentTypeList().add(paymentType);
@@ -105,13 +87,13 @@ public class PaymentTypeJpaController implements Serializable {
                     oldPaymentTypeOfInvoiceListInvoice = em.merge(oldPaymentTypeOfInvoiceListInvoice);
                 }
             }
-            for (PaymentType paymentTypeListPaymentType : paymentType.getPaymentTypeList()) {
-                PaymentType oldReferencedTypeOfPaymentTypeListPaymentType = paymentTypeListPaymentType.getReferencedType();
-                paymentTypeListPaymentType.setReferencedType(paymentType);
-                paymentTypeListPaymentType = em.merge(paymentTypeListPaymentType);
-                if (oldReferencedTypeOfPaymentTypeListPaymentType != null) {
-                    oldReferencedTypeOfPaymentTypeListPaymentType.getPaymentTypeList().remove(paymentTypeListPaymentType);
-                    oldReferencedTypeOfPaymentTypeListPaymentType = em.merge(oldReferencedTypeOfPaymentTypeListPaymentType);
+            for (PaymentTypeTranslation paymentTypeTranslationListPaymentTypeTranslation : paymentType.getPaymentTypeTranslationList()) {
+                PaymentType oldReferenceOfPaymentTypeTranslationListPaymentTypeTranslation = paymentTypeTranslationListPaymentTypeTranslation.getReference();
+                paymentTypeTranslationListPaymentTypeTranslation.setReference(paymentType);
+                paymentTypeTranslationListPaymentTypeTranslation = em.merge(paymentTypeTranslationListPaymentTypeTranslation);
+                if (oldReferenceOfPaymentTypeTranslationListPaymentTypeTranslation != null) {
+                    oldReferenceOfPaymentTypeTranslationListPaymentTypeTranslation.getPaymentTypeTranslationList().remove(paymentTypeTranslationListPaymentTypeTranslation);
+                    oldReferenceOfPaymentTypeTranslationListPaymentTypeTranslation = em.merge(oldReferenceOfPaymentTypeTranslationListPaymentTypeTranslation);
                 }
             }
             em.getTransaction().commit();
@@ -130,16 +112,12 @@ public class PaymentTypeJpaController implements Serializable {
             PaymentType persistentPaymentType = em.find(PaymentType.class, paymentType.getId());
             Employee createdUserOld = persistentPaymentType.getCreatedUser();
             Employee createdUserNew = paymentType.getCreatedUser();
-            LanguageType languageTypeOld = persistentPaymentType.getLanguageType();
-            LanguageType languageTypeNew = paymentType.getLanguageType();
-            PaymentType referencedTypeOld = persistentPaymentType.getReferencedType();
-            PaymentType referencedTypeNew = paymentType.getReferencedType();
             Employee lastModifiedUserOld = persistentPaymentType.getLastModifiedUser();
             Employee lastModifiedUserNew = paymentType.getLastModifiedUser();
             List<Invoice> invoiceListOld = persistentPaymentType.getInvoiceList();
             List<Invoice> invoiceListNew = paymentType.getInvoiceList();
-            List<PaymentType> paymentTypeListOld = persistentPaymentType.getPaymentTypeList();
-            List<PaymentType> paymentTypeListNew = paymentType.getPaymentTypeList();
+            List<PaymentTypeTranslation> paymentTypeTranslationListOld = persistentPaymentType.getPaymentTypeTranslationList();
+            List<PaymentTypeTranslation> paymentTypeTranslationListNew = paymentType.getPaymentTypeTranslationList();
             List<String> illegalOrphanMessages = null;
             for (Invoice invoiceListOldInvoice : invoiceListOld) {
                 if (!invoiceListNew.contains(invoiceListOldInvoice)) {
@@ -149,20 +127,20 @@ public class PaymentTypeJpaController implements Serializable {
                     illegalOrphanMessages.add("You must retain Invoice " + invoiceListOldInvoice + " since its paymentType field is not nullable.");
                 }
             }
+            for (PaymentTypeTranslation paymentTypeTranslationListOldPaymentTypeTranslation : paymentTypeTranslationListOld) {
+                if (!paymentTypeTranslationListNew.contains(paymentTypeTranslationListOldPaymentTypeTranslation)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain PaymentTypeTranslation " + paymentTypeTranslationListOldPaymentTypeTranslation + " since its reference field is not nullable.");
+                }
+            }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
             if (createdUserNew != null) {
                 createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
                 paymentType.setCreatedUser(createdUserNew);
-            }
-            if (languageTypeNew != null) {
-                languageTypeNew = em.getReference(languageTypeNew.getClass(), languageTypeNew.getId());
-                paymentType.setLanguageType(languageTypeNew);
-            }
-            if (referencedTypeNew != null) {
-                referencedTypeNew = em.getReference(referencedTypeNew.getClass(), referencedTypeNew.getId());
-                paymentType.setReferencedType(referencedTypeNew);
             }
             if (lastModifiedUserNew != null) {
                 lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
@@ -175,13 +153,13 @@ public class PaymentTypeJpaController implements Serializable {
             }
             invoiceListNew = attachedInvoiceListNew;
             paymentType.setInvoiceList(invoiceListNew);
-            List<PaymentType> attachedPaymentTypeListNew = new ArrayList<PaymentType>();
-            for (PaymentType paymentTypeListNewPaymentTypeToAttach : paymentTypeListNew) {
-                paymentTypeListNewPaymentTypeToAttach = em.getReference(paymentTypeListNewPaymentTypeToAttach.getClass(), paymentTypeListNewPaymentTypeToAttach.getId());
-                attachedPaymentTypeListNew.add(paymentTypeListNewPaymentTypeToAttach);
+            List<PaymentTypeTranslation> attachedPaymentTypeTranslationListNew = new ArrayList<PaymentTypeTranslation>();
+            for (PaymentTypeTranslation paymentTypeTranslationListNewPaymentTypeTranslationToAttach : paymentTypeTranslationListNew) {
+                paymentTypeTranslationListNewPaymentTypeTranslationToAttach = em.getReference(paymentTypeTranslationListNewPaymentTypeTranslationToAttach.getClass(), paymentTypeTranslationListNewPaymentTypeTranslationToAttach.getId());
+                attachedPaymentTypeTranslationListNew.add(paymentTypeTranslationListNewPaymentTypeTranslationToAttach);
             }
-            paymentTypeListNew = attachedPaymentTypeListNew;
-            paymentType.setPaymentTypeList(paymentTypeListNew);
+            paymentTypeTranslationListNew = attachedPaymentTypeTranslationListNew;
+            paymentType.setPaymentTypeTranslationList(paymentTypeTranslationListNew);
             paymentType = em.merge(paymentType);
             if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
                 createdUserOld.getPaymentTypeList().remove(paymentType);
@@ -190,22 +168,6 @@ public class PaymentTypeJpaController implements Serializable {
             if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
                 createdUserNew.getPaymentTypeList().add(paymentType);
                 createdUserNew = em.merge(createdUserNew);
-            }
-            if (languageTypeOld != null && !languageTypeOld.equals(languageTypeNew)) {
-                languageTypeOld.getPaymentTypeList().remove(paymentType);
-                languageTypeOld = em.merge(languageTypeOld);
-            }
-            if (languageTypeNew != null && !languageTypeNew.equals(languageTypeOld)) {
-                languageTypeNew.getPaymentTypeList().add(paymentType);
-                languageTypeNew = em.merge(languageTypeNew);
-            }
-            if (referencedTypeOld != null && !referencedTypeOld.equals(referencedTypeNew)) {
-                referencedTypeOld.getPaymentTypeList().remove(paymentType);
-                referencedTypeOld = em.merge(referencedTypeOld);
-            }
-            if (referencedTypeNew != null && !referencedTypeNew.equals(referencedTypeOld)) {
-                referencedTypeNew.getPaymentTypeList().add(paymentType);
-                referencedTypeNew = em.merge(referencedTypeNew);
             }
             if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
                 lastModifiedUserOld.getPaymentTypeList().remove(paymentType);
@@ -226,20 +188,14 @@ public class PaymentTypeJpaController implements Serializable {
                     }
                 }
             }
-            for (PaymentType paymentTypeListOldPaymentType : paymentTypeListOld) {
-                if (!paymentTypeListNew.contains(paymentTypeListOldPaymentType)) {
-                    paymentTypeListOldPaymentType.setReferencedType(null);
-                    paymentTypeListOldPaymentType = em.merge(paymentTypeListOldPaymentType);
-                }
-            }
-            for (PaymentType paymentTypeListNewPaymentType : paymentTypeListNew) {
-                if (!paymentTypeListOld.contains(paymentTypeListNewPaymentType)) {
-                    PaymentType oldReferencedTypeOfPaymentTypeListNewPaymentType = paymentTypeListNewPaymentType.getReferencedType();
-                    paymentTypeListNewPaymentType.setReferencedType(paymentType);
-                    paymentTypeListNewPaymentType = em.merge(paymentTypeListNewPaymentType);
-                    if (oldReferencedTypeOfPaymentTypeListNewPaymentType != null && !oldReferencedTypeOfPaymentTypeListNewPaymentType.equals(paymentType)) {
-                        oldReferencedTypeOfPaymentTypeListNewPaymentType.getPaymentTypeList().remove(paymentTypeListNewPaymentType);
-                        oldReferencedTypeOfPaymentTypeListNewPaymentType = em.merge(oldReferencedTypeOfPaymentTypeListNewPaymentType);
+            for (PaymentTypeTranslation paymentTypeTranslationListNewPaymentTypeTranslation : paymentTypeTranslationListNew) {
+                if (!paymentTypeTranslationListOld.contains(paymentTypeTranslationListNewPaymentTypeTranslation)) {
+                    PaymentType oldReferenceOfPaymentTypeTranslationListNewPaymentTypeTranslation = paymentTypeTranslationListNewPaymentTypeTranslation.getReference();
+                    paymentTypeTranslationListNewPaymentTypeTranslation.setReference(paymentType);
+                    paymentTypeTranslationListNewPaymentTypeTranslation = em.merge(paymentTypeTranslationListNewPaymentTypeTranslation);
+                    if (oldReferenceOfPaymentTypeTranslationListNewPaymentTypeTranslation != null && !oldReferenceOfPaymentTypeTranslationListNewPaymentTypeTranslation.equals(paymentType)) {
+                        oldReferenceOfPaymentTypeTranslationListNewPaymentTypeTranslation.getPaymentTypeTranslationList().remove(paymentTypeTranslationListNewPaymentTypeTranslation);
+                        oldReferenceOfPaymentTypeTranslationListNewPaymentTypeTranslation = em.merge(oldReferenceOfPaymentTypeTranslationListNewPaymentTypeTranslation);
                     }
                 }
             }
@@ -280,6 +236,13 @@ public class PaymentTypeJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This PaymentType (" + paymentType + ") cannot be destroyed since the Invoice " + invoiceListOrphanCheckInvoice + " in its invoiceList field has a non-nullable paymentType field.");
             }
+            List<PaymentTypeTranslation> paymentTypeTranslationListOrphanCheck = paymentType.getPaymentTypeTranslationList();
+            for (PaymentTypeTranslation paymentTypeTranslationListOrphanCheckPaymentTypeTranslation : paymentTypeTranslationListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This PaymentType (" + paymentType + ") cannot be destroyed since the PaymentTypeTranslation " + paymentTypeTranslationListOrphanCheckPaymentTypeTranslation + " in its paymentTypeTranslationList field has a non-nullable reference field.");
+            }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
@@ -288,25 +251,10 @@ public class PaymentTypeJpaController implements Serializable {
                 createdUser.getPaymentTypeList().remove(paymentType);
                 createdUser = em.merge(createdUser);
             }
-            LanguageType languageType = paymentType.getLanguageType();
-            if (languageType != null) {
-                languageType.getPaymentTypeList().remove(paymentType);
-                languageType = em.merge(languageType);
-            }
-            PaymentType referencedType = paymentType.getReferencedType();
-            if (referencedType != null) {
-                referencedType.getPaymentTypeList().remove(paymentType);
-                referencedType = em.merge(referencedType);
-            }
             Employee lastModifiedUser = paymentType.getLastModifiedUser();
             if (lastModifiedUser != null) {
                 lastModifiedUser.getPaymentTypeList().remove(paymentType);
                 lastModifiedUser = em.merge(lastModifiedUser);
-            }
-            List<PaymentType> paymentTypeList = paymentType.getPaymentTypeList();
-            for (PaymentType paymentTypeListPaymentType : paymentTypeList) {
-                paymentTypeListPaymentType.setReferencedType(null);
-                paymentTypeListPaymentType = em.merge(paymentTypeListPaymentType);
             }
             em.remove(paymentType);
             em.getTransaction().commit();

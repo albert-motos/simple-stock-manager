@@ -66,17 +66,11 @@ public class PaymentType implements Serializable {
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee createdUser;
-    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private LanguageType languageType;
-    @OneToMany(mappedBy = "referencedType")
-    private List<PaymentType> paymentTypeList;
-    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private PaymentType referencedType;
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
+    private List<PaymentTypeTranslation> paymentTypeTranslationList;
 
     public PaymentType() {
     }
@@ -150,37 +144,21 @@ public class PaymentType implements Serializable {
         this.createdUser = createdUser;
     }
 
-    public LanguageType getLanguageType() {
-        return languageType;
-    }
-
-    public void setLanguageType(LanguageType languageType) {
-        this.languageType = languageType;
-    }
-
-    @XmlTransient
-    public List<PaymentType> getPaymentTypeList() {
-        return paymentTypeList;
-    }
-
-    public void setPaymentTypeList(List<PaymentType> paymentTypeList) {
-        this.paymentTypeList = paymentTypeList;
-    }
-
-    public PaymentType getReferencedType() {
-        return referencedType;
-    }
-
-    public void setReferencedType(PaymentType referencedType) {
-        this.referencedType = referencedType;
-    }
-
     public Employee getLastModifiedUser() {
         return lastModifiedUser;
     }
 
     public void setLastModifiedUser(Employee lastModifiedUser) {
         this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<PaymentTypeTranslation> getPaymentTypeTranslationList() {
+        return paymentTypeTranslationList;
+    }
+
+    public void setPaymentTypeTranslationList(List<PaymentTypeTranslation> paymentTypeTranslationList) {
+        this.paymentTypeTranslationList = paymentTypeTranslationList;
     }
 
     @Override

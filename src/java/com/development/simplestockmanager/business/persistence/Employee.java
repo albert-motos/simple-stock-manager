@@ -120,7 +120,7 @@ public class Employee implements Serializable {
     private Employee lastModifiedUser;
     @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private LanguageType languageType;
+    private Language languageType;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
     private List<PriceType> priceTypeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
@@ -391,11 +391,11 @@ public class Employee implements Serializable {
         this.lastModifiedUser = lastModifiedUser;
     }
 
-    public LanguageType getLanguageType() {
+    public Language getLanguageType() {
         return languageType;
     }
 
-    public void setLanguageType(LanguageType languageType) {
+    public void setLanguageType(Language languageType) {
         this.languageType = languageType;
     }
 

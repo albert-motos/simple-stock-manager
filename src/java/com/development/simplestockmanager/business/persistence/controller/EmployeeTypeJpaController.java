@@ -12,7 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
-import com.development.simplestockmanager.business.persistence.LanguageType;
+import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
@@ -36,11 +36,11 @@ public class EmployeeTypeJpaController implements Serializable {
     }
 
     public void create(EmployeeType employeeType) throws IllegalOrphanException {
+        if (employeeType.getEmployeeTypeTranslationList() == null) {
+            employeeType.setEmployeeTypeTranslationList(new ArrayList<EmployeeTypeTranslation>());
+        }
         if (employeeType.getEmployeeList() == null) {
             employeeType.setEmployeeList(new ArrayList<Employee>());
-        }
-        if (employeeType.getEmployeeTypeList() == null) {
-            employeeType.setEmployeeTypeList(new ArrayList<EmployeeType>());
         }
         List<String> illegalOrphanMessages = null;
         Employee createdUserOrphanCheck = employeeType.getCreatedUser();
@@ -75,49 +75,40 @@ public class EmployeeTypeJpaController implements Serializable {
                 createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
                 employeeType.setCreatedUser(createdUser);
             }
-            EmployeeType referencedType = employeeType.getReferencedType();
-            if (referencedType != null) {
-                referencedType = em.getReference(referencedType.getClass(), referencedType.getId());
-                employeeType.setReferencedType(referencedType);
-            }
-            LanguageType languageType = employeeType.getLanguageType();
-            if (languageType != null) {
-                languageType = em.getReference(languageType.getClass(), languageType.getId());
-                employeeType.setLanguageType(languageType);
-            }
             Employee lastModifiedUser = employeeType.getLastModifiedUser();
             if (lastModifiedUser != null) {
                 lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
                 employeeType.setLastModifiedUser(lastModifiedUser);
             }
+            List<EmployeeTypeTranslation> attachedEmployeeTypeTranslationList = new ArrayList<EmployeeTypeTranslation>();
+            for (EmployeeTypeTranslation employeeTypeTranslationListEmployeeTypeTranslationToAttach : employeeType.getEmployeeTypeTranslationList()) {
+                employeeTypeTranslationListEmployeeTypeTranslationToAttach = em.getReference(employeeTypeTranslationListEmployeeTypeTranslationToAttach.getClass(), employeeTypeTranslationListEmployeeTypeTranslationToAttach.getId());
+                attachedEmployeeTypeTranslationList.add(employeeTypeTranslationListEmployeeTypeTranslationToAttach);
+            }
+            employeeType.setEmployeeTypeTranslationList(attachedEmployeeTypeTranslationList);
             List<Employee> attachedEmployeeList = new ArrayList<Employee>();
             for (Employee employeeListEmployeeToAttach : employeeType.getEmployeeList()) {
                 employeeListEmployeeToAttach = em.getReference(employeeListEmployeeToAttach.getClass(), employeeListEmployeeToAttach.getId());
                 attachedEmployeeList.add(employeeListEmployeeToAttach);
             }
             employeeType.setEmployeeList(attachedEmployeeList);
-            List<EmployeeType> attachedEmployeeTypeList = new ArrayList<EmployeeType>();
-            for (EmployeeType employeeTypeListEmployeeTypeToAttach : employeeType.getEmployeeTypeList()) {
-                employeeTypeListEmployeeTypeToAttach = em.getReference(employeeTypeListEmployeeTypeToAttach.getClass(), employeeTypeListEmployeeTypeToAttach.getId());
-                attachedEmployeeTypeList.add(employeeTypeListEmployeeTypeToAttach);
-            }
-            employeeType.setEmployeeTypeList(attachedEmployeeTypeList);
             em.persist(employeeType);
             if (createdUser != null) {
                 createdUser.setEmployeeType(employeeType);
                 createdUser = em.merge(createdUser);
             }
-            if (referencedType != null) {
-                referencedType.getEmployeeTypeList().add(employeeType);
-                referencedType = em.merge(referencedType);
-            }
-            if (languageType != null) {
-                languageType.getEmployeeTypeList().add(employeeType);
-                languageType = em.merge(languageType);
-            }
             if (lastModifiedUser != null) {
                 lastModifiedUser.setEmployeeType(employeeType);
                 lastModifiedUser = em.merge(lastModifiedUser);
+            }
+            for (EmployeeTypeTranslation employeeTypeTranslationListEmployeeTypeTranslation : employeeType.getEmployeeTypeTranslationList()) {
+                EmployeeType oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation = employeeTypeTranslationListEmployeeTypeTranslation.getReference();
+                employeeTypeTranslationListEmployeeTypeTranslation.setReference(employeeType);
+                employeeTypeTranslationListEmployeeTypeTranslation = em.merge(employeeTypeTranslationListEmployeeTypeTranslation);
+                if (oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation != null) {
+                    oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation.getEmployeeTypeTranslationList().remove(employeeTypeTranslationListEmployeeTypeTranslation);
+                    oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation = em.merge(oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation);
+                }
             }
             for (Employee employeeListEmployee : employeeType.getEmployeeList()) {
                 EmployeeType oldEmployeeTypeOfEmployeeListEmployee = employeeListEmployee.getEmployeeType();
@@ -126,15 +117,6 @@ public class EmployeeTypeJpaController implements Serializable {
                 if (oldEmployeeTypeOfEmployeeListEmployee != null) {
                     oldEmployeeTypeOfEmployeeListEmployee.getEmployeeList().remove(employeeListEmployee);
                     oldEmployeeTypeOfEmployeeListEmployee = em.merge(oldEmployeeTypeOfEmployeeListEmployee);
-                }
-            }
-            for (EmployeeType employeeTypeListEmployeeType : employeeType.getEmployeeTypeList()) {
-                EmployeeType oldReferencedTypeOfEmployeeTypeListEmployeeType = employeeTypeListEmployeeType.getReferencedType();
-                employeeTypeListEmployeeType.setReferencedType(employeeType);
-                employeeTypeListEmployeeType = em.merge(employeeTypeListEmployeeType);
-                if (oldReferencedTypeOfEmployeeTypeListEmployeeType != null) {
-                    oldReferencedTypeOfEmployeeTypeListEmployeeType.getEmployeeTypeList().remove(employeeTypeListEmployeeType);
-                    oldReferencedTypeOfEmployeeTypeListEmployeeType = em.merge(oldReferencedTypeOfEmployeeTypeListEmployeeType);
                 }
             }
             em.getTransaction().commit();
@@ -153,16 +135,12 @@ public class EmployeeTypeJpaController implements Serializable {
             EmployeeType persistentEmployeeType = em.find(EmployeeType.class, employeeType.getId());
             Employee createdUserOld = persistentEmployeeType.getCreatedUser();
             Employee createdUserNew = employeeType.getCreatedUser();
-            EmployeeType referencedTypeOld = persistentEmployeeType.getReferencedType();
-            EmployeeType referencedTypeNew = employeeType.getReferencedType();
-            LanguageType languageTypeOld = persistentEmployeeType.getLanguageType();
-            LanguageType languageTypeNew = employeeType.getLanguageType();
             Employee lastModifiedUserOld = persistentEmployeeType.getLastModifiedUser();
             Employee lastModifiedUserNew = employeeType.getLastModifiedUser();
+            List<EmployeeTypeTranslation> employeeTypeTranslationListOld = persistentEmployeeType.getEmployeeTypeTranslationList();
+            List<EmployeeTypeTranslation> employeeTypeTranslationListNew = employeeType.getEmployeeTypeTranslationList();
             List<Employee> employeeListOld = persistentEmployeeType.getEmployeeList();
             List<Employee> employeeListNew = employeeType.getEmployeeList();
-            List<EmployeeType> employeeTypeListOld = persistentEmployeeType.getEmployeeTypeList();
-            List<EmployeeType> employeeTypeListNew = employeeType.getEmployeeTypeList();
             List<String> illegalOrphanMessages = null;
             if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
                 if (illegalOrphanMessages == null) {
@@ -194,6 +172,14 @@ public class EmployeeTypeJpaController implements Serializable {
                     illegalOrphanMessages.add("The Employee " + lastModifiedUserNew + " already has an item of type EmployeeType whose lastModifiedUser column cannot be null. Please make another selection for the lastModifiedUser field.");
                 }
             }
+            for (EmployeeTypeTranslation employeeTypeTranslationListOldEmployeeTypeTranslation : employeeTypeTranslationListOld) {
+                if (!employeeTypeTranslationListNew.contains(employeeTypeTranslationListOldEmployeeTypeTranslation)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain EmployeeTypeTranslation " + employeeTypeTranslationListOldEmployeeTypeTranslation + " since its reference field is not nullable.");
+                }
+            }
             for (Employee employeeListOldEmployee : employeeListOld) {
                 if (!employeeListNew.contains(employeeListOldEmployee)) {
                     if (illegalOrphanMessages == null) {
@@ -209,18 +195,17 @@ public class EmployeeTypeJpaController implements Serializable {
                 createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
                 employeeType.setCreatedUser(createdUserNew);
             }
-            if (referencedTypeNew != null) {
-                referencedTypeNew = em.getReference(referencedTypeNew.getClass(), referencedTypeNew.getId());
-                employeeType.setReferencedType(referencedTypeNew);
-            }
-            if (languageTypeNew != null) {
-                languageTypeNew = em.getReference(languageTypeNew.getClass(), languageTypeNew.getId());
-                employeeType.setLanguageType(languageTypeNew);
-            }
             if (lastModifiedUserNew != null) {
                 lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
                 employeeType.setLastModifiedUser(lastModifiedUserNew);
             }
+            List<EmployeeTypeTranslation> attachedEmployeeTypeTranslationListNew = new ArrayList<EmployeeTypeTranslation>();
+            for (EmployeeTypeTranslation employeeTypeTranslationListNewEmployeeTypeTranslationToAttach : employeeTypeTranslationListNew) {
+                employeeTypeTranslationListNewEmployeeTypeTranslationToAttach = em.getReference(employeeTypeTranslationListNewEmployeeTypeTranslationToAttach.getClass(), employeeTypeTranslationListNewEmployeeTypeTranslationToAttach.getId());
+                attachedEmployeeTypeTranslationListNew.add(employeeTypeTranslationListNewEmployeeTypeTranslationToAttach);
+            }
+            employeeTypeTranslationListNew = attachedEmployeeTypeTranslationListNew;
+            employeeType.setEmployeeTypeTranslationList(employeeTypeTranslationListNew);
             List<Employee> attachedEmployeeListNew = new ArrayList<Employee>();
             for (Employee employeeListNewEmployeeToAttach : employeeListNew) {
                 employeeListNewEmployeeToAttach = em.getReference(employeeListNewEmployeeToAttach.getClass(), employeeListNewEmployeeToAttach.getId());
@@ -228,37 +213,25 @@ public class EmployeeTypeJpaController implements Serializable {
             }
             employeeListNew = attachedEmployeeListNew;
             employeeType.setEmployeeList(employeeListNew);
-            List<EmployeeType> attachedEmployeeTypeListNew = new ArrayList<EmployeeType>();
-            for (EmployeeType employeeTypeListNewEmployeeTypeToAttach : employeeTypeListNew) {
-                employeeTypeListNewEmployeeTypeToAttach = em.getReference(employeeTypeListNewEmployeeTypeToAttach.getClass(), employeeTypeListNewEmployeeTypeToAttach.getId());
-                attachedEmployeeTypeListNew.add(employeeTypeListNewEmployeeTypeToAttach);
-            }
-            employeeTypeListNew = attachedEmployeeTypeListNew;
-            employeeType.setEmployeeTypeList(employeeTypeListNew);
             employeeType = em.merge(employeeType);
             if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
                 createdUserNew.setEmployeeType(employeeType);
                 createdUserNew = em.merge(createdUserNew);
             }
-            if (referencedTypeOld != null && !referencedTypeOld.equals(referencedTypeNew)) {
-                referencedTypeOld.getEmployeeTypeList().remove(employeeType);
-                referencedTypeOld = em.merge(referencedTypeOld);
-            }
-            if (referencedTypeNew != null && !referencedTypeNew.equals(referencedTypeOld)) {
-                referencedTypeNew.getEmployeeTypeList().add(employeeType);
-                referencedTypeNew = em.merge(referencedTypeNew);
-            }
-            if (languageTypeOld != null && !languageTypeOld.equals(languageTypeNew)) {
-                languageTypeOld.getEmployeeTypeList().remove(employeeType);
-                languageTypeOld = em.merge(languageTypeOld);
-            }
-            if (languageTypeNew != null && !languageTypeNew.equals(languageTypeOld)) {
-                languageTypeNew.getEmployeeTypeList().add(employeeType);
-                languageTypeNew = em.merge(languageTypeNew);
-            }
             if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
                 lastModifiedUserNew.setEmployeeType(employeeType);
                 lastModifiedUserNew = em.merge(lastModifiedUserNew);
+            }
+            for (EmployeeTypeTranslation employeeTypeTranslationListNewEmployeeTypeTranslation : employeeTypeTranslationListNew) {
+                if (!employeeTypeTranslationListOld.contains(employeeTypeTranslationListNewEmployeeTypeTranslation)) {
+                    EmployeeType oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation = employeeTypeTranslationListNewEmployeeTypeTranslation.getReference();
+                    employeeTypeTranslationListNewEmployeeTypeTranslation.setReference(employeeType);
+                    employeeTypeTranslationListNewEmployeeTypeTranslation = em.merge(employeeTypeTranslationListNewEmployeeTypeTranslation);
+                    if (oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation != null && !oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation.equals(employeeType)) {
+                        oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation.getEmployeeTypeTranslationList().remove(employeeTypeTranslationListNewEmployeeTypeTranslation);
+                        oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation = em.merge(oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation);
+                    }
+                }
             }
             for (Employee employeeListNewEmployee : employeeListNew) {
                 if (!employeeListOld.contains(employeeListNewEmployee)) {
@@ -268,23 +241,6 @@ public class EmployeeTypeJpaController implements Serializable {
                     if (oldEmployeeTypeOfEmployeeListNewEmployee != null && !oldEmployeeTypeOfEmployeeListNewEmployee.equals(employeeType)) {
                         oldEmployeeTypeOfEmployeeListNewEmployee.getEmployeeList().remove(employeeListNewEmployee);
                         oldEmployeeTypeOfEmployeeListNewEmployee = em.merge(oldEmployeeTypeOfEmployeeListNewEmployee);
-                    }
-                }
-            }
-            for (EmployeeType employeeTypeListOldEmployeeType : employeeTypeListOld) {
-                if (!employeeTypeListNew.contains(employeeTypeListOldEmployeeType)) {
-                    employeeTypeListOldEmployeeType.setReferencedType(null);
-                    employeeTypeListOldEmployeeType = em.merge(employeeTypeListOldEmployeeType);
-                }
-            }
-            for (EmployeeType employeeTypeListNewEmployeeType : employeeTypeListNew) {
-                if (!employeeTypeListOld.contains(employeeTypeListNewEmployeeType)) {
-                    EmployeeType oldReferencedTypeOfEmployeeTypeListNewEmployeeType = employeeTypeListNewEmployeeType.getReferencedType();
-                    employeeTypeListNewEmployeeType.setReferencedType(employeeType);
-                    employeeTypeListNewEmployeeType = em.merge(employeeTypeListNewEmployeeType);
-                    if (oldReferencedTypeOfEmployeeTypeListNewEmployeeType != null && !oldReferencedTypeOfEmployeeTypeListNewEmployeeType.equals(employeeType)) {
-                        oldReferencedTypeOfEmployeeTypeListNewEmployeeType.getEmployeeTypeList().remove(employeeTypeListNewEmployeeType);
-                        oldReferencedTypeOfEmployeeTypeListNewEmployeeType = em.merge(oldReferencedTypeOfEmployeeTypeListNewEmployeeType);
                     }
                 }
             }
@@ -332,6 +288,13 @@ public class EmployeeTypeJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This EmployeeType (" + employeeType + ") cannot be destroyed since the Employee " + lastModifiedUserOrphanCheck + " in its lastModifiedUser field has a non-nullable employeeType field.");
             }
+            List<EmployeeTypeTranslation> employeeTypeTranslationListOrphanCheck = employeeType.getEmployeeTypeTranslationList();
+            for (EmployeeTypeTranslation employeeTypeTranslationListOrphanCheckEmployeeTypeTranslation : employeeTypeTranslationListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EmployeeType (" + employeeType + ") cannot be destroyed since the EmployeeTypeTranslation " + employeeTypeTranslationListOrphanCheckEmployeeTypeTranslation + " in its employeeTypeTranslationList field has a non-nullable reference field.");
+            }
             List<Employee> employeeListOrphanCheck = employeeType.getEmployeeList();
             for (Employee employeeListOrphanCheckEmployee : employeeListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -341,21 +304,6 @@ public class EmployeeTypeJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            EmployeeType referencedType = employeeType.getReferencedType();
-            if (referencedType != null) {
-                referencedType.getEmployeeTypeList().remove(employeeType);
-                referencedType = em.merge(referencedType);
-            }
-            LanguageType languageType = employeeType.getLanguageType();
-            if (languageType != null) {
-                languageType.getEmployeeTypeList().remove(employeeType);
-                languageType = em.merge(languageType);
-            }
-            List<EmployeeType> employeeTypeList = employeeType.getEmployeeTypeList();
-            for (EmployeeType employeeTypeListEmployeeType : employeeTypeList) {
-                employeeTypeListEmployeeType.setReferencedType(null);
-                employeeTypeListEmployeeType = em.merge(employeeTypeListEmployeeType);
             }
             em.remove(employeeType);
             em.getTransaction().commit();

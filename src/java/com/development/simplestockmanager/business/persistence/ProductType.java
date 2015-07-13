@@ -64,17 +64,11 @@ public class ProductType implements Serializable {
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee createdUser;
-    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private LanguageType languageType;
-    @OneToMany(mappedBy = "referencedType")
-    private List<ProductType> productTypeList;
-    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private ProductType referencedType;
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
+    private List<ProductTypeTranslation> productTypeTranslationList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productType")
     private List<Product> productList;
 
@@ -141,37 +135,21 @@ public class ProductType implements Serializable {
         this.createdUser = createdUser;
     }
 
-    public LanguageType getLanguageType() {
-        return languageType;
-    }
-
-    public void setLanguageType(LanguageType languageType) {
-        this.languageType = languageType;
-    }
-
-    @XmlTransient
-    public List<ProductType> getProductTypeList() {
-        return productTypeList;
-    }
-
-    public void setProductTypeList(List<ProductType> productTypeList) {
-        this.productTypeList = productTypeList;
-    }
-
-    public ProductType getReferencedType() {
-        return referencedType;
-    }
-
-    public void setReferencedType(ProductType referencedType) {
-        this.referencedType = referencedType;
-    }
-
     public Employee getLastModifiedUser() {
         return lastModifiedUser;
     }
 
     public void setLastModifiedUser(Employee lastModifiedUser) {
         this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<ProductTypeTranslation> getProductTypeTranslationList() {
+        return productTypeTranslationList;
+    }
+
+    public void setProductTypeTranslationList(List<ProductTypeTranslation> productTypeTranslationList) {
+        this.productTypeTranslationList = productTypeTranslationList;
     }
 
     @XmlTransient

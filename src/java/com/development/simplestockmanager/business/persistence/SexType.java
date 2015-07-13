@@ -63,19 +63,13 @@ public class SexType implements Serializable {
     private Date lastModifiedDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sexType")
     private List<Employee> employeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
+    private List<SexTypeTranslation> sexTypeTranslationList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sexType")
     private List<Client> clientList;
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee createdUser;
-    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private LanguageType languageType;
-    @OneToMany(mappedBy = "referencedType")
-    private List<SexType> sexTypeList;
-    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private SexType referencedType;
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
@@ -145,6 +139,15 @@ public class SexType implements Serializable {
     }
 
     @XmlTransient
+    public List<SexTypeTranslation> getSexTypeTranslationList() {
+        return sexTypeTranslationList;
+    }
+
+    public void setSexTypeTranslationList(List<SexTypeTranslation> sexTypeTranslationList) {
+        this.sexTypeTranslationList = sexTypeTranslationList;
+    }
+
+    @XmlTransient
     public List<Client> getClientList() {
         return clientList;
     }
@@ -159,31 +162,6 @@ public class SexType implements Serializable {
 
     public void setCreatedUser(Employee createdUser) {
         this.createdUser = createdUser;
-    }
-
-    public LanguageType getLanguageType() {
-        return languageType;
-    }
-
-    public void setLanguageType(LanguageType languageType) {
-        this.languageType = languageType;
-    }
-
-    @XmlTransient
-    public List<SexType> getSexTypeList() {
-        return sexTypeList;
-    }
-
-    public void setSexTypeList(List<SexType> sexTypeList) {
-        this.sexTypeList = sexTypeList;
-    }
-
-    public SexType getReferencedType() {
-        return referencedType;
-    }
-
-    public void setReferencedType(SexType referencedType) {
-        this.referencedType = referencedType;
     }
 
     public Employee getLastModifiedUser() {

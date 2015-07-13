@@ -13,7 +13,7 @@ import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import com.development.simplestockmanager.business.persistence.SexType;
-import com.development.simplestockmanager.business.persistence.LanguageType;
+import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.Price;
 import java.util.ArrayList;
 import java.util.List;
@@ -186,7 +186,7 @@ public class EmployeeJpaController implements Serializable {
                 lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
                 employee.setLastModifiedUser(lastModifiedUser);
             }
-            LanguageType languageType = employee.getLanguageType();
+            Language languageType = employee.getLanguageType();
             if (languageType != null) {
                 languageType = em.getReference(languageType.getClass(), languageType.getId());
                 employee.setLanguageType(languageType);
@@ -789,8 +789,8 @@ public class EmployeeJpaController implements Serializable {
             SexType sexTypeNew = employee.getSexType();
             Employee lastModifiedUserOld = persistentEmployee.getLastModifiedUser();
             Employee lastModifiedUserNew = employee.getLastModifiedUser();
-            LanguageType languageTypeOld = persistentEmployee.getLanguageType();
-            LanguageType languageTypeNew = employee.getLanguageType();
+            Language languageTypeOld = persistentEmployee.getLanguageType();
+            Language languageTypeNew = employee.getLanguageType();
             List<Price> priceListOld = persistentEmployee.getPriceList();
             List<Price> priceListNew = employee.getPriceList();
             List<Price> priceList1Old = persistentEmployee.getPriceList1();
@@ -2204,7 +2204,7 @@ public class EmployeeJpaController implements Serializable {
                 lastModifiedUser.getEmployeeList().remove(employee);
                 lastModifiedUser = em.merge(lastModifiedUser);
             }
-            LanguageType languageType = employee.getLanguageType();
+            Language languageType = employee.getLanguageType();
             if (languageType != null) {
                 languageType.getEmployeeList().remove(employee);
                 languageType = em.merge(languageType);

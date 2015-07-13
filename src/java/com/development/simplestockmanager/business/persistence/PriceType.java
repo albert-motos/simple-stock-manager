@@ -66,17 +66,11 @@ public class PriceType implements Serializable {
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee createdUser;
-    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private LanguageType languageType;
-    @OneToMany(mappedBy = "referencedType")
-    private List<PriceType> priceTypeList;
-    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private PriceType referencedType;
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
+    private List<PriceTypeTranslation> priceTypeTranslationList;
 
     public PriceType() {
     }
@@ -150,37 +144,21 @@ public class PriceType implements Serializable {
         this.createdUser = createdUser;
     }
 
-    public LanguageType getLanguageType() {
-        return languageType;
-    }
-
-    public void setLanguageType(LanguageType languageType) {
-        this.languageType = languageType;
-    }
-
-    @XmlTransient
-    public List<PriceType> getPriceTypeList() {
-        return priceTypeList;
-    }
-
-    public void setPriceTypeList(List<PriceType> priceTypeList) {
-        this.priceTypeList = priceTypeList;
-    }
-
-    public PriceType getReferencedType() {
-        return referencedType;
-    }
-
-    public void setReferencedType(PriceType referencedType) {
-        this.referencedType = referencedType;
-    }
-
     public Employee getLastModifiedUser() {
         return lastModifiedUser;
     }
 
     public void setLastModifiedUser(Employee lastModifiedUser) {
         this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<PriceTypeTranslation> getPriceTypeTranslationList() {
+        return priceTypeTranslationList;
+    }
+
+    public void setPriceTypeTranslationList(List<PriceTypeTranslation> priceTypeTranslationList) {
+        this.priceTypeTranslationList = priceTypeTranslationList;
     }
 
     @Override

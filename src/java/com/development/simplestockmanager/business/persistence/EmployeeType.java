@@ -61,19 +61,13 @@ public class EmployeeType implements Serializable {
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
+    private List<EmployeeTypeTranslation> employeeTypeTranslationList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeType")
     private List<Employee> employeeList;
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee createdUser;
-    @OneToMany(mappedBy = "referencedType")
-    private List<EmployeeType> employeeTypeList;
-    @JoinColumn(name = "REFERENCED_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private EmployeeType referencedType;
-    @JoinColumn(name = "LANGUAGE_TYPE", referencedColumnName = "ID")
-    @ManyToOne
-    private LanguageType languageType;
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
@@ -134,6 +128,15 @@ public class EmployeeType implements Serializable {
     }
 
     @XmlTransient
+    public List<EmployeeTypeTranslation> getEmployeeTypeTranslationList() {
+        return employeeTypeTranslationList;
+    }
+
+    public void setEmployeeTypeTranslationList(List<EmployeeTypeTranslation> employeeTypeTranslationList) {
+        this.employeeTypeTranslationList = employeeTypeTranslationList;
+    }
+
+    @XmlTransient
     public List<Employee> getEmployeeList() {
         return employeeList;
     }
@@ -148,31 +151,6 @@ public class EmployeeType implements Serializable {
 
     public void setCreatedUser(Employee createdUser) {
         this.createdUser = createdUser;
-    }
-
-    @XmlTransient
-    public List<EmployeeType> getEmployeeTypeList() {
-        return employeeTypeList;
-    }
-
-    public void setEmployeeTypeList(List<EmployeeType> employeeTypeList) {
-        this.employeeTypeList = employeeTypeList;
-    }
-
-    public EmployeeType getReferencedType() {
-        return referencedType;
-    }
-
-    public void setReferencedType(EmployeeType referencedType) {
-        this.referencedType = referencedType;
-    }
-
-    public LanguageType getLanguageType() {
-        return languageType;
-    }
-
-    public void setLanguageType(LanguageType languageType) {
-        this.languageType = languageType;
     }
 
     public Employee getLastModifiedUser() {
