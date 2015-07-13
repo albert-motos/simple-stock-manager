@@ -7,13 +7,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
- * Query holder for LanguageType object
+ * Query holder for Language object
  *
  * @author foxtrot
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "LanguageType.findAllForSelector", query = "SELECT l FROM LanguageType l WHERE l.code = :language AND l.language IS NOT NULL")})
+    @NamedQuery(name = "LanguageType.findAllForSelector", query = "SELECT l FROM Language l WHERE l.code = :language AND l.language IS NOT NULL")})
 public class LanguageTypeQueryHolder implements Serializable {
 
     @Id

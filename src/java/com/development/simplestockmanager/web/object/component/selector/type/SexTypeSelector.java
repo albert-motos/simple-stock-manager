@@ -30,9 +30,9 @@ public class SexTypeSelector extends BaseTypeSelector {
         }
 
         for (SexType sexType : sexTypeList) {
-            String key = sexType.getType();
-            hashMap.put(key, sexType.getReferencedType());
-            list.add(key);
+//            String key = sexType.getType();
+//            hashMap.put(key, sexType.getReferencedType());
+//            list.add(key);
         }
     }
 
@@ -43,12 +43,12 @@ public class SexTypeSelector extends BaseTypeSelector {
     public SexTypeSelector(long mode, SexType sexType, String language) {
         this(mode, new SexTypeSpecificController(language));
 
-        for (SexType sexTypeLanguage : sexType.getSexTypeList()) {
-            if (sexTypeLanguage.getLanguageType().getCode().equals(language)) {
-                String key = sexTypeLanguage.getType();
-                selection = key;
-            }
-        }
+//        for (SexType sexTypeLanguage : sexType.getSexTypeList()) {
+//            if (sexTypeLanguage.getLanguageType().getCode().equals(language)) {
+//                String key = sexTypeLanguage.getType();
+//                selection = key;
+//            }
+//        }
 
     }
 
@@ -65,11 +65,11 @@ public class SexTypeSelector extends BaseTypeSelector {
     public SexType getValueForLanguage(SexType sexTypeBase, String language) {
         SexType translation = new SexTypeNull();
         
-        for (SexType sexType : sexTypeBase.getSexTypeList()) {
-            if (sexType.getLanguageType().getCode().equals(language)) {
-                translation = sexType;
-            }
-        }
+//        for (SexType sexType : sexTypeBase.getSexTypeList()) {
+//            if (sexType.getLanguageType().getCode().equals(language)) {
+//                translation = sexType;
+//            }
+//        }
         
         return translation;
     };

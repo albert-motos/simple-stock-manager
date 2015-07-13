@@ -21,14 +21,14 @@ public class EmployeeEditController extends EmployeeCommonController implements 
     public EmployeeEditController() {
         super(WebConstant.VALIDATOR.MODE.EDIT);
         
-        try {
-            employee = (Employee) receiveObjectFromSession(WebConstant.SESSION.EMPLOYEE);
-            baseEmployee = new Client(client);
-        } catch (Exception e) {
-            back();
-        }
-        
-        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, client.getSexType(), languageController.getLanguage());
+//        try {
+//            employee = (Employee) receiveObjectFromSession(WebConstant.SESSION.EMPLOYEE);
+//            baseEmployee = new Client(client);
+//        } catch (Exception e) {
+//            back();
+//        }
+//        
+//        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, client.getSexType(), languageController.getLanguage());
     }
 
     @Override
