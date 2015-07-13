@@ -37,6 +37,7 @@ public class EmployeeSelector extends BaseSelector {
         String key = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
         hashMap.put(key, employee);
         list.add(key);
+        selection = key;
     }
 
     @Override

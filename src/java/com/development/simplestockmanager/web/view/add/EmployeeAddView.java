@@ -40,7 +40,8 @@ public class EmployeeAddView extends BaseAddView {
         employee = new Employee();
         employeeTypeSelector = new EmployeeTypeSelector(internationalizationController.getLanguage());
         languageTypeSelector = new LanguageTypeSelector(internationalizationController.getLanguage());
-        sexTypeSelector = new SexTypeSelector(internationalizationController.getLanguage());
+//        sexTypeSelector = new SexTypeSelector(internationalizationController.getLanguage());
+        sexTypeSelector = null;
     }
 
     @Override

@@ -13,7 +13,8 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SexType.findAllForSelector", query = "SELECT s FROM SexType s WHERE s.languageType.code = :language AND s.enable = TRUE"),
+    @NamedQuery(name = "SexType.findAllForSelector", query = "SELECT s FROM SexType s WHERE s.languageType.code = :language"),
+    @NamedQuery(name = "SexType.findEnableForSelector", query = "SELECT s FROM SexType s WHERE s.languageType.code = :language AND s.enable = TRUE"),
     @NamedQuery(name = "SexType.getFindByRefencedType", query = "SELECT s FROM SexType s WHERE s.referencedType IS NULL AND s.type = :type"),
     @NamedQuery(name = "SexType.getFindByRefencedTypeAndLanguage", query = "SELECT s FROM SexType s WHERE s.referencedType.type = :type AND s.languageType.code = :language")})
 public class SexTypeQueryHolder implements Serializable {

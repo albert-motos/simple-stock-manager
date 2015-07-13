@@ -21,6 +21,9 @@ public class StoreLabelService implements Serializable {
     private final String manager;
     private final String visibility;
     private final String enable;
+    private final String viewer;
+    private final String list;
+    private final String browser;
 
     public StoreLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
@@ -30,6 +33,9 @@ public class StoreLabelService implements Serializable {
         manager = controller.getWord(CommonConstant.HEADER.STORE.MANAGER);
         visibility = controller.getWord(CommonConstant.HEADER.STORE.VISIBILITY);
         enable = controller.getWord(CommonConstant.LABEL.ENABLE.STORE);
+        viewer = controller.getWord(CommonConstant.HEADER.STORE.VIEWER);
+        list = controller.getWord(CommonConstant.HEADER.STORE.LIST);
+        browser = controller.getWord(CommonConstant.HEADER.STORE.BROWSER);
     }
 
     public String getAttributes() {
@@ -46,6 +52,18 @@ public class StoreLabelService implements Serializable {
 
     public String getEnable() {
         return enable;
+    }
+
+    public String getViewer() {
+        return viewer;
+    }
+
+    public String getList() {
+        return list;
+    }
+
+    public String getBrowser() {
+        return browser;
     }
 
 }

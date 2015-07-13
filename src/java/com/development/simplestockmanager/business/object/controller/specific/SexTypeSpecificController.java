@@ -18,11 +18,26 @@ public class SexTypeSpecificController {
         this.language = language;
     }
 
-    public List<SexType> fillSelector() {
+    public List<SexType> fillAllForSelector() {
         List<SexType> list = new ArrayList<>();
 
         try {
             Query query = new SexTypeHelper().getFindAllForSelector(language);
+            for (Object object : query.getResultList()) {
+                list.add((SexType) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
+    public List<SexType> fillEnableForSelector() {
+        List<SexType> list = new ArrayList<>();
+
+        try {
+            Query query = new SexTypeHelper().getFindEnableForSelector(language);
             for (Object object : query.getResultList()) {
                 list.add((SexType) object);
             }

@@ -20,7 +20,7 @@ public interface WebConstant {
 
         public interface MODE {
 
-            public static long VISIBLE = 0;
+            public static long ENABLE = 0;
             public static long ALL = 1;
         }
     }
@@ -57,6 +57,11 @@ public interface WebConstant {
     public interface SESSION {
 
         public static String BRAND = "brand";
+        public static String CLIENT = "client";
+        public static String EMPLOYEE = "employee";
+        public static String PRODUCT = "product";
+        public static String PROVIDER = "provider";
+        public static String STORE = "store";
     }
 
     public interface LOGGER {

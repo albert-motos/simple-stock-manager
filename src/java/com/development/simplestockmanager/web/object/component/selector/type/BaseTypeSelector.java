@@ -11,6 +11,7 @@ abstract class BaseTypeSelector {
 
     protected List<String> list;
     protected String selection;
+    protected long mode;
 
     public List<String> getList() {
         return list;

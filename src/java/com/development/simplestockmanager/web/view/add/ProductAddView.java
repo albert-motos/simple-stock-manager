@@ -22,7 +22,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "productAdd")
 @ViewScoped
 public class ProductAddView extends BaseAddView {
-    
+   /* 
     private final ProductValidator validator;
     private final ProductGeneralController generalController;
     
@@ -40,9 +40,9 @@ public class ProductAddView extends BaseAddView {
         providerSelector = new ProviderSelector();
         productTypeSelector = new ProductTypeSelector(internationalizationController.getLanguage());
     }
-
+*/
     @Override
-    public void add() {
+    public void add() {/*
         FacesContext context = FacesContext.getCurrentInstance();
 
         product.setBrand(brandSelector.getSelectedValue());
@@ -96,7 +96,6 @@ public class ProductAddView extends BaseAddView {
     }
 
     public Product getProduct() {
-        return product;
+        return product;*/
     }
-
 }

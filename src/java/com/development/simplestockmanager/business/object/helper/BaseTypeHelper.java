@@ -10,4 +10,6 @@ import javax.persistence.Query;
 public interface BaseTypeHelper {
 
     public Query getFindAllForSelector(String language);
+    
+    public Query getFindEnableForSelector(String language);
 }

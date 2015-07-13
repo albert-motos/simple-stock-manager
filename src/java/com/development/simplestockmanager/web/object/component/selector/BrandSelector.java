@@ -37,6 +37,7 @@ public class BrandSelector extends BaseSelector {
         String key = brand.getName();
         hashMap.put(key, brand);
         list.add(key);
+        selection = key;
     }
 
     @Override

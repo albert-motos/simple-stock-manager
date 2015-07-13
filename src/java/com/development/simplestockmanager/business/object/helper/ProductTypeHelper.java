@@ -22,4 +22,9 @@ public class ProductTypeHelper extends BaseHelper implements BaseTypeHelper {
         return query;
     }
 
+    @Override
+    public Query getFindEnableForSelector(String language) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

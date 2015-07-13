@@ -22,6 +22,9 @@ public class EmployeeLabelService implements Serializable {
     private final String credentials;
     private final String visibility;
     private final String enable;
+    private final String viewer;
+    private final String list;
+    private final String browser;
 
     public EmployeeLabelService() {
         System.out.println("# " + new Date() + " | " + EmployeeLabelService.class.getCanonicalName());
@@ -33,6 +36,9 @@ public class EmployeeLabelService implements Serializable {
         credentials = controller.getWord(CommonConstant.HEADER.EMPLOYE.CREDENTIALS);
         visibility = controller.getWord(CommonConstant.HEADER.EMPLOYE.VISIBILITY);
         enable = controller.getWord(CommonConstant.LABEL.ENABLE.EMPLOYEE);
+        viewer = controller.getWord(CommonConstant.HEADER.EMPLOYE.VIEWER);
+        list = controller.getWord(CommonConstant.HEADER.EMPLOYE.LIST);
+        browser = controller.getWord(CommonConstant.HEADER.EMPLOYE.BROWSER);
     }
 
     public String getAttributes() {
@@ -49,6 +55,18 @@ public class EmployeeLabelService implements Serializable {
 
     public String getEnable() {
         return enable;
+    }
+
+    public String getViewer() {
+        return viewer;
+    }
+
+    public String getList() {
+        return list;
+    }
+
+    public String getBrowser() {
+        return browser;
     }
 
     public String getDisplayableInfo(Employee employee) {

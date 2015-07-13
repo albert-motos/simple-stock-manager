@@ -37,6 +37,7 @@ public class ProviderSelector extends BaseSelector {
         String key = provider.getName();
         hashMap.put(key, provider);
         list.add(key);
+        selection = key;
     }
 
     @Override

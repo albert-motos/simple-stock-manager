@@ -22,7 +22,6 @@ public class BrandCommonController extends BaseCommonController {
         generalController = new BrandGeneralController();
         specificController = new BrandSpecificController();
         validator = new BrandValidator(mode, languageController, specificController);
-        brand = new Brand();
     }
 
     public Brand getBrand() {

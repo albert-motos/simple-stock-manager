@@ -3,8 +3,10 @@ package com.development.simplestockmanager.web.object.component.selector.type;
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
 import com.development.simplestockmanager.business.persistence.SexType;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Selector class for SexType object
@@ -13,18 +15,41 @@ import java.util.HashMap;
  */
 public class SexTypeSelector extends BaseTypeSelector {
 
-    private final HashMap<String, SexType> hashMap;
+    private HashMap<String, SexType> hashMap;
 
-    public SexTypeSelector(String language) {
-        SexTypeSpecificController controller = new SexTypeSpecificController(language);
-        hashMap = new HashMap<>();
+    private SexTypeSelector(long mode, SexTypeSpecificController specificController) {
         list = new ArrayList<>();
+        hashMap = new HashMap<>();
 
-        for (SexType sexType : controller.fillSelector()) {
+        List<SexType> sexTypeList;
+
+        if (mode == WebConstant.SELECTOR.MODE.ALL) {
+            sexTypeList = specificController.fillAllForSelector();
+        } else {
+            sexTypeList = specificController.fillEnableForSelector();
+        }
+
+        for (SexType sexType : sexTypeList) {
             String key = sexType.getType();
             hashMap.put(key, sexType.getReferencedType());
             list.add(key);
         }
+    }
+
+    public SexTypeSelector(long mode, String language) {
+        this(mode, new SexTypeSpecificController(language));
+    }
+
+    public SexTypeSelector(long mode, SexType sexType, String language) {
+        this(mode, new SexTypeSpecificController(language));
+
+        for (SexType sexTypeLanguage : sexType.getSexTypeList()) {
+            if (sexTypeLanguage.getLanguageType().getCode().equals(language)) {
+                String key = sexTypeLanguage.getType();
+                selection = key;
+            }
+        }
+
     }
 
     public SexType getSelectedValue() {
@@ -36,5 +61,17 @@ public class SexTypeSelector extends BaseTypeSelector {
 
         return sexType;
     }
+    
+    public SexType getValueForLanguage(SexType sexTypeBase, String language) {
+        SexType translation = new SexTypeNull();
+        
+        for (SexType sexType : sexTypeBase.getSexTypeList()) {
+            if (sexType.getLanguageType().getCode().equals(language)) {
+                translation = sexType;
+            }
+        }
+        
+        return translation;
+    };
 
 }

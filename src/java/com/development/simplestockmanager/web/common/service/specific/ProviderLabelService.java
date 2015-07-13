@@ -20,6 +20,9 @@ public class ProviderLabelService implements Serializable {
     private final String attributes;
     private final String visibility;
     private final String enable;
+    private final String viewer;
+    private final String list;
+    private final String browser;
 
     public ProviderLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
@@ -28,6 +31,9 @@ public class ProviderLabelService implements Serializable {
         attributes = controller.getWord(CommonConstant.HEADER.PROVIDER.ATTRIBUTES);
         visibility = controller.getWord(CommonConstant.HEADER.PROVIDER.VISIBILITY);
         enable = controller.getWord(CommonConstant.LABEL.ENABLE.PROVIDER);
+        viewer = controller.getWord(CommonConstant.HEADER.PROVIDER.VIEWER);
+        list = controller.getWord(CommonConstant.HEADER.PROVIDER.LIST);
+        browser = controller.getWord(CommonConstant.HEADER.PROVIDER.BROWSER);
     }
 
     public String getAttributes() {
@@ -40,6 +46,18 @@ public class ProviderLabelService implements Serializable {
 
     public String getEnable() {
         return enable;
+    }
+
+    public String getViewer() {
+        return viewer;
+    }
+
+    public String getList() {
+        return list;
+    }
+
+    public String getBrowser() {
+        return browser;
     }
 
 }

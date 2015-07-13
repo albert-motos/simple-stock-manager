@@ -100,39 +100,6 @@ public interface CommonConstant {
             public static String LAST_MODIFIED_DATE = TEXT + ".date.update";
         }
 
-        public interface LIST {
-
-            public static String TEXT = LABEL.TEXT + ".list";
-            public static String COUNTER = TEXT + ".counter";
-
-            public interface HEADER {
-
-                public static String TEXT = LIST.TEXT + ".header";
-                public static String BRAND = TEXT + ".brand";
-                public static String CLIENT = TEXT + ".client";
-                public static String EMPLOYEE = TEXT + ".employee";
-                public static String PRODUCT = TEXT + ".product";
-                public static String PROVIDER = TEXT + ".provider";
-                public static String STORE = TEXT + ".store";
-            }
-
-            public interface COLUMN {
-
-                public static String TEXT = LIST.TEXT + ".column";
-                public static String ACTIONS = TEXT + ".actions";
-
-                public interface STATUS {
-
-                    public static String TEXT = COLUMN.TEXT + ".status";
-                    public static String VISIBLE = TEXT + ".visible";
-                    public static String HIDDEN = TEXT + ".hidden";
-                }
-                
-                public static String NAME = TEXT + ".name";
-            }
-
-        }
-
         public interface ENABLE {
 
             public static String TEXT = LABEL.TEXT + ".enable";
@@ -145,6 +112,30 @@ public interface CommonConstant {
         }
     }
 
+    public interface LIST {
+
+        public static String TEXT = "list";
+        public static String COUNTER = TEXT + ".counter";
+
+        public interface COLUMN {
+
+            public static String TEXT = LIST.TEXT + ".column";
+            public static String ACTIONS = TEXT + ".actions";
+
+            public interface STATUS {
+
+                public static String TEXT = COLUMN.TEXT + ".status";
+                public static String VISIBLE = TEXT + ".visible";
+                public static String HIDDEN = TEXT + ".hidden";
+            }
+
+            public static String NAME = TEXT + ".name";
+            public static String FIRSTNAME = TEXT + ".firstname";
+            public static String LASTNAME = TEXT + ".lastname";
+        }
+
+    }
+
     public interface HEADER {
 
         public static String TEXT = "header";
@@ -155,6 +146,8 @@ public interface CommonConstant {
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
             public static String VIEWER = TEXT + ".viewer";
+            public static String LIST = TEXT + ".list";
+            public static String BROWSER = TEXT + ".browser";
         }
 
         public interface CLIENT {
@@ -162,6 +155,9 @@ public interface CommonConstant {
             public static String TEXT = HEADER.TEXT + ".client";
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
+            public static String VIEWER = TEXT + ".viewer";
+            public static String LIST = TEXT + ".list";
+            public static String BROWSER = TEXT + ".browser";
         }
 
         public interface EMPLOYE {
@@ -170,6 +166,9 @@ public interface CommonConstant {
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String CREDENTIALS = TEXT + ".credentials";
             public static String VISIBILITY = TEXT + ".visibility";
+            public static String VIEWER = TEXT + ".viewer";
+            public static String LIST = TEXT + ".list";
+            public static String BROWSER = TEXT + ".browser";
         }
 
         public interface PRODUCT {
@@ -177,6 +176,9 @@ public interface CommonConstant {
             public static String TEXT = HEADER.TEXT + ".product";
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
+            public static String VIEWER = TEXT + ".viewer";
+            public static String LIST = TEXT + ".list";
+            public static String BROWSER = TEXT + ".browser";
         }
 
         public interface PROVIDER {
@@ -184,6 +186,9 @@ public interface CommonConstant {
             public static String TEXT = HEADER.TEXT + ".provider";
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String VISIBILITY = TEXT + ".visibility";
+            public static String VIEWER = TEXT + ".viewer";
+            public static String LIST = TEXT + ".list";
+            public static String BROWSER = TEXT + ".browser";
         }
 
         public interface STORE {
@@ -192,6 +197,9 @@ public interface CommonConstant {
             public static String ATTRIBUTES = TEXT + ".attributes";
             public static String MANAGER = TEXT + ".manager";
             public static String VISIBILITY = TEXT + ".visibility";
+            public static String VIEWER = TEXT + ".viewer";
+            public static String LIST = TEXT + ".list";
+            public static String BROWSER = TEXT + ".browser";
         }
     }
 
