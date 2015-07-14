@@ -14,7 +14,6 @@ public class EmployeeTypeHelper extends CommonHelper implements BaseTypeHelper {
         return new EmployeeTypeJpaController(entityManagerFactory);
     }
 
-    @Override
     public Query getFindAllForSelector(String language) {
         Query query = entityManager.createNamedQuery("EmployeeType.findAllForSelector");
         query.setParameter("language", language);
@@ -22,9 +21,23 @@ public class EmployeeTypeHelper extends CommonHelper implements BaseTypeHelper {
         return query;
     }
 
-    @Override
     public Query getFindEnableForSelector(String language) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Query getFindAll() {
+        Query query = entityManager.createNamedQuery("EmployeeType.findAll");
+
+        return query;
+    }
+
+    @Override
+    public Query getFindEnable() {
+        Query query = entityManager.createNamedQuery("EmployeeType.findByEnable");
+        query.setParameter("enable", true);
+
+        return query;
     }
 
 }

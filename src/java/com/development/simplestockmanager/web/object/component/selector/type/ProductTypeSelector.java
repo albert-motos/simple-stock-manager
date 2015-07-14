@@ -13,28 +13,30 @@ import java.util.HashMap;
  */
 public class ProductTypeSelector extends BaseTypeSelector {
 
-    private final HashMap<String, ProductType> hashMap;
+//    private final HashMap<String, ProductType> hashMap;
 
     public ProductTypeSelector(String language) {
-        ProductTypeSpecificController controller = new ProductTypeSpecificController(language);
-        hashMap = new HashMap<>();
-        list = new ArrayList<>();
-
-        for (ProductType productType : controller.fillSelector()) {
-            String key = productType.getType();
-            hashMap.put(key, productType);
-            list.add(key);
-        }
+        super((long) 1);
+//        ProductTypeSpecificController controller = new ProductTypeSpecificController(language);
+//        hashMap = new HashMap<>();
+//        list = new ArrayList<>();
+//
+//        for (ProductType productType : controller.fillSelector()) {
+//            String key = productType.getType();
+//            hashMap.put(key, productType);
+//            list.add(key);
+//        }
     }
 
     public ProductType getSelectedValue() {
-        ProductType productType = new ProductTypeNull();
-        
-        if (!selection.isEmpty()) {
-            productType = hashMap.get(selection);
-        }
-
-        return productType;
+//        ProductType productType = new ProductTypeNull();
+//        
+//        if (!selection.isEmpty()) {
+//            productType = hashMap.get(selection);
+//        }
+//
+//        return productType;
+        return  null;
     }
 
 }

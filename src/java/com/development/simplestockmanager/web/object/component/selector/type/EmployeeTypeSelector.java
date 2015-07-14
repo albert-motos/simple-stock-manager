@@ -13,28 +13,30 @@ import java.util.HashMap;
  */
 public class EmployeeTypeSelector extends BaseTypeSelector {
 
-    private final HashMap<String, EmployeeType> hashMap;
+//    private final HashMap<String, EmployeeType> hashMap;
 
     public EmployeeTypeSelector(String language) {
-        EmployeeTypeSpecificController controller = new EmployeeTypeSpecificController(language);
-        hashMap = new HashMap<>();
-        list = new ArrayList<>();
-
-        for (EmployeeType employeeType : controller.fillSelector()) {
-            String key = employeeType.getType();
-            hashMap.put(key, employeeType);
-            list.add(key);
-        }
+        super((long) 1);
+//        EmployeeTypeSpecificController controller = new EmployeeTypeSpecificController(language);
+//        hashMap = new HashMap<>();
+//        list = new ArrayList<>();
+//
+//        for (EmployeeType employeeType : controller.fillSelector()) {
+//            String key = employeeType.getType();
+//            hashMap.put(key, employeeType);
+//            list.add(key);
+//        }
     }
 
     public EmployeeType getSelectedValue() {
-        EmployeeType employeeType = new EmployeeTypeNull();
-
-        if (!selection.isEmpty()) {
-            employeeType = hashMap.get(selection);
-        }
-
-        return employeeType;
+//        EmployeeType employeeType = new EmployeeTypeNull();
+//
+//        if (!selection.isEmpty()) {
+//            employeeType = hashMap.get(selection);
+//        }
+//
+//        return employeeType;
+        return null;
     }
 
 }

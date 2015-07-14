@@ -34,7 +34,7 @@ public class ClientEditController extends ClientCommonController implements Edit
             back();
         }
         
-        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, client.getSexType(), languageController.getLanguage());
+        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), client.getSexType());
     }
     
     @Override

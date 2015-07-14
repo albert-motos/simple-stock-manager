@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.web.object.component.selector;
 
-import com.development.simplestockmanager.business.object.controller.specific.SexTypeTranslationSpecificController;
+import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.SexType;
@@ -17,12 +17,12 @@ import java.util.List;
  */
 public class SexTypeSelector extends CommonSelector implements BaseSelector {
 
-    private final SexTypeTranslationSpecificController specificController;
+    private final SexTypeSpecificController specificController;
     private HashMap<String, SexType> hashMap;
 
     public SexTypeSelector(long mode, String language) {
         super(mode, language);
-        specificController = new SexTypeTranslationSpecificController(language);
+        this.specificController = new SexTypeSpecificController();
         search();
     }
     
@@ -34,17 +34,17 @@ public class SexTypeSelector extends CommonSelector implements BaseSelector {
     @Override
     public void search() {
         clear();
-        List<SexTypeTranslation> sexTypeTranslationList;
+        List<SexType> sexTypeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            sexTypeTranslationList = specificController.getFindAllForSelector();
+            sexTypeList = specificController.getFindAll();
         } else {
-            sexTypeTranslationList = specificController.getFindEnableForSelector();
+            sexTypeList = specificController.getFindEnable();
         }
 
-        for (SexTypeTranslation sexTypeTranslation : sexTypeTranslationList) {
-            String key = getDisplayName(sexTypeTranslation);
-            hashMap.put(key, sexTypeTranslation.getReference());
+        for (SexType sexType : sexTypeList) {
+            String key = getDisplayName(getTranslation(sexType));
+            hashMap.put(key, sexType);
             list.add(key);
         }
     }
@@ -66,7 +66,7 @@ public class SexTypeSelector extends CommonSelector implements BaseSelector {
     }
     
     public String getDisplayName(SexType sexType) {
-        return getDisplayName(getTranslation(sexType));
+        return (sexType != null ? getDisplayName(getTranslation(sexType)) : "");
     }
     
     private String getDisplayName(SexTypeTranslation sexTypeTranslation) {

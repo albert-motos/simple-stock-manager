@@ -13,61 +13,62 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class ProviderSelector extends BaseSelector {
+public class ProviderSelector {
 
     private HashMap<String, Provider> hashMap;
     private ProviderSpecificController specificController;
 
     private ProviderSelector() {
         hashMap = new HashMap<>();
-        list = new ArrayList<>();
+//        list = new ArrayList<>();
     }
 
     public ProviderSelector(long mode, ProviderSpecificController specificController) {
         this();
-        this.mode = mode;
+//        this.mode = mode;
         this.specificController = specificController;
     }
 
     public ProviderSelector(long mode, Provider provider, ProviderSpecificController specificController) {
         this();
-        this.mode = mode;
+//        this.mode = mode;
         this.specificController = specificController;
 
         String key = provider.getName();
         hashMap.put(key, provider);
-        list.add(key);
-        selection = key;
+//        list.add(key);
+//        selection = key;
     }
 
-    @Override
+//    @Override
     public void find() {
-        hashMap = new HashMap<>();
-        list = new ArrayList<>();
-        
-        List<Provider> providerList;
-
-        if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            providerList = specificController.fillSelector();
-        } else {
-            providerList = specificController.fillSelectorByName(browser);
-        }
-
-        for (Provider provider : providerList) {
-            String key = provider.getName();
-            hashMap.put(key, provider);
-            list.add(key);
-        }
+//        hashMap = new HashMap<>();
+//        list = new ArrayList<>();
+//        
+//        List<Provider> providerList;
+//
+//        if (mode == WebConstant.SELECTOR.MODE.ALL) {
+//            providerList = specificController.fillSelector();
+//        } else {
+//            providerList = specificController.fillSelectorByName(browser);
+//        }
+//
+//        for (Provider provider : providerList) {
+//            String key = provider.getName();
+//            hashMap.put(key, provider);
+//            list.add(key);
+//        }
     }
 
     public Provider getSelectedValue() {
-        Provider provider = new ProviderNull();
-
-        if (!selection.isEmpty()) {
-            provider = hashMap.get(selection);
-        }
-
-        return provider;
+//        Provider provider = new ProviderNull();
+//
+//        if (!selection.isEmpty()) {
+//            provider = hashMap.get(selection);
+//        }
+//
+//        return provider;
+        return null;
     }
 
 }

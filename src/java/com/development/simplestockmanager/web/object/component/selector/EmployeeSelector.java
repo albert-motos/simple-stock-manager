@@ -13,61 +13,91 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class EmployeeSelector extends BaseSelector {
+public class EmployeeSelector {
 
     private HashMap<String, Employee> hashMap;
     private EmployeeSpecificController specificController;
+private String browser;
+private List<String> list;
+private String selection;
+
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+
+    public void setSelection(String selection) {
+        this.selection = selection;
+    }
+    public String getSelection() {
+        return selection;
+    }
+
+
+    public List<String> getList() {
+        return list;
+    }
 
     private EmployeeSelector() {
         hashMap = new HashMap<>();
-        list = new ArrayList<>();
+//        list = new ArrayList<>();
     }
 
     public EmployeeSelector(long mode, EmployeeSpecificController specificController) {
         this();
-        this.mode = mode;
+//        this.mode = mode;
         this.specificController = specificController;
     }
 
     public EmployeeSelector(long mode, Employee employee, EmployeeSpecificController specificController) {
         this();
-        this.mode = mode;
+//        this.mode = mode;
         this.specificController = specificController;
         
         String key = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
         hashMap.put(key, employee);
-        list.add(key);
-        selection = key;
+//        list.add(key);
+//        selection = key;
     }
 
-    @Override
+//    @Override
     public void find() {
         hashMap = new HashMap<>();
-        list = new ArrayList<>();
+//        list = new ArrayList<>();
 
         List<Employee> employeeList;
 
-        if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            employeeList = specificController.fillSelector();
-        } else {
-            employeeList = specificController.fillSelectorByName(browser);
-        }
+//        if (mode == WebConstant.SELECTOR.MODE.ALL) {
+//            employeeList = specificController.fillSelector();
+//        } else {
+//            employeeList = specificController.fillSelectorByName(browser);
+//        }
 
-        for (Employee employee : employeeList) {
-            String key = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
-            hashMap.put(key, employee);
-            list.add(key);
-        }
+//        for (Employee employee : employeeList) {
+//            String key = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
+//            hashMap.put(key, employee);
+//            list.add(key);
+//        }
     }
 
     public Employee getSelectedValue() {
-        Employee employee = new EmployeeNull();
-
-        if (!selection.isEmpty()) {
-            employee = hashMap.get(selection);
-        }
-
-        return employee;
+//        Employee employee = new EmployeeNull();
+//
+//        if (!selection.isEmpty()) {
+//            employee = hashMap.get(selection);
+//        }
+//
+//        return employee;
+        return null;
     }
+
+    public String getBrowser() {
+        return browser;
+    }
+    
 
 }

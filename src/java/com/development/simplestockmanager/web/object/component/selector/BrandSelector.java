@@ -13,61 +13,62 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class BrandSelector extends BaseSelector {
+public class BrandSelector  {
 
     private HashMap<String, Brand> hashMap;
     private BrandSpecificController specificController;
 
     private BrandSelector() {
-        hashMap = new HashMap<>();
-        list = new ArrayList<>();
+//        hashMap = new HashMap<>();
+//        list = new ArrayList<>();
     }
 
     public BrandSelector(long mode, BrandSpecificController specificController) {
-        this();
-        this.mode = mode;
-        this.specificController = specificController;
+//        this();
+//        this.mode = mode;
+//        this.specificController = specificController;
     }
 
     public BrandSelector(long mode, Brand brand, BrandSpecificController specificController) {
-        this();
-        this.mode = mode;
-        this.specificController = specificController;
-
-        String key = brand.getName();
-        hashMap.put(key, brand);
-        list.add(key);
-        selection = key;
+//        this();
+//        this.mode = mode;
+//        this.specificController = specificController;
+//
+//        String key = brand.getName();
+//        hashMap.put(key, brand);
+//        list.add(key);
+//        selection = key;
     }
-
-    @Override
-    public void find() {
-        hashMap = new HashMap<>();
-        list = new ArrayList<>();
-        
-        List<Brand> brandList;
-
-        if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            brandList = specificController.fillSelector();
-        } else {
-            brandList = specificController.fillSelectorByName(browser);
-        }
-
-        for (Brand brand : brandList) {
-            String key = brand.getName();
-            hashMap.put(key, brand);
-            list.add(key);
-        }
-    }
+//
+//    @Override
+//    public void find() {
+//        hashMap = new HashMap<>();
+//        list = new ArrayList<>();
+//        
+//        List<Brand> brandList;
+//
+//        if (mode == WebConstant.SELECTOR.MODE.ALL) {
+//            brandList = specificController.fillSelector();
+//        } else {
+//            brandList = specificController.fillSelectorByName(browser);
+//        }
+//
+//        for (Brand brand : brandList) {
+//            String key = brand.getName();
+//            hashMap.put(key, brand);
+//            list.add(key);
+//        }
+//    }
 
     public Brand getSelectedValue() {
-        Brand brand = new BrandNull();
+//        Brand brand = new BrandNull();
+//
+//        if (!selection.isEmpty()) {
+//            brand = hashMap.get(selection);
+//        }
 
-        if (!selection.isEmpty()) {
-            brand = hashMap.get(selection);
-        }
-
-        return brand;
+//        return brand;
+        return null;
     }
 
 }
