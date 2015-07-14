@@ -13,62 +13,64 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class ProviderSelector {
+public class ProviderSelector extends CommonSelector implements BaseSelector {
 
+    private final ProviderSpecificController specificController;
     private HashMap<String, Provider> hashMap;
-    private ProviderSpecificController specificController;
 
-    private ProviderSelector() {
+    public ProviderSelector(long mode) {
+        super(mode);
+        this.specificController = new ProviderSpecificController();
+        search();
+    }
+
+    public ProviderSelector(long mode, Provider provider) {
+        this(mode);
+        this.selection = getDisplayName(provider);
+    }
+
+    @Override
+    public void search() {
+        clear();
+        List<Provider> providerList;
+
+        if (mode == WebConstant.SELECTOR.MODE.ALL) {
+            providerList = specificController.getFindAllByBrowser(browser);
+        } else {
+            providerList = specificController.getFindEnableByBrowser(browser);
+        }
+
+        for (Provider provider : providerList) {
+            String key = getDisplayName(provider);
+            hashMap.put(key, provider);
+            list.add(key);
+        }
+    }
+
+    @Override
+    public void clear() {
+        list = new ArrayList<>();
         hashMap = new HashMap<>();
-//        list = new ArrayList<>();
     }
-
-    public ProviderSelector(long mode, ProviderSpecificController specificController) {
-        this();
-//        this.mode = mode;
-        this.specificController = specificController;
-    }
-
-    public ProviderSelector(long mode, Provider provider, ProviderSpecificController specificController) {
-        this();
-//        this.mode = mode;
-        this.specificController = specificController;
-
-        String key = provider.getName();
-        hashMap.put(key, provider);
-//        list.add(key);
-//        selection = key;
-    }
-
-//    @Override
-    public void find() {
-//        hashMap = new HashMap<>();
-//        list = new ArrayList<>();
-//        
-//        List<Provider> providerList;
-//
-//        if (mode == WebConstant.SELECTOR.MODE.ALL) {
-//            providerList = specificController.fillSelector();
-//        } else {
-//            providerList = specificController.fillSelectorByName(browser);
-//        }
-//
-//        for (Provider provider : providerList) {
-//            String key = provider.getName();
-//            hashMap.put(key, provider);
-//            list.add(key);
-//        }
-    }
-
+    
     public Provider getSelectedValue() {
-//        Provider provider = new ProviderNull();
-//
-//        if (!selection.isEmpty()) {
-//            provider = hashMap.get(selection);
-//        }
-//
-//        return provider;
-        return null;
-    }
+        Provider provider = new ProviderNull();
 
+        if (!selection.isEmpty()) {
+            provider = hashMap.get(selection);
+        }
+
+        return provider;
+    }
+    
+    public String getDisplayName(Provider provider) {
+        String name = "";
+        
+        if (provider != null) {
+            name = provider.getName();
+        }
+        
+        return name;
+    }
+    
 }

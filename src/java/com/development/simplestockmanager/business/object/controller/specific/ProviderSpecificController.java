@@ -19,17 +19,26 @@ public class ProviderSpecificController {
         helper = new ProviderHelper();
     }
 
-    public boolean nameIsAvailable(String name) {
-        Query query = helper.getFindByNameForSelectorQuery(name);
-
-        return query.getResultList().isEmpty();
-    }
-    
-    public List<Provider> fillSelectorByName(String name) {
+    public List<Provider> getFindAllByBrowser(String browser) {
         List<Provider> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindByNameForSelectorQuery(name);
+            Query query = helper.getFindAllByBrowser(browser);
+            for (Object object : query.getResultList()) {
+                list.add((Provider) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<Provider> getFindEnableByBrowser(String browser) {
+        List<Provider> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindEnableByBrowser(browser);
             for (Object object : query.getResultList()) {
                 list.add((Provider) object);
             }
@@ -40,18 +49,4 @@ public class ProviderSpecificController {
         return list;
     }
     
-    public List<Provider> fillSelector() {
-        List<Provider> list = new ArrayList<>();
-
-        try {
-            Query query = helper.getFindAll();
-            for (Object object : query.getResultList()) {
-                list.add((Provider) object);
-            }
-        } catch (Exception e) {
-            list = new ArrayList<>();
-        }
-
-        return list;
-    }
 }

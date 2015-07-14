@@ -13,7 +13,15 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Provider.getFindByNameForSelector", query = "SELECT p FROM Provider p WHERE p.name LIKE :name AND p.enable = TRUE ORDER BY p.name")})
+    @NamedQuery(
+            name = "Provider.getFindAllByBrowser",
+            query = "SELECT p FROM Provider p WHERE p.name LIKE :browser ORDER BY p.name"
+    ),
+    @NamedQuery(
+            name = "Provider.getFindEnableByBrowser",
+            query = "SELECT p FROM Provider p WHERE p.name LIKE :browser AND p.enable = TRUE ORDER BY p.name"
+    )
+})
 public class ProviderQueryHolder implements Serializable {
 
     @Id

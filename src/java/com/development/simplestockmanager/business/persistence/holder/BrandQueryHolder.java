@@ -13,7 +13,15 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Brand.getFindByNameForSelector", query = "SELECT b FROM Brand b WHERE b.name LIKE :name AND b.enable = TRUE ORDER BY b.name")})
+    @NamedQuery(
+            name = "Brand.getFindAllByBrowser",
+            query = "SELECT b FROM Brand b WHERE b.name LIKE :browser ORDER BY b.name"
+    ),
+    @NamedQuery(
+            name = "Brand.getFindEnableByBrowser",
+            query = "SELECT b FROM Brand b WHERE b.name LIKE :browser AND b.enable = TRUE ORDER BY b.name"
+    )
+})
 public class BrandQueryHolder implements Serializable {
 
     @Id

@@ -13,15 +13,19 @@ public class ProviderHelper extends CommonHelper {
     public ProviderJpaController getJpaController() {
         return new ProviderJpaController(entityManagerFactory);
     }
-    public Query getFindByNameForSelectorQuery(String name) {
-        Query query = entityManager.createNamedQuery("Provider.getFindByNameForSelector");
-        query.setParameter("name","%" + name + "%");
+    
+    public Query getFindAllByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Provider.getFindAllByBrowser");
+        query.setParameter("browser","%" + browser + "%");
         
         return query;
     }
     
-    public Query getFindAll() {
-        return entityManager.createNamedQuery("Provider.findAll");
+    public Query getFindEnableByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Provider.getFindEnableByBrowser");
+        query.setParameter("browser","%" + browser + "%");
+        
+        return query;
     }
     
 }

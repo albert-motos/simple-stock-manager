@@ -51,11 +51,11 @@ public class BrandSpecificController {
         return brand;
     }
 
-    public List<Brand> fillSelectorByName(String name) {
+    public List<Brand> getFindAllByBrowser(String browser) {
         List<Brand> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindByNameForSelectorQuery(name);
+            Query query = helper.getFindAllByBrowser(browser);
             for (Object object : query.getResultList()) {
                 list.add((Brand) object);
             }
@@ -65,12 +65,12 @@ public class BrandSpecificController {
 
         return list;
     }
-    
-    public List<Brand> fillSelector() {
+
+    public List<Brand> getFindEnableByBrowser(String browser) {
         List<Brand> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindAll();
+            Query query = helper.getFindEnableByBrowser(browser);
             for (Object object : query.getResultList()) {
                 list.add((Brand) object);
             }
