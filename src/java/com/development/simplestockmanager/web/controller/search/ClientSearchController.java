@@ -6,7 +6,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.ClientCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
-import com.development.simplestockmanager.web.object.component.selector.SexTypeSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;

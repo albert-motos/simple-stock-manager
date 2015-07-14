@@ -3,7 +3,7 @@ package com.development.simplestockmanager.web.controller.common;
 import com.development.simplestockmanager.business.object.controller.general.ClientGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.ClientSpecificController;
 import com.development.simplestockmanager.business.persistence.Client;
-import com.development.simplestockmanager.web.object.component.selector.SexTypeSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.object.validator.ClientValidator;
 
 /**

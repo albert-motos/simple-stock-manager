@@ -1,19 +1,19 @@
-package com.development.simplestockmanager.web.object.component.selector;
+package com.development.simplestockmanager.web.object.component.selector.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.LanguageSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.LanguageNull;
 import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.object.component.selector.BaseSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Selector class for Language object
  *
  * @author foxtrot
  */
-public class LanguageSelector extends CommonSelector implements BaseSelector {
+public class LanguageSelector extends CommonTypeSelector implements BaseSelector {
 
     private final LanguageSpecificController specificController;
     private HashMap<String, Language> hashMap;

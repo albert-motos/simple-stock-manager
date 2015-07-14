@@ -7,7 +7,6 @@ import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.object.component.selector.BaseSelector;
-import com.development.simplestockmanager.web.object.component.selector.CommonSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class ProductTypeSelector extends CommonSelector implements BaseSelector {
+public class ProductTypeSelector extends CommonTypeSelector implements BaseSelector {
 
     private final ProductTypeSpecificController specificController;
     private HashMap<String, ProductType> hashMap;

@@ -36,14 +36,17 @@ public class EmployeeHelper extends CommonHelper {
         return query;
     }
     
-    public Query getFindByNameForSelectorQuery(String name) {
-        Query query = entityManager.createNamedQuery("Employee.getFindByNameForSelector");
-        query.setParameter("name","%" + name + "%");
+    public Query getFindAllByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Employee.getFindAllByBrowser");
+        query.setParameter("browser","%" + browser + "%");
         
         return query;
     }
-
-    public Query getFindAll() {
-        return entityManager.createNamedQuery("Employee.findAll");
+    
+    public Query getFindEnableByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Employee.getFindEnableByBrowser");
+        query.setParameter("browser","%" + browser + "%");
+        
+        return query;
     }
 }

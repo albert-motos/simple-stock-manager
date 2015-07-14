@@ -59,11 +59,11 @@ public class EmployeeSpecificController {
         return employee;
     }
 
-    public List<Employee> fillSelectorByName(String name) {
+    public List<Employee> getFindAllByBrowser(String browser) {
         List<Employee> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindByNameForSelectorQuery(name);
+            Query query = helper.getFindAllByBrowser(browser);
             for (Object object : query.getResultList()) {
                 list.add((Employee) object);
             }
@@ -74,11 +74,11 @@ public class EmployeeSpecificController {
         return list;
     }
 
-    public List<Employee> fillSelector() {
+    public List<Employee> getFindEnableByBrowser(String browser) {
         List<Employee> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindAll();
+            Query query = helper.getFindEnableByBrowser(browser);
             for (Object object : query.getResultList()) {
                 list.add((Employee) object);
             }

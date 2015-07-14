@@ -13,91 +13,64 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class EmployeeSelector {
+public class EmployeeSelector extends CommonSelector implements BaseSelector {
 
+    private final EmployeeSpecificController specificController;
     private HashMap<String, Employee> hashMap;
-    private EmployeeSpecificController specificController;
-private String browser;
-private List<String> list;
-private String selection;
 
-
-    public void setBrowser(String browser) {
-        this.browser = browser;
+    public EmployeeSelector(long mode) {
+        super(mode);
+        this.specificController = new EmployeeSpecificController();
+        search();
     }
 
-    public void setList(List<String> list) {
-        this.list = list;
+    public EmployeeSelector(long mode, Employee employee) {
+        this(mode);
+        this.selection = getDisplayName(employee);
     }
 
-    public void setSelection(String selection) {
-        this.selection = selection;
-    }
-    public String getSelection() {
-        return selection;
-    }
-
-
-    public List<String> getList() {
-        return list;
-    }
-
-    private EmployeeSelector() {
-        hashMap = new HashMap<>();
-//        list = new ArrayList<>();
-    }
-
-    public EmployeeSelector(long mode, EmployeeSpecificController specificController) {
-        this();
-//        this.mode = mode;
-        this.specificController = specificController;
-    }
-
-    public EmployeeSelector(long mode, Employee employee, EmployeeSpecificController specificController) {
-        this();
-//        this.mode = mode;
-        this.specificController = specificController;
-        
-        String key = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
-        hashMap.put(key, employee);
-//        list.add(key);
-//        selection = key;
-    }
-
-//    @Override
-    public void find() {
-        hashMap = new HashMap<>();
-//        list = new ArrayList<>();
-
+    @Override
+    public void search() {
+        clear();
         List<Employee> employeeList;
 
-//        if (mode == WebConstant.SELECTOR.MODE.ALL) {
-//            employeeList = specificController.fillSelector();
-//        } else {
-//            employeeList = specificController.fillSelectorByName(browser);
-//        }
+        if (mode == WebConstant.SELECTOR.MODE.ALL) {
+            employeeList = specificController.getFindAllByBrowser(browser);
+        } else {
+            employeeList = specificController.getFindEnableByBrowser(browser);
+        }
 
-//        for (Employee employee : employeeList) {
-//            String key = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
-//            hashMap.put(key, employee);
-//            list.add(key);
-//        }
+        for (Employee employee : employeeList) {
+            String key = getDisplayName(employee);
+            hashMap.put(key, employee);
+            list.add(key);
+        }
     }
 
-    public Employee getSelectedValue() {
-//        Employee employee = new EmployeeNull();
-//
-//        if (!selection.isEmpty()) {
-//            employee = hashMap.get(selection);
-//        }
-//
-//        return employee;
-        return null;
-    }
-
-    public String getBrowser() {
-        return browser;
+    @Override
+    public void clear() {
+        list = new ArrayList<>();
+        hashMap = new HashMap<>();
     }
     
+    public Employee getSelectedValue() {
+        Employee employee = new EmployeeNull();
 
+        if (!selection.isEmpty()) {
+            employee = hashMap.get(selection);
+        }
+
+        return employee;
+    }
+    
+    public String getDisplayName(Employee employee) {
+        String name = "";
+        
+        if (employee != null) {
+            name = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
+        }
+        
+        return name;
+    }
+    
 }

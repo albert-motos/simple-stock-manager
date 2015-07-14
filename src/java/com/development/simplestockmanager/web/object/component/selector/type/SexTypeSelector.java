@@ -1,11 +1,13 @@
-package com.development.simplestockmanager.web.object.component.selector;
+package com.development.simplestockmanager.web.object.component.selector.type;
 
+import com.development.simplestockmanager.web.object.component.selector.type.CommonTypeSelector;
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
 import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.object.component.selector.BaseSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class SexTypeSelector extends CommonSelector implements BaseSelector {
+public class SexTypeSelector extends CommonTypeSelector implements BaseSelector {
 
     private final SexTypeSpecificController specificController;
     private HashMap<String, SexType> hashMap;

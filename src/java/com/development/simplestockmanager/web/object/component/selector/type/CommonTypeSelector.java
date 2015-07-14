@@ -3,20 +3,22 @@ package com.development.simplestockmanager.web.object.component.selector.type;
 import java.util.List;
 
 /**
- * Base class for type selector object
+ * Common class for type selectors
  *
  * @author foxtrot
  */
-abstract class BaseTypeSelector {
+public class CommonTypeSelector {
 
     protected List<String> list;
     protected String selection;
     protected long mode;
+    protected String language;
 
-    public BaseTypeSelector(long mode) {
+    public CommonTypeSelector(long mode, String language) {
         this.mode = mode;
+        this.language = language;
     }
-    
+
     public List<String> getList() {
         return list;
     }
@@ -28,4 +30,5 @@ abstract class BaseTypeSelector {
     public void setSelection(String selection) {
         this.selection = selection;
     }
+
 }

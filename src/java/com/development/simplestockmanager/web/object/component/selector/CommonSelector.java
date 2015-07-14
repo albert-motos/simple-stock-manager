@@ -13,11 +13,9 @@ public class CommonSelector {
     protected List<String> list;
     protected String selection;
     protected long mode;
-    protected String language;
 
-    public CommonSelector(long mode, String language) {
+    public CommonSelector(long mode) {
         this.mode = mode;
-        this.language = language;
     }
     
     public void setBrowser(String browser) {
