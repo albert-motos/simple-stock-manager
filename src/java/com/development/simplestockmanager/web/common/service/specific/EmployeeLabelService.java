@@ -69,14 +69,4 @@ public class EmployeeLabelService implements Serializable {
         return browser;
     }
 
-    public String getDisplayableInfo(Employee employee) {
-        String result = "";
-
-        if (employee != null) {
-            result = "(" + employee.getUsername() + ") " + employee.getLastname() + ", " + employee.getFirstname();
-        }
-
-        return result;
-    }
-
 }

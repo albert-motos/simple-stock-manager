@@ -6,6 +6,7 @@ import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.AddController;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
+import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -24,7 +25,8 @@ public class EmployeeAddController extends EmployeeCommonController implements A
     public EmployeeAddController() {
         super(WebConstant.VALIDATOR.MODE.CREATE);
         employee = new Employee();
-//        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
+        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
+        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
     }
 
     @Override

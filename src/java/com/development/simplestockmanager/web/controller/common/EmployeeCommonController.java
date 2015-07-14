@@ -13,6 +13,7 @@ import com.development.simplestockmanager.web.object.validator.EmployeeValidator
  * @author foxtrot
  */
 public class EmployeeCommonController extends BaseCommonController {
+    
     protected final EmployeeValidator validator;
     protected final EmployeeGeneralController generalController;
     protected final EmployeeSpecificController specificController;

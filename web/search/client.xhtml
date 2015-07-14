@@ -195,7 +195,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{clientSearch.createdUser.find()}" update="createdUserList" />
+                                                <p:commandButton value="#{button.search}" actionListener="#{clientSearch.createdUser.search()}" update="createdUserList" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:selectOneMenu id="createdUserList" value="#{clientSearch.createdUser.selection}" style="width: 100%">
@@ -225,7 +225,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{clientSearch.lastModifiedUser.find()}" update="lastModifiedUserList" />
+                                                <p:commandButton value="#{button.search}" actionListener="#{clientSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:selectOneMenu id="lastModifiedUserList" value="#{clientSearch.lastModifiedUser.selection}" style="width: 100%">
@@ -356,7 +356,7 @@
                                             <p:outputLabel value="#{label.auditoryCreatedUser}" />
                                         </p:column>
                                         <p:column styleClass="info-only">
-                                            <p:outputLabel value="#{employeeLabel.getDisplayableInfo(clientSearch.client.createdUser)}" style="font-weight: normal" />
+                                            <p:outputLabel value="#{clientSearch.createdUser.getDisplayName(clientSearch.client.createdUser)}" style="font-weight: normal" />
                                         </p:column>
                                     </p:row>
                                     <p:row>
@@ -372,7 +372,7 @@
                                             <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
                                         </p:column>
                                         <p:column styleClass="info-only">
-                                            <p:outputLabel value="#{employeeLabel.getDisplayableInfo(clientSearch.client.lastModifiedUser)}" style="font-weight: normal" />
+                                            <p:outputLabel value="#{clientSearch.lastModifiedUser.getDisplayName(clientSearch.client.lastModifiedUser)}" style="font-weight: normal" />
                                         </p:column>
                                     </p:row>
                                     <p:row>
