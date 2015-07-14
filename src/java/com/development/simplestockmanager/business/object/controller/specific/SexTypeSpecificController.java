@@ -2,17 +2,17 @@ package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
 import com.development.simplestockmanager.business.persistence.SexType;
-import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 
 /**
+ * Specific controller class for SexType object
  *
  * @author foxtrot
  */
 public class SexTypeSpecificController {
-    
+
     private final SexTypeHelper helper;
 
     public SexTypeSpecificController() {
@@ -33,7 +33,7 @@ public class SexTypeSpecificController {
 
         return list;
     }
-    
+
     public List<SexType> getFindEnable() {
         List<SexType> list = new ArrayList<>();
 
@@ -48,5 +48,5 @@ public class SexTypeSpecificController {
 
         return list;
     }
-    
+
 }

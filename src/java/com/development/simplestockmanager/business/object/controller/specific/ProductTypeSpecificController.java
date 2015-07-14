@@ -7,24 +7,38 @@ import java.util.List;
 import javax.persistence.Query;
 
 /**
+ * Specific controller class for ProductType object
  *
  * @author foxtrot
  */
 public class ProductTypeSpecificController {
 
     private final ProductTypeHelper helper;
-    private final String language;
 
-    public ProductTypeSpecificController(String language) {
-        this.language = language;
-        helper = new ProductTypeHelper();
+    public ProductTypeSpecificController() {
+        this.helper = new ProductTypeHelper();
     }
 
-    public List<ProductType> fillSelector() {
+    public List<ProductType> getFindAll() {
         List<ProductType> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindAllForSelector(language);
+            Query query = helper.getFindAll();
+            for (Object object : query.getResultList()) {
+                list.add((ProductType) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<ProductType> getFindEnable() {
+        List<ProductType> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindEnable();
             for (Object object : query.getResultList()) {
                 list.add((ProductType) object);
             }

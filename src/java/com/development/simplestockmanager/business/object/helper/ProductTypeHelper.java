@@ -13,17 +13,6 @@ public class ProductTypeHelper extends CommonHelper implements BaseTypeHelper {
     public ProductTypeJpaController getJpaController() {
         return new ProductTypeJpaController(entityManagerFactory);
     }
-
-    public Query getFindAllForSelector(String language) {
-        Query query = entityManager.createNamedQuery("ProductType.findAllForSelector");
-        query.setParameter("language", language);
-
-        return query;
-    }
-
-    public Query getFindEnableForSelector(String language) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     @Override
     public Query getFindAll() {
