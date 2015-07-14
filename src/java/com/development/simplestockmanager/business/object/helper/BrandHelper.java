@@ -10,7 +10,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class BrandHelper extends BaseHelper {
+public class BrandHelper extends CommonHelper {
 
     public BrandJpaController getJpaController() {
         return new BrandJpaController(entityManagerFactory);

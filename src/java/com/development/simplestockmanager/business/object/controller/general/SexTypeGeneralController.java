@@ -2,7 +2,7 @@ package com.development.simplestockmanager.business.object.controller.general;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
-import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
+import com.development.simplestockmanager.business.object.helper.SexTypeTranslationHelper;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.controller.SexTypeJpaController;
 
@@ -16,7 +16,7 @@ public class SexTypeGeneralController {
     private final SexTypeJpaController controller;
 
     public SexTypeGeneralController() {
-        SexTypeHelper helper = new SexTypeHelper();
+        SexTypeTranslationHelper helper = new SexTypeTranslationHelper();
         controller = helper.getJpaController();
     }
 

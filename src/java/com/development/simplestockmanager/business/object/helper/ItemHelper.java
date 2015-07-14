@@ -7,7 +7,7 @@ import com.development.simplestockmanager.business.persistence.controller.ItemJp
  *
  * @author foxtrot
  */
-public class ItemHelper extends BaseHelper {
+public class ItemHelper extends CommonHelper {
 
     public ItemJpaController getJpaController() {
         return new ItemJpaController(entityManagerFactory);

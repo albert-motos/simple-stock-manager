@@ -7,7 +7,7 @@ import com.development.simplestockmanager.business.persistence.controller.Paymen
  *
  * @author foxtrot
  */
-public class PaymentTypeHelper extends BaseHelper {
+public class PaymentTypeHelper extends CommonHelper {
 
     public PaymentTypeJpaController getJpaController() {
         return new PaymentTypeJpaController(entityManagerFactory);

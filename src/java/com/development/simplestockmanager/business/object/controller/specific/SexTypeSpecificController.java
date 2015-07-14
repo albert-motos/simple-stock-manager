@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
-import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
+import com.development.simplestockmanager.business.object.helper.SexTypeTranslationHelper;
 import com.development.simplestockmanager.business.persistence.SexType;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class SexTypeSpecificController {
         List<SexType> list = new ArrayList<>();
 
         try {
-            Query query = new SexTypeHelper().getFindAllForSelector(language);
+            Query query = new SexTypeTranslationHelper().getFindAllForSelector(language);
             for (Object object : query.getResultList()) {
                 list.add((SexType) object);
             }
@@ -37,7 +37,7 @@ public class SexTypeSpecificController {
         List<SexType> list = new ArrayList<>();
 
         try {
-            Query query = new SexTypeHelper().getFindEnableForSelector(language);
+            Query query = new SexTypeTranslationHelper().getFindEnableForSelector(language);
             for (Object object : query.getResultList()) {
                 list.add((SexType) object);
             }

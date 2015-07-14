@@ -8,7 +8,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ProviderHelper extends BaseHelper {
+public class ProviderHelper extends CommonHelper {
 
     public ProviderJpaController getJpaController() {
         return new ProviderJpaController(entityManagerFactory);

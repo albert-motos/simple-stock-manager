@@ -11,7 +11,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ProductHelper extends BaseHelper {
+public class ProductHelper extends CommonHelper {
 
     public ProductJpaController getJpaController() {
         return new ProductJpaController(entityManagerFactory);

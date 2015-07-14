@@ -5,6 +5,8 @@ package com.development.simplestockmanager.web.common;
  * @author foxtrot
  */
 public interface WebConstant {
+    
+    public static String UNDEFINED = "undefined";
 
     public interface VALIDATOR {
 
@@ -22,6 +24,7 @@ public interface WebConstant {
 
             public static long ENABLE = 0;
             public static long ALL = 1;
+            public static long NONE = 2;
         }
     }
 

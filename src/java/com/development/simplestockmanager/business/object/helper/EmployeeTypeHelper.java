@@ -8,7 +8,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class EmployeeTypeHelper extends BaseHelper implements BaseTypeHelper {
+public class EmployeeTypeHelper extends CommonHelper implements BaseTypeHelper {
 
     public EmployeeTypeJpaController getJpaController() {
         return new EmployeeTypeJpaController(entityManagerFactory);

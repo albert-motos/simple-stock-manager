@@ -12,7 +12,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ClientHelper extends BaseHelper {
+public class ClientHelper extends CommonHelper {
 
     public ClientJpaController getJpaController() {
         return new ClientJpaController(entityManagerFactory);

@@ -7,7 +7,7 @@ import com.development.simplestockmanager.business.persistence.controller.Invoic
  *
  * @author foxtrot
  */
-public class InvoiceHelper extends BaseHelper {
+public class InvoiceHelper extends CommonHelper {
 
     public InvoiceJpaController getJpaController() {
         return new InvoiceJpaController(entityManagerFactory);

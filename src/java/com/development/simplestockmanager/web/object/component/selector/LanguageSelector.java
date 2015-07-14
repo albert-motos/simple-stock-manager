@@ -3,33 +3,42 @@ package com.development.simplestockmanager.web.object.component.selector;
 import com.development.simplestockmanager.business.object.controller.specific.LanguageSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.LanguageNull;
 import com.development.simplestockmanager.business.persistence.Language;
+import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Selector class for LanguageType object
+ * Selector class for Language object
  *
  * @author foxtrot
  */
-public class LanguageSelector extends BaseSelector {
+public class LanguageSelector extends CommonSelector implements BaseSelector {
 
     private final LanguageSpecificController specificController;
-    private final HashMap<String, Language> hashMap;
+    private HashMap<String, Language> hashMap;
 
     public LanguageSelector(String language) {
+        super(WebConstant.SELECTOR.MODE.NONE, language);
         specificController = new LanguageSpecificController(language);
-        hashMap = new HashMap<>();
-        list = new ArrayList<>();
-        find();
+        search();
     }
 
     @Override
-    public final void find() {
+    public void search() {
+        clear();
+        
         for (Language language : specificController.getFindAllForSelector()) {
             String key = getDisplayName(language);
             hashMap.put(key, language);
             list.add(key);
         }
+    }
+
+    @Override
+    public void clear() {
+        hashMap = new HashMap<>();
+        list = new ArrayList<>();
     }
 
     public Language getSelectedValue() {
@@ -42,8 +51,19 @@ public class LanguageSelector extends BaseSelector {
         return language;
     }
 
-    public String getDisplayName(Language language) {
+    private String getDisplayName(Language language) {
         return language.getLanguage();
     }
-
+    
+    public String getDisplayName(Language language, String code) {
+        String translation = WebConstant.UNDEFINED;
+        
+        for (Language languageTranslation : language.getLanguageList()) {
+            if (languageTranslation.getCode().equals(code)) {
+                translation = getDisplayName(languageTranslation);
+            }
+        }
+        
+        return translation;
+    }
 }

@@ -7,7 +7,7 @@ import com.development.simplestockmanager.business.persistence.controller.Analyt
  *
  * @author foxtrot
  */
-public class AnalyticsTimeHelper extends BaseHelper {
+public class AnalyticsTimeHelper extends CommonHelper {
 
     public AnalyticsTimeJpaController getJpaController() {
         return new AnalyticsTimeJpaController(entityManagerFactory);

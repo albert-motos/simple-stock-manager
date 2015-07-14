@@ -7,7 +7,7 @@ import com.development.simplestockmanager.business.persistence.controller.Record
  *
  * @author foxtrot
  */
-public class RecordHelper extends BaseHelper {
+public class RecordHelper extends CommonHelper {
 
     public RecordJpaController getJpaController() {
         return new RecordJpaController(entityManagerFactory);

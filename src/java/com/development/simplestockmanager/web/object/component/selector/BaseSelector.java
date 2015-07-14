@@ -1,39 +1,19 @@
 package com.development.simplestockmanager.web.object.component.selector;
 
-import java.util.List;
-
 /**
- * Base class for selectors
+ * Selector interface
  *
  * @author foxtrot
  */
-abstract class BaseSelector {
+public interface BaseSelector {
 
-    protected String browser;
-    protected List<String> list;
-    protected String selection;
-    protected long mode;
-
-    abstract public void find();
-
-    public void setBrowser(String browser) {
-        this.browser = browser;
-    }
-
-    public String getBrowser() {
-        return browser;
-    }
-
-    public List<String> getList() {
-        return list;
-    }
-
-    public String getSelection() {
-        return selection;
-    }
-
-    public void setSelection(String selection) {
-        this.selection = selection;
-    }
-
+    /**
+     * Search function for selector
+     */
+    public void search();
+    
+    /**
+     * Clear function for selector
+     */
+    public void clear();
 }

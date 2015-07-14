@@ -7,7 +7,7 @@ import com.development.simplestockmanager.business.persistence.controller.StockJ
  *
  * @author foxtrot
  */
-public class StockHelper extends BaseHelper{
+public class StockHelper extends CommonHelper{
 
     public StockJpaController getJpaController() {
         return new StockJpaController(entityManagerFactory);

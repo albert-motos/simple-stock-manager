@@ -7,7 +7,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class LanguageHelper extends BaseHelper {
+public class LanguageHelper extends CommonHelper {
 
     public Query getFindAllForSelector(String language) {
         Query query = entityManager.createNamedQuery("LanguageType.findAllForSelector");

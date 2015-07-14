@@ -12,12 +12,12 @@ import javax.persistence.Persistence;
  *
  * @author foxtrot
  */
-public class BaseHelper {
+public class CommonHelper {
     
     protected EntityManagerFactory entityManagerFactory;
     protected EntityManager entityManager;
 
-    public BaseHelper() {
+    public CommonHelper() {
         entityManagerFactory = Persistence.createEntityManagerFactory(BusinessConstant.PROJECT.PERSISTENCE_UNIT);
         entityManager = entityManagerFactory.createEntityManager();
     }

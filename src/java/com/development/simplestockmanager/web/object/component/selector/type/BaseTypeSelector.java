@@ -13,6 +13,10 @@ abstract class BaseTypeSelector {
     protected String selection;
     protected long mode;
 
+    public BaseTypeSelector(long mode) {
+        this.mode = mode;
+    }
+    
     public List<String> getList() {
         return list;
     }
