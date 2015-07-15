@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.ProductType;
@@ -46,11 +45,6 @@ public class ProductJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee createdUser = product.getCreatedUser();
-            if (createdUser != null) {
-                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
-                product.setCreatedUser(createdUser);
-            }
             Brand brand = product.getBrand();
             if (brand != null) {
                 brand = em.getReference(brand.getClass(), brand.getId());
@@ -66,11 +60,6 @@ public class ProductJpaController implements Serializable {
                 provider = em.getReference(provider.getClass(), provider.getId());
                 product.setProvider(provider);
             }
-            Employee lastModifiedUser = product.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
-                product.setLastModifiedUser(lastModifiedUser);
-            }
             List<Stock> attachedStockList = new ArrayList<Stock>();
             for (Stock stockListStockToAttach : product.getStockList()) {
                 stockListStockToAttach = em.getReference(stockListStockToAttach.getClass(), stockListStockToAttach.getId());
@@ -78,10 +67,6 @@ public class ProductJpaController implements Serializable {
             }
             product.setStockList(attachedStockList);
             em.persist(product);
-            if (createdUser != null) {
-                createdUser.getProductList().add(product);
-                createdUser = em.merge(createdUser);
-            }
             if (brand != null) {
                 brand.getProductList().add(product);
                 brand = em.merge(brand);
@@ -93,10 +78,6 @@ public class ProductJpaController implements Serializable {
             if (provider != null) {
                 provider.getProductList().add(product);
                 provider = em.merge(provider);
-            }
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getProductList().add(product);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             for (Stock stockListStock : product.getStockList()) {
                 Product oldProductOfStockListStock = stockListStock.getProduct();
@@ -121,16 +102,12 @@ public class ProductJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Product persistentProduct = em.find(Product.class, product.getId());
-            Employee createdUserOld = persistentProduct.getCreatedUser();
-            Employee createdUserNew = product.getCreatedUser();
             Brand brandOld = persistentProduct.getBrand();
             Brand brandNew = product.getBrand();
             ProductType productTypeOld = persistentProduct.getProductType();
             ProductType productTypeNew = product.getProductType();
             Provider providerOld = persistentProduct.getProvider();
             Provider providerNew = product.getProvider();
-            Employee lastModifiedUserOld = persistentProduct.getLastModifiedUser();
-            Employee lastModifiedUserNew = product.getLastModifiedUser();
             List<Stock> stockListOld = persistentProduct.getStockList();
             List<Stock> stockListNew = product.getStockList();
             List<String> illegalOrphanMessages = null;
@@ -145,10 +122,6 @@ public class ProductJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (createdUserNew != null) {
-                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
-                product.setCreatedUser(createdUserNew);
-            }
             if (brandNew != null) {
                 brandNew = em.getReference(brandNew.getClass(), brandNew.getId());
                 product.setBrand(brandNew);
@@ -161,10 +134,6 @@ public class ProductJpaController implements Serializable {
                 providerNew = em.getReference(providerNew.getClass(), providerNew.getId());
                 product.setProvider(providerNew);
             }
-            if (lastModifiedUserNew != null) {
-                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
-                product.setLastModifiedUser(lastModifiedUserNew);
-            }
             List<Stock> attachedStockListNew = new ArrayList<Stock>();
             for (Stock stockListNewStockToAttach : stockListNew) {
                 stockListNewStockToAttach = em.getReference(stockListNewStockToAttach.getClass(), stockListNewStockToAttach.getId());
@@ -173,14 +142,6 @@ public class ProductJpaController implements Serializable {
             stockListNew = attachedStockListNew;
             product.setStockList(stockListNew);
             product = em.merge(product);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getProductList().remove(product);
-                createdUserOld = em.merge(createdUserOld);
-            }
-            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getProductList().add(product);
-                createdUserNew = em.merge(createdUserNew);
-            }
             if (brandOld != null && !brandOld.equals(brandNew)) {
                 brandOld.getProductList().remove(product);
                 brandOld = em.merge(brandOld);
@@ -204,14 +165,6 @@ public class ProductJpaController implements Serializable {
             if (providerNew != null && !providerNew.equals(providerOld)) {
                 providerNew.getProductList().add(product);
                 providerNew = em.merge(providerNew);
-            }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getProductList().remove(product);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
-            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getProductList().add(product);
-                lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             for (Stock stockListNewStock : stockListNew) {
                 if (!stockListOld.contains(stockListNewStock)) {
@@ -264,11 +217,6 @@ public class ProductJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Employee createdUser = product.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getProductList().remove(product);
-                createdUser = em.merge(createdUser);
-            }
             Brand brand = product.getBrand();
             if (brand != null) {
                 brand.getProductList().remove(product);
@@ -283,11 +231,6 @@ public class ProductJpaController implements Serializable {
             if (provider != null) {
                 provider.getProductList().remove(product);
                 provider = em.merge(provider);
-            }
-            Employee lastModifiedUser = product.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getProductList().remove(product);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(product);
             em.getTransaction().commit();

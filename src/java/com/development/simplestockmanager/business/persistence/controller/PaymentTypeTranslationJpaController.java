@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.PaymentType;
 import com.development.simplestockmanager.business.persistence.PaymentTypeTranslation;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -38,21 +37,12 @@ public class PaymentTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Language language = paymentTypeTranslation.getLanguage();
-            if (language != null) {
-                language = em.getReference(language.getClass(), language.getId());
-                paymentTypeTranslation.setLanguage(language);
-            }
             PaymentType reference = paymentTypeTranslation.getReference();
             if (reference != null) {
                 reference = em.getReference(reference.getClass(), reference.getId());
                 paymentTypeTranslation.setReference(reference);
             }
             em.persist(paymentTypeTranslation);
-            if (language != null) {
-                language.getPaymentTypeTranslationList().add(paymentTypeTranslation);
-                language = em.merge(language);
-            }
             if (reference != null) {
                 reference.getPaymentTypeTranslationList().add(paymentTypeTranslation);
                 reference = em.merge(reference);
@@ -71,27 +61,13 @@ public class PaymentTypeTranslationJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             PaymentTypeTranslation persistentPaymentTypeTranslation = em.find(PaymentTypeTranslation.class, paymentTypeTranslation.getId());
-            Language languageOld = persistentPaymentTypeTranslation.getLanguage();
-            Language languageNew = paymentTypeTranslation.getLanguage();
             PaymentType referenceOld = persistentPaymentTypeTranslation.getReference();
             PaymentType referenceNew = paymentTypeTranslation.getReference();
-            if (languageNew != null) {
-                languageNew = em.getReference(languageNew.getClass(), languageNew.getId());
-                paymentTypeTranslation.setLanguage(languageNew);
-            }
             if (referenceNew != null) {
                 referenceNew = em.getReference(referenceNew.getClass(), referenceNew.getId());
                 paymentTypeTranslation.setReference(referenceNew);
             }
             paymentTypeTranslation = em.merge(paymentTypeTranslation);
-            if (languageOld != null && !languageOld.equals(languageNew)) {
-                languageOld.getPaymentTypeTranslationList().remove(paymentTypeTranslation);
-                languageOld = em.merge(languageOld);
-            }
-            if (languageNew != null && !languageNew.equals(languageOld)) {
-                languageNew.getPaymentTypeTranslationList().add(paymentTypeTranslation);
-                languageNew = em.merge(languageNew);
-            }
             if (referenceOld != null && !referenceOld.equals(referenceNew)) {
                 referenceOld.getPaymentTypeTranslationList().remove(paymentTypeTranslation);
                 referenceOld = em.merge(referenceOld);
@@ -128,11 +104,6 @@ public class PaymentTypeTranslationJpaController implements Serializable {
                 paymentTypeTranslation.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The paymentTypeTranslation with id " + id + " no longer exists.", enfe);
-            }
-            Language language = paymentTypeTranslation.getLanguage();
-            if (language != null) {
-                language.getPaymentTypeTranslationList().remove(paymentTypeTranslation);
-                language = em.merge(language);
             }
             PaymentType reference = paymentTypeTranslation.getReference();
             if (reference != null) {

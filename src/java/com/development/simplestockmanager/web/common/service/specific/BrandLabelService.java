@@ -26,7 +26,7 @@ public class BrandLabelService implements Serializable {
 
     public BrandLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         attributes = controller.getWord(CommonConstant.HEADER.BRAND.ATTRIBUTES);
         visibility = controller.getWord(CommonConstant.HEADER.BRAND.VISIBILITY);

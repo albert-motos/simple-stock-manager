@@ -37,7 +37,7 @@ public class BaseCommonController extends SessionController implements Serializa
 
     public BaseCommonController() {
         user = new AuthenticationService().getCurrentEmployee();
-        languageController = new LanguageController(user.getLanguageType().getCode());
+        languageController = new LanguageController(user.getLanguage().getCode());
         action = false;
 
         createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);

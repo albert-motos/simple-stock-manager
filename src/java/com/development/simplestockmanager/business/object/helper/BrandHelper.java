@@ -51,8 +51,4 @@ public class BrandHelper extends CommonHelper {
         
         return entityManager.createQuery(query);
     }
-    
-    public Query getFindAll() {
-        return entityManager.createNamedQuery("Brand.findAll");
-    }
 }

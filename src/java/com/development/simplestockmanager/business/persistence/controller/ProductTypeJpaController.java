@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,16 +46,6 @@ public class ProductTypeJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee createdUser = productType.getCreatedUser();
-            if (createdUser != null) {
-                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
-                productType.setCreatedUser(createdUser);
-            }
-            Employee lastModifiedUser = productType.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
-                productType.setLastModifiedUser(lastModifiedUser);
-            }
             List<ProductTypeTranslation> attachedProductTypeTranslationList = new ArrayList<ProductTypeTranslation>();
             for (ProductTypeTranslation productTypeTranslationListProductTypeTranslationToAttach : productType.getProductTypeTranslationList()) {
                 productTypeTranslationListProductTypeTranslationToAttach = em.getReference(productTypeTranslationListProductTypeTranslationToAttach.getClass(), productTypeTranslationListProductTypeTranslationToAttach.getId());
@@ -70,14 +59,6 @@ public class ProductTypeJpaController implements Serializable {
             }
             productType.setProductList(attachedProductList);
             em.persist(productType);
-            if (createdUser != null) {
-                createdUser.getProductTypeList().add(productType);
-                createdUser = em.merge(createdUser);
-            }
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getProductTypeList().add(productType);
-                lastModifiedUser = em.merge(lastModifiedUser);
-            }
             for (ProductTypeTranslation productTypeTranslationListProductTypeTranslation : productType.getProductTypeTranslationList()) {
                 ProductType oldReferenceOfProductTypeTranslationListProductTypeTranslation = productTypeTranslationListProductTypeTranslation.getReference();
                 productTypeTranslationListProductTypeTranslation.setReference(productType);
@@ -110,10 +91,6 @@ public class ProductTypeJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             ProductType persistentProductType = em.find(ProductType.class, productType.getId());
-            Employee createdUserOld = persistentProductType.getCreatedUser();
-            Employee createdUserNew = productType.getCreatedUser();
-            Employee lastModifiedUserOld = persistentProductType.getLastModifiedUser();
-            Employee lastModifiedUserNew = productType.getLastModifiedUser();
             List<ProductTypeTranslation> productTypeTranslationListOld = persistentProductType.getProductTypeTranslationList();
             List<ProductTypeTranslation> productTypeTranslationListNew = productType.getProductTypeTranslationList();
             List<Product> productListOld = persistentProductType.getProductList();
@@ -138,14 +115,6 @@ public class ProductTypeJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (createdUserNew != null) {
-                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
-                productType.setCreatedUser(createdUserNew);
-            }
-            if (lastModifiedUserNew != null) {
-                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
-                productType.setLastModifiedUser(lastModifiedUserNew);
-            }
             List<ProductTypeTranslation> attachedProductTypeTranslationListNew = new ArrayList<ProductTypeTranslation>();
             for (ProductTypeTranslation productTypeTranslationListNewProductTypeTranslationToAttach : productTypeTranslationListNew) {
                 productTypeTranslationListNewProductTypeTranslationToAttach = em.getReference(productTypeTranslationListNewProductTypeTranslationToAttach.getClass(), productTypeTranslationListNewProductTypeTranslationToAttach.getId());
@@ -161,22 +130,6 @@ public class ProductTypeJpaController implements Serializable {
             productListNew = attachedProductListNew;
             productType.setProductList(productListNew);
             productType = em.merge(productType);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getProductTypeList().remove(productType);
-                createdUserOld = em.merge(createdUserOld);
-            }
-            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getProductTypeList().add(productType);
-                createdUserNew = em.merge(createdUserNew);
-            }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getProductTypeList().remove(productType);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
-            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getProductTypeList().add(productType);
-                lastModifiedUserNew = em.merge(lastModifiedUserNew);
-            }
             for (ProductTypeTranslation productTypeTranslationListNewProductTypeTranslation : productTypeTranslationListNew) {
                 if (!productTypeTranslationListOld.contains(productTypeTranslationListNewProductTypeTranslation)) {
                     ProductType oldReferenceOfProductTypeTranslationListNewProductTypeTranslation = productTypeTranslationListNewProductTypeTranslation.getReference();
@@ -245,16 +198,6 @@ public class ProductTypeJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Employee createdUser = productType.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getProductTypeList().remove(productType);
-                createdUser = em.merge(createdUser);
-            }
-            Employee lastModifiedUser = productType.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getProductTypeList().remove(productType);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(productType);
             em.getTransaction().commit();

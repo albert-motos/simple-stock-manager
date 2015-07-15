@@ -55,7 +55,7 @@ public class LabelService implements Serializable {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.LABEL.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         firstname = controller.getWord(CommonConstant.LABEL.FIRSTNAME);
         lastname = controller.getWord(CommonConstant.LABEL.LASTNAME);

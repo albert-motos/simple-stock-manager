@@ -26,7 +26,7 @@ public class ProductLabelService implements Serializable {
 
     public ProductLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         attributes = controller.getWord(CommonConstant.HEADER.PRODUCT.ATTRIBUTES);
         visibility = controller.getWord(CommonConstant.HEADER.PRODUCT.VISIBILITY);

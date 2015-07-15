@@ -11,7 +11,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -43,16 +42,6 @@ public class BrandJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee createdUser = brand.getCreatedUser();
-            if (createdUser != null) {
-                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
-                brand.setCreatedUser(createdUser);
-            }
-            Employee lastModifiedUser = brand.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
-                brand.setLastModifiedUser(lastModifiedUser);
-            }
             List<Product> attachedProductList = new ArrayList<Product>();
             for (Product productListProductToAttach : brand.getProductList()) {
                 productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getId());
@@ -60,14 +49,6 @@ public class BrandJpaController implements Serializable {
             }
             brand.setProductList(attachedProductList);
             em.persist(brand);
-            if (createdUser != null) {
-                createdUser.getBrandList().add(brand);
-                createdUser = em.merge(createdUser);
-            }
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getBrandList().add(brand);
-                lastModifiedUser = em.merge(lastModifiedUser);
-            }
             for (Product productListProduct : brand.getProductList()) {
                 Brand oldBrandOfProductListProduct = productListProduct.getBrand();
                 productListProduct.setBrand(brand);
@@ -91,10 +72,6 @@ public class BrandJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Brand persistentBrand = em.find(Brand.class, brand.getId());
-            Employee createdUserOld = persistentBrand.getCreatedUser();
-            Employee createdUserNew = brand.getCreatedUser();
-            Employee lastModifiedUserOld = persistentBrand.getLastModifiedUser();
-            Employee lastModifiedUserNew = brand.getLastModifiedUser();
             List<Product> productListOld = persistentBrand.getProductList();
             List<Product> productListNew = brand.getProductList();
             List<String> illegalOrphanMessages = null;
@@ -109,14 +86,6 @@ public class BrandJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (createdUserNew != null) {
-                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
-                brand.setCreatedUser(createdUserNew);
-            }
-            if (lastModifiedUserNew != null) {
-                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
-                brand.setLastModifiedUser(lastModifiedUserNew);
-            }
             List<Product> attachedProductListNew = new ArrayList<Product>();
             for (Product productListNewProductToAttach : productListNew) {
                 productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getId());
@@ -125,22 +94,6 @@ public class BrandJpaController implements Serializable {
             productListNew = attachedProductListNew;
             brand.setProductList(productListNew);
             brand = em.merge(brand);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getBrandList().remove(brand);
-                createdUserOld = em.merge(createdUserOld);
-            }
-            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getBrandList().add(brand);
-                createdUserNew = em.merge(createdUserNew);
-            }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getBrandList().remove(brand);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
-            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getBrandList().add(brand);
-                lastModifiedUserNew = em.merge(lastModifiedUserNew);
-            }
             for (Product productListNewProduct : productListNew) {
                 if (!productListOld.contains(productListNewProduct)) {
                     Brand oldBrandOfProductListNewProduct = productListNewProduct.getBrand();
@@ -191,16 +144,6 @@ public class BrandJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Employee createdUser = brand.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getBrandList().remove(brand);
-                createdUser = em.merge(createdUser);
-            }
-            Employee lastModifiedUser = brand.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getBrandList().remove(brand);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(brand);
             em.getTransaction().commit();

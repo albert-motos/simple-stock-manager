@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.Provider;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
@@ -43,16 +42,6 @@ public class ProviderJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee createdUser = provider.getCreatedUser();
-            if (createdUser != null) {
-                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
-                provider.setCreatedUser(createdUser);
-            }
-            Employee lastModifiedUser = provider.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
-                provider.setLastModifiedUser(lastModifiedUser);
-            }
             List<Product> attachedProductList = new ArrayList<Product>();
             for (Product productListProductToAttach : provider.getProductList()) {
                 productListProductToAttach = em.getReference(productListProductToAttach.getClass(), productListProductToAttach.getId());
@@ -60,14 +49,6 @@ public class ProviderJpaController implements Serializable {
             }
             provider.setProductList(attachedProductList);
             em.persist(provider);
-            if (createdUser != null) {
-                createdUser.getProviderList().add(provider);
-                createdUser = em.merge(createdUser);
-            }
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getProviderList().add(provider);
-                lastModifiedUser = em.merge(lastModifiedUser);
-            }
             for (Product productListProduct : provider.getProductList()) {
                 Provider oldProviderOfProductListProduct = productListProduct.getProvider();
                 productListProduct.setProvider(provider);
@@ -91,10 +72,6 @@ public class ProviderJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Provider persistentProvider = em.find(Provider.class, provider.getId());
-            Employee createdUserOld = persistentProvider.getCreatedUser();
-            Employee createdUserNew = provider.getCreatedUser();
-            Employee lastModifiedUserOld = persistentProvider.getLastModifiedUser();
-            Employee lastModifiedUserNew = provider.getLastModifiedUser();
             List<Product> productListOld = persistentProvider.getProductList();
             List<Product> productListNew = provider.getProductList();
             List<String> illegalOrphanMessages = null;
@@ -109,14 +86,6 @@ public class ProviderJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (createdUserNew != null) {
-                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
-                provider.setCreatedUser(createdUserNew);
-            }
-            if (lastModifiedUserNew != null) {
-                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
-                provider.setLastModifiedUser(lastModifiedUserNew);
-            }
             List<Product> attachedProductListNew = new ArrayList<Product>();
             for (Product productListNewProductToAttach : productListNew) {
                 productListNewProductToAttach = em.getReference(productListNewProductToAttach.getClass(), productListNewProductToAttach.getId());
@@ -125,22 +94,6 @@ public class ProviderJpaController implements Serializable {
             productListNew = attachedProductListNew;
             provider.setProductList(productListNew);
             provider = em.merge(provider);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getProviderList().remove(provider);
-                createdUserOld = em.merge(createdUserOld);
-            }
-            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getProviderList().add(provider);
-                createdUserNew = em.merge(createdUserNew);
-            }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getProviderList().remove(provider);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
-            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getProviderList().add(provider);
-                lastModifiedUserNew = em.merge(lastModifiedUserNew);
-            }
             for (Product productListNewProduct : productListNew) {
                 if (!productListOld.contains(productListNewProduct)) {
                     Provider oldProviderOfProductListNewProduct = productListNewProduct.getProvider();
@@ -191,16 +144,6 @@ public class ProviderJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Employee createdUser = provider.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getProviderList().remove(provider);
-                createdUser = em.merge(createdUser);
-            }
-            Employee lastModifiedUser = provider.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getProviderList().remove(provider);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(provider);
             em.getTransaction().commit();

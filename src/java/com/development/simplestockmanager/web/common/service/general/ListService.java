@@ -33,7 +33,7 @@ public class ListService implements Serializable {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.LABEL.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
         
         actions = controller.getWord(CommonConstant.LIST.COLUMN.ACTIONS);
         status = controller.getWord(CommonConstant.LIST.COLUMN.STATUS.TEXT);

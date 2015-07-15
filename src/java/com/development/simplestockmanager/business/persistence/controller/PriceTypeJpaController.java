@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Price;
 import com.development.simplestockmanager.business.persistence.PriceType;
 import java.util.ArrayList;
@@ -47,16 +46,6 @@ public class PriceTypeJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee createdUser = priceType.getCreatedUser();
-            if (createdUser != null) {
-                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
-                priceType.setCreatedUser(createdUser);
-            }
-            Employee lastModifiedUser = priceType.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
-                priceType.setLastModifiedUser(lastModifiedUser);
-            }
             List<Price> attachedPriceList = new ArrayList<Price>();
             for (Price priceListPriceToAttach : priceType.getPriceList()) {
                 priceListPriceToAttach = em.getReference(priceListPriceToAttach.getClass(), priceListPriceToAttach.getId());
@@ -70,14 +59,6 @@ public class PriceTypeJpaController implements Serializable {
             }
             priceType.setPriceTypeTranslationList(attachedPriceTypeTranslationList);
             em.persist(priceType);
-            if (createdUser != null) {
-                createdUser.getPriceTypeList().add(priceType);
-                createdUser = em.merge(createdUser);
-            }
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getPriceTypeList().add(priceType);
-                lastModifiedUser = em.merge(lastModifiedUser);
-            }
             for (Price priceListPrice : priceType.getPriceList()) {
                 PriceType oldPriceTypeOfPriceListPrice = priceListPrice.getPriceType();
                 priceListPrice.setPriceType(priceType);
@@ -110,10 +91,6 @@ public class PriceTypeJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             PriceType persistentPriceType = em.find(PriceType.class, priceType.getId());
-            Employee createdUserOld = persistentPriceType.getCreatedUser();
-            Employee createdUserNew = priceType.getCreatedUser();
-            Employee lastModifiedUserOld = persistentPriceType.getLastModifiedUser();
-            Employee lastModifiedUserNew = priceType.getLastModifiedUser();
             List<Price> priceListOld = persistentPriceType.getPriceList();
             List<Price> priceListNew = priceType.getPriceList();
             List<PriceTypeTranslation> priceTypeTranslationListOld = persistentPriceType.getPriceTypeTranslationList();
@@ -138,14 +115,6 @@ public class PriceTypeJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (createdUserNew != null) {
-                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
-                priceType.setCreatedUser(createdUserNew);
-            }
-            if (lastModifiedUserNew != null) {
-                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
-                priceType.setLastModifiedUser(lastModifiedUserNew);
-            }
             List<Price> attachedPriceListNew = new ArrayList<Price>();
             for (Price priceListNewPriceToAttach : priceListNew) {
                 priceListNewPriceToAttach = em.getReference(priceListNewPriceToAttach.getClass(), priceListNewPriceToAttach.getId());
@@ -161,22 +130,6 @@ public class PriceTypeJpaController implements Serializable {
             priceTypeTranslationListNew = attachedPriceTypeTranslationListNew;
             priceType.setPriceTypeTranslationList(priceTypeTranslationListNew);
             priceType = em.merge(priceType);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getPriceTypeList().remove(priceType);
-                createdUserOld = em.merge(createdUserOld);
-            }
-            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getPriceTypeList().add(priceType);
-                createdUserNew = em.merge(createdUserNew);
-            }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getPriceTypeList().remove(priceType);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
-            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getPriceTypeList().add(priceType);
-                lastModifiedUserNew = em.merge(lastModifiedUserNew);
-            }
             for (Price priceListNewPrice : priceListNew) {
                 if (!priceListOld.contains(priceListNewPrice)) {
                     PriceType oldPriceTypeOfPriceListNewPrice = priceListNewPrice.getPriceType();
@@ -245,16 +198,6 @@ public class PriceTypeJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Employee createdUser = priceType.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getPriceTypeList().remove(priceType);
-                createdUser = em.merge(createdUser);
-            }
-            Employee lastModifiedUser = priceType.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getPriceTypeList().remove(priceType);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(priceType);
             em.getTransaction().commit();

@@ -4,6 +4,7 @@ import com.development.simplestockmanager.business.object.helper.EmployeeHelper;
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeNull;
 import com.development.simplestockmanager.business.persistence.Employee;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 
@@ -59,6 +60,24 @@ public class EmployeeSpecificController {
         return employee;
     }
 
+    public List<Employee> findAllForBrowser(Employee browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
+            long createdUserID, long lastModifiedUserID) {
+        List<Employee> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindForBrowserQuery(browser.getBornDate(), browser.getEmail(), browser.getEmployeeType().getId(), browser.getFirstname(),
+                    browser.getLanguage().getId(), browser.getLastname(), browser.getPhone(), browser.getSexType().getId(), browser.getUsername(), status,
+                    createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+            for (Object object : query.getResultList()) {
+                list.add((Employee) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
     public List<Employee> getFindAllByBrowser(String browser) {
         List<Employee> list = new ArrayList<>();
 

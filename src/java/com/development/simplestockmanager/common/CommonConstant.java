@@ -229,7 +229,7 @@ public interface CommonConstant {
             public static String EMAIL = TEXT + ".email";
             public static String SUMMARY = TEXT + ".summary";
             public static String EMPLOYEE_TYPE = TEXT + ".employeetype";
-            public static String LANGUAGE_TYPE = TEXT + ".languagetype";
+            public static String LANGUAGE = TEXT + ".language";
             public static String USERNAME = TEXT + ".username";
             public static String PASSWORD = TEXT + ".password";
             public static String NAME = TEXT + ".name";

@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.PriceType;
 import com.development.simplestockmanager.business.persistence.PriceTypeTranslation;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -38,21 +37,12 @@ public class PriceTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Language language = priceTypeTranslation.getLanguage();
-            if (language != null) {
-                language = em.getReference(language.getClass(), language.getId());
-                priceTypeTranslation.setLanguage(language);
-            }
             PriceType reference = priceTypeTranslation.getReference();
             if (reference != null) {
                 reference = em.getReference(reference.getClass(), reference.getId());
                 priceTypeTranslation.setReference(reference);
             }
             em.persist(priceTypeTranslation);
-            if (language != null) {
-                language.getPriceTypeTranslationList().add(priceTypeTranslation);
-                language = em.merge(language);
-            }
             if (reference != null) {
                 reference.getPriceTypeTranslationList().add(priceTypeTranslation);
                 reference = em.merge(reference);
@@ -71,27 +61,13 @@ public class PriceTypeTranslationJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             PriceTypeTranslation persistentPriceTypeTranslation = em.find(PriceTypeTranslation.class, priceTypeTranslation.getId());
-            Language languageOld = persistentPriceTypeTranslation.getLanguage();
-            Language languageNew = priceTypeTranslation.getLanguage();
             PriceType referenceOld = persistentPriceTypeTranslation.getReference();
             PriceType referenceNew = priceTypeTranslation.getReference();
-            if (languageNew != null) {
-                languageNew = em.getReference(languageNew.getClass(), languageNew.getId());
-                priceTypeTranslation.setLanguage(languageNew);
-            }
             if (referenceNew != null) {
                 referenceNew = em.getReference(referenceNew.getClass(), referenceNew.getId());
                 priceTypeTranslation.setReference(referenceNew);
             }
             priceTypeTranslation = em.merge(priceTypeTranslation);
-            if (languageOld != null && !languageOld.equals(languageNew)) {
-                languageOld.getPriceTypeTranslationList().remove(priceTypeTranslation);
-                languageOld = em.merge(languageOld);
-            }
-            if (languageNew != null && !languageNew.equals(languageOld)) {
-                languageNew.getPriceTypeTranslationList().add(priceTypeTranslation);
-                languageNew = em.merge(languageNew);
-            }
             if (referenceOld != null && !referenceOld.equals(referenceNew)) {
                 referenceOld.getPriceTypeTranslationList().remove(priceTypeTranslation);
                 referenceOld = em.merge(referenceOld);
@@ -128,11 +104,6 @@ public class PriceTypeTranslationJpaController implements Serializable {
                 priceTypeTranslation.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The priceTypeTranslation with id " + id + " no longer exists.", enfe);
-            }
-            Language language = priceTypeTranslation.getLanguage();
-            if (language != null) {
-                language.getPriceTypeTranslationList().remove(priceTypeTranslation);
-                language = em.merge(language);
             }
             PriceType reference = priceTypeTranslation.getReference();
             if (reference != null) {

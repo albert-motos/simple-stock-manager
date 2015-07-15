@@ -1,9 +1,15 @@
 package com.development.simplestockmanager.web.controller.edit;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.EditController;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
+import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
+import java.util.Date;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -17,23 +23,62 @@ import javax.faces.bean.ViewScoped;
 public class EmployeeEditController extends EmployeeCommonController implements EditController {
 
     private Employee baseEmployee;
-    
+
     public EmployeeEditController() {
         super(WebConstant.VALIDATOR.MODE.EDIT);
-        
-//        try {
-//            employee = (Employee) receiveObjectFromSession(WebConstant.SESSION.EMPLOYEE);
-//            baseEmployee = new Client(client);
-//        } catch (Exception e) {
-//            back();
-//        }
-//        
-//        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, client.getSexType(), languageController.getLanguage());
+
+        try {
+            employee = (Employee) receiveObjectFromSession(WebConstant.SESSION.EMPLOYEE);
+            baseEmployee = new Employee(employee);
+        } catch (Exception e) {
+            back();
+        }
+
+        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getSexType());
+        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getEmployeeType());
     }
 
     @Override
     public void edit() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        employee.setSexType(sexTypeSelector.getSelectedValue());
+        employee.setEmployeeType(employeeTypeSelector.getSelectedValue());
+
+        if (employee.equals(baseEmployee)) {
+            action = true;
+            severity = FacesMessage.SEVERITY_INFO;
+            summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
+            detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + employee.getId()
+                    + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.NONE);
+
+            getContext().addMessage(null, new FacesMessage(severity, summary, detail));
+        } else {
+            validator.setObject(employee);
+
+            if (validator.validate()) {
+                employee.setLastModifiedDate(new Date());
+                employee.setLastModifiedUser(user);
+
+                Long status = generalController.update(employee);
+
+                if (status == BusinessConstant.UPDATE.FAILURE) {
+                    severity = FacesMessage.SEVERITY_FATAL;
+                    summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
+                    detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                } else {
+                    action = true;
+                    severity = FacesMessage.SEVERITY_INFO;
+                    summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
+                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + employee.getId()
+                            + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.EDIT);
+                }
+
+                getContext().addMessage(null, new FacesMessage(severity, summary, detail));
+            } else {
+                for (FacesMessage message : validator.getMessageList()) {
+                    getContext().addMessage(null, message);
+                }
+            }
+        }
     }
-    
+
 }

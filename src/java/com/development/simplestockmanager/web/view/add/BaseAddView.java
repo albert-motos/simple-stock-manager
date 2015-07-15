@@ -20,7 +20,7 @@ abstract class BaseAddView implements Serializable {
 
     public BaseAddView() {
         user = new AuthenticationService().getCurrentEmployee();
-        internationalizationController = new LanguageController(user.getLanguageType().getCode());
+        internationalizationController = new LanguageController(user.getLanguage().getCode());
         added = false;
     }
 

@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -38,21 +37,12 @@ public class ProductTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Language language = productTypeTranslation.getLanguage();
-            if (language != null) {
-                language = em.getReference(language.getClass(), language.getId());
-                productTypeTranslation.setLanguage(language);
-            }
             ProductType reference = productTypeTranslation.getReference();
             if (reference != null) {
                 reference = em.getReference(reference.getClass(), reference.getId());
                 productTypeTranslation.setReference(reference);
             }
             em.persist(productTypeTranslation);
-            if (language != null) {
-                language.getProductTypeTranslationList().add(productTypeTranslation);
-                language = em.merge(language);
-            }
             if (reference != null) {
                 reference.getProductTypeTranslationList().add(productTypeTranslation);
                 reference = em.merge(reference);
@@ -71,27 +61,13 @@ public class ProductTypeTranslationJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             ProductTypeTranslation persistentProductTypeTranslation = em.find(ProductTypeTranslation.class, productTypeTranslation.getId());
-            Language languageOld = persistentProductTypeTranslation.getLanguage();
-            Language languageNew = productTypeTranslation.getLanguage();
             ProductType referenceOld = persistentProductTypeTranslation.getReference();
             ProductType referenceNew = productTypeTranslation.getReference();
-            if (languageNew != null) {
-                languageNew = em.getReference(languageNew.getClass(), languageNew.getId());
-                productTypeTranslation.setLanguage(languageNew);
-            }
             if (referenceNew != null) {
                 referenceNew = em.getReference(referenceNew.getClass(), referenceNew.getId());
                 productTypeTranslation.setReference(referenceNew);
             }
             productTypeTranslation = em.merge(productTypeTranslation);
-            if (languageOld != null && !languageOld.equals(languageNew)) {
-                languageOld.getProductTypeTranslationList().remove(productTypeTranslation);
-                languageOld = em.merge(languageOld);
-            }
-            if (languageNew != null && !languageNew.equals(languageOld)) {
-                languageNew.getProductTypeTranslationList().add(productTypeTranslation);
-                languageNew = em.merge(languageNew);
-            }
             if (referenceOld != null && !referenceOld.equals(referenceNew)) {
                 referenceOld.getProductTypeTranslationList().remove(productTypeTranslation);
                 referenceOld = em.merge(referenceOld);
@@ -128,11 +104,6 @@ public class ProductTypeTranslationJpaController implements Serializable {
                 productTypeTranslation.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The productTypeTranslation with id " + id + " no longer exists.", enfe);
-            }
-            Language language = productTypeTranslation.getLanguage();
-            if (language != null) {
-                language.getProductTypeTranslationList().remove(productTypeTranslation);
-                language = em.merge(language);
             }
             ProductType reference = productTypeTranslation.getReference();
             if (reference != null) {

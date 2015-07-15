@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.PriceType;
 import com.development.simplestockmanager.business.persistence.Stock;
 import com.development.simplestockmanager.business.persistence.Item;
@@ -45,11 +44,6 @@ public class PriceJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee createdUser = price.getCreatedUser();
-            if (createdUser != null) {
-                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
-                price.setCreatedUser(createdUser);
-            }
             PriceType priceType = price.getPriceType();
             if (priceType != null) {
                 priceType = em.getReference(priceType.getClass(), priceType.getId());
@@ -60,11 +54,6 @@ public class PriceJpaController implements Serializable {
                 stock = em.getReference(stock.getClass(), stock.getId());
                 price.setStock(stock);
             }
-            Employee lastModifiedUser = price.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
-                price.setLastModifiedUser(lastModifiedUser);
-            }
             List<Item> attachedItemList = new ArrayList<Item>();
             for (Item itemListItemToAttach : price.getItemList()) {
                 itemListItemToAttach = em.getReference(itemListItemToAttach.getClass(), itemListItemToAttach.getId());
@@ -72,10 +61,6 @@ public class PriceJpaController implements Serializable {
             }
             price.setItemList(attachedItemList);
             em.persist(price);
-            if (createdUser != null) {
-                createdUser.getPriceList().add(price);
-                createdUser = em.merge(createdUser);
-            }
             if (priceType != null) {
                 priceType.getPriceList().add(price);
                 priceType = em.merge(priceType);
@@ -83,10 +68,6 @@ public class PriceJpaController implements Serializable {
             if (stock != null) {
                 stock.getPriceList().add(price);
                 stock = em.merge(stock);
-            }
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getPriceList().add(price);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             for (Item itemListItem : price.getItemList()) {
                 Price oldPriceOfItemListItem = itemListItem.getPrice();
@@ -111,14 +92,10 @@ public class PriceJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Price persistentPrice = em.find(Price.class, price.getId());
-            Employee createdUserOld = persistentPrice.getCreatedUser();
-            Employee createdUserNew = price.getCreatedUser();
             PriceType priceTypeOld = persistentPrice.getPriceType();
             PriceType priceTypeNew = price.getPriceType();
             Stock stockOld = persistentPrice.getStock();
             Stock stockNew = price.getStock();
-            Employee lastModifiedUserOld = persistentPrice.getLastModifiedUser();
-            Employee lastModifiedUserNew = price.getLastModifiedUser();
             List<Item> itemListOld = persistentPrice.getItemList();
             List<Item> itemListNew = price.getItemList();
             List<String> illegalOrphanMessages = null;
@@ -133,10 +110,6 @@ public class PriceJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (createdUserNew != null) {
-                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
-                price.setCreatedUser(createdUserNew);
-            }
             if (priceTypeNew != null) {
                 priceTypeNew = em.getReference(priceTypeNew.getClass(), priceTypeNew.getId());
                 price.setPriceType(priceTypeNew);
@@ -144,10 +117,6 @@ public class PriceJpaController implements Serializable {
             if (stockNew != null) {
                 stockNew = em.getReference(stockNew.getClass(), stockNew.getId());
                 price.setStock(stockNew);
-            }
-            if (lastModifiedUserNew != null) {
-                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
-                price.setLastModifiedUser(lastModifiedUserNew);
             }
             List<Item> attachedItemListNew = new ArrayList<Item>();
             for (Item itemListNewItemToAttach : itemListNew) {
@@ -157,14 +126,6 @@ public class PriceJpaController implements Serializable {
             itemListNew = attachedItemListNew;
             price.setItemList(itemListNew);
             price = em.merge(price);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getPriceList().remove(price);
-                createdUserOld = em.merge(createdUserOld);
-            }
-            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getPriceList().add(price);
-                createdUserNew = em.merge(createdUserNew);
-            }
             if (priceTypeOld != null && !priceTypeOld.equals(priceTypeNew)) {
                 priceTypeOld.getPriceList().remove(price);
                 priceTypeOld = em.merge(priceTypeOld);
@@ -180,14 +141,6 @@ public class PriceJpaController implements Serializable {
             if (stockNew != null && !stockNew.equals(stockOld)) {
                 stockNew.getPriceList().add(price);
                 stockNew = em.merge(stockNew);
-            }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getPriceList().remove(price);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
-            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getPriceList().add(price);
-                lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             for (Item itemListNewItem : itemListNew) {
                 if (!itemListOld.contains(itemListNewItem)) {
@@ -240,11 +193,6 @@ public class PriceJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Employee createdUser = price.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getPriceList().remove(price);
-                createdUser = em.merge(createdUser);
-            }
             PriceType priceType = price.getPriceType();
             if (priceType != null) {
                 priceType.getPriceList().remove(price);
@@ -254,11 +202,6 @@ public class PriceJpaController implements Serializable {
             if (stock != null) {
                 stock.getPriceList().remove(price);
                 stock = em.merge(stock);
-            }
-            Employee lastModifiedUser = price.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getPriceList().remove(price);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(price);
             em.getTransaction().commit();

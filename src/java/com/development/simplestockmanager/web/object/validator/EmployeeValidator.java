@@ -77,8 +77,8 @@ public class EmployeeValidator extends BaseValidator {
             fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE_TYPE));
         }
         
-        if (employee.getLanguageType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.LANGUAGE_TYPE));
+        if (employee.getLanguage().getId() == BusinessConstant.IDENTIFIER.INVALID) {
+            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.LANGUAGE));
         }
 
         return fieldsEmptyList;

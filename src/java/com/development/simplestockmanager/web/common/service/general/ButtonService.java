@@ -29,7 +29,7 @@ public class ButtonService implements Serializable {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.BUTTON.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         add = controller.getWord(CommonConstant.BUTTON.ADD);
         cancel = controller.getWord(CommonConstant.BUTTON.CANCEL);

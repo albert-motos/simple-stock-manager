@@ -30,7 +30,7 @@ public class EmployeeLabelService implements Serializable {
         System.out.println("# " + new Date() + " | " + EmployeeLabelService.class.getCanonicalName());
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         attributes = controller.getWord(CommonConstant.HEADER.EMPLOYE.ATTRIBUTES);
         credentials = controller.getWord(CommonConstant.HEADER.EMPLOYE.CREDENTIALS);

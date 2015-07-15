@@ -53,16 +53,10 @@ public class Language implements Serializable {
     @JoinColumn(name = "REFERENCE", referencedColumnName = "ID")
     @ManyToOne
     private Language reference;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "languageType")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
     private List<Employee> employeeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
     private List<SexTypeTranslation> sexTypeTranslationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private List<PriceTypeTranslation> priceTypeTranslationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private List<ProductTypeTranslation> productTypeTranslationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private List<PaymentTypeTranslation> paymentTypeTranslationList;
 
     public Language() {
     }
@@ -137,33 +131,6 @@ public class Language implements Serializable {
 
     public void setSexTypeTranslationList(List<SexTypeTranslation> sexTypeTranslationList) {
         this.sexTypeTranslationList = sexTypeTranslationList;
-    }
-
-    @XmlTransient
-    public List<PriceTypeTranslation> getPriceTypeTranslationList() {
-        return priceTypeTranslationList;
-    }
-
-    public void setPriceTypeTranslationList(List<PriceTypeTranslation> priceTypeTranslationList) {
-        this.priceTypeTranslationList = priceTypeTranslationList;
-    }
-
-    @XmlTransient
-    public List<ProductTypeTranslation> getProductTypeTranslationList() {
-        return productTypeTranslationList;
-    }
-
-    public void setProductTypeTranslationList(List<ProductTypeTranslation> productTypeTranslationList) {
-        this.productTypeTranslationList = productTypeTranslationList;
-    }
-
-    @XmlTransient
-    public List<PaymentTypeTranslation> getPaymentTypeTranslationList() {
-        return paymentTypeTranslationList;
-    }
-
-    public void setPaymentTypeTranslationList(List<PaymentTypeTranslation> paymentTypeTranslationList) {
-        this.paymentTypeTranslationList = paymentTypeTranslationList;
     }
 
     @Override

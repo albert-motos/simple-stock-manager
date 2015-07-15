@@ -1,6 +1,10 @@
 package com.development.simplestockmanager.business.object.helper;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.controller.EmployeeJpaController;
+import com.development.simplestockmanager.web.common.WebConstant;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Query;
 
 /**
@@ -48,5 +52,27 @@ public class EmployeeHelper extends CommonHelper {
         query.setParameter("browser","%" + browser + "%");
         
         return query;
+    }
+    
+    public Query getFindForBrowserQuery(Date bornDate, String email, long employeeTypeID, String firstname, long languageID, String lastname, String phone,
+            long sexTypeID, String username, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo, 
+            long createdUserID, long lastModifiedUserID) {
+        
+        String query = "SELECT e FROM Employee e where 1 = 1"
+                + (bornDate ==  null ? "" : " AND e.bornDate = '" + new Timestamp(bornDate.getTime()) + "'")
+                + (email.isEmpty() ? "" : " AND e.email LIKE '%" + email + "%'")
+                + (employeeTypeID == BusinessConstant.IDENTIFIER.INVALID ? "" : " AND e.employeeType.id = " + employeeTypeID)
+                + (firstname.isEmpty() ? "" : " AND e.firstname LIKE '%" + firstname + "%'")
+                + (languageID == BusinessConstant.IDENTIFIER.INVALID ? "" : " AND e.language.id = " + employeeTypeID)
+                + (lastname.isEmpty() ? "" : " AND e.lastname LIKE '%" + lastname + "%'")
+                + (phone.isEmpty() ? "" : " AND e.phone LIKE '%" + phone + "%'")
+                + (sexTypeID == BusinessConstant.IDENTIFIER.INVALID ? "" : " AND e.sexType.id = " + sexTypeID)
+                + (username.isEmpty() ? "" : " AND e.username LIKE '%" + username + "%'")
+                + (status == WebConstant.STATUS.HIDDEN ? " AND b.enable = FALSE" : "")
+                + (status == WebConstant.STATUS.VISIBLE ? " AND b.enable = TRUE" : "")
+                + getAuditoryQuery("e", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+        System.out.println("# " + query);
+        
+        return entityManager.createQuery(query);
     }
 }

@@ -26,7 +26,7 @@ public class ProviderLabelService implements Serializable {
 
     public ProviderLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         attributes = controller.getWord(CommonConstant.HEADER.PROVIDER.ATTRIBUTES);
         visibility = controller.getWord(CommonConstant.HEADER.PROVIDER.VISIBILITY);

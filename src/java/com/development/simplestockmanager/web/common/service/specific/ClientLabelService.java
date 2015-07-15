@@ -26,7 +26,7 @@ public class ClientLabelService implements Serializable {
 
     public ClientLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         attributes = controller.getWord(CommonConstant.HEADER.CLIENT.ATTRIBUTES);
         visibility = controller.getWord(CommonConstant.HEADER.CLIENT.VISIBILITY);

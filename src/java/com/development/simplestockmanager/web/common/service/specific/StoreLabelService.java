@@ -27,7 +27,7 @@ public class StoreLabelService implements Serializable {
 
     public StoreLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         attributes = controller.getWord(CommonConstant.HEADER.STORE.ATTRIBUTES);
         manager = controller.getWord(CommonConstant.HEADER.STORE.MANAGER);

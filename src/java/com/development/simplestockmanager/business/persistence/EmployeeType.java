@@ -63,14 +63,14 @@ public class EmployeeType implements Serializable {
     private Date lastModifiedDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
     private List<EmployeeTypeTranslation> employeeTypeTranslationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeType")
-    private List<Employee> employeeList;
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee createdUser;
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeType")
+    private List<Employee> employeeList;
 
     public EmployeeType() {
     }
@@ -136,15 +136,6 @@ public class EmployeeType implements Serializable {
         this.employeeTypeTranslationList = employeeTypeTranslationList;
     }
 
-    @XmlTransient
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
-    }
-
     public Employee getCreatedUser() {
         return createdUser;
     }
@@ -159,6 +150,15 @@ public class EmployeeType implements Serializable {
 
     public void setLastModifiedUser(Employee lastModifiedUser) {
         this.lastModifiedUser = lastModifiedUser;
+    }
+
+    @XmlTransient
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 
     @Override

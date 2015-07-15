@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.Store;
 import com.development.simplestockmanager.business.persistence.Price;
@@ -53,11 +52,6 @@ public class StockJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee createdUser = stock.getCreatedUser();
-            if (createdUser != null) {
-                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
-                stock.setCreatedUser(createdUser);
-            }
             Product product = stock.getProduct();
             if (product != null) {
                 product = em.getReference(product.getClass(), product.getId());
@@ -67,11 +61,6 @@ public class StockJpaController implements Serializable {
             if (store != null) {
                 store = em.getReference(store.getClass(), store.getId());
                 stock.setStore(store);
-            }
-            Employee lastModifiedUser = stock.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
-                stock.setLastModifiedUser(lastModifiedUser);
             }
             List<Price> attachedPriceList = new ArrayList<Price>();
             for (Price priceListPriceToAttach : stock.getPriceList()) {
@@ -92,10 +81,6 @@ public class StockJpaController implements Serializable {
             }
             stock.setItemList(attachedItemList);
             em.persist(stock);
-            if (createdUser != null) {
-                createdUser.getStockList().add(stock);
-                createdUser = em.merge(createdUser);
-            }
             if (product != null) {
                 product.getStockList().add(stock);
                 product = em.merge(product);
@@ -103,10 +88,6 @@ public class StockJpaController implements Serializable {
             if (store != null) {
                 store.getStockList().add(stock);
                 store = em.merge(store);
-            }
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getStockList().add(stock);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             for (Price priceListPrice : stock.getPriceList()) {
                 Stock oldStockOfPriceListPrice = priceListPrice.getStock();
@@ -149,14 +130,10 @@ public class StockJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Stock persistentStock = em.find(Stock.class, stock.getId());
-            Employee createdUserOld = persistentStock.getCreatedUser();
-            Employee createdUserNew = stock.getCreatedUser();
             Product productOld = persistentStock.getProduct();
             Product productNew = stock.getProduct();
             Store storeOld = persistentStock.getStore();
             Store storeNew = stock.getStore();
-            Employee lastModifiedUserOld = persistentStock.getLastModifiedUser();
-            Employee lastModifiedUserNew = stock.getLastModifiedUser();
             List<Price> priceListOld = persistentStock.getPriceList();
             List<Price> priceListNew = stock.getPriceList();
             List<Record> recordListOld = persistentStock.getRecordList();
@@ -191,10 +168,6 @@ public class StockJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (createdUserNew != null) {
-                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
-                stock.setCreatedUser(createdUserNew);
-            }
             if (productNew != null) {
                 productNew = em.getReference(productNew.getClass(), productNew.getId());
                 stock.setProduct(productNew);
@@ -202,10 +175,6 @@ public class StockJpaController implements Serializable {
             if (storeNew != null) {
                 storeNew = em.getReference(storeNew.getClass(), storeNew.getId());
                 stock.setStore(storeNew);
-            }
-            if (lastModifiedUserNew != null) {
-                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
-                stock.setLastModifiedUser(lastModifiedUserNew);
             }
             List<Price> attachedPriceListNew = new ArrayList<Price>();
             for (Price priceListNewPriceToAttach : priceListNew) {
@@ -229,14 +198,6 @@ public class StockJpaController implements Serializable {
             itemListNew = attachedItemListNew;
             stock.setItemList(itemListNew);
             stock = em.merge(stock);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getStockList().remove(stock);
-                createdUserOld = em.merge(createdUserOld);
-            }
-            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getStockList().add(stock);
-                createdUserNew = em.merge(createdUserNew);
-            }
             if (productOld != null && !productOld.equals(productNew)) {
                 productOld.getStockList().remove(stock);
                 productOld = em.merge(productOld);
@@ -252,14 +213,6 @@ public class StockJpaController implements Serializable {
             if (storeNew != null && !storeNew.equals(storeOld)) {
                 storeNew.getStockList().add(stock);
                 storeNew = em.merge(storeNew);
-            }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getStockList().remove(stock);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
-            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getStockList().add(stock);
-                lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             for (Price priceListNewPrice : priceListNew) {
                 if (!priceListOld.contains(priceListNewPrice)) {
@@ -348,11 +301,6 @@ public class StockJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Employee createdUser = stock.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getStockList().remove(stock);
-                createdUser = em.merge(createdUser);
-            }
             Product product = stock.getProduct();
             if (product != null) {
                 product.getStockList().remove(stock);
@@ -362,11 +310,6 @@ public class StockJpaController implements Serializable {
             if (store != null) {
                 store.getStockList().remove(stock);
                 store = em.merge(store);
-            }
-            Employee lastModifiedUser = stock.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getStockList().remove(stock);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(stock);
             em.getTransaction().commit();

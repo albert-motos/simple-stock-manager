@@ -42,7 +42,7 @@ public class MenuService implements Serializable {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.MENU.CONSTRUCTOR);
 
         Employee user = new AuthenticationService().getCurrentEmployee();
-        LanguageController controller = new LanguageController(user.getLanguageType().getCode());
+        LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
         entity = controller.getWord(CommonConstant.MENU.ENTITY.TEXT);
         brand = controller.getWord(CommonConstant.MENU.ENTITY.BRAND.TEXT);
