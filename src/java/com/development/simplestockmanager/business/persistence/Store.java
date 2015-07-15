@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Store.findByCreatedDate", query = "SELECT s FROM Store s WHERE s.createdDate = :createdDate"),
     @NamedQuery(name = "Store.findByLastModifiedDate", query = "SELECT s FROM Store s WHERE s.lastModifiedDate = :lastModifiedDate")})
 public class Store implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,17 +97,16 @@ public class Store implements Serializable {
         this.id = id;
     }
 
-    public Store(Long id, String name, String street, String city, String state, String country, String phone, boolean enable, Date createdDate, Date lastModifiedDate) {
-        this.id = id;
-        this.name = name;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.country = country;
-        this.phone = phone;
-        this.enable = enable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
+    public Store(Store store) {
+        this.city = store.city;
+        this.country = store.country;
+        this.employee = store.employee;
+        this.enable = store.enable;
+        this.id = store.id;
+        this.name = store.name;
+        this.phone = store.phone;
+        this.state = store.state;
+        this.street = store.street;
     }
 
     public Long getId() {
@@ -228,27 +224,58 @@ public class Store implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.name);
+        hash = 41 * hash + Objects.hashCode(this.street);
+        hash = 41 * hash + Objects.hashCode(this.city);
+        hash = 41 * hash + Objects.hashCode(this.state);
+        hash = 41 * hash + Objects.hashCode(this.country);
+        hash = 41 * hash + Objects.hashCode(this.phone);
+        hash = 41 * hash + (this.enable ? 1 : 0);
+        hash = 41 * hash + Objects.hashCode(this.employee);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Store)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Store other = (Store) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Store other = (Store) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.street, other.street)) {
+            return false;
+        }
+        if (!Objects.equals(this.city, other.city)) {
+            return false;
+        }
+        if (!Objects.equals(this.state, other.state)) {
+            return false;
+        }
+        if (!Objects.equals(this.country, other.country)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        return Objects.equals(this.employee, other.employee);
     }
 
     @Override
     public String toString() {
         return "com.development.simplestockmanager.business.persistence.Store[ id=" + id + " ]";
     }
-    
+
 }
