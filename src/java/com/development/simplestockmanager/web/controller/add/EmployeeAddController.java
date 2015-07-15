@@ -7,6 +7,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.AddController;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
 import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.LanguageSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -14,7 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 /**
- * Search view controller class for Client object
+ * Search view controller class for Employee object
  *
  * @author foxtrot
  */
@@ -27,6 +28,7 @@ public class EmployeeAddController extends EmployeeCommonController implements A
         employee = new Employee();
         sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
         employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
+        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, languageController.getLanguage());
     }
 
     @Override

@@ -6,6 +6,9 @@ import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.Provider;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Query;
 
 /**
@@ -31,5 +34,22 @@ public class ProductSpecificController {
         }
         
         return product;
+    }
+    
+    public List<Product> findAllForBrowser(Product browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
+            long createdUserID, long lastModifiedUserID) {
+        List<Product> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindForBrowserQuery(browser.getBrand().getId(), browser.getDescription(), browser.getName(), browser.getProductType().getId(),
+                    browser.getProvider().getId(), status, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+            for (Object object : query.getResultList()) {
+                list.add((Product) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
     }
 }

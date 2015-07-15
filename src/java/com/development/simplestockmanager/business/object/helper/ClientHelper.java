@@ -18,6 +18,20 @@ public class ClientHelper extends CommonHelper {
         return new ClientJpaController(entityManagerFactory);
     }
 
+    public Query getFindAllByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Client.getFindAllByBrowser");
+        query.setParameter("browser", "%" + browser + "%");
+        
+        return query;
+    }
+    
+    public Query getFindEnableByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Client.getFindEnableByBrowser");
+        query.setParameter("browser", "%" + browser + "%");
+        
+        return query;
+    }
+    
     public Query getFindForBrowserQuery(String firstname, String lastname, long sexType, Date bornDate, String phone, String email, long status,
             Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo, long createdUserID, long lastModifiedUserID) {
 
@@ -35,4 +49,5 @@ public class ClientHelper extends CommonHelper {
 
         return entityManager.createQuery(query);
     }
+    
 }

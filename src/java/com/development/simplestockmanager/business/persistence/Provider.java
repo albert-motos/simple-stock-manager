@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -88,14 +84,13 @@ public class Provider implements Serializable {
         this.id = id;
     }
 
-    public Provider(Long id, String name, String phone, String email, boolean enable, Date createdDate, Date lastModifiedDate) {
-        this.id = id;
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.enable = enable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
+    public Provider(Provider provider) {
+        this.email = provider.email;
+        this.enable = provider.enable;
+        this.id = provider.id;
+        this.identifier = provider.identifier;
+        this.name = provider.name;
+        this.phone = provider.phone;
     }
 
     public Long getId() {
@@ -189,22 +184,41 @@ public class Provider implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.identifier);
+        hash = 37 * hash + Objects.hashCode(this.phone);
+        hash = 37 * hash + Objects.hashCode(this.email);
+        hash = 37 * hash + (this.enable ? 1 : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Provider)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Provider other = (Provider) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final Provider other = (Provider) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.identifier, other.identifier)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return this.enable == other.enable;
     }
 
     @Override

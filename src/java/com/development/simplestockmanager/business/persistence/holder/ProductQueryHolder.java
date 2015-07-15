@@ -13,7 +13,10 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Product.findByRelation", query = "SELECT p FROM Product p WHERE p.productType = :productType AND p.brand = :brand AND p.provider = :provider")})
+    @NamedQuery(
+            name = "Product.findByRelation",
+            query = "SELECT p FROM Product p WHERE p.productType = :productType AND p.brand = :brand AND p.provider = :provider")
+})
 public class ProductQueryHolder implements Serializable {
 
     @Id

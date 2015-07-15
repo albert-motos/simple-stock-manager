@@ -37,4 +37,34 @@ public class ClientSpecificController {
 
         return list;
     }
+    
+    public List<Client> getFindAllByBrowser(String browser) {
+        List<Client> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindAllByBrowser(browser);
+            for (Object object : query.getResultList()) {
+                list.add((Client) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<Client> getFindEnableByBrowser(String browser) {
+        List<Client> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindEnableByBrowser(browser);
+            for (Object object : query.getResultList()) {
+                list.add((Client) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
 }

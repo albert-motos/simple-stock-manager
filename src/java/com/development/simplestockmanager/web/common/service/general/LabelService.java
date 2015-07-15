@@ -26,7 +26,7 @@ public class LabelService implements Serializable {
     private final String email;
     private final String usernamme;
     private final String password;
-    private final String languageType;
+    private final String language;
     private final String employeeType;
     private final String name;
     private final String description;
@@ -65,7 +65,7 @@ public class LabelService implements Serializable {
         email = controller.getWord(CommonConstant.LABEL.EMAIL);
         usernamme = controller.getWord(CommonConstant.LABEL.USERNAME);
         password = controller.getWord(CommonConstant.LABEL.PASSWORD);
-        languageType = controller.getWord(CommonConstant.LABEL.LANGUAGE_TYPE);
+        language = controller.getWord(CommonConstant.LABEL.LANGUAGE_TYPE);
         employeeType = controller.getWord(CommonConstant.LABEL.EMPLOYEE_TYPE);
         name = controller.getWord(CommonConstant.LABEL.NAME);
         description = controller.getWord(CommonConstant.LABEL.DESCRIPTION);
@@ -123,8 +123,8 @@ public class LabelService implements Serializable {
         return password;
     }
 
-    public String getLanguageType() {
-        return languageType;
+    public String getLanguage() {
+        return language;
     }
 
     public String getEmployeeType() {

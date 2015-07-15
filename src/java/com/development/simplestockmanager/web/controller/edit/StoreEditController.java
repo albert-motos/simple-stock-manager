@@ -1,67 +1,57 @@
 package com.development.simplestockmanager.web.controller.edit;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
-import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.Store;
 import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.common.service.general.NavigationService;
+import com.development.simplestockmanager.web.controller.common.StoreCommonController;
 import com.development.simplestockmanager.web.controller.common.EditController;
-import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
-import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
-import com.development.simplestockmanager.web.object.component.selector.type.LanguageSelector;
-import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 /**
- * Edit view controller class for Employee object
+ * Edit view controller class for Store object
  *
  * @author foxtrot
  */
-@ManagedBean(name = "employeeEdit")
+@ManagedBean(name = "storeEdit")
 @ViewScoped
-public class EmployeeEditController extends EmployeeCommonController implements EditController {
+public class StoreEditController extends StoreCommonController implements EditController {
 
-    private Employee baseEmployee;
+    private Store baseStore;
 
-    public EmployeeEditController() {
+    public StoreEditController() {
         super(WebConstant.VALIDATOR.MODE.EDIT);
-
+        
         try {
-            employee = (Employee) receiveObjectFromSession(WebConstant.SESSION.EMPLOYEE);
-            baseEmployee = new Employee(employee);
+            store = (Store) receiveObjectFromSession(WebConstant.SESSION.STORE);
+            baseStore = new Store(store);
         } catch (Exception e) {
             back();
         }
-
-        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getSexType());
-        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getEmployeeType());
-        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, languageController.getLanguage(), employee.getLanguage());
     }
-
+    
     @Override
     public void edit() {
-        employee.setSexType(sexTypeSelector.getSelectedValue());
-        employee.setEmployeeType(employeeTypeSelector.getSelectedValue());
-        employee.setLanguage(languageSelector.getSelectedValue());
-
-        if (employee.equals(baseEmployee)) {
+        if (store.equals(baseStore)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
             summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-            detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + employee.getId()
+            detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.STORE) + store.getId()
                     + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.NONE);
-
+            
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));
         } else {
-            validator.setObject(employee);
+            validator.setObject(store);
 
             if (validator.validate()) {
-                employee.setLastModifiedDate(new Date());
-                employee.setLastModifiedUser(user);
+                store.setLastModifiedDate(new Date());
+                store.setLastModifiedUser(user);
 
-                Long status = generalController.update(employee);
+                Long status = generalController.update(store);
 
                 if (status == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
@@ -71,7 +61,7 @@ public class EmployeeEditController extends EmployeeCommonController implements 
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
                     summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + employee.getId()
+                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.STORE) + store.getId()
                             + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.EDIT);
                 }
 
@@ -83,5 +73,10 @@ public class EmployeeEditController extends EmployeeCommonController implements 
             }
         }
     }
-
+    
+    @Override
+    public final void back() {
+        new NavigationService().redirect(WebConstant.WEB.SEARCH.STORE);
+    }
+    
 }
