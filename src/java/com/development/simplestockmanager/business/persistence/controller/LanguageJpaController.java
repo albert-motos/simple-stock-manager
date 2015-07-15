@@ -5,17 +5,17 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
+import com.development.simplestockmanager.business.persistence.Language;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.development.simplestockmanager.business.persistence.Language;
-import java.util.ArrayList;
-import java.util.List;
-import com.development.simplestockmanager.business.persistence.Employee;
+import com.development.simplestockmanager.business.persistence.LanguageTranslation;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -35,54 +35,45 @@ public class LanguageJpaController implements Serializable {
     }
 
     public void create(Language language) {
-        if (language.getLanguageList() == null) {
-            language.setLanguageList(new ArrayList<Language>());
+        if (language.getLanguageTranslationList() == null) {
+            language.setLanguageTranslationList(new ArrayList<LanguageTranslation>());
         }
-        if (language.getEmployeeList() == null) {
-            language.setEmployeeList(new ArrayList<Employee>());
+        if (language.getLanguageTranslationList1() == null) {
+            language.setLanguageTranslationList1(new ArrayList<LanguageTranslation>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Language reference = language.getReference();
-            if (reference != null) {
-                reference = em.getReference(reference.getClass(), reference.getId());
-                language.setReference(reference);
+            List<LanguageTranslation> attachedLanguageTranslationList = new ArrayList<LanguageTranslation>();
+            for (LanguageTranslation languageTranslationListLanguageTranslationToAttach : language.getLanguageTranslationList()) {
+                languageTranslationListLanguageTranslationToAttach = em.getReference(languageTranslationListLanguageTranslationToAttach.getClass(), languageTranslationListLanguageTranslationToAttach.getId());
+                attachedLanguageTranslationList.add(languageTranslationListLanguageTranslationToAttach);
             }
-            List<Language> attachedLanguageList = new ArrayList<Language>();
-            for (Language languageListLanguageToAttach : language.getLanguageList()) {
-                languageListLanguageToAttach = em.getReference(languageListLanguageToAttach.getClass(), languageListLanguageToAttach.getId());
-                attachedLanguageList.add(languageListLanguageToAttach);
+            language.setLanguageTranslationList(attachedLanguageTranslationList);
+            List<LanguageTranslation> attachedLanguageTranslationList1 = new ArrayList<LanguageTranslation>();
+            for (LanguageTranslation languageTranslationList1LanguageTranslationToAttach : language.getLanguageTranslationList1()) {
+                languageTranslationList1LanguageTranslationToAttach = em.getReference(languageTranslationList1LanguageTranslationToAttach.getClass(), languageTranslationList1LanguageTranslationToAttach.getId());
+                attachedLanguageTranslationList1.add(languageTranslationList1LanguageTranslationToAttach);
             }
-            language.setLanguageList(attachedLanguageList);
-            List<Employee> attachedEmployeeList = new ArrayList<Employee>();
-            for (Employee employeeListEmployeeToAttach : language.getEmployeeList()) {
-                employeeListEmployeeToAttach = em.getReference(employeeListEmployeeToAttach.getClass(), employeeListEmployeeToAttach.getId());
-                attachedEmployeeList.add(employeeListEmployeeToAttach);
-            }
-            language.setEmployeeList(attachedEmployeeList);
+            language.setLanguageTranslationList1(attachedLanguageTranslationList1);
             em.persist(language);
-            if (reference != null) {
-                reference.getLanguageList().add(language);
-                reference = em.merge(reference);
-            }
-            for (Language languageListLanguage : language.getLanguageList()) {
-                Language oldReferenceOfLanguageListLanguage = languageListLanguage.getReference();
-                languageListLanguage.setReference(language);
-                languageListLanguage = em.merge(languageListLanguage);
-                if (oldReferenceOfLanguageListLanguage != null) {
-                    oldReferenceOfLanguageListLanguage.getLanguageList().remove(languageListLanguage);
-                    oldReferenceOfLanguageListLanguage = em.merge(oldReferenceOfLanguageListLanguage);
+            for (LanguageTranslation languageTranslationListLanguageTranslation : language.getLanguageTranslationList()) {
+                Language oldLanguageOfLanguageTranslationListLanguageTranslation = languageTranslationListLanguageTranslation.getLanguage();
+                languageTranslationListLanguageTranslation.setLanguage(language);
+                languageTranslationListLanguageTranslation = em.merge(languageTranslationListLanguageTranslation);
+                if (oldLanguageOfLanguageTranslationListLanguageTranslation != null) {
+                    oldLanguageOfLanguageTranslationListLanguageTranslation.getLanguageTranslationList().remove(languageTranslationListLanguageTranslation);
+                    oldLanguageOfLanguageTranslationListLanguageTranslation = em.merge(oldLanguageOfLanguageTranslationListLanguageTranslation);
                 }
             }
-            for (Employee employeeListEmployee : language.getEmployeeList()) {
-                Language oldLanguageOfEmployeeListEmployee = employeeListEmployee.getLanguage();
-                employeeListEmployee.setLanguage(language);
-                employeeListEmployee = em.merge(employeeListEmployee);
-                if (oldLanguageOfEmployeeListEmployee != null) {
-                    oldLanguageOfEmployeeListEmployee.getEmployeeList().remove(employeeListEmployee);
-                    oldLanguageOfEmployeeListEmployee = em.merge(oldLanguageOfEmployeeListEmployee);
+            for (LanguageTranslation languageTranslationList1LanguageTranslation : language.getLanguageTranslationList1()) {
+                Language oldReferenceOfLanguageTranslationList1LanguageTranslation = languageTranslationList1LanguageTranslation.getReference();
+                languageTranslationList1LanguageTranslation.setReference(language);
+                languageTranslationList1LanguageTranslation = em.merge(languageTranslationList1LanguageTranslation);
+                if (oldReferenceOfLanguageTranslationList1LanguageTranslation != null) {
+                    oldReferenceOfLanguageTranslationList1LanguageTranslation.getLanguageTranslationList1().remove(languageTranslationList1LanguageTranslation);
+                    oldReferenceOfLanguageTranslationList1LanguageTranslation = em.merge(oldReferenceOfLanguageTranslationList1LanguageTranslation);
                 }
             }
             em.getTransaction().commit();
@@ -99,76 +90,64 @@ public class LanguageJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Language persistentLanguage = em.find(Language.class, language.getId());
-            Language referenceOld = persistentLanguage.getReference();
-            Language referenceNew = language.getReference();
-            List<Language> languageListOld = persistentLanguage.getLanguageList();
-            List<Language> languageListNew = language.getLanguageList();
-            List<Employee> employeeListOld = persistentLanguage.getEmployeeList();
-            List<Employee> employeeListNew = language.getEmployeeList();
+            List<LanguageTranslation> languageTranslationListOld = persistentLanguage.getLanguageTranslationList();
+            List<LanguageTranslation> languageTranslationListNew = language.getLanguageTranslationList();
+            List<LanguageTranslation> languageTranslationList1Old = persistentLanguage.getLanguageTranslationList1();
+            List<LanguageTranslation> languageTranslationList1New = language.getLanguageTranslationList1();
             List<String> illegalOrphanMessages = null;
-            for (Employee employeeListOldEmployee : employeeListOld) {
-                if (!employeeListNew.contains(employeeListOldEmployee)) {
+            for (LanguageTranslation languageTranslationListOldLanguageTranslation : languageTranslationListOld) {
+                if (!languageTranslationListNew.contains(languageTranslationListOldLanguageTranslation)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Employee " + employeeListOldEmployee + " since its language field is not nullable.");
+                    illegalOrphanMessages.add("You must retain LanguageTranslation " + languageTranslationListOldLanguageTranslation + " since its language field is not nullable.");
+                }
+            }
+            for (LanguageTranslation languageTranslationList1OldLanguageTranslation : languageTranslationList1Old) {
+                if (!languageTranslationList1New.contains(languageTranslationList1OldLanguageTranslation)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain LanguageTranslation " + languageTranslationList1OldLanguageTranslation + " since its reference field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (referenceNew != null) {
-                referenceNew = em.getReference(referenceNew.getClass(), referenceNew.getId());
-                language.setReference(referenceNew);
+            List<LanguageTranslation> attachedLanguageTranslationListNew = new ArrayList<LanguageTranslation>();
+            for (LanguageTranslation languageTranslationListNewLanguageTranslationToAttach : languageTranslationListNew) {
+                languageTranslationListNewLanguageTranslationToAttach = em.getReference(languageTranslationListNewLanguageTranslationToAttach.getClass(), languageTranslationListNewLanguageTranslationToAttach.getId());
+                attachedLanguageTranslationListNew.add(languageTranslationListNewLanguageTranslationToAttach);
             }
-            List<Language> attachedLanguageListNew = new ArrayList<Language>();
-            for (Language languageListNewLanguageToAttach : languageListNew) {
-                languageListNewLanguageToAttach = em.getReference(languageListNewLanguageToAttach.getClass(), languageListNewLanguageToAttach.getId());
-                attachedLanguageListNew.add(languageListNewLanguageToAttach);
+            languageTranslationListNew = attachedLanguageTranslationListNew;
+            language.setLanguageTranslationList(languageTranslationListNew);
+            List<LanguageTranslation> attachedLanguageTranslationList1New = new ArrayList<LanguageTranslation>();
+            for (LanguageTranslation languageTranslationList1NewLanguageTranslationToAttach : languageTranslationList1New) {
+                languageTranslationList1NewLanguageTranslationToAttach = em.getReference(languageTranslationList1NewLanguageTranslationToAttach.getClass(), languageTranslationList1NewLanguageTranslationToAttach.getId());
+                attachedLanguageTranslationList1New.add(languageTranslationList1NewLanguageTranslationToAttach);
             }
-            languageListNew = attachedLanguageListNew;
-            language.setLanguageList(languageListNew);
-            List<Employee> attachedEmployeeListNew = new ArrayList<Employee>();
-            for (Employee employeeListNewEmployeeToAttach : employeeListNew) {
-                employeeListNewEmployeeToAttach = em.getReference(employeeListNewEmployeeToAttach.getClass(), employeeListNewEmployeeToAttach.getId());
-                attachedEmployeeListNew.add(employeeListNewEmployeeToAttach);
-            }
-            employeeListNew = attachedEmployeeListNew;
-            language.setEmployeeList(employeeListNew);
+            languageTranslationList1New = attachedLanguageTranslationList1New;
+            language.setLanguageTranslationList1(languageTranslationList1New);
             language = em.merge(language);
-            if (referenceOld != null && !referenceOld.equals(referenceNew)) {
-                referenceOld.getLanguageList().remove(language);
-                referenceOld = em.merge(referenceOld);
-            }
-            if (referenceNew != null && !referenceNew.equals(referenceOld)) {
-                referenceNew.getLanguageList().add(language);
-                referenceNew = em.merge(referenceNew);
-            }
-            for (Language languageListOldLanguage : languageListOld) {
-                if (!languageListNew.contains(languageListOldLanguage)) {
-                    languageListOldLanguage.setReference(null);
-                    languageListOldLanguage = em.merge(languageListOldLanguage);
-                }
-            }
-            for (Language languageListNewLanguage : languageListNew) {
-                if (!languageListOld.contains(languageListNewLanguage)) {
-                    Language oldReferenceOfLanguageListNewLanguage = languageListNewLanguage.getReference();
-                    languageListNewLanguage.setReference(language);
-                    languageListNewLanguage = em.merge(languageListNewLanguage);
-                    if (oldReferenceOfLanguageListNewLanguage != null && !oldReferenceOfLanguageListNewLanguage.equals(language)) {
-                        oldReferenceOfLanguageListNewLanguage.getLanguageList().remove(languageListNewLanguage);
-                        oldReferenceOfLanguageListNewLanguage = em.merge(oldReferenceOfLanguageListNewLanguage);
+            for (LanguageTranslation languageTranslationListNewLanguageTranslation : languageTranslationListNew) {
+                if (!languageTranslationListOld.contains(languageTranslationListNewLanguageTranslation)) {
+                    Language oldLanguageOfLanguageTranslationListNewLanguageTranslation = languageTranslationListNewLanguageTranslation.getLanguage();
+                    languageTranslationListNewLanguageTranslation.setLanguage(language);
+                    languageTranslationListNewLanguageTranslation = em.merge(languageTranslationListNewLanguageTranslation);
+                    if (oldLanguageOfLanguageTranslationListNewLanguageTranslation != null && !oldLanguageOfLanguageTranslationListNewLanguageTranslation.equals(language)) {
+                        oldLanguageOfLanguageTranslationListNewLanguageTranslation.getLanguageTranslationList().remove(languageTranslationListNewLanguageTranslation);
+                        oldLanguageOfLanguageTranslationListNewLanguageTranslation = em.merge(oldLanguageOfLanguageTranslationListNewLanguageTranslation);
                     }
                 }
             }
-            for (Employee employeeListNewEmployee : employeeListNew) {
-                if (!employeeListOld.contains(employeeListNewEmployee)) {
-                    Language oldLanguageOfEmployeeListNewEmployee = employeeListNewEmployee.getLanguage();
-                    employeeListNewEmployee.setLanguage(language);
-                    employeeListNewEmployee = em.merge(employeeListNewEmployee);
-                    if (oldLanguageOfEmployeeListNewEmployee != null && !oldLanguageOfEmployeeListNewEmployee.equals(language)) {
-                        oldLanguageOfEmployeeListNewEmployee.getEmployeeList().remove(employeeListNewEmployee);
-                        oldLanguageOfEmployeeListNewEmployee = em.merge(oldLanguageOfEmployeeListNewEmployee);
+            for (LanguageTranslation languageTranslationList1NewLanguageTranslation : languageTranslationList1New) {
+                if (!languageTranslationList1Old.contains(languageTranslationList1NewLanguageTranslation)) {
+                    Language oldReferenceOfLanguageTranslationList1NewLanguageTranslation = languageTranslationList1NewLanguageTranslation.getReference();
+                    languageTranslationList1NewLanguageTranslation.setReference(language);
+                    languageTranslationList1NewLanguageTranslation = em.merge(languageTranslationList1NewLanguageTranslation);
+                    if (oldReferenceOfLanguageTranslationList1NewLanguageTranslation != null && !oldReferenceOfLanguageTranslationList1NewLanguageTranslation.equals(language)) {
+                        oldReferenceOfLanguageTranslationList1NewLanguageTranslation.getLanguageTranslationList1().remove(languageTranslationList1NewLanguageTranslation);
+                        oldReferenceOfLanguageTranslationList1NewLanguageTranslation = em.merge(oldReferenceOfLanguageTranslationList1NewLanguageTranslation);
                     }
                 }
             }
@@ -202,25 +181,22 @@ public class LanguageJpaController implements Serializable {
                 throw new NonexistentEntityException("The language with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Employee> employeeListOrphanCheck = language.getEmployeeList();
-            for (Employee employeeListOrphanCheckEmployee : employeeListOrphanCheck) {
+            List<LanguageTranslation> languageTranslationListOrphanCheck = language.getLanguageTranslationList();
+            for (LanguageTranslation languageTranslationListOrphanCheckLanguageTranslation : languageTranslationListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Language (" + language + ") cannot be destroyed since the Employee " + employeeListOrphanCheckEmployee + " in its employeeList field has a non-nullable language field.");
+                illegalOrphanMessages.add("This Language (" + language + ") cannot be destroyed since the LanguageTranslation " + languageTranslationListOrphanCheckLanguageTranslation + " in its languageTranslationList field has a non-nullable language field.");
+            }
+            List<LanguageTranslation> languageTranslationList1OrphanCheck = language.getLanguageTranslationList1();
+            for (LanguageTranslation languageTranslationList1OrphanCheckLanguageTranslation : languageTranslationList1OrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Language (" + language + ") cannot be destroyed since the LanguageTranslation " + languageTranslationList1OrphanCheckLanguageTranslation + " in its languageTranslationList1 field has a non-nullable reference field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Language reference = language.getReference();
-            if (reference != null) {
-                reference.getLanguageList().remove(language);
-                reference = em.merge(reference);
-            }
-            List<Language> languageList = language.getLanguageList();
-            for (Language languageListLanguage : languageList) {
-                languageListLanguage.setReference(null);
-                languageListLanguage = em.merge(languageListLanguage);
             }
             em.remove(language);
             em.getTransaction().commit();

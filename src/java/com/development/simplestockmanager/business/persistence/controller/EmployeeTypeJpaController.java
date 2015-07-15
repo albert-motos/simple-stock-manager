@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
+import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.IllegalOrphanException;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.util.ArrayList;
@@ -35,6 +36,9 @@ public class EmployeeTypeJpaController implements Serializable {
     }
 
     public void create(EmployeeType employeeType) {
+        if (employeeType.getEmployeeTypeTranslationList() == null) {
+            employeeType.setEmployeeTypeTranslationList(new ArrayList<EmployeeTypeTranslation>());
+        }
         if (employeeType.getEmployeeList() == null) {
             employeeType.setEmployeeList(new ArrayList<Employee>());
         }
@@ -52,6 +56,12 @@ public class EmployeeTypeJpaController implements Serializable {
                 lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
                 employeeType.setLastModifiedUser(lastModifiedUser);
             }
+            List<EmployeeTypeTranslation> attachedEmployeeTypeTranslationList = new ArrayList<EmployeeTypeTranslation>();
+            for (EmployeeTypeTranslation employeeTypeTranslationListEmployeeTypeTranslationToAttach : employeeType.getEmployeeTypeTranslationList()) {
+                employeeTypeTranslationListEmployeeTypeTranslationToAttach = em.getReference(employeeTypeTranslationListEmployeeTypeTranslationToAttach.getClass(), employeeTypeTranslationListEmployeeTypeTranslationToAttach.getId());
+                attachedEmployeeTypeTranslationList.add(employeeTypeTranslationListEmployeeTypeTranslationToAttach);
+            }
+            employeeType.setEmployeeTypeTranslationList(attachedEmployeeTypeTranslationList);
             List<Employee> attachedEmployeeList = new ArrayList<Employee>();
             for (Employee employeeListEmployeeToAttach : employeeType.getEmployeeList()) {
                 employeeListEmployeeToAttach = em.getReference(employeeListEmployeeToAttach.getClass(), employeeListEmployeeToAttach.getId());
@@ -66,6 +76,15 @@ public class EmployeeTypeJpaController implements Serializable {
             if (lastModifiedUser != null) {
                 lastModifiedUser.getEmployeeTypeList().add(employeeType);
                 lastModifiedUser = em.merge(lastModifiedUser);
+            }
+            for (EmployeeTypeTranslation employeeTypeTranslationListEmployeeTypeTranslation : employeeType.getEmployeeTypeTranslationList()) {
+                EmployeeType oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation = employeeTypeTranslationListEmployeeTypeTranslation.getReference();
+                employeeTypeTranslationListEmployeeTypeTranslation.setReference(employeeType);
+                employeeTypeTranslationListEmployeeTypeTranslation = em.merge(employeeTypeTranslationListEmployeeTypeTranslation);
+                if (oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation != null) {
+                    oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation.getEmployeeTypeTranslationList().remove(employeeTypeTranslationListEmployeeTypeTranslation);
+                    oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation = em.merge(oldReferenceOfEmployeeTypeTranslationListEmployeeTypeTranslation);
+                }
             }
             for (Employee employeeListEmployee : employeeType.getEmployeeList()) {
                 EmployeeType oldEmployeeTypeOfEmployeeListEmployee = employeeListEmployee.getEmployeeType();
@@ -94,9 +113,19 @@ public class EmployeeTypeJpaController implements Serializable {
             Employee createdUserNew = employeeType.getCreatedUser();
             Employee lastModifiedUserOld = persistentEmployeeType.getLastModifiedUser();
             Employee lastModifiedUserNew = employeeType.getLastModifiedUser();
+            List<EmployeeTypeTranslation> employeeTypeTranslationListOld = persistentEmployeeType.getEmployeeTypeTranslationList();
+            List<EmployeeTypeTranslation> employeeTypeTranslationListNew = employeeType.getEmployeeTypeTranslationList();
             List<Employee> employeeListOld = persistentEmployeeType.getEmployeeList();
             List<Employee> employeeListNew = employeeType.getEmployeeList();
             List<String> illegalOrphanMessages = null;
+            for (EmployeeTypeTranslation employeeTypeTranslationListOldEmployeeTypeTranslation : employeeTypeTranslationListOld) {
+                if (!employeeTypeTranslationListNew.contains(employeeTypeTranslationListOldEmployeeTypeTranslation)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain EmployeeTypeTranslation " + employeeTypeTranslationListOldEmployeeTypeTranslation + " since its reference field is not nullable.");
+                }
+            }
             for (Employee employeeListOldEmployee : employeeListOld) {
                 if (!employeeListNew.contains(employeeListOldEmployee)) {
                     if (illegalOrphanMessages == null) {
@@ -116,6 +145,13 @@ public class EmployeeTypeJpaController implements Serializable {
                 lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
                 employeeType.setLastModifiedUser(lastModifiedUserNew);
             }
+            List<EmployeeTypeTranslation> attachedEmployeeTypeTranslationListNew = new ArrayList<EmployeeTypeTranslation>();
+            for (EmployeeTypeTranslation employeeTypeTranslationListNewEmployeeTypeTranslationToAttach : employeeTypeTranslationListNew) {
+                employeeTypeTranslationListNewEmployeeTypeTranslationToAttach = em.getReference(employeeTypeTranslationListNewEmployeeTypeTranslationToAttach.getClass(), employeeTypeTranslationListNewEmployeeTypeTranslationToAttach.getId());
+                attachedEmployeeTypeTranslationListNew.add(employeeTypeTranslationListNewEmployeeTypeTranslationToAttach);
+            }
+            employeeTypeTranslationListNew = attachedEmployeeTypeTranslationListNew;
+            employeeType.setEmployeeTypeTranslationList(employeeTypeTranslationListNew);
             List<Employee> attachedEmployeeListNew = new ArrayList<Employee>();
             for (Employee employeeListNewEmployeeToAttach : employeeListNew) {
                 employeeListNewEmployeeToAttach = em.getReference(employeeListNewEmployeeToAttach.getClass(), employeeListNewEmployeeToAttach.getId());
@@ -139,6 +175,17 @@ public class EmployeeTypeJpaController implements Serializable {
             if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
                 lastModifiedUserNew.getEmployeeTypeList().add(employeeType);
                 lastModifiedUserNew = em.merge(lastModifiedUserNew);
+            }
+            for (EmployeeTypeTranslation employeeTypeTranslationListNewEmployeeTypeTranslation : employeeTypeTranslationListNew) {
+                if (!employeeTypeTranslationListOld.contains(employeeTypeTranslationListNewEmployeeTypeTranslation)) {
+                    EmployeeType oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation = employeeTypeTranslationListNewEmployeeTypeTranslation.getReference();
+                    employeeTypeTranslationListNewEmployeeTypeTranslation.setReference(employeeType);
+                    employeeTypeTranslationListNewEmployeeTypeTranslation = em.merge(employeeTypeTranslationListNewEmployeeTypeTranslation);
+                    if (oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation != null && !oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation.equals(employeeType)) {
+                        oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation.getEmployeeTypeTranslationList().remove(employeeTypeTranslationListNewEmployeeTypeTranslation);
+                        oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation = em.merge(oldReferenceOfEmployeeTypeTranslationListNewEmployeeTypeTranslation);
+                    }
+                }
             }
             for (Employee employeeListNewEmployee : employeeListNew) {
                 if (!employeeListOld.contains(employeeListNewEmployee)) {
@@ -181,6 +228,13 @@ public class EmployeeTypeJpaController implements Serializable {
                 throw new NonexistentEntityException("The employeeType with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
+            List<EmployeeTypeTranslation> employeeTypeTranslationListOrphanCheck = employeeType.getEmployeeTypeTranslationList();
+            for (EmployeeTypeTranslation employeeTypeTranslationListOrphanCheckEmployeeTypeTranslation : employeeTypeTranslationListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EmployeeType (" + employeeType + ") cannot be destroyed since the EmployeeTypeTranslation " + employeeTypeTranslationListOrphanCheckEmployeeTypeTranslation + " in its employeeTypeTranslationList field has a non-nullable reference field.");
+            }
             List<Employee> employeeListOrphanCheck = employeeType.getEmployeeList();
             for (Employee employeeListOrphanCheckEmployee : employeeListOrphanCheck) {
                 if (illegalOrphanMessages == null) {

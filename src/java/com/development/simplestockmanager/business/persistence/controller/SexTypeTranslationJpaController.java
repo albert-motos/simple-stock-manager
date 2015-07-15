@@ -5,16 +5,17 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.SexType;
+import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -36,7 +37,16 @@ public class SexTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            SexType reference = sexTypeTranslation.getReference();
+            if (reference != null) {
+                reference = em.getReference(reference.getClass(), reference.getId());
+                sexTypeTranslation.setReference(reference);
+            }
             em.persist(sexTypeTranslation);
+            if (reference != null) {
+                reference.getSexTypeTranslationList().add(sexTypeTranslation);
+                reference = em.merge(reference);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,7 +60,22 @@ public class SexTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            SexTypeTranslation persistentSexTypeTranslation = em.find(SexTypeTranslation.class, sexTypeTranslation.getId());
+            SexType referenceOld = persistentSexTypeTranslation.getReference();
+            SexType referenceNew = sexTypeTranslation.getReference();
+            if (referenceNew != null) {
+                referenceNew = em.getReference(referenceNew.getClass(), referenceNew.getId());
+                sexTypeTranslation.setReference(referenceNew);
+            }
             sexTypeTranslation = em.merge(sexTypeTranslation);
+            if (referenceOld != null && !referenceOld.equals(referenceNew)) {
+                referenceOld.getSexTypeTranslationList().remove(sexTypeTranslation);
+                referenceOld = em.merge(referenceOld);
+            }
+            if (referenceNew != null && !referenceNew.equals(referenceOld)) {
+                referenceNew.getSexTypeTranslationList().add(sexTypeTranslation);
+                referenceNew = em.merge(referenceNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -79,6 +104,11 @@ public class SexTypeTranslationJpaController implements Serializable {
                 sexTypeTranslation.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The sexTypeTranslation with id " + id + " no longer exists.", enfe);
+            }
+            SexType reference = sexTypeTranslation.getReference();
+            if (reference != null) {
+                reference.getSexTypeTranslationList().remove(sexTypeTranslation);
+                reference = em.merge(reference);
             }
             em.remove(sexTypeTranslation);
             em.getTransaction().commit();

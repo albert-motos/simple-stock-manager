@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,8 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Language.findAll", query = "SELECT l FROM Language l"),
     @NamedQuery(name = "Language.findById", query = "SELECT l FROM Language l WHERE l.id = :id"),
-    @NamedQuery(name = "Language.findByCode", query = "SELECT l FROM Language l WHERE l.code = :code"),
-    @NamedQuery(name = "Language.findByLanguage", query = "SELECT l FROM Language l WHERE l.language = :language")})
+    @NamedQuery(name = "Language.findByCode", query = "SELECT l FROM Language l WHERE l.code = :code")})
 public class Language implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,27 +39,24 @@ public class Language implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
+    @Basic(optional = false)
     @Column(name = "CODE")
     private String code;
-    @Column(name = "LANGUAGE")
-    private String language;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private List<EmployeeTypeTranslation> employeeTypeTranslationList;
-    @OneToMany(mappedBy = "reference")
-    private List<Language> languageList;
-    @JoinColumn(name = "REFERENCE", referencedColumnName = "ID")
-    @ManyToOne
-    private Language reference;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private List<Employee> employeeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
-    private List<SexTypeTranslation> sexTypeTranslationList;
+    private List<LanguageTranslation> languageTranslationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
+    private List<LanguageTranslation> languageTranslationList1;
 
     public Language() {
     }
 
     public Language(Long id) {
         this.id = id;
+    }
+
+    public Language(Long id, String code) {
+        this.id = id;
+        this.code = code;
     }
 
     public Long getId() {
@@ -81,56 +75,22 @@ public class Language implements Serializable {
         this.code = code;
     }
 
-    public String getLanguage() {
-        return language;
+    @XmlTransient
+    public List<LanguageTranslation> getLanguageTranslationList() {
+        return languageTranslationList;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setLanguageTranslationList(List<LanguageTranslation> languageTranslationList) {
+        this.languageTranslationList = languageTranslationList;
     }
 
     @XmlTransient
-    public List<EmployeeTypeTranslation> getEmployeeTypeTranslationList() {
-        return employeeTypeTranslationList;
+    public List<LanguageTranslation> getLanguageTranslationList1() {
+        return languageTranslationList1;
     }
 
-    public void setEmployeeTypeTranslationList(List<EmployeeTypeTranslation> employeeTypeTranslationList) {
-        this.employeeTypeTranslationList = employeeTypeTranslationList;
-    }
-
-    @XmlTransient
-    public List<Language> getLanguageList() {
-        return languageList;
-    }
-
-    public void setLanguageList(List<Language> languageList) {
-        this.languageList = languageList;
-    }
-
-    public Language getReference() {
-        return reference;
-    }
-
-    public void setReference(Language reference) {
-        this.reference = reference;
-    }
-
-    @XmlTransient
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
-    }
-
-    @XmlTransient
-    public List<SexTypeTranslation> getSexTypeTranslationList() {
-        return sexTypeTranslationList;
-    }
-
-    public void setSexTypeTranslationList(List<SexTypeTranslation> sexTypeTranslationList) {
-        this.sexTypeTranslationList = sexTypeTranslationList;
+    public void setLanguageTranslationList1(List<LanguageTranslation> languageTranslationList1) {
+        this.languageTranslationList1 = languageTranslationList1;
     }
 
     @Override

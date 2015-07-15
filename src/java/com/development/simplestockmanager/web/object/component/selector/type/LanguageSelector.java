@@ -2,7 +2,9 @@ package com.development.simplestockmanager.web.object.component.selector.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.LanguageSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.LanguageNull;
+import com.development.simplestockmanager.business.object.nullpackage.LanguageTranslationNull;
 import com.development.simplestockmanager.business.persistence.Language;
+import com.development.simplestockmanager.business.persistence.LanguageTranslation;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.object.component.selector.BaseSelector;
 import java.util.ArrayList;
@@ -20,20 +22,20 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
 
     public LanguageSelector(long mode, String language) {
         super(mode, language);
-        specificController = new LanguageSpecificController(language);
+        specificController = new LanguageSpecificController();
         search();
     }
     
-    public LanguageSelector(long mode, String language, Language languageBase) {
+    public LanguageSelector(long mode, String language, Language languageObject) {
         this(mode, language);
-        this.selection = getDisplayNamePrivate(getTranslation(languageBase));
+        this.selection = getDisplayName(getTranslation(languageObject));
     }
 
     @Override
     public void search() {
         clear();
         
-        for (Language languageTranslation : specificController.getFindAllForSelector()) {
+        for (Language languageTranslation : specificController.getFindAll()) {
             String key = getDisplayName(languageTranslation);
             hashMap.put(key, languageTranslation);
             list.add(key);
@@ -56,32 +58,20 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
         return languageBase;
     }
 
-    
-    public String getDisplayName(Language language, String code) {
-        String translation = WebConstant.UNDEFINED;
-        
-        for (Language languageTranslation : language.getLanguageList()) {
-            if (languageTranslation.getCode().equals(code)) {
-                translation = getDisplayName(languageTranslation);
-            }
-        }
-        
-        return translation;
-    }
-    public String getDisplayName(Language language) {
-        return (language != null ? getDisplayNamePrivate(getTranslation(language)) : "");
+    public String getDisplayName(Language objectLanguage) {
+        return (objectLanguage != null ? getDisplayName(getTranslation(objectLanguage)) : "");
     }
     
-    private String getDisplayNamePrivate(Language languageBase) {
-        return languageBase.getLanguage();
+    private String getDisplayName(LanguageTranslation languageTranslation) {
+        return languageTranslation.getTranslation();
     }
     
-    private Language getTranslation(Language languageBase) {
-        Language translation = new LanguageNull();
+    private LanguageTranslation getTranslation(Language objectLanguage) {
+        LanguageTranslation translation = new LanguageTranslationNull();
         
-        for (Language languageItem : languageBase.getLanguageList()) {
-            if (languageItem.getCode().equals(language)) {
-                translation = languageItem;
+        for (LanguageTranslation languageTranslation : objectLanguage.getLanguageTranslationList1()) {
+            if (languageTranslation.getLanguage().getCode().equals(language)) {
+                translation = languageTranslation;
             }
         }
         

@@ -1,35 +1,34 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
-import com.development.simplestockmanager.business.object.helper.StoreHelper;
-import com.development.simplestockmanager.business.persistence.Store;
+import com.development.simplestockmanager.business.object.helper.ProviderHelper;
+import com.development.simplestockmanager.business.persistence.Provider;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 
 /**
- * Specific controller class for Store object
+ * Specific controller class for Provider object
  *
  * @author foxtrot
  */
-public class StoreSpecificController {
+public class ProviderSpecificController {
 
-    private final StoreHelper helper;
+    private final ProviderHelper helper;
 
-    public StoreSpecificController() {
-        helper = new StoreHelper();
+    public ProviderSpecificController() {
+        helper = new ProviderHelper();
     }
 
-    public List<Store> findAllForBrowser(Store browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
+    public List<Provider> findAllForBrowser(Provider browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
             long createdUserID, long lastModifiedUserID) {
-        List<Store> list = new ArrayList<>();
+        List<Provider> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindForBrowserQuery(browser.getCity(), browser.getCountry(), browser.getEmployee().getId(), browser.getName(),
-                    browser.getPhone(), browser.getState(), browser.getStreet(), status, createdDateFrom, createdDateTo, lastModifiedDateFrom,
-                    lastModifiedDateTo, createdUserID, lastModifiedUserID);
+            Query query = helper.getFindForBrowserQuery(browser.getEmail(), browser.getIdentifier(), browser.getName(), browser.getPhone(), status,
+                    createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
             for (Object object : query.getResultList()) {
-                list.add((Store) object);
+                list.add((Provider) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
@@ -38,13 +37,13 @@ public class StoreSpecificController {
         return list;
     }
     
-    public List<Store> getFindAllByBrowser(String browser) {
-        List<Store> list = new ArrayList<>();
+    public List<Provider> getFindAllByBrowser(String browser) {
+        List<Provider> list = new ArrayList<>();
 
         try {
             Query query = helper.getFindAllByBrowser(browser);
             for (Object object : query.getResultList()) {
-                list.add((Store) object);
+                list.add((Provider) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
@@ -53,13 +52,13 @@ public class StoreSpecificController {
         return list;
     }
 
-    public List<Store> getFindEnableByBrowser(String browser) {
-        List<Store> list = new ArrayList<>();
+    public List<Provider> getFindEnableByBrowser(String browser) {
+        List<Provider> list = new ArrayList<>();
 
         try {
             Query query = helper.getFindEnableByBrowser(browser);
             for (Object object : query.getResultList()) {
-                list.add((Store) object);
+                list.add((Provider) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();

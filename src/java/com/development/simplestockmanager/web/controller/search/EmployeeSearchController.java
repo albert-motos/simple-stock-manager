@@ -6,6 +6,8 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.LanguageSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +30,16 @@ public class EmployeeSearchController extends EmployeeCommonController implement
     public EmployeeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
         sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
+        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
+        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
         clear();
     }
 
     @Override
     public void search() {
         browser.setSexType(sexTypeSelector.getSelectedValue());
+        browser.setEmployeeType(employeeTypeSelector.getSelectedValue());
+        browser.setLanguage(languageSelector.getSelectedValue());
         list = specificController.findAllForBrowser(browser, status, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo,
                 createdUser.getSelectedValue().getId(), lastModifiedUser.getSelectedValue().getId());
     }

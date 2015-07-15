@@ -26,6 +26,7 @@
     <class>com.development.simplestockmanager.business.persistence.SexTypeTranslation</class>
     <class>com.development.simplestockmanager.business.persistence.PaymentTypeTranslation</class>
     <class>com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation</class>
+    <class>com.development.simplestockmanager.business.persistence.LanguageTranslation</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://172.16.8.129:3306/STOCK?zeroDateTimeBehavior=convertToNull"/>

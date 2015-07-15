@@ -2,6 +2,7 @@
 import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.LanguageSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 
@@ -19,16 +20,15 @@ import com.development.simplestockmanager.web.object.component.selector.type.Sex
  */
 public class test {
     public static void main(String[] args) {
-        SexTypeSelector selector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, "es_ES");
-        selector.setSelection(selector.getList().get(1));
-        SexType sexType = selector.getSelectedValue();
+        LanguageSelector languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, "en_US");
+        languageSelector.setSelection(languageSelector.getList().get(2));
+        Language selectedValue = languageSelector.getSelectedValue();
         
-        SexTypeSelector selector2 = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, "en_US", sexType);
-        System.out.println(selector2.getList());
-        System.out.println(selector2.getSelection());
-        System.out.println(selector2.getSelectedValue());
-        
-        
+        LanguageSelector languageSelector1 = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, "ca_ES", selectedValue);
+        System.out.println(languageSelector1.getSelection());
+        System.out.println(languageSelector1.getSelectedValue());
+//        EmployeeTypeSelector employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ALL, "es_ES");
+//        System.out.println(employeeTypeSelector.getList());
 ////        System.out.println(selector.getDisplayName(sexType));
 //        System.out.println(selector.getList());
 //        selector.setSelection("");

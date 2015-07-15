@@ -13,19 +13,17 @@ import javax.persistence.Query;
  */
 public class LanguageSpecificController {
 
-    private final String language;
     private final LanguageHelper helper;
 
-    public LanguageSpecificController(String language) {
-        this.language = language;
+    public LanguageSpecificController() {
         helper = new LanguageHelper();
     }
 
-    public List<Language> getFindAllForSelector() {
+    public List<Language> getFindAll() {
         List<Language> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindAllForSelector(language);
+            Query query = helper.getFindAll();
             for (Object object : query.getResultList()) {
                 list.add((Language) object);
             }

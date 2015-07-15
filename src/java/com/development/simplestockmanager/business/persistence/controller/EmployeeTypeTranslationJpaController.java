@@ -5,16 +5,17 @@
  */
 package com.development.simplestockmanager.business.persistence.controller;
 
-import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
-import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.EmployeeType;
+import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
+import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -36,7 +37,16 @@ public class EmployeeTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            EmployeeType reference = employeeTypeTranslation.getReference();
+            if (reference != null) {
+                reference = em.getReference(reference.getClass(), reference.getId());
+                employeeTypeTranslation.setReference(reference);
+            }
             em.persist(employeeTypeTranslation);
+            if (reference != null) {
+                reference.getEmployeeTypeTranslationList().add(employeeTypeTranslation);
+                reference = em.merge(reference);
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -50,7 +60,22 @@ public class EmployeeTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            EmployeeTypeTranslation persistentEmployeeTypeTranslation = em.find(EmployeeTypeTranslation.class, employeeTypeTranslation.getId());
+            EmployeeType referenceOld = persistentEmployeeTypeTranslation.getReference();
+            EmployeeType referenceNew = employeeTypeTranslation.getReference();
+            if (referenceNew != null) {
+                referenceNew = em.getReference(referenceNew.getClass(), referenceNew.getId());
+                employeeTypeTranslation.setReference(referenceNew);
+            }
             employeeTypeTranslation = em.merge(employeeTypeTranslation);
+            if (referenceOld != null && !referenceOld.equals(referenceNew)) {
+                referenceOld.getEmployeeTypeTranslationList().remove(employeeTypeTranslation);
+                referenceOld = em.merge(referenceOld);
+            }
+            if (referenceNew != null && !referenceNew.equals(referenceOld)) {
+                referenceNew.getEmployeeTypeTranslationList().add(employeeTypeTranslation);
+                referenceNew = em.merge(referenceNew);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -79,6 +104,11 @@ public class EmployeeTypeTranslationJpaController implements Serializable {
                 employeeTypeTranslation.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The employeeTypeTranslation with id " + id + " no longer exists.", enfe);
+            }
+            EmployeeType reference = employeeTypeTranslation.getReference();
+            if (reference != null) {
+                reference.getEmployeeTypeTranslationList().remove(employeeTypeTranslation);
+                reference = em.merge(reference);
             }
             em.remove(employeeTypeTranslation);
             em.getTransaction().commit();
