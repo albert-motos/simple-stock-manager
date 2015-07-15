@@ -18,19 +18,24 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
     private final LanguageSpecificController specificController;
     private HashMap<String, Language> hashMap;
 
-    public LanguageSelector(String language) {
-        super(WebConstant.SELECTOR.MODE.NONE, language);
+    public LanguageSelector(long mode, String language) {
+        super(mode, language);
         specificController = new LanguageSpecificController(language);
         search();
+    }
+    
+    public LanguageSelector(long mode, String language, Language languageBase) {
+        this(mode, language);
+        this.selection = getDisplayNamePrivate(getTranslation(languageBase));
     }
 
     @Override
     public void search() {
         clear();
         
-        for (Language language : specificController.getFindAllForSelector()) {
-            String key = getDisplayName(language);
-            hashMap.put(key, language);
+        for (Language languageTranslation : specificController.getFindAllForSelector()) {
+            String key = getDisplayName(languageTranslation);
+            hashMap.put(key, languageTranslation);
             list.add(key);
         }
     }
@@ -42,18 +47,15 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
     }
 
     public Language getSelectedValue() {
-        Language language = new LanguageNull();
+        Language languageBase = new LanguageNull();
 
         if (!selection.isEmpty()) {
-            language = hashMap.get(selection);
+            languageBase = hashMap.get(selection);
         }
 
-        return language;
+        return languageBase;
     }
 
-    private String getDisplayName(Language language) {
-        return language.getLanguage();
-    }
     
     public String getDisplayName(Language language, String code) {
         String translation = WebConstant.UNDEFINED;
@@ -61,6 +63,25 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
         for (Language languageTranslation : language.getLanguageList()) {
             if (languageTranslation.getCode().equals(code)) {
                 translation = getDisplayName(languageTranslation);
+            }
+        }
+        
+        return translation;
+    }
+    public String getDisplayName(Language language) {
+        return (language != null ? getDisplayNamePrivate(getTranslation(language)) : "");
+    }
+    
+    private String getDisplayNamePrivate(Language languageBase) {
+        return languageBase.getLanguage();
+    }
+    
+    private Language getTranslation(Language languageBase) {
+        Language translation = new LanguageNull();
+        
+        for (Language languageItem : languageBase.getLanguageList()) {
+            if (languageItem.getCode().equals(language)) {
+                translation = languageItem;
             }
         }
         
