@@ -7,6 +7,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.EditController;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
 import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
+import com.development.simplestockmanager.web.object.component.selector.type.LanguageSelector;
 import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -36,12 +37,14 @@ public class EmployeeEditController extends EmployeeCommonController implements 
 
         sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getSexType());
         employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getEmployeeType());
+        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, languageController.getLanguage(), employee.getLanguage());
     }
 
     @Override
     public void edit() {
         employee.setSexType(sexTypeSelector.getSelectedValue());
         employee.setEmployeeType(employeeTypeSelector.getSelectedValue());
+        employee.setLanguage(languageSelector.getSelectedValue());
 
         if (employee.equals(baseEmployee)) {
             action = true;
