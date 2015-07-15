@@ -1,31 +1,50 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
-import com.development.simplestockmanager.business.object.helper.ProviderHelper;
-import com.development.simplestockmanager.business.persistence.Provider;
+import com.development.simplestockmanager.business.object.helper.StoreHelper;
+import com.development.simplestockmanager.business.persistence.Store;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 
 /**
- * Specific controller class for Provider object
- * 
+ * Specific controller class for Store object
+ *
  * @author foxtrot
  */
-public class ProviderSpecificController {
-    
-    private final ProviderHelper helper;
+public class StoreSpecificController {
 
-    public ProviderSpecificController() {
-        helper = new ProviderHelper();
+    private final StoreHelper helper;
+
+    public StoreSpecificController() {
+        helper = new StoreHelper();
     }
 
-    public List<Provider> getFindAllByBrowser(String browser) {
-        List<Provider> list = new ArrayList<>();
+    public List<Store> findAllForBrowser(Store browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
+            long createdUserID, long lastModifiedUserID) {
+        List<Store> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindForBrowserQuery(browser.getCity(), browser.getCountry(), browser.getEmployee().getId(), browser.getName(),
+                    browser.getPhone(), browser.getState(), browser.getStreet(), status, createdDateFrom, createdDateTo, lastModifiedDateFrom,
+                    lastModifiedDateTo, createdUserID, lastModifiedUserID);
+            for (Object object : query.getResultList()) {
+                list.add((Store) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
+    public List<Store> getFindAllByBrowser(String browser) {
+        List<Store> list = new ArrayList<>();
 
         try {
             Query query = helper.getFindAllByBrowser(browser);
             for (Object object : query.getResultList()) {
-                list.add((Provider) object);
+                list.add((Store) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
@@ -34,13 +53,13 @@ public class ProviderSpecificController {
         return list;
     }
 
-    public List<Provider> getFindEnableByBrowser(String browser) {
-        List<Provider> list = new ArrayList<>();
+    public List<Store> getFindEnableByBrowser(String browser) {
+        List<Store> list = new ArrayList<>();
 
         try {
             Query query = helper.getFindEnableByBrowser(browser);
             for (Object object : query.getResultList()) {
-                list.add((Provider) object);
+                list.add((Store) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
@@ -48,5 +67,4 @@ public class ProviderSpecificController {
 
         return list;
     }
-    
 }
