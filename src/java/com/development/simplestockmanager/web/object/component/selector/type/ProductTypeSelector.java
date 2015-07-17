@@ -38,9 +38,9 @@ public class ProductTypeSelector extends CommonTypeSelector implements BaseSelec
         List<ProductType> productTypeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            productTypeList = specificController.getFindAll();
+            productTypeList = specificController.findAll();
         } else {
-            productTypeList = specificController.getFindEnable();
+            productTypeList = specificController.findEnable();
         }
 
         for (ProductType productType : productTypeList) {
