@@ -8,6 +8,13 @@ public interface CommonConstant {
 
     public static String LANGUAGE_PATH = "com.development.simplestockmanager.common.language.language";
 
+    public interface LANGUAGE {
+
+        public static String EN_US = "en_US";
+        public static String CA_ES = "ca_ES";
+        public static String ES_ES = "es_ES";
+    }
+    
     public interface MENU {
 
         public static String TEXT = "menu";
