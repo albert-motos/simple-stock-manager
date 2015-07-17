@@ -35,9 +35,9 @@ public class ClientSelector extends CommonSelector implements BaseSelector {
         List<Client> clientList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            clientList = specificController.getFindAllByBrowser(browser);
+            clientList = specificController.findAllByBrowser(browser);
         } else {
-            clientList = specificController.getFindEnableByBrowser(browser);
+            clientList = specificController.findEnableByBrowser(browser);
         }
 
         for (Client client : clientList) {
