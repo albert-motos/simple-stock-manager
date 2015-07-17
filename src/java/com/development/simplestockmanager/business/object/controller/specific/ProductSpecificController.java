@@ -1,50 +1,61 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
-import com.development.simplestockmanager.business.object.helper.ProductHelper;
-import com.development.simplestockmanager.business.object.nullpackage.ProductNull;
-import com.development.simplestockmanager.business.persistence.Brand;
-import com.development.simplestockmanager.business.persistence.Product;
+import com.development.simplestockmanager.business.object.helper.ProductTypeHelper;
 import com.development.simplestockmanager.business.persistence.ProductType;
-import com.development.simplestockmanager.business.persistence.Provider;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 
 /**
+ * Specific controller class for ProductType object
  *
  * @author foxtrot
  */
-public class ProductSpecificController {
-    
-    private final ProductHelper helper;
+public class ProductTypeSpecificController {
 
-    public ProductSpecificController() {
-        helper = new ProductHelper();
+    private final ProductTypeHelper helper;
+
+    public ProductTypeSpecificController() {
+        this.helper = new ProductTypeHelper();
     }
 
-    public Product findByRelation(ProductType productType, Brand brand, Provider provider) {
-        Product product;
-        
-        try {
-            Query query = helper.getFindByRelationQuery(productType, brand, provider);
-            product = (Product) query.getSingleResult();
-        } catch (Exception e) {
-            product = new ProductNull();
-        }
-        
-        return product;
-    }
-    
-    public List<Product> findAllForBrowser(Product browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
-            long createdUserID, long lastModifiedUserID) {
-        List<Product> list = new ArrayList<>();
+    public List<ProductType> findByType(String type) {
+        List<ProductType> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindForBrowserQuery(browser.getBrand().getId(), browser.getDescription(), browser.getName(), browser.getProductType().getId(),
-                    browser.getProvider().getId(), status, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+            Query query = helper.getFindByType(type);
             for (Object object : query.getResultList()) {
-                list.add((Product) object);
+                list.add((ProductType) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
+    public List<ProductType> findAll() {
+        List<ProductType> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindAll();
+            for (Object object : query.getResultList()) {
+                list.add((ProductType) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<ProductType> findEnable() {
+        List<ProductType> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindEnable();
+            for (Object object : query.getResultList()) {
+                list.add((ProductType) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
