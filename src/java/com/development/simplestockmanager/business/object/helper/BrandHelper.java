@@ -24,14 +24,14 @@ public class BrandHelper extends CommonHelper {
     }
     
     public Query getFindAllByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Brand.getFindAllByBrowser");
+        Query query = entityManager.createNamedQuery("Brand.findAllByBrowser");
         query.setParameter("browser", "%" + browser + "%");
         
         return query;
     }
     
     public Query getFindEnableByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Brand.getFindEnableByBrowser");
+        Query query = entityManager.createNamedQuery("Brand.findEnableByBrowser");
         query.setParameter("browser", "%" + browser + "%");
         
         return query;
