@@ -38,7 +38,7 @@ public class ClientSpecificController {
         return list;
     }
     
-    public List<Client> getFindAllByBrowser(String browser) {
+    public List<Client> findAllByBrowser(String browser) {
         List<Client> list = new ArrayList<>();
 
         try {
@@ -53,7 +53,7 @@ public class ClientSpecificController {
         return list;
     }
 
-    public List<Client> getFindEnableByBrowser(String browser) {
+    public List<Client> findEnableByBrowser(String browser) {
         List<Client> list = new ArrayList<>();
 
         try {
