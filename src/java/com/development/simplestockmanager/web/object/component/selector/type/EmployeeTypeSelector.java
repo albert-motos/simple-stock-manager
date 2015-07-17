@@ -38,9 +38,9 @@ public class EmployeeTypeSelector extends CommonTypeSelector implements BaseSele
         List<EmployeeType> employeeTypeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            employeeTypeList = specificController.getFindAll();
+            employeeTypeList = specificController.findAll();
         } else {
-            employeeTypeList = specificController.getFindEnable();
+            employeeTypeList = specificController.findEnable();
         }
 
         for (EmployeeType employeeType : employeeTypeList) {
