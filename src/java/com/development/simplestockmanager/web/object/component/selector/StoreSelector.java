@@ -35,9 +35,9 @@ public class StoreSelector extends CommonSelector implements BaseSelector {
         List<Store> storeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            storeList = specificController.getFindAllByBrowser(browser);
+            storeList = specificController.findAllByBrowser(browser);
         } else {
-            storeList = specificController.getFindEnableByBrowser(browser);
+            storeList = specificController.findEnableByBrowser(browser);
         }
 
         for (Store store : storeList) {
