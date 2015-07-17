@@ -14,11 +14,11 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(
-            name = "Client.getFindAllByBrowser",
+            name = "Client.findAllByBrowser",
             query = "SELECT c FROM Client c WHERE c.firstname LIKE :browser OR c.lastname LIKE :browser ORDER BY c.lastname"
     ),
     @NamedQuery(
-            name = "Client.getFindEnableByBrowser",
+            name = "Client.findEnableByBrowser",
             query = "SELECT c FROM Client c WHERE c.firstname LIKE :browser OR c.lastname LIKE :browser AND c.enable = TRUE ORDER BY c.lastname"
     )
 })
