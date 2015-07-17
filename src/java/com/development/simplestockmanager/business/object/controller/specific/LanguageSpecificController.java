@@ -19,7 +19,7 @@ public class LanguageSpecificController {
         helper = new LanguageHelper();
     }
 
-    public List<Language> getFindAll() {
+    public List<Language> findAll() {
         List<Language> list = new ArrayList<>();
 
         try {
