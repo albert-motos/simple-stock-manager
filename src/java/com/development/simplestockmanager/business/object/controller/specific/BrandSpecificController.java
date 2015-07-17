@@ -51,7 +51,7 @@ public class BrandSpecificController {
         return brand;
     }
 
-    public List<Brand> getFindAllByBrowser(String browser) {
+    public List<Brand> findAllByBrowser(String browser) {
         List<Brand> list = new ArrayList<>();
 
         try {
@@ -66,7 +66,7 @@ public class BrandSpecificController {
         return list;
     }
 
-    public List<Brand> getFindEnableByBrowser(String browser) {
+    public List<Brand> findEnableByBrowser(String browser) {
         List<Brand> list = new ArrayList<>();
 
         try {
