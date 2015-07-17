@@ -9,6 +9,8 @@ import javax.persistence.Query;
  */
 public interface BaseTypeHelper {
 
+    public Query getFindByType(String type);
+    
     public Query getFindAll();
     
     public Query getFindEnable();
