@@ -11,15 +11,30 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class SexTypeSpecificController {
+public class SexTypeTypeSpecificController {
 
     private final SexTypeHelper helper;
 
-    public SexTypeSpecificController() {
+    public SexTypeTypeSpecificController() {
         this.helper = new SexTypeHelper();
     }
+    
+    public List<SexType> findByType(String type) {
+        List<SexType> list = new ArrayList<>();
 
-    public List<SexType> getFindAll() {
+        try {
+            Query query = helper.getFindByType(type);
+            for (Object object : query.getResultList()) {
+                list.add((SexType) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<SexType> findAll() {
         List<SexType> list = new ArrayList<>();
 
         try {
@@ -34,7 +49,7 @@ public class SexTypeSpecificController {
         return list;
     }
 
-    public List<SexType> getFindEnable() {
+    public List<SexType> findEnable() {
         List<SexType> list = new ArrayList<>();
 
         try {
@@ -48,5 +63,4 @@ public class SexTypeSpecificController {
 
         return list;
     }
-
 }
