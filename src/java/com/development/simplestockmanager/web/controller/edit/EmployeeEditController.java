@@ -4,6 +4,7 @@ import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.EditController;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
 import com.development.simplestockmanager.web.object.selector.type.EmployeeTypeSelector;
@@ -82,6 +83,11 @@ public class EmployeeEditController extends EmployeeCommonController implements 
                 }
             }
         }
+    }
+    
+    @Override
+    public final void back() {
+        new NavigationService().redirect(WebConstant.WEB.SEARCH.EMPLOYEE);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.development.simplestockmanager.web.controller.common;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
-import com.development.simplestockmanager.business.object.controller.specific.EmployeeSpecificController;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;

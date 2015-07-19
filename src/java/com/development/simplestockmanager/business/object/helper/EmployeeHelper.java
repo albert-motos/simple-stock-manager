@@ -68,8 +68,8 @@ public class EmployeeHelper extends CommonHelper {
                 + (phone.isEmpty() ? "" : " AND e.phone LIKE '%" + phone + "%'")
                 + (sexTypeID == BusinessConstant.IDENTIFIER.INVALID ? "" : " AND e.sexType.id = " + sexTypeID)
                 + (username.isEmpty() ? "" : " AND e.username LIKE '%" + username + "%'")
-                + (status == WebConstant.STATUS.HIDDEN ? " AND b.enable = FALSE" : "")
-                + (status == WebConstant.STATUS.VISIBLE ? " AND b.enable = TRUE" : "")
+                + (status == WebConstant.STATUS.HIDDEN ? " AND e.enable = FALSE" : "")
+                + (status == WebConstant.STATUS.VISIBLE ? " AND e.enable = TRUE" : "")
                 + getAuditoryQuery("e", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
         

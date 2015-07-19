@@ -52,13 +52,12 @@ public class EmployeeSearchController extends EmployeeCommonController implement
     }
     
     public void initView(Employee employee) {
-        employee.setSexType(sexTypeSelector.getSelectedValue());
         this.employee = employee;
     }
     
     public void initEdit(Employee employee) {
-        sendObjectToSession(WebConstant.SESSION.CLIENT, employee);
-        new NavigationService().redirect(WebConstant.WEB.EDIT.CLIENT);
+        sendObjectToSession(WebConstant.SESSION.EMPLOYEE, employee);
+        new NavigationService().redirect(WebConstant.WEB.EDIT.EMPLOYEE);
     }
 
     public List<Employee> getList() {

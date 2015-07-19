@@ -139,6 +139,27 @@
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
+                        
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{label.status}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu value="#{employeeSearch.status}" style="width: 100px">
+                                                    <f:selectItem itemLabel="" itemValue="#{label.statusIndeterminate}" />
+                                                    <f:selectItem itemLabel="#{list.statusVisible}" itemValue="#{label.statusVisible}" />
+                                                    <f:selectItem itemLabel="#{list.statusHidden}" itemValue="#{label.statusHidden}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
                     </p:tab>
                     
                     <p:tab title="#{label.auditoryHeader}">
@@ -237,7 +258,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:selectOneMenu id="createdUserList" value="#{employeeSearch.createdUser.selection}">
+                                                <p:selectOneMenu id="createdUserList" value="#{employeeSearch.createdUser.selection}" style="width: 400px">
                                                     <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
                                                     <f:selectItems value="#{employeeSearch.createdUser.list}" />
                                                 </p:selectOneMenu>
@@ -279,7 +300,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:selectOneMenu id="lastModifiedUserList" value="#{employeeSearch.lastModifiedUser.selection}">
+                                                <p:selectOneMenu id="lastModifiedUserList" value="#{employeeSearch.lastModifiedUser.selection}"  style="width: 400px">
                                                     <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
                                                     <f:selectItems value="#{employeeSearch.lastModifiedUser.list}" />
                                                 </p:selectOneMenu>

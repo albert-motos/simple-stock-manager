@@ -34,8 +34,8 @@ public class ClientSearchController extends ClientCommonController implements Se
     @Override
     public void search() {
         browser.setSexType(sexTypeSelector.getSelectedValue());
-        list = specificController.findAllForBrowser(browser, status, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo,-1, -1);
-//                createdUser.getSelectedValue().getId(), lastModifiedUser.getSelectedValue().getId());
+        list = specificController.findAllForBrowser(browser, status, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo,
+                createdUser.getSelectedValue().getId(), lastModifiedUser.getSelectedValue().getId());
     }
 
     @Override
@@ -46,7 +46,6 @@ public class ClientSearchController extends ClientCommonController implements Se
     }
     
     public void initView(Client client) {
-        client.setSexType(sexTypeSelector.getSelectedValue());
         this.client = client;
     }
     
