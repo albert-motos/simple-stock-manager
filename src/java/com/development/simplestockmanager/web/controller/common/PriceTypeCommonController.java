@@ -3,7 +3,7 @@ package com.development.simplestockmanager.web.controller.common;
 import com.development.simplestockmanager.business.object.controller.general.PriceTypeGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.PriceTypeSpecificController;
 import com.development.simplestockmanager.business.persistence.PriceType;
-//import com.development.simplestockmanager.web.object.validator.type.PriceTypeValidator;
+import com.development.simplestockmanager.web.object.validator.type.PriceTypeValidator;
 
 /**
  * Common controller class for PriceType object
@@ -12,7 +12,7 @@ import com.development.simplestockmanager.business.persistence.PriceType;
  */
 public class PriceTypeCommonController extends BaseCommonController {
 
-//    protected final PriceTypeValidator validator;
+    protected final PriceTypeValidator validator;
     protected final PriceTypeGeneralController generalController;
     protected final PriceTypeSpecificController specificController;
 
@@ -21,8 +21,7 @@ public class PriceTypeCommonController extends BaseCommonController {
     public PriceTypeCommonController(long mode) {
         generalController = new PriceTypeGeneralController();
         specificController = new PriceTypeSpecificController();
-//        validator = new PriceTypeValidator(mode, languageController, specificController);
-//        validator = new PriceTypeValidator();
+        validator = new PriceTypeValidator(mode, languageController, specificController);
     }
 
     public PriceType getPriceType() {
