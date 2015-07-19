@@ -6,6 +6,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.BrandCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -40,6 +41,9 @@ public class BrandSearchController extends BrandCommonController implements Sear
         browser = new BrandNull();
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
+        
+        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
     }
 
     public void initView(Brand brand) {

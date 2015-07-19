@@ -21,6 +21,7 @@ public class BrandSelector extends CommonSelector implements BaseSelector {
     public BrandSelector(long mode) {
         super(mode);
         this.specificController = new BrandSpecificController();
+        this.browser = "";
         search();
     }
 

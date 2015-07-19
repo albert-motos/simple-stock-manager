@@ -21,6 +21,7 @@ public class ProviderSelector extends CommonSelector implements BaseSelector {
     public ProviderSelector(long mode) {
         super(mode);
         this.specificController = new ProviderSpecificController();
+        this.browser = "";
         search();
     }
 

@@ -20,7 +20,7 @@
                                         <p:outputLabel value="#{label.name}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{productAdd.product.name}" style="width: 100%" />
+                                        <p:inputText value="#{productEdit.product.name}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -32,9 +32,9 @@
                                         <p:outputLabel value="#{label.productType}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectOneMenu value="#{productAdd.productTypeSelector.selection}" style="width: 100%">
+                                        <p:selectOneMenu value="#{productEdit.productTypeSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
-                                            <f:selectItems value="#{productAdd.productTypeSelector.list}" />
+                                            <f:selectItems value="#{productEdit.productTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -52,7 +52,7 @@
                                         <p:outputLabel value="#{label.description}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputTextarea value="#{productAdd.product.description}" style="width: 100%" rows="3" />
+                                        <p:inputTextarea value="#{productEdit.product.description}" style="width: 100%" rows="3" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -69,7 +69,7 @@
                                         <p:outputLabel value="#{label.brand}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{productAdd.brandSelector.browser}" style="width: 100%" />
+                                        <p:inputText value="#{productEdit.brandSelector.browser}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -78,12 +78,12 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:commandButton value="#{button.search}" actionListener="#{productAdd.brandSelector.search()}" update="brandList" />
+                                        <p:commandButton value="#{button.search}" actionListener="#{productEdit.brandSelector.search()}" update="brandList" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectOneMenu id="brandList" value="#{productAdd.brandSelector.selection}" style="width: 100%">
+                                        <p:selectOneMenu id="brandList" value="#{productEdit.brandSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
-                                            <f:selectItems value="#{productAdd.brandSelector.list}" />
+                                            <f:selectItems value="#{productEdit.brandSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -99,7 +99,7 @@
                                         <p:outputLabel value="#{label.provider}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{productAdd.providerSelector.browser}" style="width: 100%" />
+                                        <p:inputText value="#{productEdit.providerSelector.browser}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -108,12 +108,12 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:commandButton value="#{button.search}" actionListener="#{productAdd.providerSelector.search()}" update="providerList" />
+                                        <p:commandButton value="#{button.search}" actionListener="#{productEdit.providerSelector.search()}" update="providerList" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectOneMenu id="providerList" value="#{productAdd.providerSelector.selection}" style="width: 100%">
+                                        <p:selectOneMenu id="providerList" value="#{productEdit.providerSelector.selection}" style="width: 100%">
                                             <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
-                                            <f:selectItems value="#{productAdd.providerSelector.list}" />
+                                            <f:selectItems value="#{productEdit.providerSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
                                 </p:row>
@@ -133,7 +133,7 @@
                                         <p:outputLabel value="#{productLabel.enable}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{productAdd.product.enable}" />
+                                        <p:selectBooleanCheckbox value="#{productEdit.product.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -143,8 +143,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{button.add}" rendered="#{not productAdd.action}" actionListener="#{productAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{button.back(productAdd.action)}" actionListener="#{productAdd.back()}"
+                <p:commandButton value="#{button.edit}" rendered="#{not productEdit.action}" actionListener="#{productEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(productEdit.action)}" actionListener="#{productEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

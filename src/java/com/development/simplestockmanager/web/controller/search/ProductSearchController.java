@@ -7,6 +7,7 @@ import com.development.simplestockmanager.web.common.service.general.NavigationS
 import com.development.simplestockmanager.web.controller.common.ProductCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
 import com.development.simplestockmanager.web.object.selector.BrandSelector;
+import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import com.development.simplestockmanager.web.object.selector.ProviderSelector;
 import com.development.simplestockmanager.web.object.selector.type.ProductTypeSelector;
 import java.util.ArrayList;
@@ -37,9 +38,9 @@ public class ProductSearchController extends ProductCommonController implements 
 
     @Override
     public void search() {
-        product.setProductType(productTypeSelector.getSelectedValue());
-        product.setBrand(brandSelector.getSelectedValue());
-        product.setProvider(providerSelector.getSelectedValue());
+        browser.setProductType(productTypeSelector.getSelectedValue());
+        browser.setBrand(brandSelector.getSelectedValue());
+        browser.setProvider(providerSelector.getSelectedValue());
         list = specificController.findAllForBrowser(browser, status, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo,
                 createdUser.getSelectedValue().getId(), lastModifiedUser.getSelectedValue().getId());
     }
@@ -49,12 +50,12 @@ public class ProductSearchController extends ProductCommonController implements 
         browser = new ProductNull();
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
+        
+        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
     }
     
     public void initView(Product product) {
-        product.setProductType(productTypeSelector.getSelectedValue());
-        product.setBrand(brandSelector.getSelectedValue());
-        product.setProvider(providerSelector.getSelectedValue());
         this.product = product;
     }
     

@@ -30,7 +30,7 @@ public class ProductEditController extends ProductCommonController implements Ed
         super(WebConstant.VALIDATOR.MODE.EDIT);
         
         try {
-            product = (Product) receiveObjectFromSession(WebConstant.SESSION.CLIENT);
+            product = (Product) receiveObjectFromSession(WebConstant.SESSION.PRODUCT);
             baseProduct = new Product(product);
         } catch (Exception e) {
             back();

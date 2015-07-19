@@ -38,8 +38,8 @@ public class ProductHelper extends CommonHelper {
                 + (name.isEmpty() ? "" : " AND p.name LIKE '%" + name + "%'")
                 + (productTypeID == BusinessConstant.IDENTIFIER.INVALID ? "" : " AND p.productType.id = " + productTypeID)
                 + (providerID == BusinessConstant.IDENTIFIER.INVALID ? "" : " AND p.provider.id = " + providerID)
-                + (status == WebConstant.STATUS.HIDDEN ? " AND b.enable = FALSE" : "")
-                + (status == WebConstant.STATUS.VISIBLE ? " AND b.enable = TRUE" : "")
+                + (status == WebConstant.STATUS.HIDDEN ? " AND p.enable = FALSE" : "")
+                + (status == WebConstant.STATUS.VISIBLE ? " AND p.enable = TRUE" : "")
                 + getAuditoryQuery("p", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
 

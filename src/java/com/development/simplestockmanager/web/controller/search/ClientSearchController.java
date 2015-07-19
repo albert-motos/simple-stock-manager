@@ -6,6 +6,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.ClientCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import com.development.simplestockmanager.web.object.selector.type.SexTypeSelector;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,9 @@ public class ClientSearchController extends ClientCommonController implements Se
         browser = new ClientNull();
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
+        
+        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
     }
     
     public void initView(Client client) {
