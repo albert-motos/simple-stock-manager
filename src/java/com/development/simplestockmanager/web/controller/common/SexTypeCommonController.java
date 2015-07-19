@@ -21,8 +21,7 @@ public class SexTypeCommonController extends BaseCommonController {
     public SexTypeCommonController(long mode) {
         generalController = new SexTypeGeneralController();
         specificController = new SexTypeSpecificController();
-//        validator = new SexTypeValidator(mode, languageController, specificController);
-        validator = new SexTypeValidator();
+        validator = new SexTypeValidator(mode, languageController, specificController);
     }
 
     public SexType getSexType() {

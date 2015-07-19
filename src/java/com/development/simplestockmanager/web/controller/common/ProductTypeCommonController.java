@@ -3,7 +3,6 @@ package com.development.simplestockmanager.web.controller.common;
 import com.development.simplestockmanager.business.object.controller.general.ProductTypeGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.ProductTypeSpecificController;
 import com.development.simplestockmanager.business.persistence.ProductType;
-import com.development.simplestockmanager.web.object.validator.ProductValidator;
 import com.development.simplestockmanager.web.object.validator.type.ProductTypeValidator;
 
 /**
@@ -22,8 +21,7 @@ public class ProductTypeCommonController extends BaseCommonController {
     public ProductTypeCommonController(long mode) {
         generalController = new ProductTypeGeneralController();
         specificController = new ProductTypeSpecificController();
-//        validator = new ProductTypeValidator(mode, languageController, specificController);
-        validator = new ProductTypeValidator();
+        validator = new ProductTypeValidator(mode, languageController, specificController);
     }
 
     public ProductType getProductType() {
