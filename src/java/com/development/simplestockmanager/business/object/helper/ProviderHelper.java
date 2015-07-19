@@ -17,14 +17,14 @@ public class ProviderHelper extends CommonHelper {
     }
     
     public Query getFindAllByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Provider.getFindAllByBrowser");
+        Query query = entityManager.createNamedQuery("Provider.findAllByBrowser");
         query.setParameter("browser","%" + browser + "%");
         
         return query;
     }
     
     public Query getFindEnableByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Provider.getFindEnableByBrowser");
+        Query query = entityManager.createNamedQuery("Provider.findEnableByBrowser");
         query.setParameter("browser","%" + browser + "%");
         
         return query;

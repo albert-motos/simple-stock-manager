@@ -35,9 +35,9 @@ public class BrandSelector extends CommonSelector implements BaseSelector {
         List<Brand> brandList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            brandList = specificController.getFindAllByBrowser(browser);
+            brandList = specificController.findAllByBrowser(browser);
         } else {
-            brandList = specificController.getFindEnableByBrowser(browser);
+            brandList = specificController.findEnableByBrowser(browser);
         }
 
         for (Brand brand : brandList) {

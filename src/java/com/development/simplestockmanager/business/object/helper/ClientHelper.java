@@ -19,14 +19,14 @@ public class ClientHelper extends CommonHelper {
     }
 
     public Query getFindAllByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Client.getFindAllByBrowser");
+        Query query = entityManager.createNamedQuery("Client.findAllByBrowser");
         query.setParameter("browser", "%" + browser + "%");
         
         return query;
     }
     
     public Query getFindEnableByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Client.getFindEnableByBrowser");
+        Query query = entityManager.createNamedQuery("Client.findEnableByBrowser");
         query.setParameter("browser", "%" + browser + "%");
         
         return query;

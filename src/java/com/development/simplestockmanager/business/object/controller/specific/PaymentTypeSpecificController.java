@@ -1,31 +1,31 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
-import com.development.simplestockmanager.business.object.helper.ProductTypeHelper;
-import com.development.simplestockmanager.business.persistence.ProductType;
+import com.development.simplestockmanager.business.object.helper.PaymentTypeHelper;
+import com.development.simplestockmanager.business.persistence.PaymentType;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
 
 /**
- * Specific controller class for ProductType object
+ * Specific controller class for PaymentType object
  *
  * @author foxtrot
  */
-public class ProductTypeSpecificController {
+public class PaymentTypeSpecificController {
 
-    private final ProductTypeHelper helper;
+    private final PaymentTypeHelper helper;
 
-    public ProductTypeSpecificController() {
-        this.helper = new ProductTypeHelper();
+    public PaymentTypeSpecificController() {
+        this.helper = new PaymentTypeHelper();
     }
-
-    public List<ProductType> findByType(String type) {
-        List<ProductType> list = new ArrayList<>();
+    
+    public List<PaymentType> findByType(String type) {
+        List<PaymentType> list = new ArrayList<>();
 
         try {
             Query query = helper.getFindByType(type);
             for (Object object : query.getResultList()) {
-                list.add((ProductType) object);
+                list.add((PaymentType) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
@@ -33,14 +33,14 @@ public class ProductTypeSpecificController {
 
         return list;
     }
-    
-    public List<ProductType> findAll() {
-        List<ProductType> list = new ArrayList<>();
+
+    public List<PaymentType> findAll() {
+        List<PaymentType> list = new ArrayList<>();
 
         try {
             Query query = helper.getFindAll();
             for (Object object : query.getResultList()) {
-                list.add((ProductType) object);
+                list.add((PaymentType) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();
@@ -49,13 +49,13 @@ public class ProductTypeSpecificController {
         return list;
     }
 
-    public List<ProductType> findEnable() {
-        List<ProductType> list = new ArrayList<>();
+    public List<PaymentType> findEnable() {
+        List<PaymentType> list = new ArrayList<>();
 
         try {
             Query query = helper.getFindEnable();
             for (Object object : query.getResultList()) {
-                list.add((ProductType) object);
+                list.add((PaymentType) object);
             }
         } catch (Exception e) {
             list = new ArrayList<>();

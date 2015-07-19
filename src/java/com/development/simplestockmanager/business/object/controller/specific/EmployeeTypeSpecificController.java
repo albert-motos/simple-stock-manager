@@ -18,8 +18,23 @@ public class EmployeeTypeSpecificController {
     public EmployeeTypeSpecificController() {
         this.helper = new EmployeeTypeHelper();
     }
+    
+    public List<EmployeeType> findByType(String type) {
+        List<EmployeeType> list = new ArrayList<>();
 
-    public List<EmployeeType> getFindAll() {
+        try {
+            Query query = helper.getFindByType(type);
+            for (Object object : query.getResultList()) {
+                list.add((EmployeeType) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<EmployeeType> findAll() {
         List<EmployeeType> list = new ArrayList<>();
 
         try {
@@ -34,7 +49,7 @@ public class EmployeeTypeSpecificController {
         return list;
     }
 
-    public List<EmployeeType> getFindEnable() {
+    public List<EmployeeType> findEnable() {
         List<EmployeeType> list = new ArrayList<>();
 
         try {

@@ -37,7 +37,7 @@ public class ProviderSpecificController {
         return list;
     }
     
-    public List<Provider> getFindAllByBrowser(String browser) {
+    public List<Provider> findAllByBrowser(String browser) {
         List<Provider> list = new ArrayList<>();
 
         try {
@@ -52,7 +52,7 @@ public class ProviderSpecificController {
         return list;
     }
 
-    public List<Provider> getFindEnableByBrowser(String browser) {
+    public List<Provider> findEnableByBrowser(String browser) {
         List<Provider> list = new ArrayList<>();
 
         try {

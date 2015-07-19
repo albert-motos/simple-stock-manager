@@ -15,6 +15,14 @@ public class ProductTypeHelper extends CommonHelper implements BaseTypeHelper {
     }
     
     @Override
+    public Query getFindByType(String type) {
+        Query query = entityManager.createNamedQuery("ProductType.findByType");
+        query.setParameter("type", type);
+
+        return query;
+    }
+    
+    @Override
     public Query getFindAll() {
         Query query = entityManager.createNamedQuery("Product.findAll");
 

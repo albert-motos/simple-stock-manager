@@ -18,14 +18,14 @@ public class StoreHelper extends CommonHelper {
     }
     
     public Query getFindAllByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Store.getFindAllByBrowser");
+        Query query = entityManager.createNamedQuery("Store.findAllByBrowser");
         query.setParameter("browser", "%" + browser + "%");
         
         return query;
     }
     
     public Query getFindEnableByBrowser(String browser) {
-        Query query = entityManager.createNamedQuery("Store.getFindEnableByBrowser");
+        Query query = entityManager.createNamedQuery("Store.findEnableByBrowser");
         query.setParameter("browser", "%" + browser + "%");
         
         return query;

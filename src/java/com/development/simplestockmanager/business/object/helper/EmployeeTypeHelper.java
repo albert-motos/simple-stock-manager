@@ -15,6 +15,14 @@ public class EmployeeTypeHelper extends CommonHelper implements BaseTypeHelper {
     }
 
     @Override
+    public Query getFindByType(String type) {
+        Query query = entityManager.createNamedQuery("EmployeeType.findByType");
+        query.setParameter("type", type);
+
+        return query;
+    }
+    
+    @Override
     public Query getFindAll() {
         Query query = entityManager.createNamedQuery("EmployeeType.findAll");
 
@@ -28,5 +36,9 @@ public class EmployeeTypeHelper extends CommonHelper implements BaseTypeHelper {
 
         return query;
     }
+
+    
+
+    
 
 }

@@ -35,7 +35,7 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
     public void search() {
         clear();
         
-        for (Language languageTranslation : specificController.getFindAll()) {
+        for (Language languageTranslation : specificController.findAll()) {
             String key = getDisplayName(languageTranslation);
             hashMap.put(key, languageTranslation);
             list.add(key);

@@ -38,7 +38,7 @@ public class StoreSpecificController {
         return list;
     }
     
-    public List<Store> getFindAllByBrowser(String browser) {
+    public List<Store> findAllByBrowser(String browser) {
         List<Store> list = new ArrayList<>();
 
         try {
@@ -53,7 +53,7 @@ public class StoreSpecificController {
         return list;
     }
 
-    public List<Store> getFindEnableByBrowser(String browser) {
+    public List<Store> findEnableByBrowser(String browser) {
         List<Store> list = new ArrayList<>();
 
         try {

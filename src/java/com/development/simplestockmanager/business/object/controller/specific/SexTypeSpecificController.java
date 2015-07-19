@@ -19,7 +19,7 @@ public class SexTypeSpecificController {
         this.helper = new SexTypeHelper();
     }
 
-    public List<SexType> getFindAll() {
+    public List<SexType> findAll() {
         List<SexType> list = new ArrayList<>();
 
         try {
@@ -34,7 +34,7 @@ public class SexTypeSpecificController {
         return list;
     }
 
-    public List<SexType> getFindEnable() {
+    public List<SexType> findEnable() {
         List<SexType> list = new ArrayList<>();
 
         try {

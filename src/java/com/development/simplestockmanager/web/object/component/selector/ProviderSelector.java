@@ -35,9 +35,9 @@ public class ProviderSelector extends CommonSelector implements BaseSelector {
         List<Provider> providerList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            providerList = specificController.getFindAllByBrowser(browser);
+            providerList = specificController.findAllByBrowser(browser);
         } else {
-            providerList = specificController.getFindEnableByBrowser(browser);
+            providerList = specificController.findEnableByBrowser(browser);
         }
 
         for (Provider provider : providerList) {

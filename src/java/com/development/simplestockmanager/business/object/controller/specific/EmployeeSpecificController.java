@@ -21,7 +21,7 @@ public class EmployeeSpecificController {
         helper = new EmployeeHelper();
     }
 
-    public Employee getEmployeeByCredencials(String username, String password) {
+    public Employee findByCredencials(String username, String password) {
         Employee employee;
 
         try {
@@ -34,7 +34,7 @@ public class EmployeeSpecificController {
         return employee;
     }
 
-    public Employee getEmployeeBySession(String session) {
+    public Employee findBySession(String session) {
         Employee employee;
 
         try {
@@ -78,7 +78,7 @@ public class EmployeeSpecificController {
         return list;
     }
     
-    public List<Employee> getFindAllByBrowser(String browser) {
+    public List<Employee> findAllByBrowser(String browser) {
         List<Employee> list = new ArrayList<>();
 
         try {
@@ -93,7 +93,7 @@ public class EmployeeSpecificController {
         return list;
     }
 
-    public List<Employee> getFindEnableByBrowser(String browser) {
+    public List<Employee> findEnableByBrowser(String browser) {
         List<Employee> list = new ArrayList<>();
 
         try {

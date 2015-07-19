@@ -1,6 +1,5 @@
 package com.development.simplestockmanager.web.object.component.selector.type;
 
-import com.development.simplestockmanager.web.object.component.selector.type.CommonTypeSelector;
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeTranslationNull;
@@ -39,9 +38,9 @@ public class SexTypeSelector extends CommonTypeSelector implements BaseSelector 
         List<SexType> sexTypeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            sexTypeList = specificController.getFindAll();
+            sexTypeList = specificController.findAll();
         } else {
-            sexTypeList = specificController.getFindEnable();
+            sexTypeList = specificController.findEnable();
         }
 
         for (SexType sexType : sexTypeList) {

@@ -35,9 +35,9 @@ public class EmployeeSelector extends CommonSelector implements BaseSelector {
         List<Employee> employeeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
-            employeeList = specificController.getFindAllByBrowser(browser);
+            employeeList = specificController.findAllByBrowser(browser);
         } else {
-            employeeList = specificController.getFindEnableByBrowser(browser);
+            employeeList = specificController.findEnableByBrowser(browser);
         }
 
         for (Employee employee : employeeList) {
