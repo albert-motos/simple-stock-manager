@@ -14,7 +14,7 @@ public interface CommonConstant {
         public static String CA_ES = "ca_ES";
         public static String ES_ES = "es_ES";
     }
-    
+
     public interface MENU {
 
         public static String TEXT = "menu";
@@ -91,6 +91,7 @@ public interface CommonConstant {
         public static String STATE = TEXT + ".state";
         public static String COUNTRY = TEXT + ".country";
         public static String EMPLOYEE = TEXT + ".employee";
+        public static String TYPE = TEXT + ".type";
 
         public static String NON_SELECTION = TEXT + ".nonselection";
         public static String STATUS = TEXT + ".status";
@@ -116,6 +117,15 @@ public interface CommonConstant {
             public static String PROVIDER = TEXT + ".provider";
             public static String PRODUCT = TEXT + ".product";
             public static String STORE = TEXT + ".store";
+        }
+
+        public interface TRANSLATION {
+
+            public static String TEXT = LABEL.TEXT + ".translation";
+            public static String CA_ES = TEXT + ".ca_es";
+            public static String ES_ES = TEXT + ".es_es";
+            public static String EN_US = TEXT + ".en_us";
+
         }
     }
 
@@ -250,6 +260,16 @@ public interface CommonConstant {
             public static String STATE = TEXT + ".state";
             public static String COUNTRY = TEXT + ".country";
             public static String EMPLOYEE = TEXT + ".employee";
+            public static String TYPE = TEXT + ".type";
+
+            public interface TRANSLATION {
+
+                public static String TEXT = WARNING.TEXT + ".translation";
+                public static String CA_ES = TEXT + ".ca_es";
+                public static String ES_ES = TEXT + ".es_es";
+                public static String EN_US = TEXT + ".en_us";
+
+            }
 
             public interface DETAIL {
 
@@ -268,7 +288,17 @@ public interface CommonConstant {
             public static String PRODUCT = TEXT + ".product";
 
             public static String SUMMARY = TEXT + ".summary";
+            
+            public static String TYPE = TEXT + ".type";
+            public interface TRANSLATION {
 
+                public static String TEXT = WARNING.TEXT + ".translation";
+                public static String CA_ES = TEXT + ".ca_es";
+                public static String ES_ES = TEXT + ".es_es";
+                public static String EN_US = TEXT + ".en_us";
+
+            }
+            
             public interface DETAIL {
 
                 public static String TEXT = ERROR.TEXT + ".detail";
