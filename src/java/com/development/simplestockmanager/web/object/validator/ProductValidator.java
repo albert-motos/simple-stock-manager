@@ -10,7 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ProductValidator extends BaseValidator {
+/**
+ * Validator class for Product object
+ *
+ * @author foxtrot
+ */
+public class ProductValidator extends CommonValidator implements BaseValidator {
 
     private final ProductSpecificController specificController;
     private Product product;
@@ -21,18 +26,17 @@ public class ProductValidator extends BaseValidator {
     }
 
     @Override
-    protected void convertObject() {
+    public void setObject(Object object) {
         product = (Product) object;
     }
 
     @Override
     public boolean validate() {
-        convertObject();
         return validate(checkFields(), inconsistenceFields());
     }
 
     @Override
-    protected List<String> checkFields() {
+    public List<String> checkFields() {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (product.getName().isEmpty()) {
@@ -59,19 +63,19 @@ public class ProductValidator extends BaseValidator {
     }
 
     @Override
-    protected List<String> inconsistenceFields() {
+    public List<String> inconsistenceFields() {
         List<String> causeList = new ArrayList<>();
 
         if (product.getProvider().getId() != BusinessConstant.IDENTIFIER.INVALID
                 && product.getBrand().getId() != BusinessConstant.IDENTIFIER.INVALID
                 && product.getProductType().getId() != BusinessConstant.IDENTIFIER.INVALID) {
-            
+
             Product productOfRelation = specificController.findByRelation(product.getProductType(), product.getBrand(), product.getProvider());
-            
+
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && productOfRelation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && productOfRelation.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(productOfRelation.getId(), product.getId()))) {
-               causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.PRODUCT));
+                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.PRODUCT));
             }
         }
 

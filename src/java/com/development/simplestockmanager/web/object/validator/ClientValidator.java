@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class ClientValidator extends BaseValidator {
+public class ClientValidator extends CommonValidator implements BaseValidator {
 
     private Client client;
 
@@ -22,18 +22,17 @@ public class ClientValidator extends BaseValidator {
     }
 
     @Override
-    protected void convertObject() {
+    public void setObject(Object object) {
         client = (Client) object;
     }
 
     @Override
     public boolean validate() {
-        convertObject();
         return validate(checkFields(), inconsistenceFields());
     }
 
     @Override
-    protected List<String> checkFields() {
+    public List<String> checkFields() {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (client.getFirstname().isEmpty()) {
@@ -64,7 +63,7 @@ public class ClientValidator extends BaseValidator {
     }
 
     @Override
-    protected List<String> inconsistenceFields() {
+    public List<String> inconsistenceFields() {
         List<String> causeList = new ArrayList<>();
 
         if (client.getBornDate() != null) {

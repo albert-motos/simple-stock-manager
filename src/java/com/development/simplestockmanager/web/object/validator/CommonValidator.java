@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.web.object.validator;
 
 import com.development.simplestockmanager.common.CommonConstant;
@@ -12,32 +7,20 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 
 /**
+ * Common class for validator
  *
- * @author Monica
+ * @author foxtrot
  */
-abstract class BaseValidator {
+public class CommonValidator {
 
     protected LanguageController languageController;
     protected long mode;
-    protected Object object;
     private List<FacesMessage> messageList;
 
-    public BaseValidator(long mode, LanguageController controller) {
+    public CommonValidator(long mode, LanguageController controller) {
         this.mode = mode;
         this.languageController = controller;
     }
-
-    public void setObject(Object object) {
-        this.object = object;
-    }
-
-    public List<FacesMessage> getMessageList() {
-        return messageList;
-    }
-
-    abstract protected void convertObject();
-
-    abstract public boolean validate();
 
     protected boolean validate(List<String> warningList, List<String> errorList) {
         messageList = new ArrayList<>();
@@ -51,7 +34,7 @@ abstract class BaseValidator {
             } else {
                 detail = languageController.getWord(CommonConstant.MESSAGE.WARNING.DETAIL.PLURAL);
             }
-            
+
             messageList.add(new FacesMessage(FacesMessage.SEVERITY_WARN, summary, detail));
 
             for (String warning : warningList) {
@@ -66,7 +49,7 @@ abstract class BaseValidator {
             } else {
                 detail = languageController.getWord(CommonConstant.MESSAGE.ERROR.DETAIL.PLURAL);
             }
-            
+
             messageList.add(new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, detail));
 
             for (String error : errorList) {
@@ -77,9 +60,7 @@ abstract class BaseValidator {
         return messageList.isEmpty();
     }
 
-    abstract protected List<String> checkFields();
-
-    protected List<String> inconsistenceFields() {
-        return new ArrayList<>();
+    public List<FacesMessage> getMessageList() {
+        return messageList;
     }
 }

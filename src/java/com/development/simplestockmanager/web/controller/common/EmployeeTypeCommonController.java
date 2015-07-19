@@ -3,7 +3,7 @@ package com.development.simplestockmanager.web.controller.common;
 import com.development.simplestockmanager.business.object.controller.general.EmployeeTypeGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeTypeSpecificController;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
-//import com.development.simplestockmanager.web.object.validator.EmployeeTypeValidator;
+import com.development.simplestockmanager.web.object.validator.type.EmployeeTypeValidator;
 
 /**
  * Common controller class for EmployeeType object
@@ -12,7 +12,7 @@ import com.development.simplestockmanager.business.persistence.EmployeeType;
  */
 public class EmployeeTypeCommonController extends BaseCommonController {
 
-//    protected final EmployeeTypeValidator validator;
+    protected final EmployeeTypeValidator validator;
     protected final EmployeeTypeGeneralController generalController;
     protected final EmployeeTypeSpecificController specificController;
 
@@ -22,6 +22,7 @@ public class EmployeeTypeCommonController extends BaseCommonController {
         generalController = new EmployeeTypeGeneralController();
         specificController = new EmployeeTypeSpecificController();
 //        validator = new EmployeeTypeValidator(mode, languageController, specificController);
+        validator = new EmployeeTypeValidator();
     }
 
     public EmployeeType getEmployeeType() {

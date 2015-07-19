@@ -1,7 +1,7 @@
 package com.development.simplestockmanager.web.controller.add;
 
 import com.development.simplestockmanager.business.common.BusinessConstant;
-import com.development.simplestockmanager.business.object.nullpackage.BrandNull;
+import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.AddController;
@@ -22,7 +22,7 @@ public class BrandAddController extends BrandCommonController implements AddCont
 
     public BrandAddController() {
         super(WebConstant.VALIDATOR.MODE.CREATE);
-        brand = new BrandNull();
+        brand = new Brand();
     }
 
     @Override

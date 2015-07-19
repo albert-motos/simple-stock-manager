@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class ProviderValidator extends BaseValidator {
+public class ProviderValidator extends CommonValidator implements BaseValidator {
 
     private Provider provider;
 
@@ -20,18 +20,17 @@ public class ProviderValidator extends BaseValidator {
     }
 
     @Override
-    protected void convertObject() {
+    public void setObject(Object object) {
         provider = (Provider) object;
     }
 
     @Override
     public boolean validate() {
-        convertObject();
         return validate(checkFields(), inconsistenceFields());
     }
 
     @Override
-    protected List<String> checkFields() {
+    public List<String> checkFields() {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (provider.getName().isEmpty()) {
@@ -51,6 +50,11 @@ public class ProviderValidator extends BaseValidator {
         }
 
         return fieldsEmptyList;
+    }
+
+    @Override
+    public List<String> inconsistenceFields() {
+        return new ArrayList<>();
     }
 
 }

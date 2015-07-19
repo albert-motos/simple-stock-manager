@@ -15,7 +15,7 @@ import java.util.Objects;
  *
  * @author foxtrot
  */
-public class BrandValidator extends BaseValidator {
+public class BrandValidator extends CommonValidator implements BaseValidator {
 
     private final BrandSpecificController specificController;
     private Brand brand;
@@ -26,18 +26,17 @@ public class BrandValidator extends BaseValidator {
     }
     
     @Override
-    protected void convertObject() {
+    public void setObject(Object object) {
         brand = (Brand) object;
     }
 
     @Override
     public boolean validate() {
-        convertObject();
         return validate(checkFields(), inconsistenceFields());
     }
 
     @Override
-    protected List<String> checkFields() {
+    public List<String> checkFields() {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (brand.getName().isEmpty()) {
@@ -52,7 +51,7 @@ public class BrandValidator extends BaseValidator {
     }
 
     @Override
-    protected List<String> inconsistenceFields() {
+    public List<String> inconsistenceFields() {
         List<String> causeList = new ArrayList<>();
 
         if (!brand.getName().isEmpty()) {

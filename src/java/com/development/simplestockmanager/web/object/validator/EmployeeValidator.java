@@ -16,7 +16,7 @@ import java.util.Objects;
  *
  * @author foxtrot
  */
-public class EmployeeValidator extends BaseValidator {
+public class EmployeeValidator extends CommonValidator implements BaseValidator {
 
     private final EmployeeSpecificController specificController;
     private Employee employee;
@@ -27,18 +27,17 @@ public class EmployeeValidator extends BaseValidator {
     }
 
     @Override
-    protected void convertObject() {
+    public void setObject(Object object) {
         employee = (Employee) object;
     }
 
     @Override
     public boolean validate() {
-        convertObject();
         return validate(checkFields(), inconsistenceFields());
     }
 
     @Override
-    protected List<String> checkFields() {
+    public List<String> checkFields() {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (employee.getFirstname().isEmpty()) {
@@ -72,11 +71,11 @@ public class EmployeeValidator extends BaseValidator {
         if (employee.getSexType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
             fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.SEX_TYPE));
         }
-        
+
         if (employee.getEmployeeType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
             fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE_TYPE));
         }
-        
+
         if (employee.getLanguage().getId() == BusinessConstant.IDENTIFIER.INVALID) {
             fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.LANGUAGE));
         }
@@ -85,7 +84,7 @@ public class EmployeeValidator extends BaseValidator {
     }
 
     @Override
-    protected List<String> inconsistenceFields() {
+    public List<String> inconsistenceFields() {
         List<String> causeList = new ArrayList<>();
 
         if (employee.getBornDate() != null) {
@@ -96,7 +95,7 @@ public class EmployeeValidator extends BaseValidator {
 
         if (!employee.getUsername().isEmpty()) {
             Employee employeeOfUsername = specificController.findByUsername(employee.getUsername());
-            
+
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && employeeOfUsername.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && employeeOfUsername.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(employeeOfUsername.getId(), employee.getId()))) {

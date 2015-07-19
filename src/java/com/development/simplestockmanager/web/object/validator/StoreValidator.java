@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author foxtrot
  */
-public class StoreValidator extends BaseValidator {
+public class StoreValidator extends CommonValidator implements BaseValidator {
 
     private Store store;
 
@@ -21,18 +21,17 @@ public class StoreValidator extends BaseValidator {
     }
 
     @Override
-    protected void convertObject() {
+    public void setObject(Object object) {
         store = (Store) object;
     }
 
     @Override
     public boolean validate() {
-        convertObject();
         return validate(checkFields(), inconsistenceFields());
     }
 
     @Override
-    protected List<String> checkFields() {
+    public List<String> checkFields() {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (store.getName().isEmpty()) {
@@ -63,6 +62,11 @@ public class StoreValidator extends BaseValidator {
             fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMPLOYEE));
         }
         return fieldsEmptyList;
+    }
+
+    @Override
+    public List<String> inconsistenceFields() {
+        return new ArrayList<>();
     }
 
 }
