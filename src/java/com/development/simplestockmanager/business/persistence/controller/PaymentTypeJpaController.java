@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.business.persistence.Invoice;
 import com.development.simplestockmanager.business.persistence.PaymentType;
 import java.util.ArrayList;
@@ -46,6 +47,16 @@ public class PaymentTypeJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Employee createdUser = paymentType.getCreatedUser();
+            if (createdUser != null) {
+                createdUser = em.getReference(createdUser.getClass(), createdUser.getId());
+                paymentType.setCreatedUser(createdUser);
+            }
+            Employee lastModifiedUser = paymentType.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser = em.getReference(lastModifiedUser.getClass(), lastModifiedUser.getId());
+                paymentType.setLastModifiedUser(lastModifiedUser);
+            }
             List<Invoice> attachedInvoiceList = new ArrayList<Invoice>();
             for (Invoice invoiceListInvoiceToAttach : paymentType.getInvoiceList()) {
                 invoiceListInvoiceToAttach = em.getReference(invoiceListInvoiceToAttach.getClass(), invoiceListInvoiceToAttach.getId());
@@ -59,6 +70,14 @@ public class PaymentTypeJpaController implements Serializable {
             }
             paymentType.setPaymentTypeTranslationList(attachedPaymentTypeTranslationList);
             em.persist(paymentType);
+            if (createdUser != null) {
+                createdUser.getPaymentTypeList().add(paymentType);
+                createdUser = em.merge(createdUser);
+            }
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getPaymentTypeList().add(paymentType);
+                lastModifiedUser = em.merge(lastModifiedUser);
+            }
             for (Invoice invoiceListInvoice : paymentType.getInvoiceList()) {
                 PaymentType oldPaymentTypeOfInvoiceListInvoice = invoiceListInvoice.getPaymentType();
                 invoiceListInvoice.setPaymentType(paymentType);
@@ -91,6 +110,10 @@ public class PaymentTypeJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             PaymentType persistentPaymentType = em.find(PaymentType.class, paymentType.getId());
+            Employee createdUserOld = persistentPaymentType.getCreatedUser();
+            Employee createdUserNew = paymentType.getCreatedUser();
+            Employee lastModifiedUserOld = persistentPaymentType.getLastModifiedUser();
+            Employee lastModifiedUserNew = paymentType.getLastModifiedUser();
             List<Invoice> invoiceListOld = persistentPaymentType.getInvoiceList();
             List<Invoice> invoiceListNew = paymentType.getInvoiceList();
             List<PaymentTypeTranslation> paymentTypeTranslationListOld = persistentPaymentType.getPaymentTypeTranslationList();
@@ -115,6 +138,14 @@ public class PaymentTypeJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (createdUserNew != null) {
+                createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());
+                paymentType.setCreatedUser(createdUserNew);
+            }
+            if (lastModifiedUserNew != null) {
+                lastModifiedUserNew = em.getReference(lastModifiedUserNew.getClass(), lastModifiedUserNew.getId());
+                paymentType.setLastModifiedUser(lastModifiedUserNew);
+            }
             List<Invoice> attachedInvoiceListNew = new ArrayList<Invoice>();
             for (Invoice invoiceListNewInvoiceToAttach : invoiceListNew) {
                 invoiceListNewInvoiceToAttach = em.getReference(invoiceListNewInvoiceToAttach.getClass(), invoiceListNewInvoiceToAttach.getId());
@@ -130,6 +161,22 @@ public class PaymentTypeJpaController implements Serializable {
             paymentTypeTranslationListNew = attachedPaymentTypeTranslationListNew;
             paymentType.setPaymentTypeTranslationList(paymentTypeTranslationListNew);
             paymentType = em.merge(paymentType);
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                createdUserOld.getPaymentTypeList().remove(paymentType);
+                createdUserOld = em.merge(createdUserOld);
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                createdUserNew.getPaymentTypeList().add(paymentType);
+                createdUserNew = em.merge(createdUserNew);
+            }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                lastModifiedUserOld.getPaymentTypeList().remove(paymentType);
+                lastModifiedUserOld = em.merge(lastModifiedUserOld);
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                lastModifiedUserNew.getPaymentTypeList().add(paymentType);
+                lastModifiedUserNew = em.merge(lastModifiedUserNew);
+            }
             for (Invoice invoiceListNewInvoice : invoiceListNew) {
                 if (!invoiceListOld.contains(invoiceListNewInvoice)) {
                     PaymentType oldPaymentTypeOfInvoiceListNewInvoice = invoiceListNewInvoice.getPaymentType();
@@ -198,6 +245,16 @@ public class PaymentTypeJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Employee createdUser = paymentType.getCreatedUser();
+            if (createdUser != null) {
+                createdUser.getPaymentTypeList().remove(paymentType);
+                createdUser = em.merge(createdUser);
+            }
+            Employee lastModifiedUser = paymentType.getLastModifiedUser();
+            if (lastModifiedUser != null) {
+                lastModifiedUser.getPaymentTypeList().remove(paymentType);
+                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(paymentType);
             em.getTransaction().commit();

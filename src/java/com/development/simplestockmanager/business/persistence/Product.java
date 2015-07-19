@@ -195,14 +195,14 @@ public class Product implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.name);
-        hash = 97 * hash + Objects.hashCode(this.description);
-        hash = 97 * hash + (this.enable ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.brand);
-        hash = 97 * hash + Objects.hashCode(this.productType);
-        hash = 97 * hash + Objects.hashCode(this.provider);
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.name);
+        hash = 41 * hash + Objects.hashCode(this.description);
+        hash = 41 * hash + (this.enable ? 1 : 0);
+        hash = 41 * hash + Objects.hashCode(this.brand);
+        hash = 41 * hash + Objects.hashCode(this.productType);
+        hash = 41 * hash + Objects.hashCode(this.provider);
         return hash;
     }
 

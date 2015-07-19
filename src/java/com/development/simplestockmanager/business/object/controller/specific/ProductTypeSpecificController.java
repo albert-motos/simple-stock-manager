@@ -19,7 +19,7 @@ public class ProductTypeSpecificController {
         this.helper = new ProductTypeHelper();
     }
 
-    public List<ProductType> getFindAll() {
+    public List<ProductType> findAll() {
         List<ProductType> list = new ArrayList<>();
 
         try {
@@ -34,7 +34,7 @@ public class ProductTypeSpecificController {
         return list;
     }
 
-    public List<ProductType> getFindEnable() {
+    public List<ProductType>  findEnable() {
         List<ProductType> list = new ArrayList<>();
 
         try {

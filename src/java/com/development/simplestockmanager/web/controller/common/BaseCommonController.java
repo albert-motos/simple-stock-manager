@@ -7,7 +7,7 @@ import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.AuthenticationService;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
-import com.development.simplestockmanager.web.object.component.selector.EmployeeSelector;
+import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import java.io.Serializable;
 import java.util.Date;
 import javax.faces.application.FacesMessage;

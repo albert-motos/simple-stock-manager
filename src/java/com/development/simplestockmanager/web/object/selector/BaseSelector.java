@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.object.component.selector;
+package com.development.simplestockmanager.web.object.selector;
 
 /**
  * Selector interface

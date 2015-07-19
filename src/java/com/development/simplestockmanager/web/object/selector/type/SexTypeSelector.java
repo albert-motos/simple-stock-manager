@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.object.component.selector.type;
+package com.development.simplestockmanager.web.object.selector.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
@@ -6,7 +6,7 @@ import com.development.simplestockmanager.business.object.nullpackage.SexTypeTra
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
 import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.object.component.selector.BaseSelector;
+import com.development.simplestockmanager.web.object.selector.BaseSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

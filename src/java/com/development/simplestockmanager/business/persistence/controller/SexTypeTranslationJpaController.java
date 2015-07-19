@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
 import com.development.simplestockmanager.business.persistence.controller.exceptions.NonexistentEntityException;
@@ -37,12 +38,21 @@ public class SexTypeTranslationJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Language language = sexTypeTranslation.getLanguage();
+            if (language != null) {
+                language = em.getReference(language.getClass(), language.getId());
+                sexTypeTranslation.setLanguage(language);
+            }
             SexType reference = sexTypeTranslation.getReference();
             if (reference != null) {
                 reference = em.getReference(reference.getClass(), reference.getId());
                 sexTypeTranslation.setReference(reference);
             }
             em.persist(sexTypeTranslation);
+            if (language != null) {
+                language.getSexTypeTranslationList().add(sexTypeTranslation);
+                language = em.merge(language);
+            }
             if (reference != null) {
                 reference.getSexTypeTranslationList().add(sexTypeTranslation);
                 reference = em.merge(reference);
@@ -61,13 +71,27 @@ public class SexTypeTranslationJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             SexTypeTranslation persistentSexTypeTranslation = em.find(SexTypeTranslation.class, sexTypeTranslation.getId());
+            Language languageOld = persistentSexTypeTranslation.getLanguage();
+            Language languageNew = sexTypeTranslation.getLanguage();
             SexType referenceOld = persistentSexTypeTranslation.getReference();
             SexType referenceNew = sexTypeTranslation.getReference();
+            if (languageNew != null) {
+                languageNew = em.getReference(languageNew.getClass(), languageNew.getId());
+                sexTypeTranslation.setLanguage(languageNew);
+            }
             if (referenceNew != null) {
                 referenceNew = em.getReference(referenceNew.getClass(), referenceNew.getId());
                 sexTypeTranslation.setReference(referenceNew);
             }
             sexTypeTranslation = em.merge(sexTypeTranslation);
+            if (languageOld != null && !languageOld.equals(languageNew)) {
+                languageOld.getSexTypeTranslationList().remove(sexTypeTranslation);
+                languageOld = em.merge(languageOld);
+            }
+            if (languageNew != null && !languageNew.equals(languageOld)) {
+                languageNew.getSexTypeTranslationList().add(sexTypeTranslation);
+                languageNew = em.merge(languageNew);
+            }
             if (referenceOld != null && !referenceOld.equals(referenceNew)) {
                 referenceOld.getSexTypeTranslationList().remove(sexTypeTranslation);
                 referenceOld = em.merge(referenceOld);
@@ -104,6 +128,11 @@ public class SexTypeTranslationJpaController implements Serializable {
                 sexTypeTranslation.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The sexTypeTranslation with id " + id + " no longer exists.", enfe);
+            }
+            Language language = sexTypeTranslation.getLanguage();
+            if (language != null) {
+                language.getSexTypeTranslationList().remove(sexTypeTranslation);
+                language = em.merge(language);
             }
             SexType reference = sexTypeTranslation.getReference();
             if (reference != null) {

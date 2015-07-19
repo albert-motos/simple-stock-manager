@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.object.component.selector.type;
+package com.development.simplestockmanager.web.object.selector.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.EmployeeTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeTypeNull;
@@ -6,7 +6,7 @@ import com.development.simplestockmanager.business.object.nullpackage.EmployeeTy
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
 import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.object.component.selector.BaseSelector;
+import com.development.simplestockmanager.web.object.selector.BaseSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

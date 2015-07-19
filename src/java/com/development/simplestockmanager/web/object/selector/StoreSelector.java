@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.object.component.selector;
+package com.development.simplestockmanager.web.object.selector;
 
 import com.development.simplestockmanager.business.object.controller.specific.StoreSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.StoreNull;

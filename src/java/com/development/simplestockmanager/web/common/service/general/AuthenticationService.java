@@ -52,7 +52,7 @@ public class AuthenticationService implements Serializable {
     public void login() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.AUTHENTICATION.LOGIN);
 
-        employee = specificController.getEmployeeByCredencials(employee.getUsername(), employee.getPassword());
+        employee = specificController.findByCredencials(employee.getUsername(), employee.getPassword());
         FacesContext currentInstance = FacesContext.getCurrentInstance();
         FacesMessage message = null;
 
@@ -102,7 +102,7 @@ public class AuthenticationService implements Serializable {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.AUTHENTICATION.GET_CURRENT_EMPLOYEE);
 
         String session = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        return specificController.getEmployeeBySession(session);
+        return specificController.findBySession(session);
     }
 
     public Employee getEmployee() {

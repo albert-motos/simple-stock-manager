@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.object.component.selector.type;
+package com.development.simplestockmanager.web.object.selector.type;
 
 import com.development.simplestockmanager.business.object.controller.specific.LanguageSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.LanguageNull;
@@ -6,7 +6,7 @@ import com.development.simplestockmanager.business.object.nullpackage.LanguageTr
 import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.LanguageTranslation;
 import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.object.component.selector.BaseSelector;
+import com.development.simplestockmanager.web.object.selector.BaseSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
 

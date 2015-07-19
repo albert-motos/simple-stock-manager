@@ -43,9 +43,21 @@ public class Language implements Serializable {
     @Column(name = "CODE")
     private String code;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private List<EmployeeTypeTranslation> employeeTypeTranslationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private List<Employee> employeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private List<SexTypeTranslation> sexTypeTranslationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
     private List<LanguageTranslation> languageTranslationList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
     private List<LanguageTranslation> languageTranslationList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private List<PriceTypeTranslation> priceTypeTranslationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private List<ProductTypeTranslation> productTypeTranslationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+    private List<PaymentTypeTranslation> paymentTypeTranslationList;
 
     public Language() {
     }
@@ -76,6 +88,33 @@ public class Language implements Serializable {
     }
 
     @XmlTransient
+    public List<EmployeeTypeTranslation> getEmployeeTypeTranslationList() {
+        return employeeTypeTranslationList;
+    }
+
+    public void setEmployeeTypeTranslationList(List<EmployeeTypeTranslation> employeeTypeTranslationList) {
+        this.employeeTypeTranslationList = employeeTypeTranslationList;
+    }
+
+    @XmlTransient
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
+    @XmlTransient
+    public List<SexTypeTranslation> getSexTypeTranslationList() {
+        return sexTypeTranslationList;
+    }
+
+    public void setSexTypeTranslationList(List<SexTypeTranslation> sexTypeTranslationList) {
+        this.sexTypeTranslationList = sexTypeTranslationList;
+    }
+
+    @XmlTransient
     public List<LanguageTranslation> getLanguageTranslationList() {
         return languageTranslationList;
     }
@@ -91,6 +130,33 @@ public class Language implements Serializable {
 
     public void setLanguageTranslationList1(List<LanguageTranslation> languageTranslationList1) {
         this.languageTranslationList1 = languageTranslationList1;
+    }
+
+    @XmlTransient
+    public List<PriceTypeTranslation> getPriceTypeTranslationList() {
+        return priceTypeTranslationList;
+    }
+
+    public void setPriceTypeTranslationList(List<PriceTypeTranslation> priceTypeTranslationList) {
+        this.priceTypeTranslationList = priceTypeTranslationList;
+    }
+
+    @XmlTransient
+    public List<ProductTypeTranslation> getProductTypeTranslationList() {
+        return productTypeTranslationList;
+    }
+
+    public void setProductTypeTranslationList(List<ProductTypeTranslation> productTypeTranslationList) {
+        this.productTypeTranslationList = productTypeTranslationList;
+    }
+
+    @XmlTransient
+    public List<PaymentTypeTranslation> getPaymentTypeTranslationList() {
+        return paymentTypeTranslationList;
+    }
+
+    public void setPaymentTypeTranslationList(List<PaymentTypeTranslation> paymentTypeTranslationList) {
+        this.paymentTypeTranslationList = paymentTypeTranslationList;
     }
 
     @Override

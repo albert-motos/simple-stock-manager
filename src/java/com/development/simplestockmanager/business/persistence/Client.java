@@ -211,15 +211,15 @@ public class Client implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.firstname);
-        hash = 53 * hash + Objects.hashCode(this.lastname);
-        hash = 53 * hash + Objects.hashCode(this.bornDate);
-        hash = 53 * hash + Objects.hashCode(this.phone);
-        hash = 53 * hash + Objects.hashCode(this.email);
-        hash = 53 * hash + (this.enable ? 1 : 0);
-        hash = 53 * hash + Objects.hashCode(this.sexType);
+        int hash = 7;
+        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 71 * hash + Objects.hashCode(this.firstname);
+        hash = 71 * hash + Objects.hashCode(this.lastname);
+        hash = 71 * hash + Objects.hashCode(this.bornDate);
+        hash = 71 * hash + Objects.hashCode(this.phone);
+        hash = 71 * hash + Objects.hashCode(this.email);
+        hash = 71 * hash + (this.enable ? 1 : 0);
+        hash = 71 * hash + Objects.hashCode(this.sexType);
         return hash;
     }
 

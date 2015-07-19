@@ -66,7 +66,7 @@
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                                <p:column style="width: 30%">
+                                <p:column style="width: 35%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
@@ -78,7 +78,7 @@
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                                <p:column style="width: 40%">
+                                <p:column style="width: 35%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column style="text-align: center">
@@ -92,27 +92,22 @@
                                 </p:column>
                             </p:row>
                         </p:panelGrid>
-                        
+
                         <p:panelGrid style="width: 100%">
                             <p:row>
-                                <p:column style="width: 30%">
+                                <p:column style="width: 40%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.firstname}" />
+                                                <p:outputLabel value="#{label.usernamme}" />
                                             </p:column>
                                             <p:column style="width: 100%">
-                                                <p:inputText value="#{employeeSearch.browser.firstname}" style="width: 100%" />
+                                                <p:inputText value="#{employeeSearch.browser.username}" style="width: 100%" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                            </p:row>
-                        </p:panelGrid>
-                        
-                        <p:panelGrid style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 50%">
+                                <p:column style="width: 30%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
@@ -127,7 +122,7 @@
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                                <p:column style="width: 50%">
+                                <p:column style="width: 30%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
@@ -145,6 +140,7 @@
                             </p:row>
                         </p:panelGrid>
                     </p:tab>
+                    
                     <p:tab title="#{label.auditoryHeader}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
@@ -208,28 +204,40 @@
                             </p:row>
                         </p:panelGrid>
 
-                        <p:panelGrid style="width: 100%">
+                        <p:panelGrid>
                             <p:row>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:outputLabel value="#{label.auditoryCreatedUser}" />
                                             </p:column>
-                                            <p:column style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
                                                 <p:inputText value="#{employeeSearch.createdUser.browser}" style="width: 100%" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:commandButton value="#{button.search}" actionListener="#{employeeSearch.createdUser.search()}" update="createdUserList" />
                                             </p:column>
-                                            <p:column style="width: 100%">
-                                                <p:selectOneMenu id="createdUserList" value="#{employeeSearch.createdUser.selection}" style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="createdUserList" value="#{employeeSearch.createdUser.selection}">
                                                     <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
                                                     <f:selectItems value="#{employeeSearch.createdUser.list}" />
                                                 </p:selectOneMenu>
@@ -238,28 +246,40 @@
                                     </p:panelGrid>
                                 </p:column>
                             </p:row>
-
+                            
                             <p:row>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
                                             </p:column>
-                                            <p:column style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
                                                 <p:inputText value="#{employeeSearch.lastModifiedUser.browser}" style="width: 100%" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:commandButton value="#{button.search}" actionListener="#{employeeSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
                                             </p:column>
-                                            <p:column style="width: 100%">
-                                                <p:selectOneMenu id="lastModifiedUserList" value="#{employeeSearch.lastModifiedUser.selection}" style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="lastModifiedUserList" value="#{employeeSearch.lastModifiedUser.selection}">
                                                     <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
                                                     <f:selectItems value="#{employeeSearch.lastModifiedUser.list}" />
                                                 </p:selectOneMenu>
@@ -291,11 +311,11 @@
                     <h:outputText value="#{list.getStatus(employee.enable)}" />
                 </p:column>
 
-                <p:column headerText="#{list.firstname}" sortBy="#{employee.firstname}">
+                <p:column headerText="#{list.firstname}" style="width: 30%" sortBy="#{employee.firstname}">
                     <h:outputText value="#{employee.firstname}" />
                 </p:column>
 
-                <p:column headerText="#{list.lastname}" sortBy="#{employee.lastname}">
+                <p:column headerText="#{list.lastname}" style="width: 70%" sortBy="#{employee.lastname}">
                     <h:outputText value="#{employee.lastname}" />
                 </p:column>
             </p:dataTable>

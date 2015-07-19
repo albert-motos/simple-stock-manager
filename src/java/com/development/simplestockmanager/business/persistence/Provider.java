@@ -184,13 +184,13 @@ public class Provider implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.name);
-        hash = 37 * hash + Objects.hashCode(this.identifier);
-        hash = 37 * hash + Objects.hashCode(this.phone);
-        hash = 37 * hash + Objects.hashCode(this.email);
-        hash = 37 * hash + (this.enable ? 1 : 0);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.identifier);
+        hash = 53 * hash + Objects.hashCode(this.phone);
+        hash = 53 * hash + Objects.hashCode(this.email);
+        hash = 53 * hash + (this.enable ? 1 : 0);
         return hash;
     }
 

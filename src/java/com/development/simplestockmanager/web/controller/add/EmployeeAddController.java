@@ -6,9 +6,9 @@ import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.AddController;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
-import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
-import com.development.simplestockmanager.web.object.component.selector.type.LanguageSelector;
-import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
+import com.development.simplestockmanager.web.object.selector.type.EmployeeTypeSelector;
+import com.development.simplestockmanager.web.object.selector.type.LanguageSelector;
+import com.development.simplestockmanager.web.object.selector.type.SexTypeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -35,6 +35,7 @@ public class EmployeeAddController extends EmployeeCommonController implements A
     public void add() {
         employee.setSexType(sexTypeSelector.getSelectedValue());
         employee.setEmployeeType(employeeTypeSelector.getSelectedValue());
+        employee.setLanguage(languageSelector.getSelectedValue());
         validator.setObject(employee);
         
         if (validator.validate()) {
@@ -42,6 +43,7 @@ public class EmployeeAddController extends EmployeeCommonController implements A
             employee.setLastModifiedDate(new Date());
             employee.setCreatedUser(user);
             employee.setLastModifiedUser(user);
+            employee.setLastOnlineDate(new Date(0)); 
 
             Long id = generalController.create(employee);
 
@@ -53,7 +55,7 @@ public class EmployeeAddController extends EmployeeCommonController implements A
                 action = true;
                 severity = FacesMessage.SEVERITY_INFO;
                 summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.CLIENT) + id +
+                detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + id +
                         languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
             }
 

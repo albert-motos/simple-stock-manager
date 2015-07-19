@@ -46,6 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employee.findByCreatedDate", query = "SELECT e FROM Employee e WHERE e.createdDate = :createdDate"),
     @NamedQuery(name = "Employee.findByLastModifiedDate", query = "SELECT e FROM Employee e WHERE e.lastModifiedDate = :lastModifiedDate")})
 public class Employee implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,9 +96,9 @@ public class Employee implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
-    private List<EmployeeType> employeeTypeList;
+    private List<Price> priceList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
-    private List<EmployeeType> employeeTypeList1;
+    private List<Price> priceList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
     private List<Employee> employeeList;
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
@@ -106,6 +107,9 @@ public class Employee implements Serializable {
     @JoinColumn(name = "EMPLOYEE_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private EmployeeType employeeType;
+    @JoinColumn(name = "LANGUAGE", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Language language;
     @JoinColumn(name = "SEX_TYPE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private SexType sexType;
@@ -114,13 +118,72 @@ public class Employee implements Serializable {
     @JoinColumn(name = "LAST_MODIFIED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee lastModifiedUser;
-    @JoinColumn(name = "LANGUAGE", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Language language;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<PriceType> priceTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<PriceType> priceTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Record> recordList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Record> recordList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Record> recordList2;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Invoice> invoiceList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Invoice> invoiceList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Invoice> invoiceList2;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Client> clientList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Client> clientList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Stock> stockList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Stock> stockList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Brand> brandList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Brand> brandList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
     private List<SexType> sexTypeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
     private List<SexType> sexTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<PaymentType> paymentTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<PaymentType> paymentTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<EmployeeType> employeeTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<EmployeeType> employeeTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Item> itemList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Item> itemList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<ProductType> productTypeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<ProductType> productTypeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<AnalyticsTime> analyticsTimeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<AnalyticsTime> analyticsTimeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Product> productList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Product> productList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Provider> providerList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Provider> providerList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdUser")
+    private List<Store> storeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<Store> storeList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastModifiedUser")
+    private List<Store> storeList2;
 
     public Employee() {
     }
@@ -257,21 +320,21 @@ public class Employee implements Serializable {
     }
 
     @XmlTransient
-    public List<EmployeeType> getEmployeeTypeList() {
-        return employeeTypeList;
+    public List<Price> getPriceList() {
+        return priceList;
     }
 
-    public void setEmployeeTypeList(List<EmployeeType> employeeTypeList) {
-        this.employeeTypeList = employeeTypeList;
+    public void setPriceList(List<Price> priceList) {
+        this.priceList = priceList;
     }
 
     @XmlTransient
-    public List<EmployeeType> getEmployeeTypeList1() {
-        return employeeTypeList1;
+    public List<Price> getPriceList1() {
+        return priceList1;
     }
 
-    public void setEmployeeTypeList1(List<EmployeeType> employeeTypeList1) {
-        this.employeeTypeList1 = employeeTypeList1;
+    public void setPriceList1(List<Price> priceList1) {
+        this.priceList1 = priceList1;
     }
 
     @XmlTransient
@@ -299,6 +362,14 @@ public class Employee implements Serializable {
         this.employeeType = employeeType;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
     public SexType getSexType() {
         return sexType;
     }
@@ -324,12 +395,130 @@ public class Employee implements Serializable {
         this.lastModifiedUser = lastModifiedUser;
     }
 
-    public Language getLanguage() {
-        return language;
+    @XmlTransient
+    public List<PriceType> getPriceTypeList() {
+        return priceTypeList;
     }
 
-    public void setLanguage(Language language) {
-        this.language = language;
+    public void setPriceTypeList(List<PriceType> priceTypeList) {
+        this.priceTypeList = priceTypeList;
+    }
+
+    @XmlTransient
+    public List<PriceType> getPriceTypeList1() {
+        return priceTypeList1;
+    }
+
+    public void setPriceTypeList1(List<PriceType> priceTypeList1) {
+        this.priceTypeList1 = priceTypeList1;
+    }
+
+    @XmlTransient
+    public List<Record> getRecordList() {
+        return recordList;
+    }
+
+    public void setRecordList(List<Record> recordList) {
+        this.recordList = recordList;
+    }
+
+    @XmlTransient
+    public List<Record> getRecordList1() {
+        return recordList1;
+    }
+
+    public void setRecordList1(List<Record> recordList1) {
+        this.recordList1 = recordList1;
+    }
+
+    @XmlTransient
+    public List<Record> getRecordList2() {
+        return recordList2;
+    }
+
+    public void setRecordList2(List<Record> recordList2) {
+        this.recordList2 = recordList2;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList() {
+        return invoiceList;
+    }
+
+    public void setInvoiceList(List<Invoice> invoiceList) {
+        this.invoiceList = invoiceList;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList1() {
+        return invoiceList1;
+    }
+
+    public void setInvoiceList1(List<Invoice> invoiceList1) {
+        this.invoiceList1 = invoiceList1;
+    }
+
+    @XmlTransient
+    public List<Invoice> getInvoiceList2() {
+        return invoiceList2;
+    }
+
+    public void setInvoiceList2(List<Invoice> invoiceList2) {
+        this.invoiceList2 = invoiceList2;
+    }
+
+    @XmlTransient
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Client> clientList) {
+        this.clientList = clientList;
+    }
+
+    @XmlTransient
+    public List<Client> getClientList1() {
+        return clientList1;
+    }
+
+    public void setClientList1(List<Client> clientList1) {
+        this.clientList1 = clientList1;
+    }
+
+    @XmlTransient
+    public List<Stock> getStockList() {
+        return stockList;
+    }
+
+    public void setStockList(List<Stock> stockList) {
+        this.stockList = stockList;
+    }
+
+    @XmlTransient
+    public List<Stock> getStockList1() {
+        return stockList1;
+    }
+
+    public void setStockList1(List<Stock> stockList1) {
+        this.stockList1 = stockList1;
+    }
+
+    @XmlTransient
+    public List<Brand> getBrandList() {
+        return brandList;
+    }
+
+    public void setBrandList(List<Brand> brandList) {
+        this.brandList = brandList;
+    }
+
+    @XmlTransient
+    public List<Brand> getBrandList1() {
+        return brandList1;
+    }
+
+    public void setBrandList1(List<Brand> brandList1) {
+        this.brandList1 = brandList1;
     }
 
     @XmlTransient
@@ -350,21 +539,174 @@ public class Employee implements Serializable {
         this.sexTypeList1 = sexTypeList1;
     }
 
+    @XmlTransient
+    public List<PaymentType> getPaymentTypeList() {
+        return paymentTypeList;
+    }
+
+    public void setPaymentTypeList(List<PaymentType> paymentTypeList) {
+        this.paymentTypeList = paymentTypeList;
+    }
+
+    @XmlTransient
+    public List<PaymentType> getPaymentTypeList1() {
+        return paymentTypeList1;
+    }
+
+    public void setPaymentTypeList1(List<PaymentType> paymentTypeList1) {
+        this.paymentTypeList1 = paymentTypeList1;
+    }
+
+    @XmlTransient
+    public List<EmployeeType> getEmployeeTypeList() {
+        return employeeTypeList;
+    }
+
+    public void setEmployeeTypeList(List<EmployeeType> employeeTypeList) {
+        this.employeeTypeList = employeeTypeList;
+    }
+
+    @XmlTransient
+    public List<EmployeeType> getEmployeeTypeList1() {
+        return employeeTypeList1;
+    }
+
+    public void setEmployeeTypeList1(List<EmployeeType> employeeTypeList1) {
+        this.employeeTypeList1 = employeeTypeList1;
+    }
+
+    @XmlTransient
+    public List<Item> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<Item> itemList) {
+        this.itemList = itemList;
+    }
+
+    @XmlTransient
+    public List<Item> getItemList1() {
+        return itemList1;
+    }
+
+    public void setItemList1(List<Item> itemList1) {
+        this.itemList1 = itemList1;
+    }
+
+    @XmlTransient
+    public List<ProductType> getProductTypeList() {
+        return productTypeList;
+    }
+
+    public void setProductTypeList(List<ProductType> productTypeList) {
+        this.productTypeList = productTypeList;
+    }
+
+    @XmlTransient
+    public List<ProductType> getProductTypeList1() {
+        return productTypeList1;
+    }
+
+    public void setProductTypeList1(List<ProductType> productTypeList1) {
+        this.productTypeList1 = productTypeList1;
+    }
+
+    @XmlTransient
+    public List<AnalyticsTime> getAnalyticsTimeList() {
+        return analyticsTimeList;
+    }
+
+    public void setAnalyticsTimeList(List<AnalyticsTime> analyticsTimeList) {
+        this.analyticsTimeList = analyticsTimeList;
+    }
+
+    @XmlTransient
+    public List<AnalyticsTime> getAnalyticsTimeList1() {
+        return analyticsTimeList1;
+    }
+
+    public void setAnalyticsTimeList1(List<AnalyticsTime> analyticsTimeList1) {
+        this.analyticsTimeList1 = analyticsTimeList1;
+    }
+
+    @XmlTransient
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+
+    @XmlTransient
+    public List<Product> getProductList1() {
+        return productList1;
+    }
+
+    public void setProductList1(List<Product> productList1) {
+        this.productList1 = productList1;
+    }
+
+    @XmlTransient
+    public List<Provider> getProviderList() {
+        return providerList;
+    }
+
+    public void setProviderList(List<Provider> providerList) {
+        this.providerList = providerList;
+    }
+
+    @XmlTransient
+    public List<Provider> getProviderList1() {
+        return providerList1;
+    }
+
+    public void setProviderList1(List<Provider> providerList1) {
+        this.providerList1 = providerList1;
+    }
+
+    @XmlTransient
+    public List<Store> getStoreList() {
+        return storeList;
+    }
+
+    public void setStoreList(List<Store> storeList) {
+        this.storeList = storeList;
+    }
+
+    @XmlTransient
+    public List<Store> getStoreList1() {
+        return storeList1;
+    }
+
+    public void setStoreList1(List<Store> storeList1) {
+        this.storeList1 = storeList1;
+    }
+
+    @XmlTransient
+    public List<Store> getStoreList2() {
+        return storeList2;
+    }
+
+    public void setStoreList2(List<Store> storeList2) {
+        this.storeList2 = storeList2;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + Objects.hashCode(this.id);
-        hash = 43 * hash + Objects.hashCode(this.firstname);
-        hash = 43 * hash + Objects.hashCode(this.lastname);
-        hash = 43 * hash + Objects.hashCode(this.bornDate);
-        hash = 43 * hash + Objects.hashCode(this.phone);
-        hash = 43 * hash + Objects.hashCode(this.email);
-        hash = 43 * hash + Objects.hashCode(this.username);
-        hash = 43 * hash + Objects.hashCode(this.password);
-        hash = 43 * hash + (this.enable ? 1 : 0);
-        hash = 43 * hash + Objects.hashCode(this.employeeType);
-        hash = 43 * hash + Objects.hashCode(this.sexType);
-        hash = 43 * hash + Objects.hashCode(this.language);
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.firstname);
+        hash = 41 * hash + Objects.hashCode(this.lastname);
+        hash = 41 * hash + Objects.hashCode(this.bornDate);
+        hash = 41 * hash + Objects.hashCode(this.phone);
+        hash = 41 * hash + Objects.hashCode(this.email);
+        hash = 41 * hash + Objects.hashCode(this.username);
+        hash = 41 * hash + Objects.hashCode(this.password);
+        hash = 41 * hash + (this.enable ? 1 : 0);
+        hash = 41 * hash + Objects.hashCode(this.employeeType);
+        hash = 41 * hash + Objects.hashCode(this.language);
+        hash = 41 * hash + Objects.hashCode(this.sexType);
         return hash;
     }
 
@@ -407,15 +749,15 @@ public class Employee implements Serializable {
         if (!Objects.equals(this.employeeType, other.employeeType)) {
             return false;
         }
-        if (!Objects.equals(this.sexType, other.sexType)) {
+        if (!Objects.equals(this.language, other.language)) {
             return false;
         }
-        return Objects.equals(this.language, other.language);
+        return Objects.equals(this.sexType, other.sexType);
     }
 
     @Override
     public String toString() {
         return "com.development.simplestockmanager.business.persistence.Employee[ id=" + id + " ]";
     }
-    
+
 }

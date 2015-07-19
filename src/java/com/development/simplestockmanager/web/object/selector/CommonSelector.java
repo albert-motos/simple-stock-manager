@@ -1,22 +1,29 @@
-package com.development.simplestockmanager.web.object.component.selector.type;
+package com.development.simplestockmanager.web.object.selector;
 
 import java.util.List;
 
 /**
- * Common class for type selectors
+ * Common class for selectors
  *
  * @author foxtrot
  */
-public class CommonTypeSelector {
+public class CommonSelector {
 
+    protected String browser;
     protected List<String> list;
     protected String selection;
     protected long mode;
-    protected String language;
 
-    public CommonTypeSelector(long mode, String language) {
+    public CommonSelector(long mode) {
         this.mode = mode;
-        this.language = language;
+    }
+    
+    public void setBrowser(String browser) {
+        this.browser = browser;
+    }
+
+    public String getBrowser() {
+        return browser;
     }
 
     public List<String> getList() {

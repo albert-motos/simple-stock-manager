@@ -65,6 +65,8 @@ public class SexType implements Serializable {
     private List<Employee> employeeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reference")
     private List<SexTypeTranslation> sexTypeTranslationList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sexType")
+    private List<Client> clientList;
     @JoinColumn(name = "CREATED_USER", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Employee createdUser;
@@ -143,6 +145,15 @@ public class SexType implements Serializable {
 
     public void setSexTypeTranslationList(List<SexTypeTranslation> sexTypeTranslationList) {
         this.sexTypeTranslationList = sexTypeTranslationList;
+    }
+
+    @XmlTransient
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Client> clientList) {
+        this.clientList = clientList;
     }
 
     public Employee getCreatedUser() {

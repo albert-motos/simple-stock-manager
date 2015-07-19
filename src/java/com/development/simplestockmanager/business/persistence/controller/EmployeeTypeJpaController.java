@@ -35,12 +35,36 @@ public class EmployeeTypeJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(EmployeeType employeeType) {
+    public void create(EmployeeType employeeType) throws IllegalOrphanException {
         if (employeeType.getEmployeeTypeTranslationList() == null) {
             employeeType.setEmployeeTypeTranslationList(new ArrayList<EmployeeTypeTranslation>());
         }
         if (employeeType.getEmployeeList() == null) {
             employeeType.setEmployeeList(new ArrayList<Employee>());
+        }
+        List<String> illegalOrphanMessages = null;
+        Employee createdUserOrphanCheck = employeeType.getCreatedUser();
+        if (createdUserOrphanCheck != null) {
+            EmployeeType oldEmployeeTypeOfCreatedUser = createdUserOrphanCheck.getEmployeeType();
+            if (oldEmployeeTypeOfCreatedUser != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Employee " + createdUserOrphanCheck + " already has an item of type EmployeeType whose createdUser column cannot be null. Please make another selection for the createdUser field.");
+            }
+        }
+        Employee lastModifiedUserOrphanCheck = employeeType.getLastModifiedUser();
+        if (lastModifiedUserOrphanCheck != null) {
+            EmployeeType oldEmployeeTypeOfLastModifiedUser = lastModifiedUserOrphanCheck.getEmployeeType();
+            if (oldEmployeeTypeOfLastModifiedUser != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Employee " + lastModifiedUserOrphanCheck + " already has an item of type EmployeeType whose lastModifiedUser column cannot be null. Please make another selection for the lastModifiedUser field.");
+            }
+        }
+        if (illegalOrphanMessages != null) {
+            throw new IllegalOrphanException(illegalOrphanMessages);
         }
         EntityManager em = null;
         try {
@@ -70,11 +94,11 @@ public class EmployeeTypeJpaController implements Serializable {
             employeeType.setEmployeeList(attachedEmployeeList);
             em.persist(employeeType);
             if (createdUser != null) {
-                createdUser.getEmployeeTypeList().add(employeeType);
+                createdUser.setEmployeeType(employeeType);
                 createdUser = em.merge(createdUser);
             }
             if (lastModifiedUser != null) {
-                lastModifiedUser.getEmployeeTypeList().add(employeeType);
+                lastModifiedUser.setEmployeeType(employeeType);
                 lastModifiedUser = em.merge(lastModifiedUser);
             }
             for (EmployeeTypeTranslation employeeTypeTranslationListEmployeeTypeTranslation : employeeType.getEmployeeTypeTranslationList()) {
@@ -118,6 +142,36 @@ public class EmployeeTypeJpaController implements Serializable {
             List<Employee> employeeListOld = persistentEmployeeType.getEmployeeList();
             List<Employee> employeeListNew = employeeType.getEmployeeList();
             List<String> illegalOrphanMessages = null;
+            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("You must retain Employee " + createdUserOld + " since its employeeType field is not nullable.");
+            }
+            if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
+                EmployeeType oldEmployeeTypeOfCreatedUser = createdUserNew.getEmployeeType();
+                if (oldEmployeeTypeOfCreatedUser != null) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("The Employee " + createdUserNew + " already has an item of type EmployeeType whose createdUser column cannot be null. Please make another selection for the createdUser field.");
+                }
+            }
+            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("You must retain Employee " + lastModifiedUserOld + " since its employeeType field is not nullable.");
+            }
+            if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
+                EmployeeType oldEmployeeTypeOfLastModifiedUser = lastModifiedUserNew.getEmployeeType();
+                if (oldEmployeeTypeOfLastModifiedUser != null) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("The Employee " + lastModifiedUserNew + " already has an item of type EmployeeType whose lastModifiedUser column cannot be null. Please make another selection for the lastModifiedUser field.");
+                }
+            }
             for (EmployeeTypeTranslation employeeTypeTranslationListOldEmployeeTypeTranslation : employeeTypeTranslationListOld) {
                 if (!employeeTypeTranslationListNew.contains(employeeTypeTranslationListOldEmployeeTypeTranslation)) {
                     if (illegalOrphanMessages == null) {
@@ -160,20 +214,12 @@ public class EmployeeTypeJpaController implements Serializable {
             employeeListNew = attachedEmployeeListNew;
             employeeType.setEmployeeList(employeeListNew);
             employeeType = em.merge(employeeType);
-            if (createdUserOld != null && !createdUserOld.equals(createdUserNew)) {
-                createdUserOld.getEmployeeTypeList().remove(employeeType);
-                createdUserOld = em.merge(createdUserOld);
-            }
             if (createdUserNew != null && !createdUserNew.equals(createdUserOld)) {
-                createdUserNew.getEmployeeTypeList().add(employeeType);
+                createdUserNew.setEmployeeType(employeeType);
                 createdUserNew = em.merge(createdUserNew);
             }
-            if (lastModifiedUserOld != null && !lastModifiedUserOld.equals(lastModifiedUserNew)) {
-                lastModifiedUserOld.getEmployeeTypeList().remove(employeeType);
-                lastModifiedUserOld = em.merge(lastModifiedUserOld);
-            }
             if (lastModifiedUserNew != null && !lastModifiedUserNew.equals(lastModifiedUserOld)) {
-                lastModifiedUserNew.getEmployeeTypeList().add(employeeType);
+                lastModifiedUserNew.setEmployeeType(employeeType);
                 lastModifiedUserNew = em.merge(lastModifiedUserNew);
             }
             for (EmployeeTypeTranslation employeeTypeTranslationListNewEmployeeTypeTranslation : employeeTypeTranslationListNew) {
@@ -228,6 +274,20 @@ public class EmployeeTypeJpaController implements Serializable {
                 throw new NonexistentEntityException("The employeeType with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
+            Employee createdUserOrphanCheck = employeeType.getCreatedUser();
+            if (createdUserOrphanCheck != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EmployeeType (" + employeeType + ") cannot be destroyed since the Employee " + createdUserOrphanCheck + " in its createdUser field has a non-nullable employeeType field.");
+            }
+            Employee lastModifiedUserOrphanCheck = employeeType.getLastModifiedUser();
+            if (lastModifiedUserOrphanCheck != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This EmployeeType (" + employeeType + ") cannot be destroyed since the Employee " + lastModifiedUserOrphanCheck + " in its lastModifiedUser field has a non-nullable employeeType field.");
+            }
             List<EmployeeTypeTranslation> employeeTypeTranslationListOrphanCheck = employeeType.getEmployeeTypeTranslationList();
             for (EmployeeTypeTranslation employeeTypeTranslationListOrphanCheckEmployeeTypeTranslation : employeeTypeTranslationListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
@@ -244,16 +304,6 @@ public class EmployeeTypeJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
-            }
-            Employee createdUser = employeeType.getCreatedUser();
-            if (createdUser != null) {
-                createdUser.getEmployeeTypeList().remove(employeeType);
-                createdUser = em.merge(createdUser);
-            }
-            Employee lastModifiedUser = employeeType.getLastModifiedUser();
-            if (lastModifiedUser != null) {
-                lastModifiedUser.getEmployeeTypeList().remove(employeeType);
-                lastModifiedUser = em.merge(lastModifiedUser);
             }
             em.remove(employeeType);
             em.getTransaction().commit();

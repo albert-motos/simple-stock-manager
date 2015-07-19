@@ -2,9 +2,9 @@
 import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.object.component.selector.type.EmployeeTypeSelector;
-import com.development.simplestockmanager.web.object.component.selector.type.LanguageSelector;
-import com.development.simplestockmanager.web.object.component.selector.type.SexTypeSelector;
+import com.development.simplestockmanager.web.object.selector.type.EmployeeTypeSelector;
+import com.development.simplestockmanager.web.object.selector.type.LanguageSelector;
+import com.development.simplestockmanager.web.object.selector.type.SexTypeSelector;
 
 
 

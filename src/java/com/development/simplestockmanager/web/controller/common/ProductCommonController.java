@@ -3,9 +3,9 @@ package com.development.simplestockmanager.web.controller.common;
 import com.development.simplestockmanager.business.object.controller.general.ProductGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.ProductSpecificController;
 import com.development.simplestockmanager.business.persistence.Product;
-import com.development.simplestockmanager.web.object.component.selector.type.ProductTypeSelector;
-import com.development.simplestockmanager.web.object.component.selector.ProviderSelector;
-import com.development.simplestockmanager.web.object.component.selector.BrandSelector;
+import com.development.simplestockmanager.web.object.selector.type.ProductTypeSelector;
+import com.development.simplestockmanager.web.object.selector.ProviderSelector;
+import com.development.simplestockmanager.web.object.selector.BrandSelector;
 import com.development.simplestockmanager.web.object.validator.ProductValidator;
 
 /**

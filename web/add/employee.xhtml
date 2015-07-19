@@ -183,8 +183,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{button.add}" rendered="#{not employeeAdd.added}" actionListener="#{employeeAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{button.back(employeeAdd.added)}" actionListener="#{employeeAdd.back()}"
+                <p:commandButton value="#{button.add}" rendered="#{not employeeAdd.action}" actionListener="#{employeeAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(employeeAdd.action)}" actionListener="#{employeeAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>
