@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
+import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
 import com.development.simplestockmanager.business.persistence.SexType;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,19 @@ public class SexTypeSpecificController {
         this.helper = new SexTypeHelper();
     }
 
+    public SexType findByType(String type) {
+        SexType sexType;
+
+        try {
+            Query query = helper.getFindByType(type);
+            sexType = (SexType) query.getSingleResult();
+        } catch (Exception e) {
+            sexType = new SexTypeNull();
+        }
+
+        return sexType;
+    }
+    
     public List<SexType> findAll() {
         List<SexType> list = new ArrayList<>();
 

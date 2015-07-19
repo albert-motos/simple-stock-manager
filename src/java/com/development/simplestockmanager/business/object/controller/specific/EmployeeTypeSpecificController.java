@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.EmployeeTypeHelper;
+import com.development.simplestockmanager.business.object.nullpackage.EmployeeTypeNull;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +20,17 @@ public class EmployeeTypeSpecificController {
         this.helper = new EmployeeTypeHelper();
     }
     
-    public List<EmployeeType> findByType(String type) {
-        List<EmployeeType> list = new ArrayList<>();
+    public EmployeeType findByType(String type) {
+        EmployeeType employeeType;
 
         try {
             Query query = helper.getFindByType(type);
-            for (Object object : query.getResultList()) {
-                list.add((EmployeeType) object);
-            }
+            employeeType = (EmployeeType) query.getSingleResult();
         } catch (Exception e) {
-            list = new ArrayList<>();
+            employeeType = new EmployeeTypeNull();
         }
 
-        return list;
+        return employeeType;
     }
 
     public List<EmployeeType> findAll() {

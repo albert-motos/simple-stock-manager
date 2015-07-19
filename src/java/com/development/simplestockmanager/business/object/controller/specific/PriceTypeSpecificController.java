@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.PriceTypeHelper;
+import com.development.simplestockmanager.business.object.nullpackage.PriceTypeNull;
 import com.development.simplestockmanager.business.persistence.PriceType;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +20,17 @@ public class PriceTypeSpecificController {
         this.helper = new PriceTypeHelper();
     }
     
-    public List<PriceType> findByType(String type) {
-        List<PriceType> list = new ArrayList<>();
+    public PriceType findByType(String type) {
+        PriceType priceType;
 
         try {
             Query query = helper.getFindByType(type);
-            for (Object object : query.getResultList()) {
-                list.add((PriceType) object);
-            }
+            priceType = (PriceType) query.getSingleResult();
         } catch (Exception e) {
-            list = new ArrayList<>();
+            priceType = new PriceTypeNull();
         }
 
-        return list;
+        return priceType;
     }
 
     public List<PriceType> findAll() {

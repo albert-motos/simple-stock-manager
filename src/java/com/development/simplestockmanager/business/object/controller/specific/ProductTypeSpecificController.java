@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.ProductTypeHelper;
+import com.development.simplestockmanager.business.object.nullpackage.ProductTypeNull;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,19 @@ public class ProductTypeSpecificController {
         this.helper = new ProductTypeHelper();
     }
 
+    public ProductType findByType(String type) {
+        ProductType productType;
+
+        try {
+            Query query = helper.getFindByType(type);
+            productType = (ProductType) query.getSingleResult();
+        } catch (Exception e) {
+            productType = new ProductTypeNull();
+        }
+
+        return productType;
+    }
+    
     public List<ProductType> findAll() {
         List<ProductType> list = new ArrayList<>();
 

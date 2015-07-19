@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.PaymentTypeHelper;
+import com.development.simplestockmanager.business.object.nullpackage.PaymentTypeNull;
 import com.development.simplestockmanager.business.persistence.PaymentType;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +20,17 @@ public class PaymentTypeSpecificController {
         this.helper = new PaymentTypeHelper();
     }
     
-    public List<PaymentType> findByType(String type) {
-        List<PaymentType> list = new ArrayList<>();
+    public PaymentType findByType(String type) {
+        PaymentType paymentType;
 
         try {
             Query query = helper.getFindByType(type);
-            for (Object object : query.getResultList()) {
-                list.add((PaymentType) object);
-            }
+            paymentType = (PaymentType) query.getSingleResult();
         } catch (Exception e) {
-            list = new ArrayList<>();
+            paymentType = new PaymentTypeNull();
         }
 
-        return list;
+        return paymentType;
     }
 
     public List<PaymentType> findAll() {
