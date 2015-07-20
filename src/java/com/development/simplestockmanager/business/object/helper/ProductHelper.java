@@ -1,11 +1,12 @@
 package com.development.simplestockmanager.business.object.helper;
 
-import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.common.business.helper.common.CommonHelper;
+import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.Provider;
 import com.development.simplestockmanager.business.persistence.controller.ProductJpaController;
-import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.common.constant.WebConstant;
 import java.util.Date;
 import javax.persistence.Query;
 

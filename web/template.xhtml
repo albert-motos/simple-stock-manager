@@ -22,28 +22,28 @@
                     <p:menubar>
                         <p:submenu label="#{menu.entity}">
                             <p:submenu label="#{menu.brand}">
-                                <p:menuitem value="#{menu.brandCreate}" url="/add/brand.xhtml" />
-                                <p:menuitem value="#{menu.brandSearch}" url="/search/brand.xhtml" />
+                                <p:menuitem value="#{menu.brandCreate}" url="#{url.add('brand')}" />
+                                <p:menuitem value="#{menu.brandSearch}" url="#{url.search('brand')}" />
                             </p:submenu>
                             <p:submenu label="#{menu.client}">
-                                <p:menuitem value="#{menu.clientCreate}" url="/add/client.xhtml" />
-                                <p:menuitem value="#{menu.clientSearch}" url="/search/client.xhtml" />
+                                <p:menuitem value="#{menu.clientCreate}" url="#{url.add('client')}" />
+                                <p:menuitem value="#{menu.clientSearch}" url="#{url.search('client')}" />
                             </p:submenu>
                             <p:submenu label="#{menu.employee}">
-                                <p:menuitem value="#{menu.employeeCreate}" url="/add/employee.xhtml" />
-                                <p:menuitem value="#{menu.employeeSearch}" url="/search/employee.xhtml" />
+                                <p:menuitem value="#{menu.employeeCreate}" url="#{url.add('employee')}" />
+                                <p:menuitem value="#{menu.employeeSearch}" url="#{url.search('employee')}" />
                             </p:submenu>
                             <p:submenu label="#{menu.product}">
-                                <p:menuitem value="#{menu.productCreate}" url="/add/product.xhtml" />
-                                <p:menuitem value="#{menu.productSearch}" url="/search/product.xhtml" />
+                                <p:menuitem value="#{menu.productCreate}" url="#{url.add('product')}" />
+                                <p:menuitem value="#{menu.productSearch}" url="#{url.search('product')}" />
                             </p:submenu>
                             <p:submenu label="#{menu.provider}">
-                                <p:menuitem value="#{menu.providerCreate}" url="/add/provider.xhtml" />
-                                <p:menuitem value="#{menu.providerSearch}" url="/search/provider.xhtml" />
+                                <p:menuitem value="#{menu.providerCreate}" url="#{url.add('provider')}" />
+                                <p:menuitem value="#{menu.providerSearch}" url="#{url.search('provider')}" />
                             </p:submenu>
                             <p:submenu label="#{menu.store}">
-                                <p:menuitem value="#{menu.storeCreate}" url="/add/store.xhtml" />
-                                <p:menuitem value="#{menu.storeSearch}" url="/search/store.xhtml" />
+                                <p:menuitem value="#{menu.storeCreate}" url="#{url.add('store')}" />
+                                <p:menuitem value="#{menu.storeSearch}" url="#{url.search('store')}" />
                             </p:submenu>
                         </p:submenu>
                         <f:facet name="options" >

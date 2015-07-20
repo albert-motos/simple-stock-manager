@@ -4,10 +4,10 @@ import com.development.simplestockmanager.business.object.nullpackage.EmployeeTy
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
-import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.common.service.general.NavigationService;
-import com.development.simplestockmanager.web.controller.common.type.EmployeeTypeCommonController;
-import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.web.service.general.NavigationService;
+import com.development.simplestockmanager.common.web.controller.common.type.EmployeeTypeCommonController;
+import com.development.simplestockmanager.common.web.controller.base.SearchController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -54,7 +54,7 @@ public class EmployeeTypeSearchController extends EmployeeTypeCommonController i
 
     public void initEdit(EmployeeType employeeType) {
         sendObjectToSession(WebConstant.SESSION.EMPLOYEE_TYPE, employeeType);
-        new NavigationService().redirect(WebConstant.WEB.EDIT.EMPLOYEE_TYPE);
+        new NavigationService().redirect(WebConstant.WEB.EDIT.TYPE.EMPLOYEE_TYPE);
     }
     
     public List<EmployeeType> getList() {

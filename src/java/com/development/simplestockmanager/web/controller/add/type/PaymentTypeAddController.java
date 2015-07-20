@@ -1,12 +1,12 @@
 package com.development.simplestockmanager.web.controller.add.type;
 
-import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.PaymentType;
 import com.development.simplestockmanager.business.persistence.PaymentTypeTranslation;
-import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.controller.common.AddController;
-import com.development.simplestockmanager.web.controller.common.type.PaymentTypeCommonController;
+import com.development.simplestockmanager.common.constant.CommonConstant;
+import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.common.web.controller.base.AddController;
+import com.development.simplestockmanager.common.web.controller.common.type.PaymentTypeCommonController;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

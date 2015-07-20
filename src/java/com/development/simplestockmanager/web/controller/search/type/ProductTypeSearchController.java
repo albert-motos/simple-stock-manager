@@ -4,10 +4,10 @@ import com.development.simplestockmanager.business.object.nullpackage.ProductTyp
 import com.development.simplestockmanager.business.object.nullpackage.ProductTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
-import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.common.service.general.NavigationService;
-import com.development.simplestockmanager.web.controller.common.type.ProductTypeCommonController;
-import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.web.service.general.NavigationService;
+import com.development.simplestockmanager.common.web.controller.common.type.ProductTypeCommonController;
+import com.development.simplestockmanager.common.web.controller.base.SearchController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -54,7 +54,7 @@ public class ProductTypeSearchController extends ProductTypeCommonController imp
 
     public void initEdit(ProductType productType) {
         sendObjectToSession(WebConstant.SESSION.PRODUCT_TYPE, productType);
-        new NavigationService().redirect(WebConstant.WEB.EDIT.PRODUCT_TYPE);
+        new NavigationService().redirect(WebConstant.WEB.EDIT.TYPE.PRODUCT_TYPE);
     }
     
     public List<ProductType> getList() {

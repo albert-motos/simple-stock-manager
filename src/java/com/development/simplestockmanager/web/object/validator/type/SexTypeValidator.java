@@ -1,14 +1,16 @@
 package com.development.simplestockmanager.web.object.validator.type;
 
-import com.development.simplestockmanager.web.object.validator.*;
-import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.common.web.object.validator.common.CommonValidator;
+import com.development.simplestockmanager.common.web.object.validator.base.BaseTypeValidator;
+import com.development.simplestockmanager.common.web.object.validator.base.BaseValidator;
+import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeSpecificController;
 import com.development.simplestockmanager.business.object.controller.specific.SexTypeTranslationSpecificController;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
-import com.development.simplestockmanager.common.CommonConstant;
+import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.language.LanguageController;
-import com.development.simplestockmanager.web.common.WebConstant;
+import com.development.simplestockmanager.common.constant.WebConstant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

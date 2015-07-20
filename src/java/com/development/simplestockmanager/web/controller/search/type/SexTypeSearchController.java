@@ -4,10 +4,10 @@ import com.development.simplestockmanager.business.object.nullpackage.SexTypeNul
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
-import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.common.service.general.NavigationService;
-import com.development.simplestockmanager.web.controller.common.type.SexTypeCommonController;
-import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.web.service.general.NavigationService;
+import com.development.simplestockmanager.common.web.controller.common.type.SexTypeCommonController;
+import com.development.simplestockmanager.common.web.controller.base.SearchController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -54,7 +54,7 @@ public class SexTypeSearchController extends SexTypeCommonController implements 
 
     public void initEdit(SexType sexType) {
         sendObjectToSession(WebConstant.SESSION.SEX_TYPE, sexType);
-        new NavigationService().redirect(WebConstant.WEB.EDIT.SEX_TYPE);
+        new NavigationService().redirect(WebConstant.WEB.EDIT.TYPE.SEX_TYPE);
     }
     
     public List<SexType> getList() {

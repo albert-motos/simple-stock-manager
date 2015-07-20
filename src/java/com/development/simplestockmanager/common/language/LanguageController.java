@@ -5,7 +5,7 @@
  */
 package com.development.simplestockmanager.common.language;
 
-import com.development.simplestockmanager.common.CommonConstant;
+import com.development.simplestockmanager.common.constant.CommonConstant;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

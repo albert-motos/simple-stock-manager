@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.object.helper.ProductTypeHelper;
 import com.development.simplestockmanager.business.object.nullpackage.ProductTypeNull;
 import com.development.simplestockmanager.business.persistence.ProductType;

@@ -1,6 +1,6 @@
 package com.development.simplestockmanager.business.object.controller.general;
 
-import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.object.nullpackage.PaymentTypeTranslationNull;
 import com.development.simplestockmanager.business.object.helper.PaymentTypeTranslationHelper;
 import com.development.simplestockmanager.business.persistence.PaymentTypeTranslation;

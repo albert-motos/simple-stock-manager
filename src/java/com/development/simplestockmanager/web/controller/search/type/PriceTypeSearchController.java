@@ -4,10 +4,10 @@ import com.development.simplestockmanager.business.object.nullpackage.PriceTypeN
 import com.development.simplestockmanager.business.object.nullpackage.PriceTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.PriceType;
 import com.development.simplestockmanager.business.persistence.PriceTypeTranslation;
-import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.common.service.general.NavigationService;
-import com.development.simplestockmanager.web.controller.common.type.PriceTypeCommonController;
-import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.web.service.general.NavigationService;
+import com.development.simplestockmanager.common.web.controller.common.type.PriceTypeCommonController;
+import com.development.simplestockmanager.common.web.controller.base.SearchController;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -54,7 +54,7 @@ public class PriceTypeSearchController extends PriceTypeCommonController impleme
 
     public void initEdit(PriceType priceType) {
         sendObjectToSession(WebConstant.SESSION.PRICE_TYPE, priceType);
-        new NavigationService().redirect(WebConstant.WEB.EDIT.PRICE_TYPE);
+        new NavigationService().redirect(WebConstant.WEB.EDIT.TYPE.PRICE_TYPE);
     }
     
     public List<PriceType> getList() {

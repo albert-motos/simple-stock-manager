@@ -1,13 +1,13 @@
 package com.development.simplestockmanager.web.controller.edit.type;
 
-import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
-import com.development.simplestockmanager.common.CommonConstant;
-import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.common.service.general.NavigationService;
-import com.development.simplestockmanager.web.controller.common.type.ProductTypeCommonController;
-import com.development.simplestockmanager.web.controller.common.EditController;
+import com.development.simplestockmanager.common.constant.CommonConstant;
+import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.web.service.general.NavigationService;
+import com.development.simplestockmanager.common.web.controller.common.type.ProductTypeCommonController;
+import com.development.simplestockmanager.common.web.controller.base.EditController;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -127,7 +127,7 @@ public class ProductTypeEditController extends ProductTypeCommonController imple
 
     @Override
     public final void back() {
-        new NavigationService().redirect(WebConstant.WEB.SEARCH.PRODUCT_TYPE);
+        new NavigationService().redirect(WebConstant.WEB.SEARCH.TYPE.PRODUCT_TYPE);
     }
 
 }

@@ -1,12 +1,13 @@
 package com.development.simplestockmanager.web.object.selector.type;
 
+import com.development.simplestockmanager.common.web.object.selector.common.CommonTypeSelector;
 import com.development.simplestockmanager.business.object.controller.specific.ProductTypeSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.ProductTypeNull;
 import com.development.simplestockmanager.business.object.nullpackage.ProductTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
-import com.development.simplestockmanager.web.common.WebConstant;
-import com.development.simplestockmanager.web.object.selector.BaseSelector;
+import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.common.web.object.selector.base.BaseSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
