@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -81,12 +77,14 @@ public class SexType implements Serializable {
         this.id = id;
     }
 
-    public SexType(Long id, String type, boolean enable, Date createdDate, Date lastModifiedDate) {
-        this.id = id;
-        this.type = type;
-        this.enable = enable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
+    public SexType(SexType sexType) {
+        this.enable = sexType.enable;
+        this.id = sexType.id;
+        this.type = sexType.type;
+        this.createdDate = sexType.createdDate;
+        this.createdUser = sexType.createdUser;
+        this.lastModifiedDate = sexType.lastModifiedDate;
+        this.lastModifiedUser = sexType.lastModifiedUser;
     }
 
     public Long getId() {
@@ -174,19 +172,29 @@ public class SexType implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.type);
+        hash = 79 * hash + (this.enable ? 1 : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SexType)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        SexType other = (SexType) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SexType other = (SexType) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
             return false;
         }
         return true;

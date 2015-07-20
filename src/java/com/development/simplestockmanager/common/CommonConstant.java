@@ -339,6 +339,12 @@ public interface CommonConstant {
                     public static String PRODUCT = TEXT + ".product";
                     public static String PROVIDER = TEXT + ".provider";
                     public static String STORE = TEXT + ".store";
+                    
+                    public static String EMPLOYEE_TYPE = TEXT + ".employee_type";
+                    public static String PAYMENT_TYPE = TEXT + ".payment_type";
+                    public static String PRICE_TYPE = TEXT + ".price_type";
+                    public static String PRODUCT_TYPE = TEXT + ".product_type";
+                    public static String SEX_TYPE = TEXT + ".sex_type";
                 }
 
                 public interface ACTION {

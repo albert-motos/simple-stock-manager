@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.business.object.helper;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import javax.persistence.Query;
 
 /**
@@ -8,6 +9,10 @@ import javax.persistence.Query;
  * @author foxtrot
  */
 public class LanguageHelper extends CommonHelper {
+
+    public LanguageHelper() {
+        super(BusinessConstant.QUERY.LANGUAGE);
+    }
 
     public Query getFindAll() {
         Query query = entityManager.createNamedQuery("Language.findAll");

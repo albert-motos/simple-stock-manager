@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.business.object.helper;
 
-import com.development.simplestockmanager.business.persistence.controller.EmployeeTypeJpaController;
+import com.development.simplestockmanager.business.common.BusinessConstant;
+import com.development.simplestockmanager.business.persistence.controller.ProductTypeTranslationJpaController;
 import javax.persistence.Query;
 
 /**
@@ -10,8 +11,12 @@ import javax.persistence.Query;
  */
 public class ProductTypeTranslationHelper extends CommonHelper implements BaseTypeTranslationHelper {
 
-    public EmployeeTypeJpaController getJpaController() {
-        return new EmployeeTypeJpaController(entityManagerFactory);
+    public ProductTypeTranslationHelper() {
+        super(BusinessConstant.QUERY.PRODUCT_TYPE_TRANSLATION);
+    }
+
+    public ProductTypeTranslationJpaController getJpaController() {
+        return new ProductTypeTranslationJpaController(entityManagerFactory);
     }
 
     @Override

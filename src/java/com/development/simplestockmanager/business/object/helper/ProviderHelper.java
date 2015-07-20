@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.business.object.helper;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.controller.ProviderJpaController;
 import com.development.simplestockmanager.web.common.WebConstant;
 import java.util.Date;
@@ -11,6 +12,10 @@ import javax.persistence.Query;
  * @author foxtrot
  */
 public class ProviderHelper extends CommonHelper {
+
+    public ProviderHelper() {
+        super(BusinessConstant.QUERY.PROVIDER);
+    }
 
     public ProviderJpaController getJpaController() {
         return new ProviderJpaController(entityManagerFactory);
@@ -40,7 +45,7 @@ public class ProviderHelper extends CommonHelper {
                 + (phone.isEmpty() ? "" : " AND p.phone LIKE '%" + phone + "%'")
                 + (status == WebConstant.STATUS.HIDDEN ? " AND p.enable = FALSE" : "")
                 + (status == WebConstant.STATUS.VISIBLE ? " AND p.enable = TRUE" : "")
-                + getAuditoryQuery("p", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+                + getAuditoryQuery(createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
 
         return entityManager.createQuery(query);

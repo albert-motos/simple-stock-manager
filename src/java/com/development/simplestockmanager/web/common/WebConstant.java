@@ -5,7 +5,7 @@ package com.development.simplestockmanager.web.common;
  * @author foxtrot
  */
 public interface WebConstant {
-    
+
     public static String UNDEFINED = "undefined";
 
     public interface VALIDATOR {
@@ -43,6 +43,12 @@ public interface WebConstant {
             public static String PRODUCT = TEXT + "/product.xhtml";
             public static String PROVIDER = TEXT + "/provider.xhtml";
             public static String STORE = TEXT + "/store.xhtml";
+            
+            public static String EMPLOYEE_TYPE = TEXT + "/employee_type.xhtml";
+            public static String PAYMENT_TYPE = TEXT + "/payment_type.xhtml";
+            public static String PRICE_TYPE = TEXT + "/price_type.xhtml";
+            public static String PRODUCT_TYPE = TEXT + "/product_type.xhtml";
+            public static String SEX_TYPE = TEXT + "/sex_type.xhtml";
         }
 
         public interface SEARCH {
@@ -54,6 +60,12 @@ public interface WebConstant {
             public static String PRODUCT = TEXT + "/product.xhtml";
             public static String PROVIDER = TEXT + "/provider.xhtml";
             public static String STORE = TEXT + "/store.xhtml";
+
+            public static String EMPLOYEE_TYPE = TEXT + "/employee_type.xhtml";
+            public static String PAYMENT_TYPE = TEXT + "/payment_type.xhtml";
+            public static String PRICE_TYPE = TEXT + "/price_type.xhtml";
+            public static String PRODUCT_TYPE = TEXT + "/product_type.xhtml";
+            public static String SEX_TYPE = TEXT + "/sex_type.xhtml";
         }
     }
 
@@ -65,6 +77,12 @@ public interface WebConstant {
         public static String PRODUCT = "product";
         public static String PROVIDER = "provider";
         public static String STORE = "store";
+
+        public static String EMPLOYEE_TYPE = "employee_type";
+        public static String PAYMENT_TYPE = "payment_type";
+        public static String PRICE_TYPE = "price_type";
+        public static String PRODUCT_TYPE = "product_type";
+        public static String SEX_TYPE = "sex_type";
     }
 
     public interface LOGGER {

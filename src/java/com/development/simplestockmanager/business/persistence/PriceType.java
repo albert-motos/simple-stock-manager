@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -79,12 +75,14 @@ public class PriceType implements Serializable {
         this.id = id;
     }
 
-    public PriceType(Long id, String type, boolean enable, Date createdDate, Date lastModifiedDate) {
-        this.id = id;
-        this.type = type;
-        this.enable = enable;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
+    public PriceType(PriceType priceType) {
+        this.enable = priceType.enable;
+        this.id = priceType.id;
+        this.type = priceType.type;
+        this.createdDate = priceType.createdDate;
+        this.createdUser = priceType.createdUser;
+        this.lastModifiedDate = priceType.lastModifiedDate;
+        this.lastModifiedUser = priceType.lastModifiedUser;
     }
 
     public Long getId() {
@@ -163,22 +161,29 @@ public class PriceType implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.type);
+        hash = 17 * hash + (this.enable ? 1 : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PriceType)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        PriceType other = (PriceType) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final PriceType other = (PriceType) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        return this.enable == other.enable;
     }
 
     @Override

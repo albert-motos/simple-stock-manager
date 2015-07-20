@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,9 +50,11 @@ public class EmployeeTypeTranslation implements Serializable {
         this.id = id;
     }
 
-    public EmployeeTypeTranslation(Long id, String translation) {
-        this.id = id;
-        this.translation = translation;
+    public EmployeeTypeTranslation(EmployeeTypeTranslation employeeTypeTranslation) {
+        this.id = employeeTypeTranslation.id;
+        this.language = employeeTypeTranslation.language;
+        this.reference = employeeTypeTranslation.reference;
+        this.translation = employeeTypeTranslation.translation;
     }
 
     public Long getId() {
@@ -93,22 +91,33 @@ public class EmployeeTypeTranslation implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.translation);
+        hash = 79 * hash + Objects.hashCode(this.reference);
+        hash = 79 * hash + Objects.hashCode(this.language);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EmployeeTypeTranslation)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        EmployeeTypeTranslation other = (EmployeeTypeTranslation) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final EmployeeTypeTranslation other = (EmployeeTypeTranslation) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.translation, other.translation)) {
+            return false;
+        }
+        if (!Objects.equals(this.reference, other.reference)) {
+            return false;
+        }
+        return Objects.equals(this.language, other.language);
     }
 
     @Override

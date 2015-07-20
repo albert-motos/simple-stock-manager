@@ -14,15 +14,17 @@ import javax.persistence.Persistence;
  */
 public class CommonHelper {
     
+    private final String type;
     protected EntityManagerFactory entityManagerFactory;
     protected EntityManager entityManager;
 
-    public CommonHelper() {
+    public CommonHelper(String type) {
+        this.type = type;
         entityManagerFactory = Persistence.createEntityManagerFactory(BusinessConstant.PROJECT.PERSISTENCE_UNIT);
         entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public String getAuditoryQuery(String type, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
+    public String getAuditoryQuery(Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
             long createdUserID, long lastModifiedUserID) {
 
         String query = "";

@@ -14,6 +14,10 @@ import javax.persistence.Query;
  */
 public class EmployeeHelper extends CommonHelper {
 
+    public EmployeeHelper() {
+        super(BusinessConstant.QUERY.EMPLOYEE);
+    }
+
     public EmployeeJpaController getJpaController() {
         return new EmployeeJpaController(entityManagerFactory);
     }
@@ -70,7 +74,7 @@ public class EmployeeHelper extends CommonHelper {
                 + (username.isEmpty() ? "" : " AND e.username LIKE '%" + username + "%'")
                 + (status == WebConstant.STATUS.HIDDEN ? " AND e.enable = FALSE" : "")
                 + (status == WebConstant.STATUS.VISIBLE ? " AND e.enable = TRUE" : "")
-                + getAuditoryQuery("e", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+                + getAuditoryQuery(createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
         
         return entityManager.createQuery(query);
