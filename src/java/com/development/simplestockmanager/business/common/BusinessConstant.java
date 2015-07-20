@@ -34,15 +34,31 @@ public interface BusinessConstant {
         public static String WEB = "/SimpleStockManager";
     }
 
-    public interface URL {
+    public interface QUERY {
 
-        public static String INDEX = PROJECT.WEB + "/index.xhtml";
-
-        public interface ADD {
-
-            public static String ADD = PROJECT.WEB + "/add";
-            public static String CLIENT = ADD + "/client.xhtml";
-        }
+        public static String ANALYTICS_TIME = "a";
+        public static String BRAND = "b";
+        public static String CLIENT = "c";
+        public static String EMPLOYEE = "e";
+        public static String EMPLOYEE_TYPE = "e";
+        public static String EMPLOYEE_TYPE_TRANSLATION = "e";
+        public static String INVOICE = "i";
+        public static String ITEM = "i";
+        public static String LANGUAGE = "l";
+        public static String PAYMENT_TYPE = "p";
+        public static String PAYMENT_TYPE_TRANSLATION = "p";
+        public static String PRICE = "p";
+        public static String PRICE_TYPE = "p";
+        public static String PRICE_TYPE_TRANSLATION = "p";
+        public static String PRODUCT = "p";
+        public static String PRODUCT_TYPE = "p";
+        public static String PRODUCT_TYPE_TRANSLATION = "p";
+        public static String PROVIDER = "p";
+        public static String RECORD = "r";
+        public static String SEX_TYPE = "s";
+        public static String SEX_TYPE_TRANSLATION = "s";
+        public static String STOCK = "s";
+        public static String STORE = "s";
     }
 
 }

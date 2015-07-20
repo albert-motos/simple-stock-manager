@@ -16,6 +16,10 @@ import javax.persistence.Query;
  */
 public class ProductHelper extends CommonHelper {
 
+    public ProductHelper() {
+        super(BusinessConstant.QUERY.PRODUCT);
+    }
+
     public ProductJpaController getJpaController() {
         return new ProductJpaController(entityManagerFactory);
     }
@@ -40,7 +44,7 @@ public class ProductHelper extends CommonHelper {
                 + (providerID == BusinessConstant.IDENTIFIER.INVALID ? "" : " AND p.provider.id = " + providerID)
                 + (status == WebConstant.STATUS.HIDDEN ? " AND p.enable = FALSE" : "")
                 + (status == WebConstant.STATUS.VISIBLE ? " AND p.enable = TRUE" : "")
-                + getAuditoryQuery("p", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+                + getAuditoryQuery(createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
 
         return entityManager.createQuery(query);

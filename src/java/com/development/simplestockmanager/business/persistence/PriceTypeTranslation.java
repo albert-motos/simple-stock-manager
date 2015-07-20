@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,9 +50,11 @@ public class PriceTypeTranslation implements Serializable {
         this.id = id;
     }
 
-    public PriceTypeTranslation(Long id, String translation) {
-        this.id = id;
-        this.translation = translation;
+    public PriceTypeTranslation(PriceTypeTranslation priceTypeTranslation) {
+        this.id = priceTypeTranslation.id;
+        this.language = priceTypeTranslation.language;
+        this.reference = priceTypeTranslation.reference;
+        this.translation = priceTypeTranslation.translation;
     }
 
     public Long getId() {
@@ -93,22 +91,33 @@ public class PriceTypeTranslation implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.translation);
+        hash = 97 * hash + Objects.hashCode(this.language);
+        hash = 97 * hash + Objects.hashCode(this.reference);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PriceTypeTranslation)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        PriceTypeTranslation other = (PriceTypeTranslation) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final PriceTypeTranslation other = (PriceTypeTranslation) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.translation, other.translation)) {
+            return false;
+        }
+        if (!Objects.equals(this.language, other.language)) {
+            return false;
+        }
+        return Objects.equals(this.reference, other.reference);
     }
 
     @Override

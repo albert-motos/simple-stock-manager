@@ -13,6 +13,10 @@ import javax.persistence.Query;
  */
 public class StoreHelper extends CommonHelper {
 
+    public StoreHelper() {
+        super(BusinessConstant.QUERY.STORE);
+    }
+
     public StoreJpaController getJpaController() {
         return new StoreJpaController(entityManagerFactory);
     }
@@ -44,7 +48,7 @@ public class StoreHelper extends CommonHelper {
                 + (street.isEmpty() ? "" : " AND s.street LIKE '%" + street + "%'")
                 + (status == WebConstant.STATUS.HIDDEN ? " AND s.enable = FALSE" : "")
                 + (status == WebConstant.STATUS.VISIBLE ? " AND s.enable = TRUE" : "")
-                + getAuditoryQuery("s", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+                + getAuditoryQuery(createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
 
         return entityManager.createQuery(query);

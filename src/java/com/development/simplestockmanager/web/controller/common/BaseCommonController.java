@@ -49,7 +49,7 @@ public class BaseCommonController extends SessionController implements Serializa
     }
     
     public void back() {
-        new NavigationService().redirect(BusinessConstant.URL.INDEX);
+        new NavigationService().redirect(WebConstant.WEB.INDEX);
     }
 
     public boolean isAction() {

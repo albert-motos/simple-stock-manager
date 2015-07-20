@@ -1,6 +1,10 @@
 package com.development.simplestockmanager.business.object.helper;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.controller.EmployeeTypeJpaController;
+import com.development.simplestockmanager.web.common.WebConstant;
+import java.sql.Timestamp;
+import java.util.Date;
 import javax.persistence.Query;
 
 /**
@@ -9,6 +13,10 @@ import javax.persistence.Query;
  * @author foxtrot
  */
 public class EmployeeTypeHelper extends CommonHelper implements BaseTypeHelper {
+
+    public EmployeeTypeHelper() {
+        super(BusinessConstant.QUERY.EMPLOYEE_TYPE);
+    }
 
     public EmployeeTypeJpaController getJpaController() {
         return new EmployeeTypeJpaController(entityManagerFactory);
@@ -37,8 +45,18 @@ public class EmployeeTypeHelper extends CommonHelper implements BaseTypeHelper {
         return query;
     }
 
-    
-
-    
+    public Query getFindForBrowserQuery(String type, String translation, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom,
+            Date lastModifiedDateTo, long createdUserID, long lastModifiedUserID) {
+        
+        String query = "SELECT e FROM EmployeeType e INNER JOIN e.employeeTypeTranslationList AS et where 1 = 1"
+                + (type.isEmpty() ? "" : " AND e.type LIKE '%" + type + "%'")
+                + (translation.isEmpty() ? "" : " AND et.translation LIKE '%" + translation + "%'")
+                + (status == WebConstant.STATUS.HIDDEN ? " AND e.enable = FALSE" : "")
+                + (status == WebConstant.STATUS.VISIBLE ? " AND e.enable = TRUE" : "")
+                + getAuditoryQuery(createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+        System.out.println("# " + query);
+        
+        return entityManager.createQuery(query);
+    }
 
 }

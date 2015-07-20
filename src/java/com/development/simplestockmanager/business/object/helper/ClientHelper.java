@@ -14,6 +14,10 @@ import javax.persistence.Query;
  */
 public class ClientHelper extends CommonHelper {
 
+    public ClientHelper() {
+        super(BusinessConstant.QUERY.CLIENT);
+    }
+
     public ClientJpaController getJpaController() {
         return new ClientJpaController(entityManagerFactory);
     }
@@ -44,7 +48,7 @@ public class ClientHelper extends CommonHelper {
                 + (email.isEmpty() ? "" : " AND c.email LIKE '%" + email + "%'")
                 + (status == WebConstant.STATUS.HIDDEN ? " AND c.enable = FALSE" : "")
                 + (status == WebConstant.STATUS.VISIBLE ? " AND c.enable = TRUE" : "")
-                + getAuditoryQuery("c", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+                + getAuditoryQuery(createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
 
         return entityManager.createQuery(query);

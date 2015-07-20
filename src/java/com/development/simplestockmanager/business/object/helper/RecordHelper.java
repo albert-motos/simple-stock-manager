@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.business.object.helper;
 
+import com.development.simplestockmanager.business.common.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.controller.RecordJpaController;
 
 /**
@@ -8,6 +9,10 @@ import com.development.simplestockmanager.business.persistence.controller.Record
  * @author foxtrot
  */
 public class RecordHelper extends CommonHelper {
+
+    public RecordHelper() {
+        super(BusinessConstant.QUERY.RECORD);
+    }
 
     public RecordJpaController getJpaController() {
         return new RecordJpaController(entityManagerFactory);

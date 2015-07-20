@@ -2,8 +2,10 @@ package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.SexTypeHelper;
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeNull;
+import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
 import com.development.simplestockmanager.business.persistence.SexType;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 
@@ -53,6 +55,23 @@ public class SexTypeSpecificController {
 
         try {
             Query query = helper.getFindEnable();
+            for (Object object : query.getResultList()) {
+                list.add((SexType) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+    
+    public List<SexType> findAllForBrowser(SexType browser, SexTypeTranslation translation, long status, Date createdDateFrom, Date createdDateTo,
+            Date lastModifiedDateFrom, Date lastModifiedDateTo, long createdUserID, long lastModifiedUserID) {
+        List<SexType> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindForBrowserQuery(browser.getType(), translation.getTranslation(), status, createdDateFrom, createdDateTo,
+                    lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
             for (Object object : query.getResultList()) {
                 list.add((SexType) object);
             }

@@ -22,7 +22,7 @@ public class EmployeeTypeGeneralController {
         controller = helper.getJpaController();
     }
 
-    public long client(EmployeeType employeeType) {
+    public long create(EmployeeType employeeType) {
         try {
             controller.create(employeeType);
         } catch (Exception e) {

@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,9 +50,11 @@ public class ProductTypeTranslation implements Serializable {
         this.id = id;
     }
 
-    public ProductTypeTranslation(Long id, String translation) {
-        this.id = id;
-        this.translation = translation;
+    public ProductTypeTranslation(ProductTypeTranslation productTypeTranslation) {
+        this.id = productTypeTranslation.id;
+        this.language = productTypeTranslation.language;
+        this.reference = productTypeTranslation.reference;
+        this.translation = productTypeTranslation.translation;
     }
 
     public Long getId() {
@@ -93,22 +91,33 @@ public class ProductTypeTranslation implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.translation);
+        hash = 29 * hash + Objects.hashCode(this.language);
+        hash = 29 * hash + Objects.hashCode(this.reference);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductTypeTranslation)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        ProductTypeTranslation other = (ProductTypeTranslation) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final ProductTypeTranslation other = (ProductTypeTranslation) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.translation, other.translation)) {
+            return false;
+        }
+        if (!Objects.equals(this.language, other.language)) {
+            return false;
+        }
+        return Objects.equals(this.reference, other.reference);
     }
 
     @Override
