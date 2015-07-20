@@ -38,8 +38,8 @@ public class ProviderHelper extends CommonHelper {
                 + (identifier.isEmpty() ? "" : " AND p.identifier LIKE '%" + identifier + "%'")
                 + (name.isEmpty() ? "" : " AND p.name LIKE '%" + name + "%'")
                 + (phone.isEmpty() ? "" : " AND p.phone LIKE '%" + phone + "%'")
-                + (status == WebConstant.STATUS.HIDDEN ? " AND b.enable = FALSE" : "")
-                + (status == WebConstant.STATUS.VISIBLE ? " AND b.enable = TRUE" : "")
+                + (status == WebConstant.STATUS.HIDDEN ? " AND p.enable = FALSE" : "")
+                + (status == WebConstant.STATUS.VISIBLE ? " AND p.enable = TRUE" : "")
                 + getAuditoryQuery("p", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
 

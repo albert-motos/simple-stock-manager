@@ -42,8 +42,7 @@ public class BrandSearchController extends BrandCommonController implements Sear
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
         
-        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
-        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        super.clear();
     }
 
     public void initView(Brand brand) {

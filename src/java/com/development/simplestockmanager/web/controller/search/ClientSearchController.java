@@ -45,8 +45,7 @@ public class ClientSearchController extends ClientCommonController implements Se
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
         
-        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
-        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        super.clear();
     }
     
     public void initView(Client client) {

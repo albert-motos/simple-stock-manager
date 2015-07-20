@@ -40,6 +40,8 @@ public class StoreSearchController extends StoreCommonController implements Sear
         browser = new StoreNull();
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
+        
+        super.clear();
     }
     
     public void initView(Store store) {

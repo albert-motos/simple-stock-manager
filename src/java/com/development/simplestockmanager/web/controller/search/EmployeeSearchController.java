@@ -51,8 +51,7 @@ public class EmployeeSearchController extends EmployeeCommonController implement
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
         
-        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
-        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        super.clear();
     }
     
     public void initView(Employee employee) {

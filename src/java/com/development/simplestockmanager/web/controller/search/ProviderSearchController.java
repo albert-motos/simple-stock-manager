@@ -40,6 +40,8 @@ public class ProviderSearchController extends ProviderCommonController implement
         browser = new ProviderNull();
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
+        
+        super.clear();
     }
     
     public void initView(Provider provider) {

@@ -19,7 +19,7 @@
                                         <p:outputLabel value="#{label.name}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText  value="#{providerAdd.provider.name}" style="width: 100%" />
+                                        <p:inputText  value="#{providerEdit.provider.name}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -31,7 +31,7 @@
                                         <p:outputLabel value="#{label.identifier}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText  value="#{providerAdd.provider.identifier}" style="width: 100%" />
+                                        <p:inputText  value="#{providerEdit.provider.identifier}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -45,7 +45,7 @@
                                         <p:outputLabel value="#{label.phoneNumber}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText  value="#{providerAdd.provider.phone}" style="width: 100%" />
+                                        <p:inputText  value="#{providerEdit.provider.phone}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -57,7 +57,7 @@
                                         <p:outputLabel value="#{label.email}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText  value="#{providerAdd.provider.email}" style="width: 100%" />
+                                        <p:inputText  value="#{providerEdit.provider.email}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -76,7 +76,7 @@
                                         <p:outputLabel value="#{providerLabel.enable}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{providerAdd.provider.enable}" />
+                                        <p:selectBooleanCheckbox value="#{providerEdit.provider.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -86,8 +86,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{button.add}" rendered="#{not providerAdd.action}" actionListener="#{providerAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{button.back(providerAdd.action)}" actionListener="#{providerAdd.back()}"
+                <p:commandButton value="#{button.add}" rendered="#{not providerEdit.action}" actionListener="#{providerEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{button.back(providerEdit.action)}" actionListener="#{providerEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

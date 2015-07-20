@@ -27,7 +27,7 @@ public class ProviderEditController extends ProviderCommonController implements 
         super(WebConstant.VALIDATOR.MODE.EDIT);
         
         try {
-            provider = (Provider) receiveObjectFromSession(WebConstant.SESSION.CLIENT);
+            provider = (Provider) receiveObjectFromSession(WebConstant.SESSION.PROVIDER);
             baseProvider = new Provider(provider);
         } catch (Exception e) {
             back();

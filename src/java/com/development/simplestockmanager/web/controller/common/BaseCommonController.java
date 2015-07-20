@@ -43,6 +43,11 @@ public class BaseCommonController extends SessionController implements Serializa
         lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
     }
     
+    public void clear() {
+        createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+        lastModifiedUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
+    }
+    
     public void back() {
         new NavigationService().redirect(BusinessConstant.URL.INDEX);
     }
