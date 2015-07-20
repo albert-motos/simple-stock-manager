@@ -42,8 +42,8 @@ public class StoreHelper extends CommonHelper {
                 + (phone.isEmpty() ? "" : " AND s.phone LIKE '%" + phone + "%'")
                 + (state.isEmpty() ? "" : " AND s.state LIKE '%" + state + "%'")
                 + (street.isEmpty() ? "" : " AND s.street LIKE '%" + street + "%'")
-                + (status == WebConstant.STATUS.HIDDEN ? " AND c.enable = FALSE" : "")
-                + (status == WebConstant.STATUS.VISIBLE ? " AND c.enable = TRUE" : "")
+                + (status == WebConstant.STATUS.HIDDEN ? " AND s.enable = FALSE" : "")
+                + (status == WebConstant.STATUS.VISIBLE ? " AND s.enable = TRUE" : "")
                 + getAuditoryQuery("s", createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
         System.out.println("# " + query);
 

@@ -7,6 +7,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.StoreCommonController;
 import com.development.simplestockmanager.web.controller.common.EditController;
+import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +33,8 @@ public class StoreEditController extends StoreCommonController implements EditCo
         } catch (Exception e) {
             back();
         }
+        
+        employeeSelector = new EmployeeSelector(WebConstant.SELECTOR.MODE.ENABLE, store.getEmployee());
     }
     
     @Override

@@ -24,7 +24,7 @@ public class EmployeeTypeSelector extends CommonTypeSelector implements BaseSele
     public EmployeeTypeSelector(long mode, String language) {
         super(mode, language);
         this.specificController = new EmployeeTypeSpecificController();
-        search();
+        clear();
     }
 
     public EmployeeTypeSelector(long mode, String language, EmployeeType employeeType) {
@@ -34,7 +34,6 @@ public class EmployeeTypeSelector extends CommonTypeSelector implements BaseSele
 
     @Override
     public void search() {
-        clear();
         List<EmployeeType> employeeTypeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
@@ -54,6 +53,9 @@ public class EmployeeTypeSelector extends CommonTypeSelector implements BaseSele
     public void clear() {
         list = new ArrayList<>();
         hashMap = new HashMap<>();
+        selection = "";
+        
+        search();
     }
     
     public EmployeeType getSelectedValue() {

@@ -24,7 +24,7 @@ public class ProductTypeSelector extends CommonTypeSelector implements BaseSelec
     public ProductTypeSelector(long mode, String language) {
         super(mode, language);
         this.specificController = new ProductTypeSpecificController();
-        search();
+        clear();
     }
     
     public ProductTypeSelector(long mode, String language, ProductType productType) {
@@ -34,7 +34,6 @@ public class ProductTypeSelector extends CommonTypeSelector implements BaseSelec
     
     @Override
     public void search() {
-        clear();
         List<ProductType> productTypeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
@@ -54,6 +53,9 @@ public class ProductTypeSelector extends CommonTypeSelector implements BaseSelec
     public void clear() {
         list = new ArrayList<>();
         hashMap = new HashMap<>();
+        selection = "";
+        
+        search();
     }
     
     public ProductType getSelectedValue() {

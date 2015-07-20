@@ -21,6 +21,7 @@ public class EmployeeSelector extends CommonSelector implements BaseSelector {
     public EmployeeSelector(long mode) {
         super(mode);
         this.specificController = new EmployeeSpecificController();
+        this.browser = "";
         search();
     }
 

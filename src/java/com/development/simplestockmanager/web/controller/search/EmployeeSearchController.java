@@ -6,7 +6,6 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.EmployeeCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
-import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import com.development.simplestockmanager.web.object.selector.type.EmployeeTypeSelector;
 import com.development.simplestockmanager.web.object.selector.type.LanguageSelector;
 import com.development.simplestockmanager.web.object.selector.type.SexTypeSelector;
@@ -50,6 +49,10 @@ public class EmployeeSearchController extends EmployeeCommonController implement
         browser = new EmployeeNull();
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
+        
+        sexTypeSelector.clear();
+        employeeTypeSelector.clear();
+        languageSelector.clear();
         
         super.clear();
     }

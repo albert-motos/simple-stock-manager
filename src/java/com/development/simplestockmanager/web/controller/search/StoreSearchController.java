@@ -6,6 +6,7 @@ import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.common.service.general.NavigationService;
 import com.development.simplestockmanager.web.controller.common.StoreCommonController;
 import com.development.simplestockmanager.web.controller.common.SearchController;
+import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -26,11 +27,13 @@ public class StoreSearchController extends StoreCommonController implements Sear
 
     public StoreSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
+        employeeSelector = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);
         clear();
     }
 
     @Override
     public void search() {
+        browser.setEmployee(employeeSelector.getSelectedValue());
         list = specificController.findAllForBrowser(browser, status, createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo,
                 createdUser.getSelectedValue().getId(), lastModifiedUser.getSelectedValue().getId());
     }
@@ -40,6 +43,7 @@ public class StoreSearchController extends StoreCommonController implements Sear
         browser = new StoreNull();
         list = new ArrayList<>();
         status = WebConstant.STATUS.INDETERMINATE;
+        employeeSelector.clear();
         
         super.clear();
     }

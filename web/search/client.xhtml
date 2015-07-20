@@ -114,6 +114,7 @@
                             </p:row>
                         </p:panelGrid>
                     </p:tab>
+                    
                     <p:tab title="#{label.auditoryHeader}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
@@ -177,28 +178,40 @@
                             </p:row>
                         </p:panelGrid>
 
-                        <p:panelGrid style="width: 100%">
+                        <p:panelGrid>
                             <p:row>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:outputLabel value="#{label.auditoryCreatedUser}" />
                                             </p:column>
-                                            <p:column style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
                                                 <p:inputText value="#{clientSearch.createdUser.browser}" style="width: 100%" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:commandButton value="#{button.search}" actionListener="#{clientSearch.createdUser.search()}" update="createdUserList" />
                                             </p:column>
-                                            <p:column style="width: 100%">
-                                                <p:selectOneMenu id="createdUserList" value="#{clientSearch.createdUser.selection}" style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="createdUserList" value="#{clientSearch.createdUser.selection}" style="width: 400px">
                                                     <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
                                                     <f:selectItems value="#{clientSearch.createdUser.list}" />
                                                 </p:selectOneMenu>
@@ -207,28 +220,40 @@
                                     </p:panelGrid>
                                 </p:column>
                             </p:row>
-
+                            
                             <p:row>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
                                             </p:column>
-                                            <p:column style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
                                                 <p:inputText value="#{clientSearch.lastModifiedUser.browser}" style="width: 100%" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
                                 </p:column>
-                                <p:column style="width: 50%">
+                                <p:column>
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
                                                 <p:commandButton value="#{button.search}" actionListener="#{clientSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
                                             </p:column>
-                                            <p:column style="width: 100%">
-                                                <p:selectOneMenu id="lastModifiedUserList" value="#{clientSearch.lastModifiedUser.selection}" style="width: 100%">
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="lastModifiedUserList" value="#{clientSearch.lastModifiedUser.selection}"  style="width: 400px">
                                                     <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
                                                     <f:selectItems value="#{clientSearch.lastModifiedUser.list}" />
                                                 </p:selectOneMenu>

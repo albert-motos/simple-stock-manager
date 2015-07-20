@@ -6,6 +6,7 @@ import com.development.simplestockmanager.common.CommonConstant;
 import com.development.simplestockmanager.web.common.WebConstant;
 import com.development.simplestockmanager.web.controller.common.AddController;
 import com.development.simplestockmanager.web.controller.common.StoreCommonController;
+import com.development.simplestockmanager.web.object.selector.EmployeeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,10 +24,12 @@ public class StoreAddController extends StoreCommonController implements AddCont
     public StoreAddController() {
         super(WebConstant.VALIDATOR.MODE.CREATE);
         store = new Store();
+        employeeSelector = new EmployeeSelector(WebConstant.SELECTOR.MODE.ENABLE);
     }
 
     @Override
     public void add() {
+        store.setEmployee(employeeSelector.getSelectedValue());
         validator.setObject(store);
         
         if (validator.validate()) {

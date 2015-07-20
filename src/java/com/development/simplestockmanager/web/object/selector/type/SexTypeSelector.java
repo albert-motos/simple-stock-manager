@@ -24,7 +24,7 @@ public class SexTypeSelector extends CommonTypeSelector implements BaseSelector 
     public SexTypeSelector(long mode, String language) {
         super(mode, language);
         this.specificController = new SexTypeSpecificController();
-        search();
+        clear();
     }
     
     public SexTypeSelector(long mode, String language, SexType sexType) {
@@ -34,7 +34,6 @@ public class SexTypeSelector extends CommonTypeSelector implements BaseSelector 
     
     @Override
     public void search() {
-        clear();
         List<SexType> sexTypeList;
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
@@ -54,6 +53,9 @@ public class SexTypeSelector extends CommonTypeSelector implements BaseSelector 
     public void clear() {
         list = new ArrayList<>();
         hashMap = new HashMap<>();
+        selection = "";
+        
+        search();
     }
     
     public SexType getSelectedValue() {

@@ -23,7 +23,7 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
     public LanguageSelector(long mode, String language) {
         super(mode, language);
         specificController = new LanguageSpecificController();
-        search();
+        clear();
     }
     
     public LanguageSelector(long mode, String language, Language languageObject) {
@@ -32,9 +32,7 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
     }
 
     @Override
-    public void search() {
-        clear();
-        
+    public void search() {        
         for (Language languageTranslation : specificController.findAll()) {
             String key = getDisplayName(languageTranslation);
             hashMap.put(key, languageTranslation);
@@ -46,6 +44,9 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
     public void clear() {
         hashMap = new HashMap<>();
         list = new ArrayList<>();
+        selection = "";
+        
+        search();
     }
 
     public Language getSelectedValue() {

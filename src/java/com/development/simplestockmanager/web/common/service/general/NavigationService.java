@@ -15,7 +15,6 @@ public class NavigationService implements Serializable {
 
     public void redirect(String url) {
         try {
-            System.out.println("#" + url);
             FacesContext.getCurrentInstance().getExternalContext().redirect(url);
         } catch (IOException ex) {
             Logger.getLogger(NavigationService.class.getName()).log(Level.SEVERE, null, ex);
