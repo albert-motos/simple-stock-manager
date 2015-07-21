@@ -46,6 +46,28 @@
                                 <p:menuitem value="#{menu.storeSearch}" url="#{url.search('store')}" />
                             </p:submenu>
                         </p:submenu>
+                        <p:submenu label="#{menu.type}">
+                            <p:submenu label="#{menu.employeeType}">
+                                <p:menuitem value="#{menu.employeeTypeCreate}" url="#{url.add('employee_type')}" />
+                                <p:menuitem value="#{menu.employeeTypeSearch}" url="#{url.search('employee_type')}" />
+                            </p:submenu>
+                            <p:submenu label="#{menu.paymentType}">
+                                <p:menuitem value="#{menu.paymentTypeCreate}" url="#{url.add('payment_type')}" />
+                                <p:menuitem value="#{menu.paymentTypeSearch}" url="#{url.search('payment_type')}" />
+                            </p:submenu>
+                            <p:submenu label="#{menu.priceType}">
+                                <p:menuitem value="#{menu.priceTypeCreate}" url="#{url.add('price_type')}" />
+                                <p:menuitem value="#{menu.priceTypeSearch}" url="#{url.search('price_type')}" />
+                            </p:submenu>
+                            <p:submenu label="#{menu.productType}">
+                                <p:menuitem value="#{menu.productTypeCreate}" url="#{url.add('product_type')}" />
+                                <p:menuitem value="#{menu.productTypeSearch}" url="#{url.search('product_type')}" />
+                            </p:submenu>
+                            <p:submenu label="#{menu.sexType}">
+                                <p:menuitem value="#{menu.sexTypeCreate}" url="#{url.add('sex_type')}" />
+                                <p:menuitem value="#{menu.sexTypeSearch}" url="#{url.search('sex_type')}" />
+                            </p:submenu>
+                        </p:submenu>
                         <f:facet name="options" >
                             <p:commandButton value="CLOSE_SESSION" actionListener="#{authentication.logout()}" />
                         </f:facet>

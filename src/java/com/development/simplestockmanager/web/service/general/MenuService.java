@@ -37,6 +37,23 @@ public class MenuService implements Serializable {
     private final String store;
     private final String storeCreate;
     private final String storeSearch;
+    
+    private final String type;
+    private final String employeeType;
+    private final String employeeTypeCreate;
+    private final String employeeTypeSearch;
+    private final String paymentType;
+    private final String paymentTypeCreate;
+    private final String paymentTypeSearch;
+    private final String priceType;
+    private final String priceTypeCreate;
+    private final String priceTypeSearch;
+    private final String productType;
+    private final String productTypeCreate;
+    private final String productTypeSearch;
+    private final String sexType;
+    private final String sexTypeCreate;
+    private final String sexTypeSearch;
 
     public MenuService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.MENU.CONSTRUCTOR);
@@ -63,6 +80,23 @@ public class MenuService implements Serializable {
         store = controller.getWord(CommonConstant.MENU.ENTITY.STORE.TEXT);
         storeCreate = controller.getWord(CommonConstant.MENU.ENTITY.STORE.CREATE);
         storeSearch = controller.getWord(CommonConstant.MENU.ENTITY.STORE.SEARCH);
+        
+        type = controller.getWord(CommonConstant.MENU.TYPE.TEXT);
+        employeeType = controller.getWord(CommonConstant.MENU.TYPE.EMPLOYEE_TYPE.TEXT);
+        employeeTypeCreate = controller.getWord(CommonConstant.MENU.TYPE.EMPLOYEE_TYPE.CREATE);
+        employeeTypeSearch = controller.getWord(CommonConstant.MENU.TYPE.EMPLOYEE_TYPE.SEARCH);
+        paymentType = controller.getWord(CommonConstant.MENU.TYPE.PAYMENT_TYPE.TEXT);
+        paymentTypeCreate = controller.getWord(CommonConstant.MENU.TYPE.PAYMENT_TYPE.CREATE);
+        paymentTypeSearch = controller.getWord(CommonConstant.MENU.TYPE.PAYMENT_TYPE.SEARCH);
+        priceType = controller.getWord(CommonConstant.MENU.TYPE.PRICE_TYPE.TEXT);
+        priceTypeCreate = controller.getWord(CommonConstant.MENU.TYPE.PRICE_TYPE.CREATE);
+        priceTypeSearch = controller.getWord(CommonConstant.MENU.TYPE.PRICE_TYPE.SEARCH);
+        productType = controller.getWord(CommonConstant.MENU.TYPE.PRODUCT_TYPE.TEXT);
+        productTypeCreate = controller.getWord(CommonConstant.MENU.TYPE.PRODUCT_TYPE.CREATE);
+        productTypeSearch = controller.getWord(CommonConstant.MENU.TYPE.PRODUCT_TYPE.SEARCH);
+        sexType = controller.getWord(CommonConstant.MENU.TYPE.SEX_TYPE.TEXT);
+        sexTypeCreate = controller.getWord(CommonConstant.MENU.TYPE.SEX_TYPE.CREATE);
+        sexTypeSearch = controller.getWord(CommonConstant.MENU.TYPE.SEX_TYPE.SEARCH);
     }
 
     public String getEntity() {
@@ -139,6 +173,70 @@ public class MenuService implements Serializable {
 
     public String getStoreSearch() {
         return storeSearch;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getEmployeeType() {
+        return employeeType;
+    }
+
+    public String getEmployeeTypeCreate() {
+        return employeeTypeCreate;
+    }
+
+    public String getEmployeeTypeSearch() {
+        return employeeTypeSearch;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public String getPaymentTypeCreate() {
+        return paymentTypeCreate;
+    }
+
+    public String getPaymentTypeSearch() {
+        return paymentTypeSearch;
+    }
+
+    public String getPriceType() {
+        return priceType;
+    }
+
+    public String getPriceTypeCreate() {
+        return priceTypeCreate;
+    }
+
+    public String getPriceTypeSearch() {
+        return priceTypeSearch;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public String getProductTypeCreate() {
+        return productTypeCreate;
+    }
+
+    public String getProductTypeSearch() {
+        return productTypeSearch;
+    }
+
+    public String getSexType() {
+        return sexType;
+    }
+
+    public String getSexTypeCreate() {
+        return sexTypeCreate;
+    }
+
+    public String getSexTypeSearch() {
+        return sexTypeSearch;
     }
 
 }

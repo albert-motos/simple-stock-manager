@@ -65,6 +65,47 @@ public interface CommonConstant {
                 public static String SEARCH = TEXT + ".search";
             }
         }
+
+        public interface TYPE {
+
+            public static String TEXT = MENU.TEXT + ".type";
+
+            public interface EMPLOYEE_TYPE {
+
+                public static String TEXT = TYPE.TEXT + ".employee_type";
+                public static String CREATE = TEXT + ".create";
+                public static String SEARCH = TEXT + ".search";
+            }
+            
+            public interface PAYMENT_TYPE {
+
+                public static String TEXT = TYPE.TEXT + ".payment_type";
+                public static String CREATE = TEXT + ".create";
+                public static String SEARCH = TEXT + ".search";
+            }
+            
+            public interface PRICE_TYPE {
+
+                public static String TEXT = TYPE.TEXT + ".price_type";
+                public static String CREATE = TEXT + ".create";
+                public static String SEARCH = TEXT + ".search";
+            }
+            
+            public interface PRODUCT_TYPE {
+
+                public static String TEXT = TYPE.TEXT + ".product_type";
+                public static String CREATE = TEXT + ".create";
+                public static String SEARCH = TEXT + ".search";
+            }
+            
+            public interface SEX_TYPE {
+
+                public static String TEXT = TYPE.TEXT + ".sex_type";
+                public static String CREATE = TEXT + ".create";
+                public static String SEARCH = TEXT + ".search";
+            }
+
+        }
     }
 
     public interface LABEL {
@@ -288,8 +329,9 @@ public interface CommonConstant {
             public static String PRODUCT = TEXT + ".product";
 
             public static String SUMMARY = TEXT + ".summary";
-            
+
             public static String TYPE = TEXT + ".type";
+
             public interface TRANSLATION {
 
                 public static String TEXT = WARNING.TEXT + ".translation";
@@ -298,7 +340,7 @@ public interface CommonConstant {
                 public static String EN_US = TEXT + ".en_us";
 
             }
-            
+
             public interface DETAIL {
 
                 public static String TEXT = ERROR.TEXT + ".detail";
@@ -339,7 +381,7 @@ public interface CommonConstant {
                     public static String PRODUCT = TEXT + ".product";
                     public static String PROVIDER = TEXT + ".provider";
                     public static String STORE = TEXT + ".store";
-                    
+
                     public static String EMPLOYEE_TYPE = TEXT + ".employee_type";
                     public static String PAYMENT_TYPE = TEXT + ".payment_type";
                     public static String PRICE_TYPE = TEXT + ".price_type";
