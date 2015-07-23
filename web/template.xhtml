@@ -14,58 +14,58 @@
         <title>SimpleStockManager</title>
     </h:head>
 
-    <h:body>
+    <h:body onload="">
 
         <div id="top">
             <ui:insert name="top">
                 <h:form>
                     <p:menubar>
-                        <p:submenu label="#{menu.entity}">
-                            <p:submenu label="#{menu.brand}">
-                                <p:menuitem value="#{menu.brandCreate}" url="#{url.add('brand')}" />
-                                <p:menuitem value="#{menu.brandSearch}" url="#{url.search('brand')}" />
+                        <p:submenu label="#{language.entity}">
+                            <p:submenu label="#{language.brand.title}">
+                                <p:menuitem value="#{language.brand.create}" url="#{url.add('brand')}" />
+                                <p:menuitem value="#{language.brand.search}" url="#{url.search('brand')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.client}">
-                                <p:menuitem value="#{menu.clientCreate}" url="#{url.add('client')}" />
-                                <p:menuitem value="#{menu.clientSearch}" url="#{url.search('client')}" />
+                            <p:submenu label="#{language.brand.title}">
+                                <p:menuitem value="#{language.brand.create}" url="#{url.add('client')}" />
+                                <p:menuitem value="#{language.brand.search}" url="#{url.search('client')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.employee}">
-                                <p:menuitem value="#{menu.employeeCreate}" url="#{url.add('employee')}" />
-                                <p:menuitem value="#{menu.employeeSearch}" url="#{url.search('employee')}" />
+                            <p:submenu label="#{language.employee.title}">
+                                <p:menuitem value="#{language.employee.create}" url="#{url.add('employee')}" />
+                                <p:menuitem value="#{language.employee.search}" url="#{url.search('employee')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.product}">
-                                <p:menuitem value="#{menu.productCreate}" url="#{url.add('product')}" />
-                                <p:menuitem value="#{menu.productSearch}" url="#{url.search('product')}" />
+                            <p:submenu label="#{language.product.title}">
+                                <p:menuitem value="#{language.product.create}" url="#{url.add('product')}" />
+                                <p:menuitem value="#{language.product.search}" url="#{url.search('product')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.provider}">
-                                <p:menuitem value="#{menu.providerCreate}" url="#{url.add('provider')}" />
-                                <p:menuitem value="#{menu.providerSearch}" url="#{url.search('provider')}" />
+                            <p:submenu label="#{language.provider.title}">
+                                <p:menuitem value="#{language.provider.create}" url="#{url.add('provider')}" />
+                                <p:menuitem value="#{language.provider.search}" url="#{url.search('provider')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.store}">
-                                <p:menuitem value="#{menu.storeCreate}" url="#{url.add('store')}" />
-                                <p:menuitem value="#{menu.storeSearch}" url="#{url.search('store')}" />
+                            <p:submenu label="#{language.store.title}">
+                                <p:menuitem value="#{language.store.create}" url="#{url.add('store')}" />
+                                <p:menuitem value="#{language.store.search}" url="#{url.search('store')}" />
                             </p:submenu>
                         </p:submenu>
-                        <p:submenu label="#{menu.type}">
-                            <p:submenu label="#{menu.employeeType}">
-                                <p:menuitem value="#{menu.employeeTypeCreate}" url="#{url.add('employee_type')}" />
-                                <p:menuitem value="#{menu.employeeTypeSearch}" url="#{url.search('employee_type')}" />
+                        <p:submenu label="#{language.type}">
+                            <p:submenu label="#{language.employee_type.title}">
+                                <p:menuitem value="#{language.employee_type.create}" url="#{url.add('employee_type')}" />
+                                <p:menuitem value="#{language.employee_type.search}" url="#{url.search('employee_type')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.paymentType}">
-                                <p:menuitem value="#{menu.paymentTypeCreate}" url="#{url.add('payment_type')}" />
-                                <p:menuitem value="#{menu.paymentTypeSearch}" url="#{url.search('payment_type')}" />
+                            <p:submenu label="#{language.payment_type.title}">
+                                <p:menuitem value="#{language.payment_type.create}" url="#{url.add('payment_type')}" />
+                                <p:menuitem value="#{language.payment_type.search}" url="#{url.search('payment_type')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.priceType}">
-                                <p:menuitem value="#{menu.priceTypeCreate}" url="#{url.add('price_type')}" />
-                                <p:menuitem value="#{menu.priceTypeSearch}" url="#{url.search('price_type')}" />
+                            <p:submenu label="#{language.price_type.title}">
+                                <p:menuitem value="#{language.price_type.create}" url="#{url.add('price_type')}" />
+                                <p:menuitem value="#{language.price_type.search}" url="#{url.search('price_type')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.productType}">
-                                <p:menuitem value="#{menu.productTypeCreate}" url="#{url.add('product_type')}" />
-                                <p:menuitem value="#{menu.productTypeSearch}" url="#{url.search('product_type')}" />
+                            <p:submenu label="#{language.product_type.title}">
+                                <p:menuitem value="#{language.product_type.create}" url="#{url.add('product_type')}" />
+                                <p:menuitem value="#{language.product_type.search}" url="#{url.search('product_type')}" />
                             </p:submenu>
-                            <p:submenu label="#{menu.sexType}">
-                                <p:menuitem value="#{menu.sexTypeCreate}" url="#{url.add('sex_type')}" />
-                                <p:menuitem value="#{menu.sexTypeSearch}" url="#{url.search('sex_type')}" />
+                            <p:submenu label="#{language.sex_type.title}">
+                                <p:menuitem value="#{language.sex_type.create}" url="#{url.add('sex_type')}" />
+                                <p:menuitem value="#{language.sex_type.search}" url="#{url.search('sex_type')}" />
                             </p:submenu>
                         </p:submenu>
                         <f:facet name="options" >
