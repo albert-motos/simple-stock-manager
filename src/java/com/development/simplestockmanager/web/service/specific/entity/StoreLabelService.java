@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.service.specific;
+package com.development.simplestockmanager.web.service.specific.entity;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.constant.CommonConstant;
@@ -9,35 +9,41 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
- * Service class for specific client label internationalization functionality
+ * Service class for specific store label internationalization functionality
  *
  * @author foxtrot
  */
-@ManagedBean(name = "brandLabel")
+@ManagedBean(name = "storeLabel")
 @SessionScoped
-public class BrandLabelService implements Serializable {
+public class StoreLabelService implements Serializable {
 
     private final String attributes;
+    private final String manager;
     private final String visibility;
     private final String enable;
     private final String viewer;
     private final String list;
     private final String browser;
 
-    public BrandLabelService() {
+    public StoreLabelService() {
         Employee user = new AuthenticationService().getCurrentEmployee();
         LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
-        attributes = controller.getWord(CommonConstant.HEADER.BRAND.ATTRIBUTES);
-        visibility = controller.getWord(CommonConstant.HEADER.BRAND.VISIBILITY);
+        manager = controller.getWord(CommonConstant.HEADER.TEXT);
+        attributes = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        visibility = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
         enable = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
-        viewer = controller.getWord(CommonConstant.HEADER.BRAND.VIEWER);
-        list = controller.getWord(CommonConstant.HEADER.BRAND.LIST);
-        browser = controller.getWord(CommonConstant.HEADER.BRAND.BROWSER);
+        viewer = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        list = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        browser = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
     }
 
     public String getAttributes() {
         return attributes;
+    }
+
+    public String getManager() {
+        return manager;
     }
 
     public String getVisibility() {

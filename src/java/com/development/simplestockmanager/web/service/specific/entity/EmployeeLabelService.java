@@ -1,4 +1,4 @@
-package com.development.simplestockmanager.web.service.specific;
+package com.development.simplestockmanager.web.service.specific.entity;
 
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.constant.CommonConstant;
@@ -32,13 +32,14 @@ public class EmployeeLabelService implements Serializable {
         Employee user = new AuthenticationService().getCurrentEmployee();
         LanguageController controller = new LanguageController(user.getLanguage().getCode());
 
-        attributes = controller.getWord(CommonConstant.HEADER.EMPLOYE.ATTRIBUTES);
-        credentials = controller.getWord(CommonConstant.HEADER.EMPLOYE.CREDENTIALS);
-        visibility = controller.getWord(CommonConstant.HEADER.EMPLOYE.VISIBILITY);
-        enable = controller.getWord(CommonConstant.LABEL.ENABLE.EMPLOYEE);
-        viewer = controller.getWord(CommonConstant.HEADER.EMPLOYE.VIEWER);
-        list = controller.getWord(CommonConstant.HEADER.EMPLOYE.LIST);
-        browser = controller.getWord(CommonConstant.HEADER.EMPLOYE.BROWSER);
+        attributes = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        visibility = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        enable = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        viewer = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        list = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        browser = controller.getWord(CommonConstant.LABEL.ENABLE.BRAND);
+        
+        credentials = controller.getWord(CommonConstant.HEADER.TEXT);
     }
 
     public String getAttributes() {

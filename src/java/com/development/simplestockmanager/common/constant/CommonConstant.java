@@ -76,28 +76,28 @@ public interface CommonConstant {
                 public static String CREATE = TEXT + ".create";
                 public static String SEARCH = TEXT + ".search";
             }
-            
+
             public interface PAYMENT_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".payment_type";
                 public static String CREATE = TEXT + ".create";
                 public static String SEARCH = TEXT + ".search";
             }
-            
+
             public interface PRICE_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".price_type";
                 public static String CREATE = TEXT + ".create";
                 public static String SEARCH = TEXT + ".search";
             }
-            
+
             public interface PRODUCT_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".product_type";
                 public static String CREATE = TEXT + ".create";
                 public static String SEARCH = TEXT + ".search";
             }
-            
+
             public interface SEX_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".sex_type";
@@ -158,6 +158,11 @@ public interface CommonConstant {
             public static String PROVIDER = TEXT + ".provider";
             public static String PRODUCT = TEXT + ".product";
             public static String STORE = TEXT + ".store";
+            public static String EMPLOYEE_TYPE = TEXT + ".employee_type";
+            public static String PAYMENT_TYPE = TEXT + ".payment_type";
+            public static String PRICE_TYPE = TEXT + ".price_type";
+            public static String PRODUCT_TYPE = TEXT + ".product_type";
+            public static String SEX_TYPE = TEXT + ".sex_type";
         }
 
         public interface TRANSLATION {
@@ -198,66 +203,137 @@ public interface CommonConstant {
 
         public static String TEXT = "header";
 
-        public interface BRAND {
+        public interface ENTITY {
 
-            public static String TEXT = HEADER.TEXT + ".brand";
-            public static String ATTRIBUTES = TEXT + ".attributes";
-            public static String VISIBILITY = TEXT + ".visibility";
-            public static String VIEWER = TEXT + ".viewer";
-            public static String LIST = TEXT + ".list";
-            public static String BROWSER = TEXT + ".browser";
+            public static String TEXT = ".entity";
+
+            public interface BRAND {
+
+                public static String TEXT = ENTITY.TEXT + ".brand";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                public static String LIST = TEXT + ".list";
+                public static String BROWSER = TEXT + ".browser";
+            }
+
+            public interface CLIENT {
+
+                public static String TEXT = ENTITY.TEXT + ".client";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                public static String LIST = TEXT + ".list";
+                public static String BROWSER = TEXT + ".browser";
+            }
+
+            public interface EMPLOYE {
+
+                public static String TEXT = ENTITY.TEXT + ".employee";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String CREDENTIALS = TEXT + ".credentials";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                public static String LIST = TEXT + ".list";
+                public static String BROWSER = TEXT + ".browser";
+            }
+
+            public interface PRODUCT {
+
+                public static String TEXT = ENTITY.TEXT + ".product";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                public static String LIST = TEXT + ".list";
+                public static String BROWSER = TEXT + ".browser";
+            }
+
+            public interface PROVIDER {
+
+                public static String TEXT = ENTITY.TEXT + ".provider";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                public static String LIST = TEXT + ".list";
+                public static String BROWSER = TEXT + ".browser";
+            }
+
+            public interface STORE {
+
+                public static String TEXT = ENTITY.TEXT + ".store";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String MANAGER = TEXT + ".manager";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                public static String LIST = TEXT + ".list";
+                public static String BROWSER = TEXT + ".browser";
+            }
+
         }
+        
+        public interface TYPE {
 
-        public interface CLIENT {
+            public static String TEXT = ".type";
 
-            public static String TEXT = HEADER.TEXT + ".client";
-            public static String ATTRIBUTES = TEXT + ".attributes";
-            public static String VISIBILITY = TEXT + ".visibility";
-            public static String VIEWER = TEXT + ".viewer";
-            public static String LIST = TEXT + ".list";
-            public static String BROWSER = TEXT + ".browser";
-        }
+            public interface EMPLOYEE_TYPE {
 
-        public interface EMPLOYE {
+                public static String TEXT = TYPE.TEXT + ".employee_type";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String BROWSER = TEXT + ".browser";
+                public static String LIST = TEXT + ".list";
+                public static String TRANSLATION = TEXT + ".translation";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                
+            }
+            
+            public interface PAYMENT_TYPE {
 
-            public static String TEXT = HEADER.TEXT + ".employee";
-            public static String ATTRIBUTES = TEXT + ".attributes";
-            public static String CREDENTIALS = TEXT + ".credentials";
-            public static String VISIBILITY = TEXT + ".visibility";
-            public static String VIEWER = TEXT + ".viewer";
-            public static String LIST = TEXT + ".list";
-            public static String BROWSER = TEXT + ".browser";
-        }
+                public static String TEXT = TYPE.TEXT + ".payment_type";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String BROWSER = TEXT + ".browser";
+                public static String LIST = TEXT + ".list";
+                public static String TRANSLATION = TEXT + ".translation";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                
+            }
+            
+            public interface PRICE_TYPE {
 
-        public interface PRODUCT {
+                public static String TEXT = TYPE.TEXT + ".price_type";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String BROWSER = TEXT + ".browser";
+                public static String LIST = TEXT + ".list";
+                public static String TRANSLATION = TEXT + ".translation";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                
+            }
+            
+            public interface PRODUCT_TYPE {
 
-            public static String TEXT = HEADER.TEXT + ".product";
-            public static String ATTRIBUTES = TEXT + ".attributes";
-            public static String VISIBILITY = TEXT + ".visibility";
-            public static String VIEWER = TEXT + ".viewer";
-            public static String LIST = TEXT + ".list";
-            public static String BROWSER = TEXT + ".browser";
-        }
+                public static String TEXT = TYPE.TEXT + ".product_type";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String BROWSER = TEXT + ".browser";
+                public static String LIST = TEXT + ".list";
+                public static String TRANSLATION = TEXT + ".translation";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                
+            }
+            
+            public interface SEX_TYPE {
 
-        public interface PROVIDER {
-
-            public static String TEXT = HEADER.TEXT + ".provider";
-            public static String ATTRIBUTES = TEXT + ".attributes";
-            public static String VISIBILITY = TEXT + ".visibility";
-            public static String VIEWER = TEXT + ".viewer";
-            public static String LIST = TEXT + ".list";
-            public static String BROWSER = TEXT + ".browser";
-        }
-
-        public interface STORE {
-
-            public static String TEXT = HEADER.TEXT + ".store";
-            public static String ATTRIBUTES = TEXT + ".attributes";
-            public static String MANAGER = TEXT + ".manager";
-            public static String VISIBILITY = TEXT + ".visibility";
-            public static String VIEWER = TEXT + ".viewer";
-            public static String LIST = TEXT + ".list";
-            public static String BROWSER = TEXT + ".browser";
+                public static String TEXT = TYPE.TEXT + ".sex_type";
+                public static String ATTRIBUTES = TEXT + ".attributes";
+                public static String BROWSER = TEXT + ".browser";
+                public static String LIST = TEXT + ".list";
+                public static String TRANSLATION = TEXT + ".translation";
+                public static String VISIBILITY = TEXT + ".visibility";
+                public static String VIEWER = TEXT + ".viewer";
+                
+            }
         }
     }
 
