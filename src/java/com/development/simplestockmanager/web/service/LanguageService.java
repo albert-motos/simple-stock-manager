@@ -7,6 +7,7 @@ import com.development.simplestockmanager.web.service.general.AuthenticationServ
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  * Service class for internationalization functionality
@@ -19,29 +20,35 @@ public class LanguageService implements Serializable {
 
     private final LanguageController controller;
     
-    private String entity;
-    private String type;
-    private String relation;
+    private final String entity;
+    private final String type;
+    private final String relation;
     
-    private Header brand;
-    private Header client;
-    private Header employee;
-    private Header product;
-    private Header provider;
-    private Header store;
-    private Header employee_type;
-    private Header payment_type;
-    private Header price_type;
-    private Header product_type;
-    private Header sex_type;
+    private final Header brand;
+    private final Header client;
+    private final Header employee;
+    private final Header product;
+    private final Header provider;
+    private final Header store;
+    private final Header employee_type;
+    private final Header payment_type;
+    private final Header price_type;
+    private final Header product_type;
+    private final Header sex_type;
+    
+    
+    
+    private String attributes;
+    private String browser;
+    private String credentials;
+    private String list;
+    private String manager;
+    private String viewer;
+    private String visibility;
     
     public LanguageService() {        
         controller = new LanguageController(new AuthenticationService().getCurrentEmployee().getLanguage().getCode());
 
-        initHeader();
-    }
-    
-    private void initHeader() {
         entity = controller.getWord(CommonConstant.TRANSLATION.ENTITY.TEXT);
         type = controller.getWord(CommonConstant.TRANSLATION.TYPE.TEXT);
         relation = "null";
@@ -58,6 +65,10 @@ public class LanguageService implements Serializable {
         price_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.PRICE_TYPE);
         product_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.PRODUCT_TYPE);
         sex_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.SEX_TPE);
+    }
+    
+    public void reload() {
+        FacesContext.getCurrentInstance().getExternalContext().
     }
 
     public String getEntity() {
