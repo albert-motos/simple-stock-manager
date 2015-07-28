@@ -5,6 +5,7 @@ import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.object.selector.type.EmployeeTypeSelector;
 import com.development.simplestockmanager.web.object.selector.type.LanguageSelector;
 import com.development.simplestockmanager.web.object.selector.type.SexTypeSelector;
+import com.development.simplestockmanager.web.service.LanguageService;
 import com.development.simplestockmanager.web.service.general.UrlService;
 
 
@@ -21,7 +22,8 @@ import com.development.simplestockmanager.web.service.general.UrlService;
  */
 public class test {
     public static void main(String[] args) {
-        UrlService url = new UrlService();
-        System.out.println(url.add("asd"));
+        LanguageService languageService = new LanguageService();
+        
+        System.out.println(languageService.getList().getBrand());
     }
 }

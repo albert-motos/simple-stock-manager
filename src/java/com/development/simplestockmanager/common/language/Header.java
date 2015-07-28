@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.development.simplestockmanager.common.language;
 
 import com.development.simplestockmanager.common.constant.CommonConstant;
@@ -17,10 +12,12 @@ public class Header {
     private final String create;
     private final String search;
 
-    public Header(LanguageController controller, String type) {
+    public Header(String type) {
+//        LanguageController controller = LanguageControllerManager.getInstance().getController();
+        LanguageController controller = new LanguageController("es_ES");
         this.title = controller.getWord(type);
-        this.create = controller.getWord(CommonConstant.TRANSLATION.HEADER.CREATE) + " " + this.title.toLowerCase();
-        this.search = controller.getWord(CommonConstant.TRANSLATION.HEADER.SEARCH) + " " + this.title.toLowerCase();
+        this.create = controller.getWord(CommonConstant.HEADER.CREATE) + " " + this.title.toLowerCase();
+        this.search = controller.getWord(CommonConstant.HEADER.SEARCH) + " " + this.title.toLowerCase();
     }
 
     public String getTitle() {

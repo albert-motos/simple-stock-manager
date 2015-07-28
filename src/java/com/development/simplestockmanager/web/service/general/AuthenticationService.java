@@ -6,6 +6,7 @@ import com.development.simplestockmanager.business.object.controller.specific.Em
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeNull;
 import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.constant.WebConstant;
+import com.development.simplestockmanager.common.language.LanguageControllerManager;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -62,14 +63,18 @@ public class AuthenticationService implements Serializable {
                 throw new Exception();
             }
 
+            String session = currentInstance.getExternalContext().getSessionId(false);
+            
             employee.setIsOnline(true);
             employee.setLastOnlineDate(new Date());
-            employee.setSessionId(currentInstance.getExternalContext().getSessionId(false));
+            employee.setSessionId(session);
 
             if (generalController.update(employee) == BusinessConstant.UPDATE.FAILURE) {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "The server don't work properly");
                 throw new Exception();
             }
+            
+            LanguageControllerManager.getInstance().addSession(session, employee.getLanguage().getCode());
 
             navigation.redirect(WebConstant.WEB.INDEX);
         } catch (Exception e) {
@@ -89,6 +94,9 @@ public class AuthenticationService implements Serializable {
             }
 
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            
+            LanguageControllerManager.getInstance().removeSession(externalContext.getSessionId(true));
+            
             externalContext.invalidateSession();
             navigation.redirect(WebConstant.WEB.LOGIN);
         } catch (IOException ex) {

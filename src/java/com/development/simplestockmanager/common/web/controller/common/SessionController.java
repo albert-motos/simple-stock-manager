@@ -31,4 +31,9 @@ public class SessionController {
         HttpServletRequest request = (HttpServletRequest) getContext().getExternalContext().getRequest();
         return request.getSession();
     }
+    
+    public static String getSessionId() {
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionId(true);
+    }
+    
 }

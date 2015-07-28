@@ -15,52 +15,83 @@ public interface CommonConstant {
         public static String ES_ES = "es_ES";
     }
 
-    public interface TRANSLATION {
+    public interface ENTITY {
 
-        public interface ENTITY {
+        public static String TEXT = "entity";
 
-            public static String TEXT = "entity";
-            
-            public static String BRAND = TEXT + ".brand";
-            public static String CLIENT = TEXT + ".client";
-            public static String EMPLOYEE = TEXT + ".employee";
-            public static String PRODUCT = TEXT + ".product";
-            public static String PROVIDER = TEXT + ".provider";
-            public static String STORE = TEXT + ".store";
-            
-        }
+        public static String BRAND = TEXT + ".brand";
+        public static String CLIENT = TEXT + ".client";
+        public static String EMPLOYEE = TEXT + ".employee";
+        public static String PRODUCT = TEXT + ".product";
+        public static String PROVIDER = TEXT + ".provider";
+        public static String STORE = TEXT + ".store";
 
-        public interface TYPE {
-            
-            public static String TEXT = "type";
-            
-            public static String EMPLOYEE_TYPE = TEXT + ".employee_type";
-            public static String PAYMENT_TYPE = TEXT + ".payment_type";
-            public static String PRICE_TYPE = TEXT + ".price_type";
-            public static String PRODUCT_TYPE = TEXT + ".product_type";
-            public static String SEX_TPE = TEXT + ".sex_type";
-
-        }
-        
-        public interface HEADER {
-            
-            public static String TEXT = "header.";
-            
-            public static String CREATE = TEXT + "create";
-            public static String SEARCH = TEXT + "search";
-            
-        }
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public interface TYPE {
+
+        public static String TEXT = "type";
+
+        public static String EMPLOYEE_TYPE = TEXT + ".employee_type";
+        public static String PAYMENT_TYPE = TEXT + ".payment_type";
+        public static String PRICE_TYPE = TEXT + ".price_type";
+        public static String PRODUCT_TYPE = TEXT + ".product_type";
+        public static String SEX_TPE = TEXT + ".sex_type";
+
+    }
+
+    public interface HEADER {
+
+        public static String TEXT = "header.";
+
+        public static String CREATE = TEXT + "create";
+        public static String SEARCH = TEXT + "search";
+
+    }
+
+    public interface PAGE {
+
+        public static String TEXT = "page.";
+
+        public static String ATTRIBUTES = TEXT + "attributes";
+        public static String BROWSER = TEXT + "browser";
+        public static String CREDENTIALS = TEXT + "credentials";
+        public static String ENABLE = TEXT + "enable";
+        public static String LIST = TEXT + "list";
+        public static String MANAGER = TEXT + "manager";
+        public static String VIEWER = TEXT + "viewer";
+        public static String VISIBILITY = TEXT + "visibility";
+
+    }
+
+    public interface VARIANT {
+
+        public interface ARTICLE {
+
+            public static String TEXT = ".article";
+            public static String CODE = "{A}";
+        }
+        
+        public interface GENERAL {
+
+            public static String TEXT = ".general";
+            public static String CODE = "{G}";
+        }
+        
+        public interface SPECIFIC {
+
+            public static String TEXT = ".specific";
+            public static String CODE = "{S}";
+        }
+        
+        public interface TYPE {
+
+            public static String TEXT = ".type";
+            public static String CODE = "{T}";
+        }
+
+    }
+
     public interface MENU {
 
         public static String TEXT = "menu";
@@ -245,7 +276,7 @@ public interface CommonConstant {
 
     }
 
-    public interface HEADER {
+    public interface HEADER2 {
 
         public static String TEXT = "header";
 
@@ -316,7 +347,7 @@ public interface CommonConstant {
             }
 
         }
-        
+
         public interface TYPE {
 
             public static String TEXT = ".type";
@@ -330,9 +361,9 @@ public interface CommonConstant {
                 public static String TRANSLATION = TEXT + ".translation";
                 public static String VISIBILITY = TEXT + ".visibility";
                 public static String VIEWER = TEXT + ".viewer";
-                
+
             }
-            
+
             public interface PAYMENT_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".payment_type";
@@ -342,9 +373,9 @@ public interface CommonConstant {
                 public static String TRANSLATION = TEXT + ".translation";
                 public static String VISIBILITY = TEXT + ".visibility";
                 public static String VIEWER = TEXT + ".viewer";
-                
+
             }
-            
+
             public interface PRICE_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".price_type";
@@ -354,9 +385,9 @@ public interface CommonConstant {
                 public static String TRANSLATION = TEXT + ".translation";
                 public static String VISIBILITY = TEXT + ".visibility";
                 public static String VIEWER = TEXT + ".viewer";
-                
+
             }
-            
+
             public interface PRODUCT_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".product_type";
@@ -366,9 +397,9 @@ public interface CommonConstant {
                 public static String TRANSLATION = TEXT + ".translation";
                 public static String VISIBILITY = TEXT + ".visibility";
                 public static String VIEWER = TEXT + ".viewer";
-                
+
             }
-            
+
             public interface SEX_TYPE {
 
                 public static String TEXT = TYPE.TEXT + ".sex_type";
@@ -378,7 +409,7 @@ public interface CommonConstant {
                 public static String TRANSLATION = TEXT + ".translation";
                 public static String VISIBILITY = TEXT + ".visibility";
                 public static String VIEWER = TEXT + ".viewer";
-                
+
             }
         }
     }

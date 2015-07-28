@@ -3,6 +3,8 @@ package com.development.simplestockmanager.web.service;
 import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.language.Header;
 import com.development.simplestockmanager.common.language.LanguageController;
+import com.development.simplestockmanager.common.language.LanguageControllerManager;
+import com.development.simplestockmanager.common.language.Page;
 import com.development.simplestockmanager.web.service.general.AuthenticationService;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -17,8 +19,6 @@ import javax.faces.context.FacesContext;
 @ManagedBean(name = "language")
 @SessionScoped
 public class LanguageService implements Serializable {
-
-    private final LanguageController controller;
     
     private final String entity;
     private final String type;
@@ -36,39 +36,43 @@ public class LanguageService implements Serializable {
     private final Header product_type;
     private final Header sex_type;
     
+    private final Page attributes;
+    private final Page browser;
+    private final Page credentials;
+    private final Page list;
+    private final Page manager;
+    private final Page viewer;
+    private final Page visibility;
     
-    
-    private String attributes;
-    private String browser;
-    private String credentials;
-    private String list;
-    private String manager;
-    private String viewer;
-    private String visibility;
-    
-    public LanguageService() {        
-        controller = new LanguageController(new AuthenticationService().getCurrentEmployee().getLanguage().getCode());
-
-        entity = controller.getWord(CommonConstant.TRANSLATION.ENTITY.TEXT);
-        type = controller.getWord(CommonConstant.TRANSLATION.TYPE.TEXT);
+    public LanguageService() {
+//        LanguageController controller = LanguageControllerManager.getInstance().getController()
+        
+        
+LanguageController controller = new LanguageController("en_US");
+        entity = controller.getWord(CommonConstant.ENTITY.TEXT);
+        type = controller.getWord(CommonConstant.TYPE.TEXT);
         relation = "null";
         
-        brand = new Header(controller, CommonConstant.TRANSLATION.ENTITY.BRAND);
-        client = new Header(controller, CommonConstant.TRANSLATION.ENTITY.CLIENT);
-        employee = new Header(controller, CommonConstant.TRANSLATION.ENTITY.EMPLOYEE);
-        product = new Header(controller, CommonConstant.TRANSLATION.ENTITY.PRODUCT);
-        provider = new Header(controller, CommonConstant.TRANSLATION.ENTITY.PROVIDER);
-        store = new Header(controller, CommonConstant.TRANSLATION.ENTITY.STORE);
+        brand = new Header(CommonConstant.ENTITY.BRAND);
+        client = new Header(CommonConstant.ENTITY.CLIENT);
+        employee = new Header(CommonConstant.ENTITY.EMPLOYEE);
+        product = new Header(CommonConstant.ENTITY.PRODUCT);
+        provider = new Header(CommonConstant.ENTITY.PROVIDER);
+        store = new Header(CommonConstant.ENTITY.STORE);
         
-        employee_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.EMPLOYEE_TYPE);
-        payment_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.PAYMENT_TYPE);
-        price_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.PRICE_TYPE);
-        product_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.PRODUCT_TYPE);
-        sex_type = new Header(controller, CommonConstant.TRANSLATION.TYPE.SEX_TPE);
-    }
-    
-    public void reload() {
-        FacesContext.getCurrentInstance().getExternalContext().
+        employee_type = new Header(CommonConstant.TYPE.EMPLOYEE_TYPE);
+        payment_type = new Header(CommonConstant.TYPE.PAYMENT_TYPE);
+        price_type = new Header(CommonConstant.TYPE.PRICE_TYPE);
+        product_type = new Header(CommonConstant.TYPE.PRODUCT_TYPE);
+        sex_type = new Header(CommonConstant.TYPE.SEX_TPE);
+        
+        attributes = new Page(controller.getWord(CommonConstant.PAGE.ATTRIBUTES));
+        browser = new Page(controller.getWord(CommonConstant.PAGE.BROWSER));
+        credentials = new Page(controller.getWord(CommonConstant.PAGE.CREDENTIALS));
+        list = new Page(controller.getWord(CommonConstant.PAGE.LIST));
+        manager = new Page(controller.getWord(CommonConstant.PAGE.MANAGER));
+        viewer = new Page(controller.getWord(CommonConstant.PAGE.VIEWER));
+        visibility = new Page(controller.getWord(CommonConstant.PAGE.VISIBILITY));
     }
 
     public String getEntity() {
@@ -125,6 +129,34 @@ public class LanguageService implements Serializable {
 
     public Header getSex_type() {
         return sex_type;
+    }
+
+    public Page getAttributes() {
+        return attributes;
+    }
+
+    public Page getBrowser() {
+        return browser;
+    }
+
+    public Page getCredentials() {
+        return credentials;
+    }
+
+    public Page getList() {
+        return list;
+    }
+
+    public Page getManager() {
+        return manager;
+    }
+
+    public Page getViewer() {
+        return viewer;
+    }
+
+    public Page getVisibility() {
+        return visibility;
     }
 
 }
