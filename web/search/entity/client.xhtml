@@ -8,16 +8,16 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel header="#{clientLabel.browser}" toggleable="true" collapsed="false" widgetVar="browser" style="margin-bottom: 15px">
+            <p:panel header="#{language.browser.client}" toggleable="true" collapsed="false" widgetVar="browser" style="margin-bottom: 15px">
                 <p:tabView>
-                    <p:tab title="#{clientLabel.attributes}">
+                    <p:tab title="#{language.attributes.client}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column style="width: 30%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.firstname}" />
+                                                <p:outputLabel value="#{language.label.firstname}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{clientSearch.browser.firstname}" style="width: 100%" />
@@ -29,7 +29,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.lastname}" />
+                                                <p:outputLabel value="#{language.label.lastname}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{clientSearch.browser.lastname}" style="width: 100%" />
@@ -41,11 +41,11 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.sexType}" />
+                                                <p:outputLabel value="#{language.label.sex_type}" />
                                             </p:column>
                                             <p:column style="width: 100%" >
                                                 <p:selectOneMenu value="#{clientSearch.sexTypeSelector.selection}" style="width: 100%">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{clientSearch.sexTypeSelector.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -58,7 +58,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.bornDate}" />
+                                                <p:outputLabel value="#{language.label.born_date}" />
                                             </p:column>
                                             <p:column style="width: 100%" >
                                                 <p:calendar value="#{clientSearch.browser.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true"  style="width: 100%" />
@@ -70,7 +70,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.phoneNumber}" />
+                                                <p:outputLabel value="#{language.label.phone_number}" />
                                             </p:column>
                                             <p:column style="width: 100%" >
                                                 <p:inputText value="#{clientSearch.browser.phone}" style="width: 100%" />
@@ -82,7 +82,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column style="text-align: center">
-                                                <p:outputLabel value="#{label.email}" />
+                                                <p:outputLabel value="#{language.label.email}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText  value="#{clientSearch.browser.email}" style="width: 100%" />
@@ -99,13 +99,13 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.status}" />
+                                                <p:outputLabel value="#{language.label.status}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:selectOneMenu value="#{clientSearch.status}" style="width: 100px">
-                                                    <f:selectItem itemLabel="" itemValue="#{label.statusIndeterminate}" />
-                                                    <f:selectItem itemLabel="#{list.statusVisible}" itemValue="#{label.statusVisible}" />
-                                                    <f:selectItem itemLabel="#{list.statusHidden}" itemValue="#{label.statusHidden}" />
+                                                    <f:selectItem itemLabel="" itemValue="#{language.special.value.indeterminate}" />
+                                                    <f:selectItem itemLabel="#{language.special.visible}" itemValue="#{language.special.value.visible}" />
+                                                    <f:selectItem itemLabel="#{language.special.hidden}" itemValue="#{language.special.value.hidden}" />
                                                 </p:selectOneMenu>
                                             </p:column>
                                         </p:row>
@@ -115,14 +115,14 @@
                         </p:panelGrid>
                     </p:tab>
                     
-                    <p:tab title="#{label.auditoryHeader}">
+                    <p:tab title="#{language.special.auditory.header}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column>
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryCreatedDate}" />
+                                                <p:outputLabel value="#{language.special.auditory.created_date}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -131,13 +131,13 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryBetween}" />
+                                                <p:outputLabel value="#{language.special.between}" />
                                             </p:column>
                                             <p:column>
                                                 <p:calendar value="#{clientSearch.createdDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryAnd}" />
+                                                <p:outputLabel value="#{language.special.conjuction}" />
                                             </p:column>
                                             <p:column >
                                                 <p:calendar value="#{clientSearch.createdDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
@@ -152,7 +152,7 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryLastModifiedDate}" />
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -161,13 +161,13 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryBetween}" />
+                                                <p:outputLabel value="#{language.special.between}" />
                                             </p:column>
                                             <p:column>
                                                 <p:calendar value="#{clientSearch.lastModifiedDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryAnd}" />
+                                                <p:outputLabel value="#{language.special.conjuction}" />
                                             </p:column>
                                             <p:column >
                                                 <p:calendar value="#{clientSearch.lastModifiedDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
@@ -184,7 +184,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryCreatedUser}" />
+                                                <p:outputLabel value="#{language.special.auditory.created_user}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -202,7 +202,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{clientSearch.createdUser.search()}" update="createdUserList" />
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{clientSearch.createdUser.search()}" update="createdUserList" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -212,7 +212,7 @@
                                         <p:row>
                                             <p:column>
                                                 <p:selectOneMenu id="createdUserList" value="#{clientSearch.createdUser.selection}" style="width: 400px">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{clientSearch.createdUser.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -226,7 +226,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -244,7 +244,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{clientSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{clientSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -254,7 +254,7 @@
                                         <p:row>
                                             <p:column>
                                                 <p:selectOneMenu id="lastModifiedUserList" value="#{clientSearch.lastModifiedUser.selection}"  style="width: 400px">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{clientSearch.lastModifiedUser.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -265,44 +265,44 @@
                         </p:panelGrid>
                     </p:tab>
                 </p:tabView>
-                <p:commandButton value="#{button.search}" actionListener="#{clientSearch.search()}" style="width: 100px; margin: 5px" update="list" />
-                <p:commandButton value="#{button.clear}" actionListener="#{clientSearch.clear()}" style="width: 100px; margin: 5px" update="@form" />
+                <p:commandButton value="#{language.button.search}" actionListener="#{clientSearch.search()}" style="width: 100px; margin: 5px" update="list" />
+                <p:commandButton value="#{language.button.clear}" actionListener="#{clientSearch.clear()}" style="width: 100px; margin: 5px" update="@form" />
             </p:panel>
 
             <p:dataTable id="list" var="client" value="#{clientSearch.list}" style="width: 100%" rows="10" paginator="true" rowsPerPageTemplate="10,15,20"
-                         paginatorTemplate="#{list.counter} #{clientSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                         paginatorTemplate="#{language.special.counter} #{clientSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
 
                 <f:facet name="header">
-                    #{clientLabel.list}
+                    #{language.list.client}
                 </f:facet>
 
-                <p:column headerText="#{list.actions}" style="width: 85px; text-align: center">
+                <p:column headerText="#{language.special.actions}" style="width: 85px; text-align: center">
                     <p:commandButton icon="ui-icon-search" actionListener="#{clientSearch.initView(client)}"  update="@form" oncomplete="PF('dlg').show();" />
                     <p:commandButton icon="ui-icon-pencil" actionListener="#{clientSearch.initEdit(client)}"  update="@form" style="margin-left: 5px"/>
                 </p:column>
 
-                <p:column headerText="#{list.status}" style="width: 100px; text-align: center">
-                    <h:outputText value="#{list.getStatus(client.enable)}" />
+                <p:column headerText="#{language.column.status}" style="width: 100px; text-align: center">
+                    <h:outputText value="#{language.special.getStatus(client.enable)}" />
                 </p:column>
 
-                <p:column headerText="#{list.firstname}" sortBy="#{client.firstname}">
+                <p:column headerText="#{language.column.firstname}" sortBy="#{client.firstname}">
                     <h:outputText value="#{client.firstname}" />
                 </p:column>
 
-                <p:column headerText="#{list.lastname}" sortBy="#{client.lastname}">
+                <p:column headerText="#{language.column.lastname}" sortBy="#{client.lastname}">
                     <h:outputText value="#{client.lastname}" />
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="#{clientLabel.viewer}" widgetVar="dlg" draggable="false" resizable="false" width="600" position="top" style="margin-top: 50px" >
-                <p:panel header="#{clientLabel.attributes}" >
+            <p:dialog header="#{language.viewer.client}" widgetVar="dlg" draggable="false" resizable="false" width="600" position="top" style="margin-top: 50px" >
+                <p:panel header="#{language.attributes.client}" >
                     <p:panelGrid style="width: 100%">
                         <p:row>
                             <p:column style="width: 100%">
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.firstname}" />
+                                            <p:outputLabel value="#{language.label.firstname}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{clientSearch.client.firstname}" style="font-weight: normal" />
@@ -310,7 +310,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.lastname}" />
+                                            <p:outputLabel value="#{language.label.lastname}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{clientSearch.client.lastname}" style="font-weight: normal" />
@@ -318,7 +318,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.sexType}" />
+                                            <p:outputLabel value="#{language.label.sex_type}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{clientSearch.sexTypeSelector.getDisplayName(clientSearch.client.sexType)}" style="font-weight: normal" />
@@ -326,7 +326,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.bornDate}" />
+                                            <p:outputLabel value="#{language.label.born_date}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{clientSearch.client.bornDate}" style="font-weight: normal" />
@@ -334,7 +334,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.phoneNumber}" />
+                                            <p:outputLabel value="#{language.label.phone_number}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{clientSearch.client.phone}" style="font-weight: normal" />
@@ -342,7 +342,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.email}" />
+                                            <p:outputLabel value="#{language.label.email}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{clientSearch.client.email}" style="font-weight: normal" />
@@ -353,17 +353,17 @@
                         </p:row>
                     </p:panelGrid>
                 </p:panel>
-                <p:panel header="#{clientLabel.visibility}">
+                <p:panel header="#{language.visibility.client}">
                     <p:panelGrid style="width: 100%">
                         <p:row>
                             <p:column style="width: 100%">
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.status}" />
+                                            <p:outputLabel value="#{language.label.status}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
-                                            <p:outputLabel value="#{list.getStatus(clientSearch.client.enable)}" style="font-weight: normal" />
+                                            <p:outputLabel value="#{language.special.getStatus(clientSearch.client.enable)}" style="font-weight: normal" />
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -371,14 +371,14 @@
                         </p:row>
                     </p:panelGrid>
                 </p:panel>
-                <p:panel header="#{label.auditoryHeader}" >
+                <p:panel header="#{language.special.auditory.header}" >
                     <p:panelGrid style="width: 100%">
                         <p:row>
                             <p:column style="width: 100%">
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryCreatedUser}" />
+                                            <p:outputLabel value="#{language.special.auditory.created_user}" />
                                         </p:column>
                                         <p:column styleClass="info-only">
                                             <p:outputLabel value="#{clientSearch.createdUser.getDisplayName(clientSearch.client.createdUser)}" style="font-weight: normal" />
@@ -386,7 +386,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryCreatedDate}" />
+                                            <p:outputLabel value="#{language.special.auditory.created_date}" />
                                         </p:column>
                                         <p:column style="text-align: left">
                                             <p:outputLabel value="#{clientSearch.client.createdDate}" style="font-weight: normal" />
@@ -394,7 +394,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
                                         </p:column>
                                         <p:column styleClass="info-only">
                                             <p:outputLabel value="#{clientSearch.lastModifiedUser.getDisplayName(clientSearch.client.lastModifiedUser)}" style="font-weight: normal" />
@@ -402,7 +402,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryLastModifiedDate}" />
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
                                         </p:column>
                                         <p:column style="text-align: left">
                                             <p:outputLabel value="#{clientSearch.client.lastModifiedDate}" style="font-weight: normal" />

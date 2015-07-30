@@ -37,8 +37,9 @@ public class Page {
     }
     
     private String replace(String base, String type) {
-//        LanguageController controller = LanguageControllerManager.getInstance().getController();
-        LanguageController controller = new LanguageController("en_US");
+        LanguageController controller = LanguageControllerManager.getInstance().getController();
+//        LanguageController controller = new LanguageController("en_US");
+        System.out.println("#" + base + "%" + type);
         if (base.contains(CommonConstant.VARIANT.ARTICLE.CODE)) {
             base = base.replace(CommonConstant.VARIANT.ARTICLE.CODE, controller.getWord(type + CommonConstant.VARIANT.ARTICLE.TEXT));
         } else if (base.contains(CommonConstant.VARIANT.GENERAL.CODE)) {
@@ -46,6 +47,8 @@ public class Page {
         } else if (base.contains(CommonConstant.VARIANT.SPECIFIC.CODE)) {
             base = base.replace(CommonConstant.VARIANT.SPECIFIC.CODE, controller.getWord(type + CommonConstant.VARIANT.SPECIFIC.TEXT));
         }
+        
+        System.out.println("#" + base + "%" + type);
         
         return base;
     }

@@ -8,16 +8,16 @@
 
     <ui:define name="content">
         <h:form>
-            <p:panel header="#{productLabel.browser}" toggleable="true" collapsed="false" widgetVar="browser" style="margin-bottom: 15px">
+            <p:panel header="#{language.browser.product}" toggleable="true" collapsed="false" widgetVar="browser" style="margin-bottom: 15px">
                 <p:tabView>
-                    <p:tab title="#{productLabel.attributes}">
+                    <p:tab title="#{language.attributes.product}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column style="width: 30%">
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.name}" />
+                                                <p:outputLabel value="#{language.label.name}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{productSearch.browser.name}" style="width: 100%" />
@@ -29,11 +29,11 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.productType}" />
+                                                <p:outputLabel value="#{language.label.product_type}" />
                                             </p:column>
                                             <p:column style="width: 100%" >
                                                 <p:selectOneMenu value="#{productSearch.productTypeSelector.selection}" style="width: 100%">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{productSearch.productTypeSelector.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -44,7 +44,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.description}" />
+                                                <p:outputLabel value="#{language.label.description}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{productSearch.browser.description}" style="width: 100%" />
@@ -61,7 +61,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.brand}" />
+                                                <p:outputLabel value="#{language.label.brand}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{productSearch.brandSelector.browser}" style="width: 100%" />
@@ -73,11 +73,11 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{productSearch.brandSelector.search()}" update="brandList" />
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{productSearch.brandSelector.search()}" update="brandList" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:selectOneMenu id="brandList" value="#{productSearch.brandSelector.selection}" style="width: 100%">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{productSearch.brandSelector.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -91,7 +91,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.provider}" />
+                                                <p:outputLabel value="#{language.label.provider}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:inputText value="#{productSearch.providerSelector.browser}" style="width: 100%" />
@@ -103,11 +103,11 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{productSearch.providerSelector.search()}" update="providerList" />
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{productSearch.providerSelector.search()}" update="providerList" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:selectOneMenu id="providerList" value="#{productSearch.providerSelector.selection}" style="width: 100%">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{productSearch.providerSelector.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -123,13 +123,13 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.status}" />
+                                                <p:outputLabel value="#{language.label.status}" />
                                             </p:column>
                                             <p:column style="width: 100%">
                                                 <p:selectOneMenu value="#{productSearch.status}" style="width: 100px">
-                                                    <f:selectItem itemLabel="" itemValue="#{label.statusIndeterminate}" />
-                                                    <f:selectItem itemLabel="#{list.statusVisible}" itemValue="#{label.statusVisible}" />
-                                                    <f:selectItem itemLabel="#{list.statusHidden}" itemValue="#{label.statusHidden}" />
+                                                    <f:selectItem itemLabel="" itemValue="#{language.special.value.indeterminate}" />
+                                                    <f:selectItem itemLabel="#{language.special.visible}" itemValue="#{language.special.value.visible}" />
+                                                    <f:selectItem itemLabel="#{language.special.hidden}" itemValue="#{language.special.value.hidden}" />
                                                 </p:selectOneMenu>
                                             </p:column>
                                         </p:row>
@@ -139,14 +139,14 @@
                         </p:panelGrid>
                     </p:tab>
 
-                    <p:tab title="#{label.auditoryHeader}">
+                    <p:tab title="#{language.special.auditory.header}">
                         <p:panelGrid style="width: 100%">
                             <p:row>
                                 <p:column>
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryCreatedDate}" />
+                                                <p:outputLabel value="#{language.special.auditory.created_date}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -155,13 +155,13 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryBetween}" />
+                                                <p:outputLabel value="#{language.special.between}" />
                                             </p:column>
                                             <p:column>
                                                 <p:calendar value="#{productSearch.createdDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryAnd}" />
+                                                <p:outputLabel value="#{language.special.conjuction}" />
                                             </p:column>
                                             <p:column >
                                                 <p:calendar value="#{productSearch.createdDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
@@ -176,7 +176,7 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryLastModifiedDate}" />
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -185,13 +185,13 @@
                                     <p:panelGrid>
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryBetween}" />
+                                                <p:outputLabel value="#{language.special.between}" />
                                             </p:column>
                                             <p:column>
                                                 <p:calendar value="#{productSearch.lastModifiedDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
                                             </p:column>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryAnd}" />
+                                                <p:outputLabel value="#{language.special.conjuction}" />
                                             </p:column>
                                             <p:column >
                                                 <p:calendar value="#{productSearch.lastModifiedDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
@@ -208,7 +208,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryCreatedUser}" />
+                                                <p:outputLabel value="#{language.special.auditory.created_user}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -226,7 +226,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{productSearch.createdUser.search()}" update="createdUserList" />
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{productSearch.createdUser.search()}" update="createdUserList" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -236,7 +236,7 @@
                                         <p:row>
                                             <p:column>
                                                 <p:selectOneMenu id="createdUserList" value="#{productSearch.createdUser.selection}" style="width: 400px">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{productSearch.createdUser.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -250,7 +250,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -268,7 +268,7 @@
                                     <p:panelGrid style="width: 100%">
                                         <p:row>
                                             <p:column>
-                                                <p:commandButton value="#{button.search}" actionListener="#{productSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{productSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
                                             </p:column>
                                         </p:row>
                                     </p:panelGrid>
@@ -278,7 +278,7 @@
                                         <p:row>
                                             <p:column>
                                                 <p:selectOneMenu id="lastModifiedUserList" value="#{productSearch.lastModifiedUser.selection}"  style="width: 400px">
-                                                    <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                     <f:selectItems value="#{productSearch.lastModifiedUser.list}" />
                                                 </p:selectOneMenu>
                                             </p:column>
@@ -289,40 +289,40 @@
                         </p:panelGrid>
                     </p:tab>
                 </p:tabView>
-                <p:commandButton value="#{button.search}" actionListener="#{productSearch.search()}" style="width: 100px; margin: 5px" update="list" />
-                <p:commandButton value="#{button.clear}" actionListener="#{productSearch.clear()}" style="width: 100px; margin: 5px" update="@form" />
+                <p:commandButton value="#{language.button.search}" actionListener="#{productSearch.search()}" style="width: 100px; margin: 5px" update="list" />
+                <p:commandButton value="#{language.button.clear}" actionListener="#{productSearch.clear()}" style="width: 100px; margin: 5px" update="@form" />
             </p:panel>
 
             <p:dataTable id="list" var="product" value="#{productSearch.list}" style="width: 100%" rows="10" paginator="true" rowsPerPageTemplate="10,15,20"
-                         paginatorTemplate="#{list.counter} #{productSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+                         paginatorTemplate="#{language.special.counter} #{productSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
 
                 <f:facet name="header">
-                    #{productLabel.list}
+                    #{language.list.product}
                 </f:facet>
 
-                <p:column headerText="#{list.actions}" style="width: 85px; text-align: center">
+                <p:column headerText="#{language.special.actions}" style="width: 85px; text-align: center">
                     <p:commandButton icon="ui-icon-search" actionListener="#{productSearch.initView(product)}"  update="@form" oncomplete="PF('dlg').show();" />
                     <p:commandButton icon="ui-icon-pencil" actionListener="#{productSearch.initEdit(product)}"  update="@form" style="margin-left: 5px"/>
                 </p:column>
 
-                <p:column headerText="#{list.status}" style="width: 100px; text-align: center">
-                    <h:outputText value="#{list.getStatus(product.enable)}" />
+                <p:column headerText="#{language.column.status}" style="width: 100px; text-align: center">
+                    <h:outputText value="#{language.special.getStatus(product.enable)}" />
                 </p:column>
 
-                <p:column headerText="#{list.name}" sortBy="#{product.name}">
+                <p:column headerText="#{language.column.name}" sortBy="#{product.name}">
                     <h:outputText value="#{product.name}" />
                 </p:column>
             </p:dataTable>
 
-            <p:dialog header="#{productLabel.viewer}" widgetVar="dlg" draggable="false" resizable="false" width="600" position="top" style="margin-top: 50px" >
-                <p:panel header="#{productLabel.attributes}" >
+            <p:dialog header="#{language.viewer.product}" widgetVar="dlg" draggable="false" resizable="false" width="600" position="top" style="margin-top: 50px" >
+                <p:panel header="#{language.attributes.product}" >
                     <p:panelGrid style="width: 100%">
                         <p:row>
                             <p:column style="width: 100%">
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.name}" />
+                                            <p:outputLabel value="#{language.label.name}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{productSearch.product.name}" style="font-weight: normal" />
@@ -330,7 +330,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.productType}" />
+                                            <p:outputLabel value="#{language.label.product_type}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{productSearch.productTypeSelector.getDisplayName(productSearch.product.productType)}" style="font-weight: normal" />
@@ -338,7 +338,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.description}" />
+                                            <p:outputLabel value="#{language.label.description}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{productSearch.product.description}" style="font-weight: normal" />
@@ -346,7 +346,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.brand}" />
+                                            <p:outputLabel value="#{language.label.brand}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{productSearch.brandSelector.getDisplayName(productSearch.product.brand)}" style="font-weight: normal" />
@@ -354,7 +354,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.provider}" />
+                                            <p:outputLabel value="#{language.label.provider}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
                                             <p:outputLabel value="#{productSearch.providerSelector.getDisplayName(productSearch.product.provider)}" style="font-weight: normal" />
@@ -365,17 +365,17 @@
                         </p:row>
                     </p:panelGrid>
                 </p:panel>
-                <p:panel header="#{productLabel.visibility}">
+                <p:panel header="#{language.visibility.product}">
                     <p:panelGrid style="width: 100%">
                         <p:row>
                             <p:column style="width: 100%">
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.status}" />
+                                            <p:outputLabel value="#{language.label.status}" />
                                         </p:column>
                                         <p:column style="text-align: left; width: 100%">
-                                            <p:outputLabel value="#{list.getStatus(productSearch.product.enable)}" style="font-weight: normal" />
+                                            <p:outputLabel value="#{language.special.getStatus(productSearch.product.enable)}" style="font-weight: normal" />
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -383,14 +383,14 @@
                         </p:row>
                     </p:panelGrid>
                 </p:panel>
-                <p:panel header="#{label.auditoryHeader}" >
+                <p:panel header="#{language.special.auditory.header}" >
                     <p:panelGrid style="width: 100%">
                         <p:row>
                             <p:column style="width: 100%">
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryCreatedUser}" />
+                                            <p:outputLabel value="#{language.special.auditory.created_user}" />
                                         </p:column>
                                         <p:column styleClass="info-only">
                                             <p:outputLabel value="#{productSearch.createdUser.getDisplayName(productSearch.product.createdUser)}" style="font-weight: normal" />
@@ -398,7 +398,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryCreatedDate}" />
+                                            <p:outputLabel value="#{language.special.auditory.created_date}" />
                                         </p:column>
                                         <p:column style="text-align: left">
                                             <p:outputLabel value="#{productSearch.product.createdDate}" style="font-weight: normal" />
@@ -406,7 +406,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryLastModifiedUser}" />
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
                                         </p:column>
                                         <p:column styleClass="info-only">
                                             <p:outputLabel value="#{productSearch.lastModifiedUser.getDisplayName(productSearch.product.lastModifiedUser)}" style="font-weight: normal" />
@@ -414,7 +414,7 @@
                                     </p:row>
                                     <p:row>
                                         <p:column>
-                                            <p:outputLabel value="#{label.auditoryLastModifiedDate}" />
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
                                         </p:column>
                                         <p:column style="text-align: left">
                                             <p:outputLabel value="#{productSearch.product.lastModifiedDate}" style="font-weight: normal" />

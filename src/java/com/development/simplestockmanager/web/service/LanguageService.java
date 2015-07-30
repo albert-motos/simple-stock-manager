@@ -1,15 +1,16 @@
 package com.development.simplestockmanager.web.service;
 
 import com.development.simplestockmanager.common.constant.CommonConstant;
+import com.development.simplestockmanager.common.language.Button;
 import com.development.simplestockmanager.common.language.Header;
+import com.development.simplestockmanager.common.language.Label;
 import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.common.language.LanguageControllerManager;
 import com.development.simplestockmanager.common.language.Page;
-import com.development.simplestockmanager.web.service.general.AuthenticationService;
+import com.development.simplestockmanager.common.language.Special;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 /**
  * Service class for internationalization functionality
@@ -43,12 +44,17 @@ public class LanguageService implements Serializable {
     private final Page manager;
     private final Page viewer;
     private final Page visibility;
+    private final Page enable;
+    
+    private final Label label;
+    private final Label column;
+    private final Button button;
+    private final Special special;
     
     public LanguageService() {
-//        LanguageController controller = LanguageControllerManager.getInstance().getController()
-        
-        
-LanguageController controller = new LanguageController("en_US");
+        LanguageController controller = LanguageControllerManager.getInstance().getController();
+//        LanguageController controller = new LanguageController("en_US");
+
         entity = controller.getWord(CommonConstant.ENTITY.TEXT);
         type = controller.getWord(CommonConstant.TYPE.TEXT);
         relation = "null";
@@ -73,6 +79,12 @@ LanguageController controller = new LanguageController("en_US");
         manager = new Page(controller.getWord(CommonConstant.PAGE.MANAGER));
         viewer = new Page(controller.getWord(CommonConstant.PAGE.VIEWER));
         visibility = new Page(controller.getWord(CommonConstant.PAGE.VISIBILITY));
+        enable = new Page(controller.getWord(CommonConstant.PAGE.ENABLE));
+        
+        label = new Label(controller.getWord(CommonConstant.LABEL.BASE));
+        column = new Label(controller.getWord(CommonConstant.COLUMN.BASE));
+        button = new Button();
+        special = new Special();
     }
 
     public String getEntity() {
@@ -157,6 +169,26 @@ LanguageController controller = new LanguageController("en_US");
 
     public Page getVisibility() {
         return visibility;
+    }
+
+    public Page getEnable() {
+        return enable;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+    public Label getColumn() {
+        return column;
+    }
+
+    public Button getButton() {
+        return button;
+    }
+
+    public Special getSpecial() {
+        return special;
     }
 
 }

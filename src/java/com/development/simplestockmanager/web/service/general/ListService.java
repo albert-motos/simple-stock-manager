@@ -14,7 +14,7 @@ import javax.faces.bean.SessionScoped;
  *
  * @author foxtrot
  */
-@ManagedBean(name = "list")
+@ManagedBean(name = "list2")
 @SessionScoped
 public class ListService implements Serializable {
 
@@ -35,12 +35,12 @@ public class ListService implements Serializable {
         Employee user = new AuthenticationService().getCurrentEmployee();
         LanguageController controller = new LanguageController(user.getLanguage().getCode());
         
-        actions = controller.getWord(CommonConstant.LIST.COLUMN.ACTIONS);
+        actions = controller.getWord(CommonConstant.LIST.COLUMN.FIRSTNAME);
         status = controller.getWord(CommonConstant.LIST.COLUMN.STATUS.TEXT);
         statusHidden = controller.getWord(CommonConstant.LIST.COLUMN.STATUS.HIDDEN);
         statusVisible = controller.getWord(CommonConstant.LIST.COLUMN.STATUS.VISIBLE);
         
-        counter = controller.getWord(CommonConstant.LIST.COUNTER);
+        counter = controller.getWord(CommonConstant.LIST.TEXT);
         
         name = controller.getWord(CommonConstant.LIST.COLUMN.NAME);
         firstname = controller.getWord(CommonConstant.LIST.COLUMN.FIRSTNAME);

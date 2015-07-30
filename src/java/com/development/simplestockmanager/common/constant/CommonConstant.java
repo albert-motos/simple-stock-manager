@@ -71,19 +71,19 @@ public interface CommonConstant {
             public static String TEXT = ".article";
             public static String CODE = "{A}";
         }
-        
+
         public interface GENERAL {
 
             public static String TEXT = ".general";
             public static String CODE = "{G}";
         }
-        
+
         public interface SPECIFIC {
 
             public static String TEXT = ".specific";
             public static String CODE = "{S}";
         }
-        
+
         public interface TYPE {
 
             public static String TEXT = ".type";
@@ -91,6 +91,77 @@ public interface CommonConstant {
         }
 
     }
+    
+    public interface COLUMN {
+
+        public static String TEXT = "column.";
+        public static String BASE = TEXT + "base";
+    }
+
+    public interface LABEL {
+
+        public static String TEXT = "label.";
+        public static String BASE = TEXT + "base";
+
+        public static String FIRSTNAME = TEXT + "firstname";
+        public static String LASTNAME = TEXT + "lastname";
+        public static String SEX_TYPE = TEXT + "sex_type";
+        public static String BORN_DATE = TEXT + "born_date";
+        public static String PHONE_NUMBER = TEXT + "phone_number";
+        public static String EMAIL = TEXT + "email";
+        public static String USERNAME = TEXT + "username";
+        public static String PASSWORD = TEXT + "password";
+        public static String EMPLOYEE_TYPE = TEXT + "employee_type";
+        public static String LANGUAGE_TYPE = TEXT + "language";
+        public static String NAME = TEXT + "name";
+        public static String DESCRIPTION = TEXT + "description";
+        public static String IDENTIFIER = TEXT + "identifier";
+        public static String PRODUCT_TYPE = TEXT + "product_type";
+        public static String BRAND = TEXT + "brand";
+        public static String PROVIDER = TEXT + "provider";
+        public static String STREET = TEXT + "street";
+        public static String CITY = TEXT + "city";
+        public static String STATE = TEXT + "state";
+        public static String COUNTRY = TEXT + "country";
+        public static String EMPLOYEE = TEXT + "employee";
+        public static String TYPE = TEXT + "type";
+
+        public static String STATUS = TEXT + "status";
+
+    }
+
+    public interface SPECIAL {
+
+        public static String TEXT = "special.";
+        public static String NON_SELECTION = TEXT + "non_selection";
+        public static String BETWEEN = TEXT + "between";
+        public static String CONJUCTION = TEXT + "conjuction";
+        public static String COUNTER = TEXT + "counter";
+        public static String VISIBLE = TEXT + "visible";
+        public static String HIDDEN = TEXT + "hidden";
+        public static String ACTIONS = TEXT + "actions";
+        
+        public interface AUDITORY {
+
+            public static String TEXT = SPECIAL.TEXT + "auditory.";
+            public static String HEADER = TEXT + "header";
+            public static String CREATED_USER = TEXT + "created_user";
+            public static String LAST_MODIFIED_USER = TEXT + "last_modified_user";
+            public static String CREATED_DATE = TEXT + "created_date";
+            public static String LAST_MODIFIED_DATE = TEXT + "last_modified_date";
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     public interface MENU {
 
@@ -185,7 +256,7 @@ public interface CommonConstant {
         }
     }
 
-    public interface LABEL {
+    public interface LABEL2 {
 
         public static String TEXT = "label";
         public static String FIRSTNAME = TEXT + ".firstname";
@@ -255,12 +326,12 @@ public interface CommonConstant {
     public interface LIST {
 
         public static String TEXT = "list";
-        public static String COUNTER = TEXT + ".counter";
+        
 
         public interface COLUMN {
 
             public static String TEXT = LIST.TEXT + ".column";
-            public static String ACTIONS = TEXT + ".actions";
+            
 
             public interface STATUS {
 
