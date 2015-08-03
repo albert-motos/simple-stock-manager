@@ -91,7 +91,7 @@ public interface CommonConstant {
         }
 
     }
-    
+
     public interface COLUMN {
 
         public static String TEXT = "column.";
@@ -124,7 +124,17 @@ public interface CommonConstant {
         public static String STATE = TEXT + "state";
         public static String COUNTRY = TEXT + "country";
         public static String EMPLOYEE = TEXT + "employee";
+
         public static String TYPE = TEXT + "type";
+
+        public interface TRANSLATION {
+
+            public static String TEXT = LABEL.TEXT + "translation.";
+            
+            public static String EN_US = TEXT + "en_us";
+            public static String CA_ES = TEXT + "ca_es";
+            public static String ES_ES = TEXT + "es_es";
+        }
 
         public static String STATUS = TEXT + "status";
 
@@ -140,7 +150,7 @@ public interface CommonConstant {
         public static String VISIBLE = TEXT + "visible";
         public static String HIDDEN = TEXT + "hidden";
         public static String ACTIONS = TEXT + "actions";
-        
+
         public interface AUDITORY {
 
             public static String TEXT = SPECIAL.TEXT + "auditory.";
@@ -151,17 +161,6 @@ public interface CommonConstant {
             public static String LAST_MODIFIED_DATE = TEXT + "last_modified_date";
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     public interface MENU {
 
@@ -326,12 +325,10 @@ public interface CommonConstant {
     public interface LIST {
 
         public static String TEXT = "list";
-        
 
         public interface COLUMN {
 
             public static String TEXT = LIST.TEXT + ".column";
-            
 
             public interface STATUS {
 

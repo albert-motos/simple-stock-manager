@@ -20,5 +20,12 @@ public class LanguageHelper extends CommonHelper {
 
         return query;
     }
+    
+    public Query getFindByCode(String code) {
+        Query query = entityManager.createNamedQuery("Language.findByCode");
+        query.setParameter("code", code);
+        
+        return query;
+    }
 
 }

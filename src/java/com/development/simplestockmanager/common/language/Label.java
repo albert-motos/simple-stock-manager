@@ -30,11 +30,15 @@ public class Label {
     private final String country;
     private final String employee;
     
+    private final String type;
+    private final String translation_es_es;
+    private final String translation_ca_es;
+    private final String translation_en_us;
+    
     private final String status;
 
     public Label(String base) {
          LanguageController controller = LanguageControllerManager.getInstance().getController();
-//        LanguageController controller = new LanguageController("en_US");
         
         firstname = replace(base, controller.getWord(CommonConstant.LABEL.FIRSTNAME));
         lastname = replace(base, controller.getWord(CommonConstant.LABEL.LASTNAME));
@@ -57,6 +61,11 @@ public class Label {
         state = replace(base, controller.getWord(CommonConstant.LABEL.STATE));
         country = replace(base, controller.getWord(CommonConstant.LABEL.COUNTRY));
         employee = replace(base, controller.getWord(CommonConstant.LABEL.EMPLOYEE));
+        
+        type = replace(base, controller.getWord(CommonConstant.LABEL.TYPE));
+        translation_ca_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.CA_ES));
+        translation_en_us = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.EN_US));
+        translation_es_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.ES_ES));
         
         status = replace(base, controller.getWord(CommonConstant.LABEL.STATUS));
     }
@@ -151,6 +160,22 @@ public class Label {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getTranslation_es_es() {
+        return translation_es_es;
+    }
+
+    public String getTranslation_ca_es() {
+        return translation_ca_es;
+    }
+
+    public String getTranslation_en_us() {
+        return translation_en_us;
     }
 
 }

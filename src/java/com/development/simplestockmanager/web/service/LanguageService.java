@@ -1,5 +1,7 @@
 package com.development.simplestockmanager.web.service;
 
+import com.development.simplestockmanager.business.object.controller.specific.LanguageSpecificController;
+import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.language.Button;
 import com.development.simplestockmanager.common.language.Header;
@@ -191,4 +193,10 @@ public class LanguageService implements Serializable {
         return special;
     }
 
+    public static Language getLanguage(String code) {
+        LanguageSpecificController controller = new LanguageSpecificController();
+        
+        return controller.findByCode(code);
+    }
+    
 }
