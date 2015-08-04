@@ -22,14 +22,14 @@ public class SexTypeSelector extends CommonTypeSelector implements BaseSelector 
     private final SexTypeSpecificController specificController;
     private HashMap<String, SexType> hashMap;
 
-    public SexTypeSelector(long mode, String language) {
-        super(mode, language);
+    public SexTypeSelector(long mode) {
+        super(mode);
         this.specificController = new SexTypeSpecificController();
         clear();
     }
     
-    public SexTypeSelector(long mode, String language, SexType sexType) {
-        this(mode, language);
+    public SexTypeSelector(long mode, SexType sexType) {
+        this(mode);
         this.selection = getDisplayName(getTranslation(sexType));
     }    
     

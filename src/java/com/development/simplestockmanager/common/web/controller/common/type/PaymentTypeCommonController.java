@@ -32,7 +32,7 @@ public class PaymentTypeCommonController extends BaseCommonController {
         specificController = new PaymentTypeSpecificController();
         translationGeneralController = new PaymentTypeTranslationGeneralController();
         translationSpecificController = new PaymentTypeTranslationSpecificController();
-        validator = new PaymentTypeValidator(mode, languageController, specificController);
+        validator = new PaymentTypeValidator(mode, specificController);
     }
 
     public PaymentType getPaymentType() {

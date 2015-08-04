@@ -6,7 +6,6 @@ import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.specific.ProductSpecificController;
 import com.development.simplestockmanager.business.persistence.Product;
 import com.development.simplestockmanager.common.constant.CommonConstant;
-import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,8 @@ public class ProductValidator extends CommonValidator implements BaseValidator {
     private final ProductSpecificController specificController;
     private Product product;
 
-    public ProductValidator(long mode, LanguageController controller, ProductSpecificController specificController) {
-        super(mode, controller);
+    public ProductValidator(long mode, ProductSpecificController specificController) {
+        super(mode);
         this.specificController = specificController;
     }
 
@@ -42,23 +41,23 @@ public class ProductValidator extends CommonValidator implements BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (product.getName().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.NAME));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.NAME, null));
         }
 
         if (product.getProductType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PRODUCT_TYPE));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.PRODUCT_TYPE, CommonConstant.MESSAGE.DETAIL.WARNING.SELECTOR));
         }
 
         if (product.getDescription().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.DESCRIPTION));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.DESCRIPTION, null));
         }
 
         if (product.getBrand().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.BRAND));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.BRAND, CommonConstant.MESSAGE.DETAIL.WARNING.SELECTOR));
         }
 
         if (product.getProvider().getId() == BusinessConstant.IDENTIFIER.INVALID) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PROVIDER));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.PROVIDER, CommonConstant.MESSAGE.DETAIL.WARNING.SELECTOR));
         }
 
         return fieldsEmptyList;
@@ -77,7 +76,7 @@ public class ProductValidator extends CommonValidator implements BaseValidator {
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && productOfRelation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && productOfRelation.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(productOfRelation.getId(), product.getId()))) {
-                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.PRODUCT));
+                causeList.add(messageService.getDetail(CommonConstant.LABEL.PRODUCT, CommonConstant.MESSAGE.DETAIL.ERROR.PRODUCT));
             }
         }
 

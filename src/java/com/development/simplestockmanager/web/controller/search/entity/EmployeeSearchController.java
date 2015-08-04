@@ -29,9 +29,9 @@ public class EmployeeSearchController extends EmployeeCommonController implement
 
     public EmployeeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
-        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
-        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
-        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
+        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ALL);
+        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ALL);
+        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.ALL);
         clear();
     }
 

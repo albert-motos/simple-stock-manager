@@ -33,13 +33,12 @@ public class Page {
         payment_type = replace(base, CommonConstant.TYPE.PAYMENT_TYPE);
         price_type = replace(base, CommonConstant.TYPE.PRICE_TYPE);
         product_type = replace(base, CommonConstant.TYPE.PRODUCT_TYPE);
-        sex_type = replace(base, CommonConstant.TYPE.SEX_TPE);
+        sex_type = replace(base, CommonConstant.TYPE.SEX_TYPE);
     }
     
     private String replace(String base, String type) {
         LanguageController controller = LanguageControllerManager.getInstance().getController();
-//        LanguageController controller = new LanguageController("en_US");
-        System.out.println("#" + base + "%" + type);
+
         if (base.contains(CommonConstant.VARIANT.ARTICLE.CODE)) {
             base = base.replace(CommonConstant.VARIANT.ARTICLE.CODE, controller.getWord(type + CommonConstant.VARIANT.ARTICLE.TEXT));
         } else if (base.contains(CommonConstant.VARIANT.GENERAL.CODE)) {
@@ -47,8 +46,6 @@ public class Page {
         } else if (base.contains(CommonConstant.VARIANT.SPECIFIC.CODE)) {
             base = base.replace(CommonConstant.VARIANT.SPECIFIC.CODE, controller.getWord(type + CommonConstant.VARIANT.SPECIFIC.TEXT));
         }
-        
-        System.out.println("#" + base + "%" + type);
         
         return base;
     }

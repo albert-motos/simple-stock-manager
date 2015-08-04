@@ -28,7 +28,7 @@ public class EmployeeCommonController extends BaseCommonController {
     public EmployeeCommonController(long mode) {
         generalController = new EmployeeGeneralController();
         specificController = new EmployeeSpecificController();
-        validator = new EmployeeValidator(mode, languageController, specificController);
+        validator = new EmployeeValidator(mode, specificController);
     }
 
     public Employee getEmployee() {

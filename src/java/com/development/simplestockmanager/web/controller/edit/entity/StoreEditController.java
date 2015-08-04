@@ -42,9 +42,8 @@ public class StoreEditController extends StoreCommonController implements EditCo
         if (store.equals(baseStore)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
-            summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-            detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.STORE) + store.getId()
-                    + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.NONE);
+            summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+            detail = messageService.getDetail(CommonConstant.ENTITY.STORE, store.getId(), CommonConstant.MESSAGE.DETAIL.INFO.NONE);
             
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));
         } else {
@@ -58,14 +57,13 @@ public class StoreEditController extends StoreCommonController implements EditCo
 
                 if (status == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                    detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
                 } else {
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.STORE) + store.getId()
-                            + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.EDIT);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+                    detail = messageService.getDetail(CommonConstant.ENTITY.STORE, store.getId(), CommonConstant.MESSAGE.DETAIL.INFO.EDIT);
                 }
 
                 getContext().addMessage(null, new FacesMessage(severity, summary, detail));

@@ -45,11 +45,12 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
         if (validator.validate()) {
             employeeType.setCreatedDate(new Date());
             employeeType.setLastModifiedDate(new Date());
+            
             Employee employee = new Employee(user);
             employee.setEmployeeType(null);
             employeeType.setCreatedUser(employee);
             employeeType.setLastModifiedUser(employee);
-            System.out.println(user);
+
             Long id = generalController.create(employeeType);
             boolean error = false;
 
@@ -76,17 +77,16 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
                 } else {
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE_TYPE) + id
-                            + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+                    detail = messageService.getDetail(CommonConstant.TYPE.EMPLOYEE_TYPE, id, CommonConstant.MESSAGE.DETAIL.INFO.CREATE);
                 }
 
             }
             
             if (error) {
                 severity = FacesMessage.SEVERITY_FATAL;
-                summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
-                detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
             }
 
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));

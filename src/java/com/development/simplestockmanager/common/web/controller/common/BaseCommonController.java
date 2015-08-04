@@ -6,6 +6,7 @@ import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.AuthenticationService;
 import com.development.simplestockmanager.web.service.general.NavigationService;
 import com.development.simplestockmanager.web.object.selector.entity.EmployeeSelector;
+import com.development.simplestockmanager.web.service.MessageService;
 import java.io.Serializable;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
@@ -17,7 +18,7 @@ import javax.faces.application.FacesMessage;
  */
 public class BaseCommonController extends SessionController implements Serializable {
 
-    protected LanguageController languageController;
+    protected MessageService messageService;
     protected Employee user;
     
     protected boolean action;
@@ -35,7 +36,7 @@ public class BaseCommonController extends SessionController implements Serializa
 
     public BaseCommonController() {
         user = new AuthenticationService().getCurrentEmployee();
-        languageController = new LanguageController(user.getLanguage().getCode());
+        messageService = new MessageService();
         action = false;
 
         createdUser = new EmployeeSelector(WebConstant.SELECTOR.MODE.ALL);

@@ -4,7 +4,6 @@ import com.development.simplestockmanager.common.web.object.validator.common.Com
 import com.development.simplestockmanager.common.web.object.validator.base.BaseValidator;
 import com.development.simplestockmanager.business.persistence.Provider;
 import com.development.simplestockmanager.common.constant.CommonConstant;
-import com.development.simplestockmanager.common.language.LanguageController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +16,8 @@ public class ProviderValidator extends CommonValidator implements BaseValidator 
 
     private Provider provider;
 
-    public ProviderValidator(long mode, LanguageController controller) {
-        super(mode, controller);
+    public ProviderValidator(long mode) {
+        super(mode);
     }
 
     @Override
@@ -36,19 +35,19 @@ public class ProviderValidator extends CommonValidator implements BaseValidator 
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (provider.getName().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.NAME));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.NAME, null));
         }
 
         if (provider.getIdentifier().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.IDENTIFIER));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.IDENTIFIER, null));
         }
 
         if (provider.getPhone().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.PHONE_NUMBER));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.PHONE_NUMBER, null));
         }
 
         if (provider.getEmail().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.EMAIL));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.EMAIL, null));
         }
 
         return fieldsEmptyList;

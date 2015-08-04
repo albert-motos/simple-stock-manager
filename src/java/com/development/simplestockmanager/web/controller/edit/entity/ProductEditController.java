@@ -36,7 +36,7 @@ public class ProductEditController extends ProductCommonController implements Ed
             back();
         }
         
-        productTypeSelector = new ProductTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), product.getProductType());
+        productTypeSelector = new ProductTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, product.getProductType());
         brandSelector = new BrandSelector(WebConstant.SELECTOR.MODE.ENABLE, product.getBrand());
         providerSelector = new ProviderSelector(WebConstant.SELECTOR.MODE.ENABLE, product.getProvider());
     }
@@ -50,9 +50,8 @@ public class ProductEditController extends ProductCommonController implements Ed
         if (product.equals(baseProduct)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
-            summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-            detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.PRODUCT) + product.getId()
-                    + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.NONE);
+            summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+            detail = messageService.getDetail(CommonConstant.ENTITY.PRODUCT, product.getId(), CommonConstant.MESSAGE.DETAIL.INFO.NONE);
             
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));
         } else {
@@ -66,14 +65,13 @@ public class ProductEditController extends ProductCommonController implements Ed
 
                 if (status == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                    detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
                 } else {
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.PRODUCT) + product.getId()
-                            + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.EDIT);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+                    detail = messageService.getDetail(CommonConstant.ENTITY.PRODUCT, product.getId(), CommonConstant.MESSAGE.DETAIL.INFO.EDIT);
                 }
 
                 getContext().addMessage(null, new FacesMessage(severity, summary, detail));

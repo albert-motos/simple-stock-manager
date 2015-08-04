@@ -32,7 +32,7 @@ public class EmployeeTypeCommonController extends BaseCommonController {
         specificController = new EmployeeTypeSpecificController();
         translationGeneralController = new EmployeeTypeTranslationGeneralController();
         translationSpecificController = new EmployeeTypeTranslationSpecificController();
-        validator = new EmployeeTypeValidator(mode, languageController, specificController);
+        validator = new EmployeeTypeValidator(mode, specificController);
     }
 
     public EmployeeType getEmployeeType() {
