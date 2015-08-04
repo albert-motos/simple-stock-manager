@@ -6,6 +6,7 @@ import com.development.simplestockmanager.web.object.selector.type.EmployeeTypeS
 import com.development.simplestockmanager.web.object.selector.type.LanguageSelector;
 import com.development.simplestockmanager.web.object.selector.type.SexTypeSelector;
 import com.development.simplestockmanager.web.service.LanguageService;
+import com.development.simplestockmanager.web.service.MessageService;
 import com.development.simplestockmanager.web.service.general.UrlService;
 
 
@@ -22,8 +23,6 @@ import com.development.simplestockmanager.web.service.general.UrlService;
  */
 public class test {
     public static void main(String[] args) {
-        LanguageService languageService = new LanguageService();
-        
-        System.out.println(languageService.getList().getBrand());
+        MessageService.function();
     }
 }

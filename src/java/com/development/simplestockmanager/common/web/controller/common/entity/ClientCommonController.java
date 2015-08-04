@@ -24,7 +24,7 @@ public class ClientCommonController extends BaseCommonController {
     public ClientCommonController(long mode) {
         generalController = new ClientGeneralController();
         specificController = new ClientSpecificController();
-        validator = new ClientValidator(mode, languageController);
+        validator = new ClientValidator(mode);
     }
 
     public Client getClient() {

@@ -22,7 +22,7 @@ public class ProviderCommonController extends BaseCommonController {
     public ProviderCommonController(long mode) {
         generalController = new ProviderGeneralController();
         specificController = new ProviderSpecificController();
-        validator = new ProviderValidator(mode, languageController);
+        validator = new ProviderValidator(mode);
     }
 
     public Provider getProvider() {

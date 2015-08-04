@@ -25,7 +25,7 @@ public class StoreCommonController extends BaseCommonController {
     public StoreCommonController(long mode) {
         generalController = new StoreGeneralController();
         specificController = new StoreSpecificController();
-        validator = new StoreValidator(mode, languageController);
+        validator = new StoreValidator(mode);
     }
 
     public Store getStore() {

@@ -9,7 +9,6 @@ import com.development.simplestockmanager.business.object.controller.specific.Pr
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
 import com.development.simplestockmanager.common.constant.CommonConstant;
-import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +30,8 @@ public class ProductTypeValidator extends CommonValidator implements BaseValidat
     private ProductTypeTranslation translationEN_US;
     
 
-    public ProductTypeValidator(long mode, LanguageController controller, ProductTypeSpecificController specificController) {
-        super(mode, controller);
+    public ProductTypeValidator(long mode, ProductTypeSpecificController specificController) {
+        super(mode);
         this.specificController = specificController;
         this.translationController = new ProductTypeTranslationSpecificController();
     }
@@ -67,19 +66,19 @@ public class ProductTypeValidator extends CommonValidator implements BaseValidat
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (productType.getType().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.TYPE));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.TYPE, null));
         }
         
         if (translationEN_US.getTranslation().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.TRANSLATION.EN_US));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.EN_US, null));
         }
         
         if (translationES_ES.getTranslation().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.TRANSLATION.ES_ES));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.ES_ES, null));
         }
         
         if (translationCA_ES.getTranslation().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.TRANSLATION.CA_ES));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.CA_ES, null));
         }
 
         return fieldsEmptyList;
@@ -95,7 +94,7 @@ public class ProductTypeValidator extends CommonValidator implements BaseValidat
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && productTypeOfType.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && productTypeOfType.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(productTypeOfType.getId(), productType.getId()))) {
-                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.TYPE));
+                causeList.add(messageService.getDetail(CommonConstant.LABEL.TYPE, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }
         
@@ -105,7 +104,7 @@ public class ProductTypeValidator extends CommonValidator implements BaseValidat
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && translation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && translation.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(translation.getId(), productType.getId()))) {
-                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.TRANSLATION.EN_US));
+                causeList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.EN_US, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }
         
@@ -115,7 +114,7 @@ public class ProductTypeValidator extends CommonValidator implements BaseValidat
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && translation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && translation.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(translation.getId(), productType.getId()))) {
-                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.TRANSLATION.ES_ES));
+                causeList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.ES_ES, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }
         
@@ -125,7 +124,7 @@ public class ProductTypeValidator extends CommonValidator implements BaseValidat
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && translation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && translation.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(translation.getId(), productType.getId()))) {
-                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.TYPE));
+                causeList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.CA_ES, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }
 

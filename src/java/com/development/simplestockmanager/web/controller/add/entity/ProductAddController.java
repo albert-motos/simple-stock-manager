@@ -26,7 +26,7 @@ public class ProductAddController extends ProductCommonController implements Add
     public ProductAddController() {
         super(WebConstant.VALIDATOR.MODE.CREATE);
         product = new Product();
-        productTypeSelector = new ProductTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
+        productTypeSelector = new ProductTypeSelector(WebConstant.SELECTOR.MODE.ENABLE);
         brandSelector = new BrandSelector(WebConstant.SELECTOR.MODE.ENABLE);
         providerSelector = new ProviderSelector(WebConstant.SELECTOR.MODE.ENABLE);
     }
@@ -48,14 +48,13 @@ public class ProductAddController extends ProductCommonController implements Add
 
             if (id == BusinessConstant.IDENTIFIER.INVALID) {
                 severity = FacesMessage.SEVERITY_FATAL;
-                summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
-                detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
             } else {
                 action = true;
                 severity = FacesMessage.SEVERITY_INFO;
-                summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.PRODUCT) + id +
-                        languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+                detail = messageService.getDetail(CommonConstant.ENTITY.PRODUCT, id, CommonConstant.MESSAGE.DETAIL.INFO.CREATE);
             }
 
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));

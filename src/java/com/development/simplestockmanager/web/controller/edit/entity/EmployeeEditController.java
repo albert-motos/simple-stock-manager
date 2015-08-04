@@ -36,9 +36,9 @@ public class EmployeeEditController extends EmployeeCommonController implements 
             back();
         }
 
-        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getSexType());
-        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage(), employee.getEmployeeType());
-        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, languageController.getLanguage(), employee.getLanguage());
+        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, employee.getSexType());
+        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, employee.getEmployeeType());
+        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, employee.getLanguage());
     }
 
     @Override
@@ -50,9 +50,8 @@ public class EmployeeEditController extends EmployeeCommonController implements 
         if (employee.equals(baseEmployee)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
-            summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-            detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + employee.getId()
-                    + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.NONE);
+            summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+            detail = messageService.getDetail(CommonConstant.ENTITY.EMPLOYEE, employee.getId(), CommonConstant.MESSAGE.DETAIL.INFO.NONE);
 
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));
         } else {
@@ -66,14 +65,13 @@ public class EmployeeEditController extends EmployeeCommonController implements 
 
                 if (status == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                    detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
                 } else {
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + employee.getId()
-                            + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.EDIT);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+                    detail = messageService.getDetail(CommonConstant.ENTITY.EMPLOYEE, employee.getId(), CommonConstant.MESSAGE.DETAIL.INFO.EDIT);
                 }
 
                 getContext().addMessage(null, new FacesMessage(severity, summary, detail));

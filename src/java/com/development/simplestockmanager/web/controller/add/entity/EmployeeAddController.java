@@ -26,9 +26,9 @@ public class EmployeeAddController extends EmployeeCommonController implements A
     public EmployeeAddController() {
         super(WebConstant.VALIDATOR.MODE.CREATE);
         employee = new Employee();
-        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
-        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, languageController.getLanguage());
-        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE, languageController.getLanguage());
+        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ENABLE);
+        employeeTypeSelector = new EmployeeTypeSelector(WebConstant.SELECTOR.MODE.ENABLE);
+        languageSelector = new LanguageSelector(WebConstant.SELECTOR.MODE.NONE);
     }
 
     @Override
@@ -49,14 +49,13 @@ public class EmployeeAddController extends EmployeeCommonController implements A
 
             if (id == BusinessConstant.IDENTIFIER.INVALID) {
                 severity = FacesMessage.SEVERITY_FATAL;
-                summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
-                detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
             } else {
                 action = true;
                 severity = FacesMessage.SEVERITY_INFO;
-                summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE) + id +
-                        languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+                detail = messageService.getDetail(CommonConstant.ENTITY.EMPLOYEE, id, CommonConstant.MESSAGE.DETAIL.INFO.CREATE);
             }
 
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));

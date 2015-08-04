@@ -32,7 +32,7 @@ public class PriceTypeCommonController extends BaseCommonController {
         specificController = new PriceTypeSpecificController();
         translationGeneralController = new PriceTypeTranslationGeneralController();
         translationSpecificController = new PriceTypeTranslationSpecificController();
-        validator = new PriceTypeValidator(mode, languageController, specificController);
+        validator = new PriceTypeValidator(mode, specificController);
     }
 
     public PriceType getPriceType() {

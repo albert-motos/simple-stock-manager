@@ -27,7 +27,7 @@ public class ClientSearchController extends ClientCommonController implements Se
 
     public ClientSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
-        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
+        sexTypeSelector = new SexTypeSelector(WebConstant.SELECTOR.MODE.ALL);
         clear();
     }
 

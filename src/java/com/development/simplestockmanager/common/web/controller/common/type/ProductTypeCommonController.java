@@ -32,7 +32,7 @@ public class ProductTypeCommonController extends BaseCommonController {
         specificController = new ProductTypeSpecificController();
         translationGeneralController = new ProductTypeTranslationGeneralController();
         translationSpecificController = new ProductTypeTranslationSpecificController();
-        validator = new ProductTypeValidator(mode, languageController, specificController);
+        validator = new ProductTypeValidator(mode, specificController);
     }
 
     public ProductType getProductType() {

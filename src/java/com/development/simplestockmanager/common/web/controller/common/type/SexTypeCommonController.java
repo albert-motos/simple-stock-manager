@@ -32,7 +32,7 @@ public class SexTypeCommonController extends BaseCommonController {
         specificController = new SexTypeSpecificController();
         translationGeneralController = new SexTypeTranslationGeneralController();
         translationSpecificController = new SexTypeTranslationSpecificController();
-        validator = new SexTypeValidator(mode, languageController, specificController);
+        validator = new SexTypeValidator(mode, specificController);
     }
 
     public SexType getSexType() {

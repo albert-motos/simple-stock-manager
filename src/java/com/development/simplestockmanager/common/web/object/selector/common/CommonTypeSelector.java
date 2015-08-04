@@ -1,5 +1,7 @@
 package com.development.simplestockmanager.common.web.object.selector.common;
 
+import com.development.simplestockmanager.common.language.LanguageController;
+import com.development.simplestockmanager.common.language.LanguageControllerManager;
 import java.util.List;
 
 /**
@@ -14,9 +16,10 @@ public class CommonTypeSelector {
     protected long mode;
     protected String language;
 
-    public CommonTypeSelector(long mode, String language) {
+    public CommonTypeSelector(long mode) {
+        LanguageController languageController = LanguageControllerManager.getInstance().getController();
         this.mode = mode;
-        this.language = language;
+        this.language = languageController.getLanguage();
     }
 
     public List<String> getList() {

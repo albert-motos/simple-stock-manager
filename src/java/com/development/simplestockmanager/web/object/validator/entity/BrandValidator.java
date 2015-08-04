@@ -6,7 +6,6 @@ import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.object.controller.specific.BrandSpecificController;
 import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.common.constant.CommonConstant;
-import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,11 +21,11 @@ public class BrandValidator extends CommonValidator implements BaseValidator {
     private final BrandSpecificController specificController;
     private Brand brand;
 
-    public BrandValidator(long mode, LanguageController controller, BrandSpecificController specificController) {
-        super(mode, controller);
+    public BrandValidator(long mode, BrandSpecificController specificController) {
+        super(mode);
         this.specificController = specificController;
     }
-    
+
     @Override
     public void setObject(Object object) {
         brand = (Brand) object;
@@ -42,11 +41,11 @@ public class BrandValidator extends CommonValidator implements BaseValidator {
         List<String> fieldsEmptyList = new ArrayList<>();
 
         if (brand.getName().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.NAME));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.NAME, null));
         }
-        
+
         if (brand.getDescription().isEmpty()) {
-            fieldsEmptyList.add(languageController.getWord(CommonConstant.MESSAGE.WARNING.DESCRIPTION));
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.DESCRIPTION, null));
         }
 
         return fieldsEmptyList;
@@ -58,11 +57,11 @@ public class BrandValidator extends CommonValidator implements BaseValidator {
 
         if (!brand.getName().isEmpty()) {
             Brand brandOfName = specificController.findByName(brand.getName());
-            
+
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && brandOfName.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && brandOfName.getId() != BusinessConstant.IDENTIFIER.INVALID
                     && !Objects.equals(brandOfName.getId(), brand.getId()))) {
-                causeList.add(languageController.getWord(CommonConstant.MESSAGE.ERROR.NAME));
+                causeList.add(messageService.getDetail(CommonConstant.LABEL.NAME, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }
 
