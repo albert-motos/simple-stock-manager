@@ -10,14 +10,14 @@
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
 
-            <p:panel header="#{productLabel.attributes}" >
+            <p:panel header="#{language.attributes.product}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.name}" />
+                                        <p:outputLabel value="#{language.label.name}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{productAdd.product.name}" style="width: 100%" />
@@ -29,11 +29,11 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.productType}" />
+                                        <p:outputLabel value="#{language.label.product_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectOneMenu value="#{productAdd.productTypeSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                             <f:selectItems value="#{productAdd.productTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
@@ -49,7 +49,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.description}" />
+                                        <p:outputLabel value="#{language.label.description}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputTextarea value="#{productAdd.product.description}" style="width: 100%" rows="3" />
@@ -66,7 +66,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.brand}" />
+                                        <p:outputLabel value="#{language.label.brand}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{productAdd.brandSelector.browser}" style="width: 100%" />
@@ -78,11 +78,11 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:commandButton value="#{button.search}" actionListener="#{productAdd.brandSelector.search()}" update="brandList" />
+                                        <p:commandButton value="#{language.button.search}" actionListener="#{productAdd.brandSelector.search()}" update="brandList" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectOneMenu id="brandList" value="#{productAdd.brandSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                             <f:selectItems value="#{productAdd.brandSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
@@ -96,7 +96,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.provider}" />
+                                        <p:outputLabel value="#{language.label.provider}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{productAdd.providerSelector.browser}" style="width: 100%" />
@@ -108,11 +108,11 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:commandButton value="#{button.search}" actionListener="#{productAdd.providerSelector.search()}" update="providerList" />
+                                        <p:commandButton value="#{language.button.search}" actionListener="#{productAdd.providerSelector.search()}" update="providerList" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectOneMenu id="providerList" value="#{productAdd.providerSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                             <f:selectItems value="#{productAdd.providerSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
@@ -123,17 +123,17 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="#{productLabel.visibility}">
+            <p:panel header="#{language.visibility.product}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{productLabel.enable}" />
+                                        <p:outputLabel value="#{language.enable.product}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{productAdd.product.enable}" />
+                                        <p:selectBooleanCheckbox value="#{language.enable.product}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -143,8 +143,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{button.add}" rendered="#{not productAdd.action}" actionListener="#{productAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{button.back(productAdd.action)}" actionListener="#{productAdd.back()}"
+                <p:commandButton value="#{language.button.add}" rendered="#{not productAdd.action}" actionListener="#{productAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(productAdd.action)}" actionListener="#{productAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

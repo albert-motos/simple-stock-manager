@@ -28,7 +28,7 @@ public class ProductCommonController extends BaseCommonController {
     public ProductCommonController(long mode) {
         generalController = new ProductGeneralController();
         specificController = new ProductSpecificController();
-        validator = new ProductValidator(mode, languageController, specificController);
+        validator = new ProductValidator(mode, specificController);
     }
 
     public Product getProduct() {

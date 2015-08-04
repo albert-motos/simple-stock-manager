@@ -6,7 +6,6 @@ import com.development.simplestockmanager.business.object.nullpackage.LanguageNu
 import com.development.simplestockmanager.business.object.nullpackage.LanguageTranslationNull;
 import com.development.simplestockmanager.business.persistence.Language;
 import com.development.simplestockmanager.business.persistence.LanguageTranslation;
-import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.common.web.object.selector.base.BaseSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,14 +20,14 @@ public class LanguageSelector extends CommonTypeSelector implements BaseSelector
     private final LanguageSpecificController specificController;
     private HashMap<String, Language> hashMap;
 
-    public LanguageSelector(long mode, String language) {
-        super(mode, language);
+    public LanguageSelector(long mode) {
+        super(mode);
         specificController = new LanguageSpecificController();
         clear();
     }
     
-    public LanguageSelector(long mode, String language, Language languageObject) {
-        this(mode, language);
+    public LanguageSelector(long mode, Language languageObject) {
+        this(mode);
         this.selection = getDisplayName(getTranslation(languageObject));
     }
 

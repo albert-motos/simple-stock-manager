@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.web.controller.add.type;
 
+import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
@@ -7,6 +8,7 @@ import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.common.web.controller.base.AddController;
 import com.development.simplestockmanager.common.web.controller.common.type.EmployeeTypeCommonController;
+import com.development.simplestockmanager.web.service.LanguageService;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +29,10 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
         translationEN_US = new EmployeeTypeTranslation();
         translationES_ES = new EmployeeTypeTranslation();
         translationCA_ES = new EmployeeTypeTranslation();
+        
+        translationEN_US.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.EN_US));
+        translationES_ES.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.ES_ES));
+        translationCA_ES.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.CA_ES));
     }
 
     @Override
@@ -39,8 +45,11 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
         if (validator.validate()) {
             employeeType.setCreatedDate(new Date());
             employeeType.setLastModifiedDate(new Date());
-            employeeType.setCreatedUser(user);
-            employeeType.setLastModifiedUser(user);
+            
+            Employee employee = new Employee(user);
+            employee.setEmployeeType(null);
+            employeeType.setCreatedUser(employee);
+            employeeType.setLastModifiedUser(employee);
 
             Long id = generalController.create(employeeType);
             boolean error = false;
@@ -59,25 +68,25 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
                         || id_ES_ES == BusinessConstant.IDENTIFIER.INVALID
                         || id_CA_ES == BusinessConstant.IDENTIFIER.INVALID) {
                     generalController.delete(employeeType);
-                    translationGeneralController.delete(translationEN_US);
-                    translationGeneralController.delete(translationES_ES);
-                    translationGeneralController.delete(translationCA_ES);
+                    
+                    if (id_EN_US != BusinessConstant.IDENTIFIER.INVALID) translationGeneralController.delete(translationEN_US);
+                    if (id_ES_ES != BusinessConstant.IDENTIFIER.INVALID) translationGeneralController.delete(translationES_ES);
+                    if (id_CA_ES != BusinessConstant.IDENTIFIER.INVALID) translationGeneralController.delete(translationCA_ES);
                     
                     error = true;
                 } else {
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
-                    summary = languageController.getWord(CommonConstant.MESSAGE.INFO.SUMMARY);
-                    detail = languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.OBJECT.EMPLOYEE_TYPE) + id
-                            + languageController.getWord(CommonConstant.MESSAGE.INFO.DETAIL.ACTION.CREATE);
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
+                    detail = messageService.getDetail(CommonConstant.TYPE.EMPLOYEE_TYPE, id, CommonConstant.MESSAGE.DETAIL.INFO.CREATE);
                 }
 
             }
             
             if (error) {
                 severity = FacesMessage.SEVERITY_FATAL;
-                summary = languageController.getWord(CommonConstant.MESSAGE.FATAL.SUMMARY);
-                detail = languageController.getWord(CommonConstant.MESSAGE.FATAL.DETAIL.DATABASE);
+                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
             }
 
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));

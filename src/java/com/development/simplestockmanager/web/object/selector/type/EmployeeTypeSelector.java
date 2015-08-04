@@ -22,14 +22,14 @@ public class EmployeeTypeSelector extends CommonTypeSelector implements BaseSele
     private final EmployeeTypeSpecificController specificController;
     private HashMap<String, EmployeeType> hashMap;
 
-    public EmployeeTypeSelector(long mode, String language) {
-        super(mode, language);
+    public EmployeeTypeSelector(long mode) {
+        super(mode);
         this.specificController = new EmployeeTypeSpecificController();
         clear();
     }
 
-    public EmployeeTypeSelector(long mode, String language, EmployeeType employeeType) {
-        this(mode, language);
+    public EmployeeTypeSelector(long mode, EmployeeType employeeType) {
+        this(mode);
         this.selection = getDisplayName(getTranslation(employeeType));
     }
 

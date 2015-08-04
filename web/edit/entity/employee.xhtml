@@ -10,14 +10,14 @@
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
 
-            <p:panel header="#{employeeLabel.attributes}" >
+            <p:panel header="#{language.attributes.employee}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 35%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.firstname}" />
+                                        <p:outputLabel value="#{language.label.firstname}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText  value="#{employeeEdit.employee.firstname}" style="width: 100%" />
@@ -29,7 +29,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.lastname}" />
+                                        <p:outputLabel value="#{language.label.lastname}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText  value="#{employeeEdit.employee.lastname}" style="width: 100%" />
@@ -46,11 +46,11 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.sexType}" />
+                                        <p:outputLabel value="#{language.label.sex_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectOneMenu value="#{employeeEdit.sexTypeSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                             <f:selectItems value="#{employeeEdit.sexTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
@@ -61,7 +61,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.bornDate}" />
+                                        <p:outputLabel value="#{language.label.born_date}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:calendar value="#{employeeEdit.employee.bornDate}" pattern="dd-MM-yyyy" mask="true" navigator="true" />
@@ -73,7 +73,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.phoneNumber}" />
+                                        <p:outputLabel value="#{language.label.phone_number}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{employeeEdit.employee.phone}" style="width: 100%" />
@@ -90,7 +90,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.email}" />
+                                        <p:outputLabel value="#{language.label.email}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText  value="#{employeeEdit.employee.email}" style="width: 100%" />
@@ -102,11 +102,11 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.language}" />
+                                        <p:outputLabel value="#{language.label.language}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectOneMenu value="#{employeeEdit.languageSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                             <f:selectItems value="#{employeeEdit.languageSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
@@ -117,14 +117,14 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="#{employeeLabel.credentials}">
+            <p:panel header="#{language.credentials.employee}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 30%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.usernamme}" />
+                                        <p:outputLabel value="#{language.label.username}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{employeeEdit.employee.username}" style="width: 100%" />
@@ -136,7 +136,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.password}" />
+                                        <p:outputLabel value="#{language.label.password}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{employeeEdit.employee.password}" style="width: 100%" />
@@ -148,11 +148,11 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.employeeType}" />
+                                        <p:outputLabel value="#{language.label.employee_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectOneMenu value="#{employeeEdit.employeeTypeSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                             <f:selectItems value="#{employeeEdit.employeeTypeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
@@ -163,14 +163,14 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="#{employeeLabel.visibility}">
+            <p:panel header="#{language.visibility.employee}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{employeeLabel.enable}" />
+                                        <p:outputLabel value="#{language.enable.employee}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectBooleanCheckbox value="#{employeeEdit.employee.enable}" />
@@ -183,8 +183,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{button.edit}" rendered="#{not employeeEdit.action}" actionListener="#{employeeEdit.edit()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{button.back(employeeEdit.action)}" actionListener="#{employeeEdit.back()}"
+                <p:commandButton value="#{language.button.edit}" rendered="#{not employeeEdit.action}" actionListener="#{employeeEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(employeeEdit.action)}" actionListener="#{employeeEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

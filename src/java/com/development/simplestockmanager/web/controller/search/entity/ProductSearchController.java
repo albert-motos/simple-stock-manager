@@ -29,7 +29,7 @@ public class ProductSearchController extends ProductCommonController implements 
 
     public ProductSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
-        productTypeSelector = new ProductTypeSelector(WebConstant.SELECTOR.MODE.ALL, languageController.getLanguage());
+        productTypeSelector = new ProductTypeSelector(WebConstant.SELECTOR.MODE.ALL);
         brandSelector = new BrandSelector(WebConstant.SELECTOR.MODE.ALL);
         providerSelector = new ProviderSelector(WebConstant.SELECTOR.MODE.ALL);
         clear();

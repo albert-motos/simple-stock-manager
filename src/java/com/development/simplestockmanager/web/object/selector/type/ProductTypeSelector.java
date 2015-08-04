@@ -22,14 +22,14 @@ public class ProductTypeSelector extends CommonTypeSelector implements BaseSelec
     private final ProductTypeSpecificController specificController;
     private HashMap<String, ProductType> hashMap;
 
-    public ProductTypeSelector(long mode, String language) {
-        super(mode, language);
+    public ProductTypeSelector(long mode) {
+        super(mode);
         this.specificController = new ProductTypeSpecificController();
         clear();
     }
     
-    public ProductTypeSelector(long mode, String language, ProductType productType) {
-        this(mode, language);
+    public ProductTypeSelector(long mode, ProductType productType) {
+        this(mode);
         this.selection = getDisplayName(getTranslation(productType));
     }    
     

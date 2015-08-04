@@ -10,14 +10,14 @@
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
 
-            <p:panel header="#{storeLabel.attributes}" >
+            <p:panel header="#{language.attributes.store}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.name}" />
+                                        <p:outputLabel value="#{language.label.name}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{storeAdd.store.name}" style="width: 100%" />
@@ -29,7 +29,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.phoneNumber}" />
+                                        <p:outputLabel value="#{language.label.phone_number}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{storeAdd.store.phone}" style="width: 100%" />
@@ -44,7 +44,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.street}" />
+                                        <p:outputLabel value="#{language.label.street}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{storeAdd.store.street}" style="width: 100%" />
@@ -56,7 +56,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.city}" />
+                                        <p:outputLabel value="#{language.label.city}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{storeAdd.store.city}" style="width: 100%" />
@@ -71,7 +71,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.state}" />
+                                        <p:outputLabel value="#{language.label.state}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{storeAdd.store.state}" style="width: 100%" />
@@ -83,7 +83,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.country}" />
+                                        <p:outputLabel value="#{language.label.country}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{storeAdd.store.country}" style="width: 100%" />
@@ -95,14 +95,14 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="#{storeLabel.manager}" >
+            <p:panel header="#{language.manager.store}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 50%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{label.employee}" />
+                                        <p:outputLabel value="#{language.label.employee}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:inputText value="#{storeAdd.employeeSelector.browser}" style="width: 100%" />
@@ -114,11 +114,11 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:commandButton value="#{button.search}" actionListener="#{storeAdd.employeeSelector.search()}" update="providerList" />
+                                        <p:commandButton value="#{language.button.search}" actionListener="#{storeAdd.employeeSelector.search()}" update="providerList" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectOneMenu id="providerList" value="#{storeAdd.employeeSelector.selection}" style="width: 100%">
-                                            <f:selectItem itemLabel="#{label.nonSelection}" itemValue="" />
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                             <f:selectItems value="#{storeAdd.employeeSelector.list}" />
                                         </p:selectOneMenu>
                                     </p:column>
@@ -136,7 +136,7 @@
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{storeLabel.enable}" />
+                                        <p:outputLabel value="#{language.enable.store}" />
                                     </p:column>
                                     <p:column style="width: 100%">
                                         <p:selectBooleanCheckbox value="#{storeAdd.store.enable}" />
@@ -149,8 +149,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{button.add}" rendered="#{not storeAdd.action}" actionListener="#{storeAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{button.back(storeAdd.action)}" actionListener="#{storeAdd.back()}"
+                <p:commandButton value="#{language.button.add}" rendered="#{not storeAdd.action}" actionListener="#{storeAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(storeAdd.action)}" actionListener="#{storeAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

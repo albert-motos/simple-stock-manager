@@ -40,16 +40,16 @@ public class LabelService implements Serializable {
     private final String country;
     private final String employee;
 
-    private final String nonSelection;
-
-    private final String status;
-    private final String auditoryHeader;
-    private final String auditoryBetween;
-    private final String auditoryAnd;
-    private final String auditoryCreatedUser;
-    private final String auditoryLastModifiedUser;
-    private final String auditoryCreatedDate;
-    private final String auditoryLastModifiedDate;
+//    private final String nonSelection;
+//
+//    private final String status;
+//    private final String auditoryHeader;
+//    private final String auditoryBetween;
+//    private final String auditoryAnd;
+//    private final String auditoryCreatedUser;
+//    private final String auditoryLastModifiedUser;
+//    private final String auditoryCreatedDate;
+//    private final String auditoryLastModifiedDate;
 
     public LabelService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.LABEL.CONSTRUCTOR);
@@ -79,16 +79,16 @@ public class LabelService implements Serializable {
         country = controller.getWord(CommonConstant.LABEL.COUNTRY);
         employee = controller.getWord(CommonConstant.LABEL.EMPLOYEE);
 
-        nonSelection = controller.getWord(CommonConstant.LABEL.NON_SELECTION);
-        status = controller.getWord(CommonConstant.LABEL.STATUS);
-
-        auditoryAnd = controller.getWord(CommonConstant.LABEL.AUDITORY.AND);
-        auditoryBetween = controller.getWord(CommonConstant.LABEL.AUDITORY.BETWEEN);
-        auditoryCreatedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_DATE);
-        auditoryCreatedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_USER);
-        auditoryHeader = controller.getWord(CommonConstant.LABEL.AUDITORY.HEADER);
-        auditoryLastModifiedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_DATE);
-        auditoryLastModifiedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_USER);
+//        nonSelection = controller.getWord(CommonConstant.LABEL.NON_SELECTION);
+//        status = controller.getWord(CommonConstant.LABEL.STATUS);
+//
+//        auditoryAnd = controller.getWord(CommonConstant.LABEL.AUDITORY.AND);
+//        auditoryBetween = controller.getWord(CommonConstant.LABEL.AUDITORY.BETWEEN);
+//        auditoryCreatedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_DATE);
+//        auditoryCreatedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.CREATED_USER);
+//        auditoryHeader = controller.getWord(CommonConstant.LABEL.AUDITORY.HEADER);
+//        auditoryLastModifiedDate = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_DATE);
+//        auditoryLastModifiedUser = controller.getWord(CommonConstant.LABEL.AUDITORY.LAST_MODIFIED_USER);
     }
 
     public String getFirstname() {
@@ -139,9 +139,9 @@ public class LabelService implements Serializable {
         return description;
     }
 
-    public String getNonSelection() {
-        return nonSelection;
-    }
+//    public String getNonSelection() {
+//        return nonSelection;
+//    }
 
     public String getIdentifier() {
         return identifier;
@@ -179,37 +179,37 @@ public class LabelService implements Serializable {
         return employee;
     }
 
-    public String getAuditoryHeader() {
-        return auditoryHeader;
-    }
-
-    public String getAuditoryBetween() {
-        return auditoryBetween;
-    }
-
-    public String getAuditoryAnd() {
-        return auditoryAnd;
-    }
-
-    public String getAuditoryCreatedUser() {
-        return auditoryCreatedUser;
-    }
-
-    public String getAuditoryLastModifiedUser() {
-        return auditoryLastModifiedUser;
-    }
-
-    public String getAuditoryCreatedDate() {
-        return auditoryCreatedDate;
-    }
-
-    public String getAuditoryLastModifiedDate() {
-        return auditoryLastModifiedDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
+//    public String getAuditoryHeader() {
+//        return auditoryHeader;
+//    }
+//
+//    public String getAuditoryBetween() {
+//        return auditoryBetween;
+//    }
+//
+//    public String getAuditoryAnd() {
+//        return auditoryAnd;
+//    }
+//
+//    public String getAuditoryCreatedUser() {
+//        return auditoryCreatedUser;
+//    }
+//
+//    public String getAuditoryLastModifiedUser() {
+//        return auditoryLastModifiedUser;
+//    }
+//
+//    public String getAuditoryCreatedDate() {
+//        return auditoryCreatedDate;
+//    }
+//
+//    public String getAuditoryLastModifiedDate() {
+//        return auditoryLastModifiedDate;
+//    }
+//
+//    public String getStatus() {
+//        return status;
+//    }
     
     public long getStatusIndeterminate(){
         return WebConstant.STATUS.INDETERMINATE;
