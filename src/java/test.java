@@ -1,13 +1,4 @@
 
-import com.development.simplestockmanager.business.persistence.Language;
-import com.development.simplestockmanager.business.persistence.SexType;
-import com.development.simplestockmanager.common.constant.WebConstant;
-import com.development.simplestockmanager.web.object.selector.type.EmployeeTypeSelector;
-import com.development.simplestockmanager.web.object.selector.type.LanguageSelector;
-import com.development.simplestockmanager.web.object.selector.type.SexTypeSelector;
-import com.development.simplestockmanager.web.service.LanguageService;
-import com.development.simplestockmanager.web.service.MessageService;
-import com.development.simplestockmanager.web.service.general.UrlService;
 
 
 
@@ -23,6 +14,6 @@ import com.development.simplestockmanager.web.service.general.UrlService;
  */
 public class test {
     public static void main(String[] args) {
-        MessageService.function();
+        
     }
 }

@@ -19,6 +19,7 @@ public interface CommonConstant {
 
         public static String TEXT = "entity.";
 
+        public static String HEADER = TEXT + "header";
         public static String BRAND = TEXT + "brand";
         public static String CLIENT = TEXT + "client";
         public static String EMPLOYEE = TEXT + "employee";
@@ -32,6 +33,7 @@ public interface CommonConstant {
 
         public static String TEXT = "type.";
 
+        public static String HEADER = TEXT + "header";
         public static String EMPLOYEE_TYPE = TEXT + "employee_type";
         public static String PAYMENT_TYPE = TEXT + "payment_type";
         public static String PRICE_TYPE = TEXT + "price_type";
@@ -72,6 +74,11 @@ public interface CommonConstant {
             public static String CODE = "{A}";
         }
 
+        public interface COMMENT {
+
+            public static String CODE = "{C}";
+        }
+        
         public interface GENERAL {
 
             public static String TEXT = ".general";
@@ -276,7 +283,8 @@ public interface CommonConstant {
         public interface DETAIL {
 
             public static String TEXT = MESSAGE.TEXT + "detail.";
-            public static String BASE = MESSAGE.TEXT + "base";
+            public static String BASE = TEXT + "base";
+            public static String COMMENT = TEXT + "comment";
 
             public interface FATAL {
 

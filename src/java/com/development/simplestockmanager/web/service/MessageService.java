@@ -14,10 +14,12 @@ public class MessageService implements Serializable {
 
     private final LanguageController controller;
     private final String messageBase;
+    private final String messageComment;
 
     public MessageService() {
         controller = LanguageControllerManager.getInstance().getController();
         messageBase = controller.getWord(CommonConstant.MESSAGE.DETAIL.BASE);
+        messageComment = controller.getWord(CommonConstant.MESSAGE.DETAIL.COMMENT);
     }
 
     public String getSummary(String type) {
@@ -29,7 +31,7 @@ public class MessageService implements Serializable {
     }
 
     public String getDetail(String label, String comment) {
-        return replaceDetail(controller.getWord(label), (comment != null ? controller.getWord(comment) : ""));
+        return replaceDetail(controller.getWord(label), (comment == null ? "" : controller.getWord(comment)));
     }
 
     public String getDetail(String object, Long id, String type) {
@@ -40,7 +42,10 @@ public class MessageService implements Serializable {
         String detail;
 
         detail = messageBase.replace(CommonConstant.VARIANT.TYPE.CODE, label);
-        detail = detail.concat(comment);
+        
+        if (!comment.isEmpty()) {
+            detail = detail.concat(messageComment.replace(CommonConstant.VARIANT.COMMENT.CODE, comment));
+        }
         
         return detail;
     }

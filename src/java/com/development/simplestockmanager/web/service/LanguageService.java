@@ -55,10 +55,9 @@ public class LanguageService implements Serializable {
     
     public LanguageService() {
         LanguageController controller = LanguageControllerManager.getInstance().getController();
-//        LanguageController controller = new LanguageController("en_US");
 
-        entity = controller.getWord(CommonConstant.ENTITY.TEXT);
-        type = controller.getWord(CommonConstant.TYPE.TEXT);
+        entity = controller.getWord(CommonConstant.ENTITY.HEADER);
+        type = controller.getWord(CommonConstant.TYPE.HEADER);
         relation = "null";
         
         brand = new Header(CommonConstant.ENTITY.BRAND);
@@ -72,7 +71,7 @@ public class LanguageService implements Serializable {
         payment_type = new Header(CommonConstant.TYPE.PAYMENT_TYPE);
         price_type = new Header(CommonConstant.TYPE.PRICE_TYPE);
         product_type = new Header(CommonConstant.TYPE.PRODUCT_TYPE);
-        sex_type = new Header(CommonConstant.TYPE.SEX_TPE);
+        sex_type = new Header(CommonConstant.TYPE.SEX_TYPE);
         
         attributes = new Page(controller.getWord(CommonConstant.PAGE.ATTRIBUTES));
         browser = new Page(controller.getWord(CommonConstant.PAGE.BROWSER));

@@ -25,6 +25,7 @@ public class EmployeeTypeTranslationGeneralController {
         try {
             controller.create(employeeTypeTranslation);
         } catch (Exception e) {
+            System.out.println(e);
             employeeTypeTranslation = new EmployeeTypeTranslationNull();
         }
 
