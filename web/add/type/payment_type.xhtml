@@ -9,29 +9,50 @@
         <h:form>
             <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
 
-            <p:panel header="#{language.attributes.brand}" >
+            <p:panel header="#{language.attributes.payment_type}" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
-                        <p:column style="width: 30%">
+                        <p:column>
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{language.label.name}" />
+                                        <p:outputLabel value="#{language.label.type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{brandEdit.brand.name}" style="width: 100%" />
+                                        <p:inputText value="#{paymentTypeAdd.paymentType.type}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
                         </p:column>
-                        <p:column style="width: 70%">
+                    </p:row>
+                </p:panelGrid>
+                
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column>
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{language.label.description}" />
+                                        <p:outputLabel value="#{language.label.translation_en_us}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{brandEdit.brand.description}" style="width: 100%" />
+                                        <p:inputText value="#{paymentTypeAdd.translationEN_US.translation}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.translation_es_es}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{paymentTypeAdd.translationES_ES.translation}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.translation_ca_es}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{paymentTypeAdd.translationCA_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -40,17 +61,17 @@
                 </p:panelGrid>
             </p:panel>
 
-            <p:panel header="#{language.visibility.brand}">
+            <p:panel header="#{language.visibility.payment_type}">
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 100%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
-                                        <p:outputLabel value="#{language.enable.brand}" />
+                                        <p:outputLabel value="#{language.enable.payment_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{brandEdit.brand.enable}" />
+                                        <p:selectBooleanCheckbox value="#{paymentTypeAdd.paymentType.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -60,8 +81,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.edit}" rendered="#{not brandEdit.action}" actionListener="#{brandEdit.edit()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{language.button.back(brandEdit.action)}" actionListener="#{brandEdit.back()}"
+                <p:commandButton value="#{language.button.add}" rendered="#{not paymentTypeAdd.action}" actionListener="#{paymentTypeAdd.add()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(paymentTypeAdd.action)}" actionListener="#{paymentTypeAdd.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

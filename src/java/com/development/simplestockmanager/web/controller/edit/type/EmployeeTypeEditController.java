@@ -95,9 +95,16 @@ public class EmployeeTypeEditController extends EmployeeTypeCommonController imp
                             || status_ES_ES == BusinessConstant.UPDATE.FAILURE
                             || status_CA_ES == BusinessConstant.UPDATE.FAILURE) {
                         generalController.update(baseEmployeeType);
-                        translationGeneralController.update(baseTranslationEN_US);
-                        translationGeneralController.update(baseTranslationES_ES);
-                        translationGeneralController.update(baseTranslationCA_ES);
+
+                        if (status_EN_US != BusinessConstant.IDENTIFIER.INVALID) {
+                            translationGeneralController.update(baseTranslationEN_US);
+                        }
+                        if (status_ES_ES != BusinessConstant.IDENTIFIER.INVALID) {
+                            translationGeneralController.update(baseTranslationES_ES);
+                        }
+                        if (status_CA_ES != BusinessConstant.IDENTIFIER.INVALID) {
+                            translationGeneralController.update(baseTranslationCA_ES);
+                        }
 
                         error = true;
                     } else {

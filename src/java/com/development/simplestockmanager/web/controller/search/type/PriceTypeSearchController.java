@@ -25,7 +25,6 @@ public class PriceTypeSearchController extends PriceTypeCommonController impleme
     private PriceType browser;
     private PriceTypeTranslation translation;
     private List<PriceType> list;
-    private long status;
 
     public PriceTypeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -75,14 +74,6 @@ public class PriceTypeSearchController extends PriceTypeCommonController impleme
 
     public void setTranslation(PriceTypeTranslation translation) {
         this.translation = translation;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

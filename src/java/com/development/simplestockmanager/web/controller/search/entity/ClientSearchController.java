@@ -23,7 +23,6 @@ public class ClientSearchController extends ClientCommonController implements Se
 
     private Client browser;
     private List<Client> list;
-    private long status;
 
     public ClientSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -68,14 +67,6 @@ public class ClientSearchController extends ClientCommonController implements Se
 
     public void setBrowser(Client browser) {
         this.browser = browser;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

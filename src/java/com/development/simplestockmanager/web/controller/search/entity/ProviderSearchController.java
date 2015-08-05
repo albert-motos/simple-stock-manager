@@ -22,7 +22,6 @@ public class ProviderSearchController extends ProviderCommonController implement
 
     private Provider browser;
     private List<Provider> list;
-    private long status;
 
     public ProviderSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -63,14 +62,6 @@ public class ProviderSearchController extends ProviderCommonController implement
 
     public void setBrowser(Provider browser) {
         this.browser = browser;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

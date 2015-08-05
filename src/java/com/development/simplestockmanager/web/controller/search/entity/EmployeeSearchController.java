@@ -25,7 +25,6 @@ public class EmployeeSearchController extends EmployeeCommonController implement
 
     private Employee browser;
     private List<Employee> list;
-    private long status;
 
     public EmployeeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -76,14 +75,6 @@ public class EmployeeSearchController extends EmployeeCommonController implement
 
     public void setBrowser(Employee browser) {
         this.browser = browser;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

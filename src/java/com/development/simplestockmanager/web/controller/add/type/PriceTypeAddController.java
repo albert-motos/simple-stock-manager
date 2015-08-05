@@ -7,6 +7,7 @@ import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.common.web.controller.base.AddController;
 import com.development.simplestockmanager.common.web.controller.common.type.PriceTypeCommonController;
+import com.development.simplestockmanager.web.service.LanguageService;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +28,10 @@ public class PriceTypeAddController extends PriceTypeCommonController implements
         translationEN_US = new PriceTypeTranslation();
         translationES_ES = new PriceTypeTranslation();
         translationCA_ES = new PriceTypeTranslation();
+
+        translationEN_US.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.EN_US));
+        translationES_ES.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.ES_ES));
+        translationCA_ES.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.CA_ES));
     }
 
     @Override
@@ -59,10 +64,17 @@ public class PriceTypeAddController extends PriceTypeCommonController implements
                         || id_ES_ES == BusinessConstant.IDENTIFIER.INVALID
                         || id_CA_ES == BusinessConstant.IDENTIFIER.INVALID) {
                     generalController.delete(priceType);
-                    translationGeneralController.delete(translationEN_US);
-                    translationGeneralController.delete(translationES_ES);
-                    translationGeneralController.delete(translationCA_ES);
-                    
+
+                    if (id_EN_US != BusinessConstant.IDENTIFIER.INVALID) {
+                        translationGeneralController.delete(translationEN_US);
+                    }
+                    if (id_ES_ES != BusinessConstant.IDENTIFIER.INVALID) {
+                        translationGeneralController.delete(translationES_ES);
+                    }
+                    if (id_CA_ES != BusinessConstant.IDENTIFIER.INVALID) {
+                        translationGeneralController.delete(translationCA_ES);
+                    }
+
                     error = true;
                 } else {
                     action = true;
@@ -72,7 +84,7 @@ public class PriceTypeAddController extends PriceTypeCommonController implements
                 }
 
             }
-            
+
             if (error) {
                 severity = FacesMessage.SEVERITY_FATAL;
                 summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);

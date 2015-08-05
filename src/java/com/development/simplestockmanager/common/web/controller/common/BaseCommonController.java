@@ -1,7 +1,6 @@
 package com.development.simplestockmanager.common.web.controller.common;
 
 import com.development.simplestockmanager.business.persistence.Employee;
-import com.development.simplestockmanager.common.language.LanguageController;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.AuthenticationService;
 import com.development.simplestockmanager.web.service.general.NavigationService;
@@ -22,6 +21,7 @@ public class BaseCommonController extends SessionController implements Serializa
     protected Employee user;
     
     protected boolean action;
+    protected long status;
     
     protected FacesMessage.Severity severity;
     protected String summary;
@@ -94,6 +94,10 @@ public class BaseCommonController extends SessionController implements Serializa
 
     public EmployeeSelector getLastModifiedUser() {
         return lastModifiedUser;
+    }
+
+    public long getStatus() {
+        return status;
     }
 
 }

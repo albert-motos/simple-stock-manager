@@ -25,7 +25,6 @@ public class EmployeeTypeSearchController extends EmployeeTypeCommonController i
     private EmployeeType browser;
     private EmployeeTypeTranslation translation;
     private List<EmployeeType> list;
-    private long status;
 
     public EmployeeTypeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -75,14 +74,6 @@ public class EmployeeTypeSearchController extends EmployeeTypeCommonController i
 
     public void setTranslation(EmployeeTypeTranslation translation) {
         this.translation = translation;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

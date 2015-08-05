@@ -25,7 +25,6 @@ public class SexTypeSearchController extends SexTypeCommonController implements 
     private SexType browser;
     private SexTypeTranslation translation;
     private List<SexType> list;
-    private long status;
 
     public SexTypeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -75,14 +74,6 @@ public class SexTypeSearchController extends SexTypeCommonController implements 
 
     public void setTranslation(SexTypeTranslation translation) {
         this.translation = translation;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }
