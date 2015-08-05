@@ -25,7 +25,6 @@ public class ProductSearchController extends ProductCommonController implements 
 
     private Product browser;
     private List<Product> list;
-    private long status;
 
     public ProductSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -76,14 +75,6 @@ public class ProductSearchController extends ProductCommonController implements 
 
     public void setBrowser(Product browser) {
         this.browser = browser;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

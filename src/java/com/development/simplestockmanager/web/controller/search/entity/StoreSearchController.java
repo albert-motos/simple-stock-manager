@@ -23,7 +23,6 @@ public class StoreSearchController extends StoreCommonController implements Sear
 
     private Store browser;
     private List<Store> list;
-    private long status;
 
     public StoreSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -67,14 +66,6 @@ public class StoreSearchController extends StoreCommonController implements Sear
 
     public void setBrowser(Store browser) {
         this.browser = browser;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

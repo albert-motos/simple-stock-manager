@@ -29,7 +29,7 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
         translationEN_US = new EmployeeTypeTranslation();
         translationES_ES = new EmployeeTypeTranslation();
         translationCA_ES = new EmployeeTypeTranslation();
-        
+
         translationEN_US.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.EN_US));
         translationES_ES.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.ES_ES));
         translationCA_ES.setLanguage(LanguageService.getLanguage(CommonConstant.LANGUAGE.CA_ES));
@@ -45,7 +45,7 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
         if (validator.validate()) {
             employeeType.setCreatedDate(new Date());
             employeeType.setLastModifiedDate(new Date());
-            
+
             Employee employee = new Employee(user);
             employee.setEmployeeType(null);
             employeeType.setCreatedUser(employee);
@@ -68,11 +68,17 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
                         || id_ES_ES == BusinessConstant.IDENTIFIER.INVALID
                         || id_CA_ES == BusinessConstant.IDENTIFIER.INVALID) {
                     generalController.delete(employeeType);
-                    
-                    if (id_EN_US != BusinessConstant.IDENTIFIER.INVALID) translationGeneralController.delete(translationEN_US);
-                    if (id_ES_ES != BusinessConstant.IDENTIFIER.INVALID) translationGeneralController.delete(translationES_ES);
-                    if (id_CA_ES != BusinessConstant.IDENTIFIER.INVALID) translationGeneralController.delete(translationCA_ES);
-                    
+
+                    if (id_EN_US != BusinessConstant.IDENTIFIER.INVALID) {
+                        translationGeneralController.delete(translationEN_US);
+                    }
+                    if (id_ES_ES != BusinessConstant.IDENTIFIER.INVALID) {
+                        translationGeneralController.delete(translationES_ES);
+                    }
+                    if (id_CA_ES != BusinessConstant.IDENTIFIER.INVALID) {
+                        translationGeneralController.delete(translationCA_ES);
+                    }
+
                     error = true;
                 } else {
                     action = true;
@@ -82,7 +88,7 @@ public class EmployeeTypeAddController extends EmployeeTypeCommonController impl
                 }
 
             }
-            
+
             if (error) {
                 severity = FacesMessage.SEVERITY_FATAL;
                 summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);

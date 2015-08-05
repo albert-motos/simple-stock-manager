@@ -25,7 +25,6 @@ public class ProductTypeSearchController extends ProductTypeCommonController imp
     private ProductType browser;
     private ProductTypeTranslation translation;
     private List<ProductType> list;
-    private long status;
 
     public ProductTypeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -75,14 +74,6 @@ public class ProductTypeSearchController extends ProductTypeCommonController imp
 
     public void setTranslation(ProductTypeTranslation translation) {
         this.translation = translation;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

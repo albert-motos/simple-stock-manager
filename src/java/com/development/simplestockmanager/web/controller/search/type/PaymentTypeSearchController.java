@@ -25,7 +25,6 @@ public class PaymentTypeSearchController extends PaymentTypeCommonController imp
     private PaymentType browser;
     private PaymentTypeTranslation translation;
     private List<PaymentType> list;
-    private long status;
 
     public PaymentTypeSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -75,14 +74,6 @@ public class PaymentTypeSearchController extends PaymentTypeCommonController imp
 
     public void setTranslation(PaymentTypeTranslation translation) {
         this.translation = translation;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }

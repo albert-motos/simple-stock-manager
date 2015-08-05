@@ -22,7 +22,6 @@ public class BrandSearchController extends BrandCommonController implements Sear
 
     private Brand browser;
     private List<Brand> list;
-    private long status;
 
     public BrandSearchController() {
         super(WebConstant.VALIDATOR.MODE.SEARCH);
@@ -63,14 +62,6 @@ public class BrandSearchController extends BrandCommonController implements Sear
 
     public void setBrowser(Brand browser) {
         this.browser = browser;
-    }
-
-    public long getStatus() {
-        return status;
-    }
-
-    public void setStatus(long status) {
-        this.status = status;
     }
 
 }
