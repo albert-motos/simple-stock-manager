@@ -25,7 +25,7 @@ public class PaymentTypeHelper extends CommonHelper implements BaseTypeHelper {
 
     @Override
     public Query getFindByType(String type) {
-        Query query = entityManager.createNamedQuery("PaymnetType.findByType");
+        Query query = entityManager.createNamedQuery("PaymentType.findByType");
         query.setParameter("type", type);
 
         return query;

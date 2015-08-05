@@ -1,5 +1,6 @@
 package com.development.simplestockmanager.web.controller.add.type;
 
+import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
@@ -44,8 +45,11 @@ public class SexTypeAddController extends SexTypeCommonController implements Add
         if (validator.validate()) {
             sexType.setCreatedDate(new Date());
             sexType.setLastModifiedDate(new Date());
-            sexType.setCreatedUser(user);
-            sexType.setLastModifiedUser(user);
+            
+            Employee employee = new Employee(user);
+            employee.setSexType(null);
+            sexType.setCreatedUser(employee);
+            sexType.setLastModifiedUser(employee);
 
             Long id = generalController.create(sexType);
             boolean error = false;
