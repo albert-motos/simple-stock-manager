@@ -34,6 +34,7 @@ public class Label {
     private final String translation_es_es;
     private final String translation_ca_es;
     private final String translation_en_us;
+    private final String translation;
     
     private final String status;
 
@@ -66,6 +67,7 @@ public class Label {
         translation_ca_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.CA_ES));
         translation_en_us = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.EN_US));
         translation_es_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.ES_ES));
+        translation = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.TEXT));
         
         status = replace(base, controller.getWord(CommonConstant.LABEL.STATUS));
     }
@@ -176,6 +178,10 @@ public class Label {
 
     public String getTranslation_en_us() {
         return translation_en_us;
+    }
+
+    public String getTranslation() {
+        return translation;
     }
 
 }

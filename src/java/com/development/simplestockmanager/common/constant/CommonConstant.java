@@ -142,11 +142,11 @@ public interface CommonConstant {
 
         public interface TRANSLATION {
 
-            public static String TEXT = LABEL.TEXT + "translation.";
+            public static String TEXT = LABEL.TEXT + "translation";
 
-            public static String EN_US = TEXT + "en_us";
-            public static String CA_ES = TEXT + "ca_es";
-            public static String ES_ES = TEXT + "es_es";
+            public static String EN_US = TEXT + ".en_us";
+            public static String CA_ES = TEXT + ".ca_es";
+            public static String ES_ES = TEXT + ".es_es";
         }
 
         public static String STATUS = TEXT + "status";
