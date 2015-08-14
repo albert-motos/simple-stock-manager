@@ -4,6 +4,7 @@ import com.development.simplestockmanager.business.object.nullpackage.EmployeeTy
 import com.development.simplestockmanager.business.object.nullpackage.EmployeeTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;
+import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.NavigationService;
 import com.development.simplestockmanager.common.web.controller.common.type.EmployeeTypeCommonController;
@@ -49,6 +50,19 @@ public class EmployeeTypeSearchController extends EmployeeTypeCommonController i
 
     public void initView(EmployeeType employeeType) {
         this.employeeType = employeeType;
+        for (EmployeeTypeTranslation employeeTypeTranslation : employeeType.getEmployeeTypeTranslationList()) {
+            if (employeeTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.EN_US)) {
+                translationEN_US = employeeTypeTranslation;
+            }
+
+            if (employeeTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.ES_ES)) {
+                translationES_ES = employeeTypeTranslation;
+            }
+
+            if (employeeTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.CA_ES)) {
+                translationCA_ES = employeeTypeTranslation;
+            }
+        }
     }
 
     public void initEdit(EmployeeType employeeType) {

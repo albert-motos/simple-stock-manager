@@ -78,10 +78,10 @@ public class SexTypeEditController extends SexTypeCommonController implements Ed
                 sexType.setLastModifiedDate(new Date());
                 sexType.setLastModifiedUser(user);
 
-                Long status = generalController.update(sexType);
+                Long feedback = generalController.update(sexType);
                 boolean error = false;
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     error = true;
                 } else {
                     translationEN_US.setReference(sexType);

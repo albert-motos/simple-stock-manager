@@ -78,10 +78,10 @@ public class ProductTypeEditController extends ProductTypeCommonController imple
                 productType.setLastModifiedDate(new Date());
                 productType.setLastModifiedUser(user);
 
-                Long status = generalController.update(productType);
+                Long feedback = generalController.update(productType);
                 boolean error = false;
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     error = true;
                 } else {
                     translationEN_US.setReference(productType);

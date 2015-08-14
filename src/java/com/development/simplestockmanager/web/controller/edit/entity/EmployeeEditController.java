@@ -61,9 +61,9 @@ public class EmployeeEditController extends EmployeeCommonController implements 
                 employee.setLastModifiedDate(new Date());
                 employee.setLastModifiedUser(user);
 
-                Long status = generalController.update(employee);
+                Long feedback = generalController.update(employee);
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
                     detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);

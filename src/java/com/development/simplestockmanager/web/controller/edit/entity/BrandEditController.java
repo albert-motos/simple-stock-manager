@@ -50,9 +50,9 @@ public class BrandEditController extends BrandCommonController implements EditCo
                 brand.setLastModifiedDate(new Date());
                 brand.setLastModifiedUser(user);
 
-                Long status = generalController.update(brand);
+                Long feedback = generalController.update(brand);
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
                     detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);

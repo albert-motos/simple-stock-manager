@@ -78,10 +78,10 @@ public class PriceTypeEditController extends PriceTypeCommonController implement
                 priceType.setLastModifiedDate(new Date());
                 priceType.setLastModifiedUser(user);
 
-                Long status = generalController.update(priceType);
+                Long feedback = generalController.update(priceType);
                 boolean error = false;
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     error = true;
                 } else {
                     translationEN_US.setReference(priceType);

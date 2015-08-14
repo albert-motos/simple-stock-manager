@@ -78,10 +78,10 @@ public class PaymentTypeEditController extends PaymentTypeCommonController imple
                 paymentType.setLastModifiedDate(new Date());
                 paymentType.setLastModifiedUser(user);
 
-                Long status = generalController.update(paymentType);
+                Long feedback = generalController.update(paymentType);
                 boolean error = false;
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     error = true;
                 } else {
                     translationEN_US.setReference(paymentType);

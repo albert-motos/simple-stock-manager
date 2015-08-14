@@ -746,7 +746,7 @@ public class Employee implements Serializable {
         if (this.enable != other.enable) {
             return false;
         }
-        if (!Objects.equals(this.employeeType, other.employeeType)) {
+        if (!Objects.equals(this.employeeType.getId(), other.employeeType.getId())) {
             return false;
         }
         if (!Objects.equals(this.language, other.language)) {
