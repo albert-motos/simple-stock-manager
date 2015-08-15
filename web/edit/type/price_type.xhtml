@@ -19,7 +19,7 @@
                                         <p:outputLabel value="#{language.label.type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{priceTypeAdd.priceType.type}" style="width: 100%" />
+                                        <p:inputText value="#{priceTypeEdit.priceType.type}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -36,7 +36,7 @@
                                         <p:outputLabel value="#{language.label.translation_en_us}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{priceTypeAdd.translationEN_US.translation}" style="width: 100%" />
+                                        <p:inputText value="#{priceTypeEdit.translationEN_US.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -44,7 +44,7 @@
                                         <p:outputLabel value="#{language.label.translation_es_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{priceTypeAdd.translationES_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{priceTypeEdit.translationES_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -52,7 +52,7 @@
                                         <p:outputLabel value="#{language.label.translation_ca_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{priceTypeAdd.translationCA_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{priceTypeEdit.translationCA_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -71,7 +71,7 @@
                                         <p:outputLabel value="#{language.enable.price_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{priceTypeAdd.priceType.enable}" />
+                                        <p:selectBooleanCheckbox value="#{priceTypeEdit.priceType.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -81,8 +81,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.add}" rendered="#{not priceTypeAdd.action}" actionListener="#{priceTypeAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{language.button.back(priceTypeAdd.action)}" actionListener="#{priceTypeAdd.back()}"
+                <p:commandButton value="#{language.button.edit}" rendered="#{not priceTypeEdit.action}" actionListener="#{priceTypeEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(priceTypeEdit.action)}" actionListener="#{priceTypeEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

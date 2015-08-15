@@ -61,7 +61,7 @@ public class SexTypeEditController extends SexTypeCommonController implements Ed
         if (sexType.equals(baseSexType)
                 && translationEN_US.equals(baseTranslationEN_US)
                 && translationES_ES.equals(baseTranslationES_ES)
-                && translationCA_ES.equals(baseTranslationEN_US)) {
+                && translationCA_ES.equals(baseTranslationCA_ES)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
             summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
@@ -78,10 +78,10 @@ public class SexTypeEditController extends SexTypeCommonController implements Ed
                 sexType.setLastModifiedDate(new Date());
                 sexType.setLastModifiedUser(user);
 
-                Long status = generalController.update(sexType);
+                Long feedback = generalController.update(sexType);
                 boolean error = false;
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     error = true;
                 } else {
                     translationEN_US.setReference(sexType);

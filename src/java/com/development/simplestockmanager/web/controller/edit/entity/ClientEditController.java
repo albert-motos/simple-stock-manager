@@ -55,9 +55,9 @@ public class ClientEditController extends ClientCommonController implements Edit
                 client.setLastModifiedDate(new Date());
                 client.setLastModifiedUser(user);
 
-                Long status = generalController.update(client);
+                Long feedback = generalController.update(client);
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
                     detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);

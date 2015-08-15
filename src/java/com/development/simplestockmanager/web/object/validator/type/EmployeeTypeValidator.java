@@ -103,7 +103,7 @@ public class EmployeeTypeValidator extends CommonValidator implements BaseValida
             
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && translation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && translation.getId() != BusinessConstant.IDENTIFIER.INVALID
-                    && !Objects.equals(translation.getId(), employeeType.getId()))) {
+                    && !Objects.equals(translation.getId(), translationEN_US.getId()))) {
                 causeList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.EN_US, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }
@@ -113,7 +113,7 @@ public class EmployeeTypeValidator extends CommonValidator implements BaseValida
             
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && translation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && translation.getId() != BusinessConstant.IDENTIFIER.INVALID
-                    && !Objects.equals(translation.getId(), employeeType.getId()))) {
+                    && !Objects.equals(translation.getId(), translationES_ES.getId()))) {
                 causeList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.ES_ES, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }
@@ -123,7 +123,7 @@ public class EmployeeTypeValidator extends CommonValidator implements BaseValida
             
             if ((mode == WebConstant.VALIDATOR.MODE.CREATE && translation.getId() != BusinessConstant.IDENTIFIER.INVALID)
                     || (mode == WebConstant.VALIDATOR.MODE.EDIT && translation.getId() != BusinessConstant.IDENTIFIER.INVALID
-                    && !Objects.equals(translation.getId(), employeeType.getId()))) {
+                    && !Objects.equals(translation.getId(), translationCA_ES.getId()))) {
                 causeList.add(messageService.getDetail(CommonConstant.LABEL.TRANSLATION.CA_ES, CommonConstant.MESSAGE.DETAIL.ERROR.UNIQUE));
             }
         }

@@ -1,0 +1,347 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel header="#{language.browser.product_type}" toggleable="true" collapsed="false" widgetVar="browser" style="margin-bottom: 15px">
+                <p:tabView>
+                    <p:tab title="#{language.attributes.product_type}">
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.label.type}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{productTypeSearch.browser.type}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.label.translation}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{productTypeSearch.translation.translation}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.label.status}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu value="#{productTypeSearch.status}" style="width: 100px">
+                                                    <f:selectItem itemLabel="" itemValue="#{language.special.value.indeterminate}" />
+                                                    <f:selectItem itemLabel="#{language.special.visible}" itemValue="#{language.special.value.visible}" />
+                                                    <f:selectItem itemLabel="#{language.special.hidden}" itemValue="#{language.special.value.hidden}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:tab>
+                    
+                    <p:tab title="#{language.special.auditory.header}">
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.created_date}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.between}" />
+                                            </p:column>
+                                            <p:column>
+                                                <p:calendar value="#{productTypeSearch.createdDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.conjuction}" />
+                                            </p:column>
+                                            <p:column >
+                                                <p:calendar value="#{productTypeSearch.createdDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.between}" />
+                                            </p:column>
+                                            <p:column>
+                                                <p:calendar value="#{productTypeSearch.lastModifiedDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.conjuction}" />
+                                            </p:column>
+                                            <p:column >
+                                                <p:calendar value="#{productTypeSearch.lastModifiedDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.created_user}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:inputText value="#{productTypeSearch.createdUser.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{productTypeSearch.createdUser.search()}" update="createdUserList" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="createdUserList" value="#{productTypeSearch.createdUser.selection}" style="width: 400px">
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                                    <f:selectItems value="#{productTypeSearch.createdUser.list}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:inputText value="#{productTypeSearch.lastModifiedUser.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{productTypeSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="lastModifiedUserList" value="#{productTypeSearch.lastModifiedUser.selection}"  style="width: 400px">
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                                    <f:selectItems value="#{productTypeSearch.lastModifiedUser.list}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:tabView>
+                <p:commandButton value="#{language.button.search}" actionListener="#{productTypeSearch.search()}" style="width: 100px; margin: 5px" update="list" />
+                <p:commandButton value="#{language.button.clear}" actionListener="#{productTypeSearch.clear()}" style="width: 100px; margin: 5px" update="@form" />
+            </p:panel>
+
+            <p:dataTable id="list" var="productType" value="#{productTypeSearch.list}" style="width: 100%" rows="10" paginator="true" rowsPerPageTemplate="10,15,20"
+                         paginatorTemplate="#{language.special.counter} #{productTypeSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+
+                <f:facet name="header">
+                    #{language.list.product_type}
+                </f:facet>
+
+                <p:column headerText="#{language.special.actions}" style="width: 85px; text-align: center">
+                    <p:commandButton icon="ui-icon-search" actionListener="#{productTypeSearch.initView(productType)}"  update="@form" oncomplete="PF('dlg').show();" />
+                    <p:commandButton icon="ui-icon-pencil" actionListener="#{productTypeSearch.initEdit(productType)}"  update="@form" style="margin-left: 5px"/>
+                </p:column>
+
+                <p:column headerText="#{language.column.status}" style="width: 100px; text-align: center">
+                    <h:outputText value="#{language.special.getStatus(productType.enable)}" />
+                </p:column>
+
+                <p:column headerText="#{language.column.type}" sortBy="#{productType.type}">
+                    <h:outputText value="#{productType.type}" />
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="#{language.viewer.product_type}" widgetVar="dlg" draggable="false" resizable="false" width="600" position="top" style="margin-top: 50px" >
+                <p:panel header="#{language.attributes.product_type}" >
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.type}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{productTypeSearch.productType.type}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.translation_en_us}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{productTypeSearch.translationEN_US.translation}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.translation_es_es}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{productTypeSearch.translationES_ES.translation}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.translation_ca_es}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{productTypeSearch.translationCA_ES.translation}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+                
+                <p:panel header="#{language.visibility.product_type}">
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.status}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{language.special.getStatus(productTypeSearch.productType.enable)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+                
+                <p:panel header="#{language.special.auditory.header}" >
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.created_user}" />
+                                        </p:column>
+                                        <p:column styleClass="info-only">
+                                            <p:outputLabel value="#{productTypeSearch.createdUser.getDisplayName(productTypeSearch.productType.createdUser)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.created_date}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{productTypeSearch.productType.createdDate}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
+                                        </p:column>
+                                        <p:column styleClass="info-only">
+                                            <p:outputLabel value="#{productTypeSearch.lastModifiedUser.getDisplayName(productTypeSearch.productType.lastModifiedUser)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{productTypeSearch.productType.lastModifiedDate}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

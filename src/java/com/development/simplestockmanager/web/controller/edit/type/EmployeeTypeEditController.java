@@ -61,7 +61,7 @@ public class EmployeeTypeEditController extends EmployeeTypeCommonController imp
         if (employeeType.equals(baseEmployeeType)
                 && translationEN_US.equals(baseTranslationEN_US)
                 && translationES_ES.equals(baseTranslationES_ES)
-                && translationCA_ES.equals(baseTranslationEN_US)) {
+                && translationCA_ES.equals(baseTranslationCA_ES)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
             summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
@@ -77,11 +77,17 @@ public class EmployeeTypeEditController extends EmployeeTypeCommonController imp
             if (validator.validate()) {
                 employeeType.setLastModifiedDate(new Date());
                 employeeType.setLastModifiedUser(user);
+//                Employee employee = new Employee(user);
+//                employee.setEmployeeType(new EmployeeTypeNull());
+//                employeeType.setLastModifiedUser(employee);
+//                employee = new Employee(employeeType.getCreatedUser());
+//                employee.setEmployeeType(new EmployeeTypeNull());
+//                employeeType.setCreatedUser(employee);
 
-                Long status = generalController.update(employeeType);
+                Long feedback = generalController.update(employeeType);
                 boolean error = false;
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     error = true;
                 } else {
                     translationEN_US.setReference(employeeType);

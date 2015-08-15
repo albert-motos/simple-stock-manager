@@ -4,6 +4,7 @@ import com.development.simplestockmanager.business.object.nullpackage.PriceTypeN
 import com.development.simplestockmanager.business.object.nullpackage.PriceTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.PriceType;
 import com.development.simplestockmanager.business.persistence.PriceTypeTranslation;
+import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.NavigationService;
 import com.development.simplestockmanager.common.web.controller.common.type.PriceTypeCommonController;
@@ -49,6 +50,19 @@ public class PriceTypeSearchController extends PriceTypeCommonController impleme
 
     public void initView(PriceType priceType) {
         this.priceType = priceType;
+        for (PriceTypeTranslation priceTypeTranslation : priceType.getPriceTypeTranslationList()) {
+            if (priceTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.EN_US)) {
+                translationEN_US = priceTypeTranslation;
+            }
+
+            if (priceTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.ES_ES)) {
+                translationES_ES = priceTypeTranslation;
+            }
+
+            if (priceTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.CA_ES)) {
+                translationCA_ES = priceTypeTranslation;
+            }
+        }
     }
 
     public void initEdit(PriceType priceType) {

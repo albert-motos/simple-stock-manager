@@ -50,9 +50,9 @@ public class ProviderEditController extends ProviderCommonController implements 
                 provider.setLastModifiedDate(new Date());
                 provider.setLastModifiedUser(user);
 
-                Long status = generalController.update(provider);
+                Long feedback = generalController.update(provider);
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
                     detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);

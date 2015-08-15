@@ -19,7 +19,7 @@
                                         <p:outputLabel value="#{language.label.type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{sexTypeAdd.sexType.type}" style="width: 100%" />
+                                        <p:inputText value="#{sexTypeEdit.sexType.type}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -36,7 +36,7 @@
                                         <p:outputLabel value="#{language.label.translation_en_us}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{sexTypeAdd.translationEN_US.translation}" style="width: 100%" />
+                                        <p:inputText value="#{sexTypeEdit.translationEN_US.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -44,7 +44,7 @@
                                         <p:outputLabel value="#{language.label.translation_es_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{sexTypeAdd.translationES_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{sexTypeEdit.translationES_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -52,7 +52,7 @@
                                         <p:outputLabel value="#{language.label.translation_ca_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{sexTypeAdd.translationCA_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{sexTypeEdit.translationCA_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -71,7 +71,7 @@
                                         <p:outputLabel value="#{language.enable.sex_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{sexTypeAdd.sexType.enable}" />
+                                        <p:selectBooleanCheckbox value="#{sexTypeEdit.sexType.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -81,8 +81,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.add}" rendered="#{not sexTypeAdd.action}" actionListener="#{sexTypeAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{language.button.back(sexTypeAdd.action)}" actionListener="#{sexTypeAdd.back()}"
+                <p:commandButton value="#{language.button.edit}" rendered="#{not sexTypeEdit.action}" actionListener="#{sexTypeEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(sexTypeEdit.action)}" actionListener="#{sexTypeEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

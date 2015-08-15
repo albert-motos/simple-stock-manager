@@ -19,7 +19,7 @@
                                         <p:outputLabel value="#{language.label.type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{paymentTypeAdd.paymentType.type}" style="width: 100%" />
+                                        <p:inputText value="#{paymentTypeEdit.paymentType.type}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -36,7 +36,7 @@
                                         <p:outputLabel value="#{language.label.translation_en_us}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{paymentTypeAdd.translationEN_US.translation}" style="width: 100%" />
+                                        <p:inputText value="#{paymentTypeEdit.translationEN_US.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -44,7 +44,7 @@
                                         <p:outputLabel value="#{language.label.translation_es_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{paymentTypeAdd.translationES_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{paymentTypeEdit.translationES_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -52,7 +52,7 @@
                                         <p:outputLabel value="#{language.label.translation_ca_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{paymentTypeAdd.translationCA_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{paymentTypeEdit.translationCA_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -71,7 +71,7 @@
                                         <p:outputLabel value="#{language.enable.payment_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{paymentTypeAdd.paymentType.enable}" />
+                                        <p:selectBooleanCheckbox value="#{paymentTypeEdit.paymentType.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -81,8 +81,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.add}" rendered="#{not paymentTypeAdd.action}" actionListener="#{paymentTypeAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{language.button.back(paymentTypeAdd.action)}" actionListener="#{paymentTypeAdd.back()}"
+                <p:commandButton value="#{language.button.edit}" rendered="#{not paymentTypeEdit.action}" actionListener="#{paymentTypeEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(paymentTypeEdit.action)}" actionListener="#{paymentTypeEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

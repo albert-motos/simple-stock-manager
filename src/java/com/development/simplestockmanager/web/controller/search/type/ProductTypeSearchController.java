@@ -4,6 +4,7 @@ import com.development.simplestockmanager.business.object.nullpackage.ProductTyp
 import com.development.simplestockmanager.business.object.nullpackage.ProductTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.ProductType;
 import com.development.simplestockmanager.business.persistence.ProductTypeTranslation;
+import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.NavigationService;
 import com.development.simplestockmanager.common.web.controller.common.type.ProductTypeCommonController;
@@ -49,6 +50,19 @@ public class ProductTypeSearchController extends ProductTypeCommonController imp
 
     public void initView(ProductType productType) {
         this.productType = productType;
+        for (ProductTypeTranslation productTypeTranslation : productType.getProductTypeTranslationList()) {
+            if (productTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.EN_US)) {
+                translationEN_US = productTypeTranslation;
+            }
+
+            if (productTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.ES_ES)) {
+                translationES_ES = productTypeTranslation;
+            }
+
+            if (productTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.CA_ES)) {
+                translationCA_ES = productTypeTranslation;
+            }
+        }
     }
 
     public void initEdit(ProductType productType) {

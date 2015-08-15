@@ -19,7 +19,7 @@
                                         <p:outputLabel value="#{language.label.type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{employeeTypeAdd.employeeType.type}" style="width: 100%" />
+                                        <p:inputText value="#{employeeTypeEdit.employeeType.type}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -36,7 +36,7 @@
                                         <p:outputLabel value="#{language.label.translation_en_us}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{employeeTypeAdd.translationEN_US.translation}" style="width: 100%" />
+                                        <p:inputText value="#{employeeTypeEdit.translationEN_US.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -44,7 +44,7 @@
                                         <p:outputLabel value="#{language.label.translation_es_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{employeeTypeAdd.translationES_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{employeeTypeEdit.translationES_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -52,7 +52,7 @@
                                         <p:outputLabel value="#{language.label.translation_ca_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{employeeTypeAdd.translationCA_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{employeeTypeEdit.translationCA_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -71,7 +71,7 @@
                                         <p:outputLabel value="#{language.enable.employee_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{employeeTypeAdd.employeeType.enable}" />
+                                        <p:selectBooleanCheckbox value="#{employeeTypeEdit.employeeType.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -81,8 +81,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.add}" rendered="#{not employeeTypeAdd.action}" actionListener="#{employeeTypeAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{language.button.back(employeeTypeAdd.action)}" actionListener="#{employeeTypeAdd.back()}"
+                <p:commandButton value="#{language.button.edit}" rendered="#{not employeeTypeEdit.action}" actionListener="#{employeeTypeEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(employeeTypeEdit.action)}" actionListener="#{employeeTypeEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

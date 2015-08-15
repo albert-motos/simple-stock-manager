@@ -61,7 +61,7 @@ public class PriceTypeEditController extends PriceTypeCommonController implement
         if (priceType.equals(basePriceType)
                 && translationEN_US.equals(baseTranslationEN_US)
                 && translationES_ES.equals(baseTranslationES_ES)
-                && translationCA_ES.equals(baseTranslationEN_US)) {
+                && translationCA_ES.equals(baseTranslationCA_ES)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
             summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
@@ -78,10 +78,10 @@ public class PriceTypeEditController extends PriceTypeCommonController implement
                 priceType.setLastModifiedDate(new Date());
                 priceType.setLastModifiedUser(user);
 
-                Long status = generalController.update(priceType);
+                Long feedback = generalController.update(priceType);
                 boolean error = false;
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     error = true;
                 } else {
                     translationEN_US.setReference(priceType);

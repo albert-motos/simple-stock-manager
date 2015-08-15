@@ -189,7 +189,7 @@ public class EmployeeTypeJpaController implements Serializable {
                 }
             }
             if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+//                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             if (createdUserNew != null) {
                 createdUserNew = em.getReference(createdUserNew.getClass(), createdUserNew.getId());

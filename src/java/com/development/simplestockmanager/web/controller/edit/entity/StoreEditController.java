@@ -53,9 +53,9 @@ public class StoreEditController extends StoreCommonController implements EditCo
                 store.setLastModifiedDate(new Date());
                 store.setLastModifiedUser(user);
 
-                Long status = generalController.update(store);
+                Long feedback = generalController.update(store);
 
-                if (status == BusinessConstant.UPDATE.FAILURE) {
+                if (feedback == BusinessConstant.UPDATE.FAILURE) {
                     severity = FacesMessage.SEVERITY_FATAL;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
                     detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
