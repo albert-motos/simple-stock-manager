@@ -1,7 +1,5 @@
 package com.development.simplestockmanager.web.controller.edit.type;
 
-import com.development.simplestockmanager.business.object.nullpackage.EmployeeTypeNull;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.EmployeeType;
 import com.development.simplestockmanager.business.persistence.EmployeeTypeTranslation;

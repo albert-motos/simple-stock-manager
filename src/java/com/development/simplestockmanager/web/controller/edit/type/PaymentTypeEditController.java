@@ -31,7 +31,7 @@ public class PaymentTypeEditController extends PaymentTypeCommonController imple
         super(WebConstant.VALIDATOR.MODE.EDIT);
 
         try {
-            paymentType = (PaymentType) receiveObjectFromSession(WebConstant.SESSION.EMPLOYEE_TYPE);
+            paymentType = (PaymentType) receiveObjectFromSession(WebConstant.SESSION.PAYMENT_TYPE);
             basePaymentType = new PaymentType(paymentType);
         } catch (Exception e) {
             back();
@@ -61,7 +61,7 @@ public class PaymentTypeEditController extends PaymentTypeCommonController imple
         if (paymentType.equals(basePaymentType)
                 && translationEN_US.equals(baseTranslationEN_US)
                 && translationES_ES.equals(baseTranslationES_ES)
-                && translationCA_ES.equals(baseTranslationEN_US)) {
+                && translationCA_ES.equals(baseTranslationCA_ES)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
             summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);

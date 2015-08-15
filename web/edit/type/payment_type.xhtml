@@ -81,7 +81,7 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.add}" rendered="#{not paymentTypeEdit.action}" actionListener="#{paymentTypeEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.edit}" rendered="#{not paymentTypeEdit.action}" actionListener="#{paymentTypeEdit.edit()}" style="width: 100px" update="@form" />
                 <p:commandButton value="#{language.button.back(paymentTypeEdit.action)}" actionListener="#{paymentTypeEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>

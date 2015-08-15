@@ -61,7 +61,7 @@ public class PriceTypeEditController extends PriceTypeCommonController implement
         if (priceType.equals(basePriceType)
                 && translationEN_US.equals(baseTranslationEN_US)
                 && translationES_ES.equals(baseTranslationES_ES)
-                && translationCA_ES.equals(baseTranslationEN_US)) {
+                && translationCA_ES.equals(baseTranslationCA_ES)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
             summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);

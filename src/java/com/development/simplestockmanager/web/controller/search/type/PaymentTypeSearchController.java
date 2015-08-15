@@ -66,6 +66,7 @@ public class PaymentTypeSearchController extends PaymentTypeCommonController imp
     }
 
     public void initEdit(PaymentType paymentType) {
+        System.out.println("HERE");
         sendObjectToSession(WebConstant.SESSION.PAYMENT_TYPE, paymentType);
         new NavigationService().redirect(WebConstant.WEB.EDIT.TYPE.PAYMENT_TYPE);
     }
