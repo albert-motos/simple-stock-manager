@@ -19,7 +19,7 @@
                                         <p:outputLabel value="#{language.label.type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{productTypeAdd.productType.type}" style="width: 100%" />
+                                        <p:inputText value="#{productTypeEdit.productType.type}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -36,7 +36,7 @@
                                         <p:outputLabel value="#{language.label.translation_en_us}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{productTypeAdd.translationEN_US.translation}" style="width: 100%" />
+                                        <p:inputText value="#{productTypeEdit.translationEN_US.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -44,7 +44,7 @@
                                         <p:outputLabel value="#{language.label.translation_es_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{productTypeAdd.translationES_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{productTypeEdit.translationES_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -52,7 +52,7 @@
                                         <p:outputLabel value="#{language.label.translation_ca_es}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:inputText value="#{productTypeAdd.translationCA_ES.translation}" style="width: 100%" />
+                                        <p:inputText value="#{productTypeEdit.translationCA_ES.translation}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -71,7 +71,7 @@
                                         <p:outputLabel value="#{language.enable.product_type}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:selectBooleanCheckbox value="#{productTypeAdd.productType.enable}" />
+                                        <p:selectBooleanCheckbox value="#{productTypeEdit.productType.enable}" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -81,8 +81,8 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.add}" rendered="#{not productTypeAdd.action}" actionListener="#{productTypeAdd.add()}" style="width: 100px" update="@form" />
-                <p:commandButton value="#{language.button.back(productTypeAdd.action)}" actionListener="#{productTypeAdd.back()}"
+                <p:commandButton value="#{language.button.add}" rendered="#{not productTypeEdit.action}" actionListener="#{productTypeEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(productTypeEdit.action)}" actionListener="#{productTypeEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>

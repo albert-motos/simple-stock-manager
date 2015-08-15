@@ -4,6 +4,7 @@ import com.development.simplestockmanager.business.object.nullpackage.SexTypeNul
 import com.development.simplestockmanager.business.object.nullpackage.SexTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.SexType;
 import com.development.simplestockmanager.business.persistence.SexTypeTranslation;
+import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.NavigationService;
 import com.development.simplestockmanager.common.web.controller.common.type.SexTypeCommonController;
@@ -49,6 +50,19 @@ public class SexTypeSearchController extends SexTypeCommonController implements 
 
     public void initView(SexType sexType) {
         this.sexType = sexType;
+        for (SexTypeTranslation sexTypeTranslation : sexType.getSexTypeTranslationList()) {
+            if (sexTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.EN_US)) {
+                translationEN_US = sexTypeTranslation;
+            }
+
+            if (sexTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.ES_ES)) {
+                translationES_ES = sexTypeTranslation;
+            }
+
+            if (sexTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.CA_ES)) {
+                translationCA_ES = sexTypeTranslation;
+            }
+        }
     }
 
     public void initEdit(SexType sexType) {

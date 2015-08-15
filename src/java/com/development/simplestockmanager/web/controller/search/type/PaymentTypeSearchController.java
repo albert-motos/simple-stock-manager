@@ -4,6 +4,7 @@ import com.development.simplestockmanager.business.object.nullpackage.PaymentTyp
 import com.development.simplestockmanager.business.object.nullpackage.PaymentTypeTranslationNull;
 import com.development.simplestockmanager.business.persistence.PaymentType;
 import com.development.simplestockmanager.business.persistence.PaymentTypeTranslation;
+import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.NavigationService;
 import com.development.simplestockmanager.common.web.controller.common.type.PaymentTypeCommonController;
@@ -49,6 +50,19 @@ public class PaymentTypeSearchController extends PaymentTypeCommonController imp
 
     public void initView(PaymentType paymentType) {
         this.paymentType = paymentType;
+        for (PaymentTypeTranslation paymentTypeTranslation : paymentType.getPaymentTypeTranslationList()) {
+            if (paymentTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.EN_US)) {
+                translationEN_US = paymentTypeTranslation;
+            }
+
+            if (paymentTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.ES_ES)) {
+                translationES_ES = paymentTypeTranslation;
+            }
+
+            if (paymentTypeTranslation.getLanguage().getCode().equals(CommonConstant.LANGUAGE.CA_ES)) {
+                translationCA_ES = paymentTypeTranslation;
+            }
+        }
     }
 
     public void initEdit(PaymentType paymentType) {

@@ -44,7 +44,7 @@ public class PriceTypeHelper extends CommonHelper implements BaseTypeHelper {
     public Query getFindForBrowserQuery(String type, String translation, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom,
             Date lastModifiedDateTo, long createdUserID, long lastModifiedUserID) {
         
-        String query = "SELECT p FROM PriceType p INNER JOIN p.priceTypeTranslationList AS pt where 1 = 1"
+        String query = "SELECT distinct(p) FROM PriceType p INNER JOIN p.priceTypeTranslationList AS pt where 1 = 1"
                 + (type.isEmpty() ? "" : " AND p.type LIKE '%" + type + "%'")
                 + (translation.isEmpty() ? "" : " AND pt.translation LIKE '%" + translation + "%'")
                 + (status == WebConstant.STATUS.HIDDEN ? " AND p.enable = FALSE" : "")
