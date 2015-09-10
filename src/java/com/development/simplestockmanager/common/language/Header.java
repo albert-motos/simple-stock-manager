@@ -14,7 +14,6 @@ public class Header {
 
     public Header(String type) {
         LanguageController controller = LanguageControllerManager.getInstance().getController();
-//        LanguageController controller = new LanguageController("es_ES");
         
         this.title = controller.getWord(type);
         this.create = replace(controller.getWord(CommonConstant.HEADER.CREATE), this.title.toLowerCase());

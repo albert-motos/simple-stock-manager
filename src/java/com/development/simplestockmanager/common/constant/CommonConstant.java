@@ -41,6 +41,14 @@ public interface CommonConstant {
         public static String SEX_TYPE = TEXT + "sex_type";
 
     }
+    
+    public interface RELATION {
+
+        public static String TEXT = "relation.";
+
+        public static String HEADER = TEXT + "header";
+        public static String STOCK = TEXT + "stock";
+    }
 
     public interface HEADER {
 
@@ -137,6 +145,12 @@ public interface CommonConstant {
         public static String STATE = TEXT + "state";
         public static String COUNTRY = TEXT + "country";
         public static String EMPLOYEE = TEXT + "employee";
+        public static String STORE = TEXT + "store";
+        public static String STOCK = TEXT + "stock";
+        
+        public static String AMOUNT = TEXT + "amount";
+        public static String ACTUAL_AMOUNT = TEXT + "actual_amount";
+        public static String TOTAL_AMOUNT = TEXT + "total_amount";
 
         public static String TYPE = TEXT + "type";
 
@@ -265,6 +279,18 @@ public interface CommonConstant {
                 public static String SEARCH = TEXT + ".search";
             }
         }
+        
+        public interface RELATION {
+
+            public static String TEXT = MENU.TEXT + ".relation";
+
+            public interface STOCK {
+
+                public static String TEXT = RELATION.TEXT + ".stock";
+                public static String CREATE = TEXT + ".create";
+                public static String SEARCH = TEXT + ".search";
+            }
+        }
     }
 
     public interface MESSAGE {
@@ -301,6 +327,7 @@ public interface CommonConstant {
                 public static String DATE = TEXT + "date";
                 public static String UNIQUE = TEXT + "unique";
                 public static String PRODUCT = TEXT + "product";
+                public static String STOCK = TEXT + "stock";
             }
 
             public interface INFO {

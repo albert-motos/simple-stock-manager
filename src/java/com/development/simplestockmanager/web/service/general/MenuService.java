@@ -54,6 +54,10 @@ public class MenuService implements Serializable {
     private final String sexType;
     private final String sexTypeCreate;
     private final String sexTypeSearch;
+    
+    private final String stock;
+    private final String stockCreate;
+    private final String stockSearch;
 
     public MenuService() {
         System.out.println("# " + new Date() + " | " + WebConstant.LOGGER.SERVICE.MENU.CONSTRUCTOR);
@@ -97,6 +101,10 @@ public class MenuService implements Serializable {
         sexType = controller.getWord(CommonConstant.MENU.TYPE.SEX_TYPE.TEXT);
         sexTypeCreate = controller.getWord(CommonConstant.MENU.TYPE.SEX_TYPE.CREATE);
         sexTypeSearch = controller.getWord(CommonConstant.MENU.TYPE.SEX_TYPE.SEARCH);
+        
+        stock = controller.getWord(CommonConstant.MENU.RELATION.STOCK.TEXT);
+        stockCreate = controller.getWord(CommonConstant.MENU.RELATION.STOCK.CREATE);
+        stockSearch = controller.getWord(CommonConstant.MENU.RELATION.STOCK.SEARCH);
     }
 
     public String getEntity() {
@@ -237,6 +245,18 @@ public class MenuService implements Serializable {
 
     public String getSexTypeSearch() {
         return sexTypeSearch;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public String getStockCreate() {
+        return stockCreate;
+    }
+
+    public String getStockSearch() {
+        return stockSearch;
     }
 
 }

@@ -38,6 +38,7 @@ public class LanguageService implements Serializable {
     private final Header price_type;
     private final Header product_type;
     private final Header sex_type;
+    private final Header stock;
     
     private final Page attributes;
     private final Page browser;
@@ -58,7 +59,7 @@ public class LanguageService implements Serializable {
 
         entity = controller.getWord(CommonConstant.ENTITY.HEADER);
         type = controller.getWord(CommonConstant.TYPE.HEADER);
-        relation = "null";
+        relation = controller.getWord(CommonConstant.RELATION.HEADER);
         
         brand = new Header(CommonConstant.ENTITY.BRAND);
         client = new Header(CommonConstant.ENTITY.CLIENT);
@@ -72,6 +73,8 @@ public class LanguageService implements Serializable {
         price_type = new Header(CommonConstant.TYPE.PRICE_TYPE);
         product_type = new Header(CommonConstant.TYPE.PRODUCT_TYPE);
         sex_type = new Header(CommonConstant.TYPE.SEX_TYPE);
+        
+        stock = new Header((CommonConstant.RELATION.STOCK));
         
         attributes = new Page(controller.getWord(CommonConstant.PAGE.ATTRIBUTES));
         browser = new Page(controller.getWord(CommonConstant.PAGE.BROWSER));
@@ -190,6 +193,10 @@ public class LanguageService implements Serializable {
 
     public Special getSpecial() {
         return special;
+    }
+
+    public Header getStock() {
+        return stock;
     }
 
     public static Language getLanguage(String code) {

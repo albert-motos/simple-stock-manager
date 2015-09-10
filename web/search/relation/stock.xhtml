@@ -1,0 +1,384 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <p:panel header="#{language.browser.stock}" toggleable="true" collapsed="false" widgetVar="browser" style="margin-bottom: 15px">
+                <p:tabView>
+                    <p:tab title="#{language.attributes.stock}">
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.label.store}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{stockSearch.storeSelector.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{stockSearch.storeSelector.search()}" update="storeList" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu id="storeList" value="#{stockSearch.storeSelector.selection}" style="width: 100%">
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                                    <f:selectItems value="#{stockSearch.storeSelector.list}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.label.product}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:inputText value="#{stockSearch.productSelector.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 50%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{stockSearch.productSelector.search()}" update="productList" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu id="productList" value="#{stockSearch.productSelector.selection}" style="width: 100%">
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                                    <f:selectItems value="#{stockSearch.productSelector.list}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                        
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.label.status}" />
+                                            </p:column>
+                                            <p:column style="width: 100%">
+                                                <p:selectOneMenu value="#{stockSearch.status}" style="width: 100px">
+                                                    <f:selectItem itemLabel="" itemValue="#{language.special.value.indeterminate}" />
+                                                    <f:selectItem itemLabel="#{language.special.visible}" itemValue="#{language.special.value.visible}" />
+                                                    <f:selectItem itemLabel="#{language.special.hidden}" itemValue="#{language.special.value.hidden}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="#{language.special.auditory.header}">
+                        <p:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.created_date}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.between}" />
+                                            </p:column>
+                                            <p:column>
+                                                <p:calendar value="#{stockSearch.createdDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.conjuction}" />
+                                            </p:column>
+                                            <p:column >
+                                                <p:calendar value="#{stockSearch.createdDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 100%">
+                                    <p:panelGrid>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.between}" />
+                                            </p:column>
+                                            <p:column>
+                                                <p:calendar value="#{stockSearch.lastModifiedDateFrom}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.conjuction}" />
+                                            </p:column>
+                                            <p:column >
+                                                <p:calendar value="#{stockSearch.lastModifiedDateTo}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.created_user}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:inputText value="#{stockSearch.createdUser.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{stockSearch.createdUser.search()}" update="createdUserList" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="createdUserList" value="#{stockSearch.createdUser.selection}" style="width: 400px">
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                                    <f:selectItems value="#{stockSearch.createdUser.list}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column style="width: 200px">
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:inputText value="#{stockSearch.lastModifiedUser.browser}" style="width: 100%" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:commandButton value="#{language.button.search}" actionListener="#{stockSearch.lastModifiedUser.search()}" update="lastModifiedUserList" />
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>                                            
+                                <p:column>
+                                    <p:panelGrid style="width: 100%">
+                                        <p:row>
+                                            <p:column>
+                                                <p:selectOneMenu id="lastModifiedUserList" value="#{stockSearch.lastModifiedUser.selection}"  style="width: 400px">
+                                                    <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                                    <f:selectItems value="#{stockSearch.lastModifiedUser.list}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </p:tab>
+                </p:tabView>
+                <p:commandButton value="#{language.button.search}" actionListener="#{stockSearch.search()}" style="width: 100px; margin: 5px" update="list" />
+                <p:commandButton value="#{language.button.clear}" actionListener="#{stockSearch.clear()}" style="width: 100px; margin: 5px" update="@form" />
+            </p:panel>
+
+            <p:dataTable id="list" var="stock" value="#{stockSearch.list}" style="width: 100%" rows="10" paginator="true" rowsPerPageTemplate="10,15,20"
+                         paginatorTemplate="#{language.special.counter} #{stockSearch.list.size()}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" >
+
+                <f:facet name="header">
+                    #{language.list.stock}
+                </f:facet>
+
+                <p:column headerText="#{language.special.actions}" style="width: 85px; text-align: center">
+                    <p:commandButton icon="ui-icon-search" actionListener="#{stockSearch.initView(stock)}"  update="@form" oncomplete="PF('dlg').show();" />
+                    <p:commandButton icon="ui-icon-pencil" actionListener="#{stockSearch.initEdit(stock)}"  update="@form" style="margin-left: 5px"/>
+                </p:column>
+
+                <p:column headerText="#{language.column.status}" style="width: 100px; text-align: center">
+                    <h:outputText value="#{language.special.getStatus(stock.enable)}" />
+                </p:column>
+
+                <p:column headerText="#{language.column.product}" sortBy="#{stock.product.name}">
+                    <h:outputText value="#{stock.product.name}" />
+                </p:column>
+                
+                <p:column headerText="#{language.column.store}" sortBy="#{stock.store.name}">
+                    <h:outputText value="#{stock.store.name}" />
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog header="#{language.viewer.stock}" widgetVar="dlg" draggable="false" resizable="false" width="600" position="top" style="margin-top: 50px" >
+                <p:panel header="#{language.attributes.stock}" >
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.product}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{stockSearch.stock.product.name}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.store}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{stockSearch.stock.store.name}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.actual_amount}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{stockSearch.stock.actualAmount}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.total_amount}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{stockSearch.stock.totalAmount}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+
+                <p:panel header="#{language.visibility.stock}">
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.label.status}" />
+                                        </p:column>
+                                        <p:column style="text-align: left; width: 100%">
+                                            <p:outputLabel value="#{language.special.getStatus(stockSearch.stock.enable)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+
+                <p:panel header="#{language.special.auditory.header}" >
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 100%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.created_user}" />
+                                        </p:column>
+                                        <p:column styleClass="info-only">
+                                            <p:outputLabel value="#{stockSearch.createdUser.getDisplayName(stockSearch.stock.createdUser)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.created_date}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{stockSearch.stock.createdDate}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_user}" />
+                                        </p:column>
+                                        <p:column styleClass="info-only">
+                                            <p:outputLabel value="#{stockSearch.lastModifiedUser.getDisplayName(stockSearch.stock.lastModifiedUser)}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="#{language.special.auditory.last_modified_date}" />
+                                        </p:column>
+                                        <p:column style="text-align: left">
+                                            <p:outputLabel value="#{stockSearch.stock.lastModifiedDate}" style="font-weight: normal" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

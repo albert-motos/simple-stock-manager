@@ -50,4 +50,18 @@ public class ProductHelper extends CommonHelper {
 
         return entityManager.createQuery(query);
     }
+    
+    public Query getFindAllByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Product.findAllByBrowser");
+        query.setParameter("browser", "%" + browser + "%");
+        
+        return query;
+    }
+    
+    public Query getFindEnableByBrowser(String browser) {
+        Query query = entityManager.createNamedQuery("Product.findEnableByBrowser");
+        query.setParameter("browser", "%" + browser + "%");
+        
+        return query;
+    }
 }

@@ -23,12 +23,14 @@ public class StoreSelector extends CommonSelector implements BaseSelector {
     public StoreSelector(long mode) {
         super(mode);
         this.specificController = new StoreSpecificController();
-        search();
+//        search();
     }
 
     public StoreSelector(long mode, Store store) {
         this(mode);
         this.selection = getDisplayName(store);
+        this.browser = this.selection;
+        search();
     }
 
     @Override

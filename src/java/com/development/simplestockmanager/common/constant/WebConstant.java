@@ -64,6 +64,8 @@ public interface WebConstant {
             public interface RELATION {
 
                 public static String TEXT = ADD.TEXT + "/relation";
+                
+                public static String STOCK = TEXT + "/stock.xhtml";
             }
         }
 
@@ -97,6 +99,8 @@ public interface WebConstant {
             public interface RELATION {
 
                 public static String TEXT = EDIT.TEXT + "/relation";
+                
+                public static String STOCK = TEXT + "/stock.xhtml";
             }
         }
 
@@ -130,6 +134,8 @@ public interface WebConstant {
             public interface RELATION {
 
                 public static String TEXT = SEARCH.TEXT + "/relation";
+                
+                public static String STOCK = TEXT + "/stock.xhtml";
             }
         }
     }
@@ -148,6 +154,8 @@ public interface WebConstant {
         public static String PRICE_TYPE = "price_type";
         public static String PRODUCT_TYPE = "product_type";
         public static String SEX_TYPE = "sex_type";
+        
+        public static String STOCK = "stock";
     }
 
     public interface LOGGER {

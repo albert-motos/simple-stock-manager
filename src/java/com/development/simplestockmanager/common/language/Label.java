@@ -29,6 +29,12 @@ public class Label {
     private final String state;
     private final String country;
     private final String employee;
+    private final String store;
+    private final String product;
+    
+    private final String amount;
+    private final String actual_amount;
+    private final String total_amount;
     
     private final String type;
     private final String translation_es_es;
@@ -62,6 +68,12 @@ public class Label {
         state = replace(base, controller.getWord(CommonConstant.LABEL.STATE));
         country = replace(base, controller.getWord(CommonConstant.LABEL.COUNTRY));
         employee = replace(base, controller.getWord(CommonConstant.LABEL.EMPLOYEE));
+        store = replace(base, controller.getWord(CommonConstant.LABEL.STORE));
+        product = replace(base, controller.getWord(CommonConstant.LABEL.PRODUCT));
+        
+        amount = replace(base, controller.getWord(CommonConstant.LABEL.AMOUNT));
+        actual_amount = replace(base, controller.getWord(CommonConstant.LABEL.ACTUAL_AMOUNT));
+        total_amount = replace(base, controller.getWord(CommonConstant.LABEL.TOTAL_AMOUNT));
         
         type = replace(base, controller.getWord(CommonConstant.LABEL.TYPE));
         translation_ca_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.CA_ES));
@@ -182,6 +194,26 @@ public class Label {
 
     public String getTranslation() {
         return translation;
+    }
+
+    public String getStore() {
+        return store;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public String getActual_amount() {
+        return actual_amount;
+    }
+
+    public String getTotal_amount() {
+        return total_amount;
     }
 
 }
