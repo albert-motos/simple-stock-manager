@@ -20,6 +20,12 @@
             <ui:insert name="top">
                 <h:form>
                     <p:menubar>
+                        <p:submenu label="#{language.relation}">
+                            <p:submenu label="#{language.stock.title}">
+                                <p:menuitem value="#{language.stock.create}" url="#{url.add('stock')}" />
+                                <p:menuitem value="#{language.stock.search}" url="#{url.search('stock')}" />
+                            </p:submenu>
+                        </p:submenu>
                         <p:submenu label="#{language.entity}">
                             <p:submenu label="#{language.brand.title}">
                                 <p:menuitem value="#{language.brand.create}" url="#{url.add('brand')}" />

@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
+
+            <p:panel header="#{language.attributes.stock}" >
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.store}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{stockEdit.storeSelector.browser}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:commandButton value="#{language.button.search}" actionListener="#{stockEdit.storeSelector.search()}" update="storeList" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectOneMenu id="storeList" value="#{stockEdit.storeSelector.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                            <f:selectItems value="#{stockEdit.storeSelector.list}" />
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.product}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{stockEdit.productSelector.browser}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:commandButton value="#{language.button.search}" actionListener="#{stockEdit.productSelector.search()}" update="productList" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectOneMenu id="productList" value="#{stockEdit.productSelector.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                            <f:selectItems value="#{stockEdit.productSelector.list}" />
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.amount}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:spinner value="#{stockEdit.amount}" stepFactor="0.001" min="#{-stockEdit.stock.actualAmount}" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
+
+            <p:panel header="#{language.visibility.stock}">
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 100%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.enable.stock}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectBooleanCheckbox value="#{stockEdit.stock.enable}" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
+
+            <p:outputPanel style="text-align: right">
+                <p:commandButton value="#{language.button.edit}" rendered="#{not stockEdit.action}" actionListener="#{stockEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(stockEdit.action)}" actionListener="#{stockEdit.back()}"
+                                 style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+</ui:composition>

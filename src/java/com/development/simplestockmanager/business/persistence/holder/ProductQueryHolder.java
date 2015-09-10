@@ -15,7 +15,15 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(
             name = "Product.findByRelation",
-            query = "SELECT p FROM Product p WHERE p.productType = :productType AND p.brand = :brand AND p.provider = :provider")
+            query = "SELECT p FROM Product p WHERE p.productType = :productType AND p.brand = :brand AND p.provider = :provider"),
+    @NamedQuery(
+            name = "Product.findAllByBrowser",
+            query = "SELECT p FROM Product p WHERE p.name LIKE :browser ORDER BY p.name"
+    ),
+    @NamedQuery(
+            name = "Product.findEnableByBrowser",
+            query = "SELECT p FROM Product p WHERE p.name LIKE :browser AND p.enable = TRUE ORDER BY p.name"
+    )
 })
 public class ProductQueryHolder implements Serializable {
 

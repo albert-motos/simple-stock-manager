@@ -52,4 +52,34 @@ public class ProductSpecificController {
 
         return list;
     }
+    
+    public List<Product> findAllByBrowser(String browser) {
+        List<Product> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindAllByBrowser(browser);
+            for (Object object : query.getResultList()) {
+                list.add((Product) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<Product> findEnableByBrowser(String browser) {
+        List<Product> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindEnableByBrowser(browser);
+            for (Object object : query.getResultList()) {
+                list.add((Product) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
 }

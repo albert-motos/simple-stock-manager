@@ -21,6 +21,8 @@ public class Page {
     private final String product_type;
     private final String sex_type;
     
+    private final String stock;
+    
     public Page(String base) {
         brand = replace(base, CommonConstant.ENTITY.BRAND);
         client = replace(base, CommonConstant.ENTITY.CLIENT);
@@ -34,6 +36,8 @@ public class Page {
         price_type = replace(base, CommonConstant.TYPE.PRICE_TYPE);
         product_type = replace(base, CommonConstant.TYPE.PRODUCT_TYPE);
         sex_type = replace(base, CommonConstant.TYPE.SEX_TYPE);
+        
+        stock = replace(base, CommonConstant.RELATION.STOCK);
     }
     
     private String replace(String base, String type) {
@@ -92,6 +96,10 @@ public class Page {
 
     public String getSex_type() {
         return sex_type;
+    }
+
+    public String getStock() {
+        return stock;
     }
     
 }
