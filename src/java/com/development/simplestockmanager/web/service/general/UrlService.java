@@ -15,12 +15,18 @@ import javax.faces.bean.ManagedBean;
 @ApplicationScoped
 public class UrlService implements Serializable {
 
-    private HashMap<String, String> addHashMap;
-    private HashMap<String, String> searchHashMap;
+    private final HashMap<String, String> addHashMap;
+    private final HashMap<String, String> searchHashMap;
+    
+    private final String internal;
+    private final String external;
 
     public UrlService() {
         addHashMap = new HashMap<>();
         searchHashMap = new HashMap<>();
+        
+        internal = WebConstant.WEB.RELATION.INTERNAL;
+        external = WebConstant.WEB.RELATION.EXTERNAL;
 
         initilazation();
     }
@@ -67,6 +73,14 @@ public class UrlService implements Serializable {
         searchHashMap.put("sex_type", WebConstant.WEB.SEARCH.TYPE.SEX_TYPE);
         
         searchHashMap.put("stock", WebConstant.WEB.SEARCH.RELATION.STOCK);
+    }
+
+    public String getInternal() {
+        return internal;
+    }
+
+    public String getExternal() {
+        return external;
     }
 
 }

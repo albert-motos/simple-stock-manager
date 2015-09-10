@@ -38,6 +38,7 @@ public class LanguageService implements Serializable {
     private final Header price_type;
     private final Header product_type;
     private final Header sex_type;
+
     private final Header stock;
     
     private final Page attributes;

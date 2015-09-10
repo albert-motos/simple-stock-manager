@@ -138,6 +138,14 @@ public interface WebConstant {
                 public static String STOCK = TEXT + "/stock.xhtml";
             }
         }
+        
+        public interface RELATION {
+
+            public static String TEXT = "/relation";
+
+            public static String INTERNAL = RELATION.TEXT + "/internal.xhtml";
+            public static String EXTERNAL = RELATION.TEXT + "/external.xhtml";
+        }
     }
 
     public interface SESSION {
