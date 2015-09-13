@@ -26,11 +26,11 @@ public class RecordSpecificController {
         List<Record> list = new ArrayList<>();
 
         try {
-            Query query = helper.getFindForBrowserQuery(browser.getEmail(), browser.getIdentifier(), browser.getName(), browser.getPhone(), status,
-                    createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
-            for (Object object : query.getResultList()) {
-                list.add((Record) object);
-            }
+//            Query query = helper.getFindForBrowserQuery(browser.getEmail(), browser.getIdentifier(), browser.getName(), browser.getPhone(), status,
+//                    createdDateFrom, createdDateTo, lastModifiedDateFrom, lastModifiedDateTo, createdUserID, lastModifiedUserID);
+//            for (Object object : query.getResultList()) {
+//                list.add((Record) object);
+//            }
         } catch (Exception e) {
             list = new ArrayList<>();
         }

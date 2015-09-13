@@ -70,15 +70,30 @@
                             </p:panelGrid>
                         </p:column>
                     </p:row>
+                </p:panelGrid>
+                <p:separator />
+                <p:panelGrid style="width: 100%">
                     <p:row>
-                        <p:column style="width: 50%">
+                        <p:column style="width: 25%">
                             <p:panelGrid style="width: 100%">
                                 <p:row>
                                     <p:column>
                                         <p:outputLabel value="#{language.label.amount}" />
                                     </p:column>
                                     <p:column style="width: 100%">
-                                        <p:spinner value="#{stockEdit.amount}" stepFactor="0.001" min="#{-stockEdit.stock.actualAmount}" />
+                                        <p:spinner value="#{stockEdit.record.amount}" stepFactor="0.001" min="#{-stockEdit.stock.actualAmount}" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 75%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.note}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{stockEdit.record.note}" style="width: 100%" />
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>

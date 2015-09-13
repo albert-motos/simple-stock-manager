@@ -35,6 +35,7 @@ public class Label {
     private final String amount;
     private final String actual_amount;
     private final String total_amount;
+    private final String note;
     
     private final String type;
     private final String translation_es_es;
@@ -74,6 +75,7 @@ public class Label {
         amount = replace(base, controller.getWord(CommonConstant.LABEL.AMOUNT));
         actual_amount = replace(base, controller.getWord(CommonConstant.LABEL.ACTUAL_AMOUNT));
         total_amount = replace(base, controller.getWord(CommonConstant.LABEL.TOTAL_AMOUNT));
+        note = replace(base, controller.getWord(CommonConstant.LABEL.NOTE));
         
         type = replace(base, controller.getWord(CommonConstant.LABEL.TYPE));
         translation_ca_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.CA_ES));
@@ -214,6 +216,10 @@ public class Label {
 
     public String getTotal_amount() {
         return total_amount;
+    }
+
+    public String getNote() {
+        return note;
     }
 
 }

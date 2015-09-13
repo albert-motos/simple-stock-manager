@@ -147,6 +147,7 @@ public interface CommonConstant {
         public static String EMPLOYEE = TEXT + "employee";
         public static String STORE = TEXT + "store";
         public static String STOCK = TEXT + "stock";
+        public static String NOTE = TEXT + "note";
         
         public static String AMOUNT = TEXT + "amount";
         public static String ACTUAL_AMOUNT = TEXT + "actual_amount";

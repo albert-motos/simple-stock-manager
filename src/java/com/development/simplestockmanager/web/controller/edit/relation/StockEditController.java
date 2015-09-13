@@ -1,5 +1,8 @@
 package com.development.simplestockmanager.web.controller.edit.relation;
 
+import com.development.simplestockmanager.business.object.controller.general.RecordGeneralController;
+import com.development.simplestockmanager.business.object.controller.specific.RecordSpecificController;
+import com.development.simplestockmanager.business.persistence.Record;
 import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Stock;
 import com.development.simplestockmanager.common.constant.CommonConstant;
@@ -9,8 +12,10 @@ import com.development.simplestockmanager.common.web.controller.common.relation.
 import com.development.simplestockmanager.common.web.controller.base.EditController;
 import com.development.simplestockmanager.web.object.selector.entity.ProductSelector;
 import com.development.simplestockmanager.web.object.selector.entity.StoreSelector;
+import com.development.simplestockmanager.web.object.validator.relation.RecordValidator;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -25,7 +30,10 @@ import javax.faces.bean.ViewScoped;
 public class StockEditController extends StockCommonController implements EditController {
 
     private Stock baseStock;
-    private BigDecimal amount;
+    
+    private Record record;
+    private RecordValidator recordValidator;
+    private RecordGeneralController recordGeneralController;
 
     public StockEditController() {
         super(WebConstant.VALIDATOR.MODE.EDIT);
@@ -37,17 +45,23 @@ public class StockEditController extends StockCommonController implements EditCo
             back();
         }
         
+        recordValidator = new RecordValidator(WebConstant.VALIDATOR.MODE.EDIT, new RecordSpecificController());
+        recordGeneralController = new RecordGeneralController();
+        
         storeSelector = new StoreSelector(WebConstant.SELECTOR.MODE.ENABLE, stock.getStore());
         productSelector = new ProductSelector(WebConstant.SELECTOR.MODE.ENABLE, stock.getProduct());
-        amount = BigDecimal.ZERO;
+        record = new Record();
+        record.setAmount(BigDecimal.ZERO);
     }
     
     @Override
     public void edit() {
         stock.setStore(storeSelector.getSelectedValue());
         stock.setProduct(productSelector.getSelectedValue());
+        stock.setActualAmount(stock.getActualAmount().add(record.getAmount()));
+        stock.setTotalAmount(stock.getTotalAmount().add(record.getAmount()));
         
-        if (stock.equals(baseStock)) {
+        if (stock.equals(baseStock) && record.getAmount().equals(BigDecimal.ZERO)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;
             summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
@@ -56,41 +70,60 @@ public class StockEditController extends StockCommonController implements EditCo
             getContext().addMessage(null, new FacesMessage(severity, summary, detail));
         } else {
             validator.setObject(stock);
+            recordValidator.setObject(record);
 
-            if (validator.validate()) {
+            if (validator.validate() && recordValidator.validate()) {
                 stock.setLastModifiedDate(new Date());
                 stock.setLastModifiedUser(user);
 
-                Long feedback = generalController.update(stock);
-
-                if (feedback == BusinessConstant.UPDATE.FAILURE) {
-                    severity = FacesMessage.SEVERITY_FATAL;
-                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
-                    detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
-                } else {
+                try {
+                    Long feedback = generalController.update(stock);
+                    
+                    if (feedback == BusinessConstant.UPDATE.FAILURE) {
+                        throw new Exception();
+                    }
+                    
+                    record.setEmployee(user);
+                    record.setCreatedUser(user);
+                    record.setLastModifiedUser(user);
+                    record.setEnable(true);
+                    record.setCreatedDate(new Date());
+                    record.setLastModifiedDate(new Date());
+                    record.setStock(stock);
+                    
+                    feedback = recordGeneralController.create(record);
+                    
+                    if (feedback == BusinessConstant.UPDATE.FAILURE) {
+                        generalController.delete(stock);
+                        throw new Exception();
+                    }
+                    
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
                     detail = messageService.getDetail(CommonConstant.RELATION.STOCK, stock.getId(), CommonConstant.MESSAGE.DETAIL.INFO.EDIT);
+                } catch (Exception e) {
+                    severity = FacesMessage.SEVERITY_FATAL;
+                    summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
+                    detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
                 }
 
                 getContext().addMessage(null, new FacesMessage(severity, summary, detail));
             } else {
-                for (FacesMessage message : validator.getMessageList()) {
+                List<FacesMessage> messageList = recordValidator.getMessageList();
+                messageList.addAll(validator.getMessageList());
+                
+                for (FacesMessage message : messageList) {
                     getContext().addMessage(null, message);
                 }
             }
         }
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public Record getRecord() {
+        return record;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-    
     @Override
     public final void back() {
         new NavigationService().redirect(WebConstant.WEB.SEARCH.RELATION.STOCK);
