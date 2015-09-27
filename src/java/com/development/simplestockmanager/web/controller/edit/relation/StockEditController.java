@@ -1,7 +1,9 @@
 package com.development.simplestockmanager.web.controller.edit.relation;
 
+import com.development.simplestockmanager.business.object.controller.general.AnalyticsTimeGeneralController;
 import com.development.simplestockmanager.business.object.controller.general.RecordGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.RecordSpecificController;
+import com.development.simplestockmanager.business.persistence.AnalyticsTime;
 import com.development.simplestockmanager.business.persistence.Record;
 import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Stock;
@@ -34,6 +36,8 @@ public class StockEditController extends StockCommonController implements EditCo
     private Record record;
     private RecordValidator recordValidator;
     private RecordGeneralController recordGeneralController;
+    
+    private AnalyticsTimeGeneralController analyticsTimeGeneralController;
 
     public StockEditController() {
         super(WebConstant.VALIDATOR.MODE.EDIT);
@@ -47,6 +51,8 @@ public class StockEditController extends StockCommonController implements EditCo
         
         recordValidator = new RecordValidator(WebConstant.VALIDATOR.MODE.EDIT, new RecordSpecificController());
         recordGeneralController = new RecordGeneralController();
+        
+        analyticsTimeGeneralController = new AnalyticsTimeGeneralController();
         
         storeSelector = new StoreSelector(WebConstant.SELECTOR.MODE.ENABLE, stock.getStore());
         productSelector = new ProductSelector(WebConstant.SELECTOR.MODE.ENABLE, stock.getProduct());
@@ -90,10 +96,14 @@ public class StockEditController extends StockCommonController implements EditCo
                     record.setCreatedDate(new Date());
                     record.setLastModifiedDate(new Date());
                     record.setStock(stock);
+ 
+                    AnalyticsTime analyticsTime = new AnalyticsTime(new Date(), user);
+                    analyticsTimeGeneralController.create(analyticsTime);
+                    record.setAnalitycsTime(analyticsTime);
                     
                     feedback = recordGeneralController.create(record);
                     
-                    if (feedback == BusinessConstant.UPDATE.FAILURE) {
+                    if (feedback == BusinessConstant.IDENTIFIER.INVALID) {
                         generalController.delete(stock);
                         throw new Exception();
                     }
@@ -103,6 +113,7 @@ public class StockEditController extends StockCommonController implements EditCo
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
                     detail = messageService.getDetail(CommonConstant.RELATION.STOCK, stock.getId(), CommonConstant.MESSAGE.DETAIL.INFO.EDIT);
                 } catch (Exception e) {
+                    System.out.println(e);
                     severity = FacesMessage.SEVERITY_FATAL;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
                     detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);

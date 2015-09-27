@@ -136,15 +136,8 @@ public interface WebConstant {
                 public static String TEXT = SEARCH.TEXT + "/relation";
                 
                 public static String STOCK = TEXT + "/stock.xhtml";
+                public static String RECORD = TEXT + "/record.xhtml";
             }
-        }
-        
-        public interface RELATION {
-
-            public static String TEXT = "/relation";
-
-            public static String INTERNAL = RELATION.TEXT + "/internal.xhtml";
-            public static String EXTERNAL = RELATION.TEXT + "/external.xhtml";
         }
     }
 

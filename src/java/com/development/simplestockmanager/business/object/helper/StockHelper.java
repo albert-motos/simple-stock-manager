@@ -14,7 +14,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class StockHelper extends CommonHelper{
+public class StockHelper extends CommonHelper {
 
     public StockHelper() {
         super(BusinessConstant.QUERY.STOCK);

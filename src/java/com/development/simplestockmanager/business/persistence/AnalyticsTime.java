@@ -6,6 +6,7 @@
 package com.development.simplestockmanager.business.persistence;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -96,6 +97,19 @@ public class AnalyticsTime implements Serializable {
         this.id = id;
     }
 
+    public AnalyticsTime(Date time, Employee employee) {
+        this.fullTime = time;
+        this.minuteTime = Integer.valueOf(new SimpleDateFormat("mm").format(time));
+        this.hourTime = Integer.valueOf(new SimpleDateFormat("HH").format(time));
+        this.dayTime = Integer.valueOf(new SimpleDateFormat("dd").format(time));
+        this.monthTime = Integer.valueOf(new SimpleDateFormat("M").format(time));
+        this.yearTime = Integer.valueOf(new SimpleDateFormat("yyyy").format(time));
+        this.createdDate = time;
+        this.lastModifiedDate = time;
+        this.createdUser = employee;
+        this.lastModifiedUser = employee;
+    }
+    
     public AnalyticsTime(Long id, Date fullTime, int minuteTime, int hourTime, int dayTime, int monthTime, int yearTime, Date createdDate, Date lastModifiedDate) {
         this.id = id;
         this.fullTime = fullTime;

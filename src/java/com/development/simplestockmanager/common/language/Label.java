@@ -31,6 +31,7 @@ public class Label {
     private final String employee;
     private final String store;
     private final String product;
+    private final String date;
     
     private final String amount;
     private final String actual_amount;
@@ -71,6 +72,7 @@ public class Label {
         employee = replace(base, controller.getWord(CommonConstant.LABEL.EMPLOYEE));
         store = replace(base, controller.getWord(CommonConstant.LABEL.STORE));
         product = replace(base, controller.getWord(CommonConstant.LABEL.PRODUCT));
+        date = replace(base, controller.getWord(CommonConstant.LABEL.DATE));
         
         amount = replace(base, controller.getWord(CommonConstant.LABEL.AMOUNT));
         actual_amount = replace(base, controller.getWord(CommonConstant.LABEL.ACTUAL_AMOUNT));
@@ -220,6 +222,10 @@ public class Label {
 
     public String getNote() {
         return note;
+    }
+
+    public String getDate() {
+        return date;
     }
 
 }

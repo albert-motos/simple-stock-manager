@@ -40,6 +40,7 @@ public class LanguageService implements Serializable {
     private final Header sex_type;
 
     private final Header stock;
+    private final Header record;
     
     private final Page attributes;
     private final Page browser;
@@ -75,7 +76,8 @@ public class LanguageService implements Serializable {
         product_type = new Header(CommonConstant.TYPE.PRODUCT_TYPE);
         sex_type = new Header(CommonConstant.TYPE.SEX_TYPE);
         
-        stock = new Header((CommonConstant.RELATION.STOCK));
+        stock = new Header(CommonConstant.RELATION.STOCK);
+        record = new Header(CommonConstant.RELATION.RECORD);
         
         attributes = new Page(controller.getWord(CommonConstant.PAGE.ATTRIBUTES));
         browser = new Page(controller.getWord(CommonConstant.PAGE.BROWSER));
@@ -198,6 +200,10 @@ public class LanguageService implements Serializable {
 
     public Header getStock() {
         return stock;
+    }
+
+    public Header getRecord() {
+        return record;
     }
 
     public static Language getLanguage(String code) {

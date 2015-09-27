@@ -22,6 +22,7 @@ public class Page {
     private final String sex_type;
     
     private final String stock;
+    private final String record;
     
     public Page(String base) {
         brand = replace(base, CommonConstant.ENTITY.BRAND);
@@ -38,6 +39,7 @@ public class Page {
         sex_type = replace(base, CommonConstant.TYPE.SEX_TYPE);
         
         stock = replace(base, CommonConstant.RELATION.STOCK);
+        record = replace(base, CommonConstant.RELATION.RECORD);
     }
     
     private String replace(String base, String type) {
@@ -100,6 +102,10 @@ public class Page {
 
     public String getStock() {
         return stock;
+    }
+
+    public String getRecord() {
+        return record;
     }
     
 }
