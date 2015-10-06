@@ -59,6 +59,8 @@ public class LanguageService implements Serializable {
     private final Button button;
     private final Special special;
     
+    private final String separator;
+    
     public LanguageService() {
         LanguageController controller = LanguageControllerManager.getInstance().getController();
 
@@ -98,6 +100,8 @@ public class LanguageService implements Serializable {
         column = new Label(controller.getWord(CommonConstant.COLUMN.BASE));
         button = new Button();
         special = new Special();
+        
+        separator = " / ";
     }
 
     public String getEntity() {
@@ -222,6 +226,10 @@ public class LanguageService implements Serializable {
 
     public Header getPrice() {
         return price;
+    }
+
+    public String getSeparator() {
+        return separator;
     }
 
     public static Language getLanguage(String code) {

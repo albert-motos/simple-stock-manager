@@ -338,6 +338,7 @@ public interface CommonConstant {
                 public static String UNIQUE = TEXT + "unique";
                 public static String PRODUCT = TEXT + "product";
                 public static String STOCK = TEXT + "stock";
+                public static String BEGIN_DATE = TEXT + "begin_date";
             }
 
             public interface INFO {
@@ -355,6 +356,7 @@ public interface CommonConstant {
                 public static String PLURAL = TEXT + "plural";
                 
                 public static String SELECTOR = TEXT + "selector";
+                public static String DATE = TEXT + "date";
             }
             
         }

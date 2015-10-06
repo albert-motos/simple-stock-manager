@@ -1,13 +1,11 @@
 package com.development.simplestockmanager.web.object.selector.entity;
 
-import com.development.simplestockmanager.common.web.object.selector.common.CommonSelector;
 import com.development.simplestockmanager.common.web.object.selector.base.BaseSelector;
 import com.development.simplestockmanager.business.object.controller.specific.StockSpecificController;
 import com.development.simplestockmanager.business.object.nullpackage.StockNull;
 import com.development.simplestockmanager.business.persistence.Stock;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +25,7 @@ public class StockSelector implements BaseSelector {
 
     public StockSelector(long mode) {
         this.specificController = new StockSpecificController();
-        browser = "asd";
-        search();
+        browser = "";
     }
 
     public StockSelector(long mode, Stock stock) {
@@ -40,8 +37,7 @@ public class StockSelector implements BaseSelector {
 
     @Override
     public void search() {
-//        clear();
-        list = new ArrayList<>();
+        clear();
 
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
             list = specificController.findAllByBrowser(browser);
@@ -53,7 +49,6 @@ public class StockSelector implements BaseSelector {
     @Override
     public void clear() {
         list = new ArrayList<>();
-//        hashMap = new HashMap<>();
     }
 
     public Stock getSelectedValue() {
@@ -92,6 +87,10 @@ public class StockSelector implements BaseSelector {
 
     public Stock getSelection() {
         return selection;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
     }
 
     public void setSelection(Stock selection) {

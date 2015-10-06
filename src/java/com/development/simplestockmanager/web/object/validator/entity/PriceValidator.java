@@ -44,6 +44,14 @@ public class PriceValidator extends CommonValidator implements BaseValidator {
             fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.NAME, null));
         }
         
+        if (price.getInitialDate() == null) {
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.BEGIN_DATE, CommonConstant.MESSAGE.DETAIL.WARNING.DATE));
+        }
+        
+        if (price.getEndDate()== null) {
+            fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.END_DATE, CommonConstant.MESSAGE.DETAIL.WARNING.DATE));
+        }
+        
         if (price.getPriceType().getId() == BusinessConstant.IDENTIFIER.INVALID) {
             fieldsEmptyList.add(messageService.getDetail(CommonConstant.LABEL.PRICE_TYPE, CommonConstant.MESSAGE.DETAIL.WARNING.SELECTOR));
         }
@@ -57,7 +65,15 @@ public class PriceValidator extends CommonValidator implements BaseValidator {
 
     @Override
     public List<String> inconsistenceFields() {
-        return new ArrayList<>();
+        List<String> causeList = new ArrayList<>();
+        
+        if (price.getInitialDate() != null && price.getEndDate() != null) {
+            if (price.getInitialDate().after(price.getEndDate())) {
+                causeList.add(messageService.getDetail(CommonConstant.LABEL.BEGIN_DATE, CommonConstant.MESSAGE.DETAIL.ERROR.BEGIN_DATE));
+            }
+        }
+        
+        return causeList;
     }
 
 }
