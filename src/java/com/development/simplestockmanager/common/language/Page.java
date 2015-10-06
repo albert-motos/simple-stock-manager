@@ -14,6 +14,7 @@ public class Page {
     private final String product;
     private final String provider;
     private final String store;
+    private final String price;
     
     private final String employee_type;
     private final String payment_type;
@@ -33,6 +34,7 @@ public class Page {
         product = replace(base, CommonConstant.ENTITY.PRODUCT);
         provider = replace(base, CommonConstant.ENTITY.PROVIDER);
         store = replace(base, CommonConstant.ENTITY.STORE);
+        price = replace(base, CommonConstant.ENTITY.PRICE);
         
         employee_type = replace(base, CommonConstant.TYPE.EMPLOYEE_TYPE);
         payment_type = replace(base, CommonConstant.TYPE.PAYMENT_TYPE);
@@ -118,6 +120,10 @@ public class Page {
 
     public String getItem() {
         return item;
+    }
+
+    public String getPrice() {
+        return price;
     }
     
 }

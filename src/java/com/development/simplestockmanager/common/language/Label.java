@@ -38,6 +38,9 @@ public class Label {
     private final String total_amount;
     private final String note;
     private final String price;
+    private final String price_type;
+    private final String begin_date;
+    private final String end_date;
     
     private final String type;
     private final String translation_es_es;
@@ -80,6 +83,9 @@ public class Label {
         total_amount = replace(base, controller.getWord(CommonConstant.LABEL.TOTAL_AMOUNT));
         note = replace(base, controller.getWord(CommonConstant.LABEL.NOTE));
         price = replace(base, controller.getWord(CommonConstant.LABEL.PRICE));
+        price_type = replace(base, controller.getWord(CommonConstant.LABEL.PRICE_TYPE));
+        begin_date = replace(base, controller.getWord(CommonConstant.LABEL.BEGIN_DATE));
+        end_date = replace(base, controller.getWord(CommonConstant.LABEL.END_DATE));
         
         type = replace(base, controller.getWord(CommonConstant.LABEL.TYPE));
         translation_ca_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.CA_ES));
@@ -232,6 +238,18 @@ public class Label {
 
     public String getPrice() {
         return price;
+    }
+
+    public String getPrice_type() {
+        return price_type;
+    }
+
+    public String getBegin_date() {
+        return begin_date;
+    }
+
+    public String getEnd_date() {
+        return end_date;
     }
 
 }

@@ -33,6 +33,7 @@ public class LanguageService implements Serializable {
     private final Header product;
     private final Header provider;
     private final Header store;
+    private final Header price;
     private final Header employee_type;
     private final Header payment_type;
     private final Header price_type;
@@ -71,6 +72,7 @@ public class LanguageService implements Serializable {
         product = new Header(CommonConstant.ENTITY.PRODUCT);
         provider = new Header(CommonConstant.ENTITY.PROVIDER);
         store = new Header(CommonConstant.ENTITY.STORE);
+        price = new Header(CommonConstant.ENTITY.PRICE);
         
         employee_type = new Header(CommonConstant.TYPE.EMPLOYEE_TYPE);
         payment_type = new Header(CommonConstant.TYPE.PAYMENT_TYPE);
@@ -216,6 +218,10 @@ public class LanguageService implements Serializable {
 
     public Header getItem() {
         return item;
+    }
+
+    public Header getPrice() {
+        return price;
     }
 
     public static Language getLanguage(String code) {

@@ -7,6 +7,7 @@ import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.common.web.controller.base.AddController;
 import com.development.simplestockmanager.common.web.controller.common.entity.PriceCommonController;
 import com.development.simplestockmanager.web.object.selector.entity.StockSelector;
+import com.development.simplestockmanager.web.object.selector.type.PriceTypeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -25,11 +26,13 @@ public class PriceAddController extends PriceCommonController implements AddCont
         super(WebConstant.VALIDATOR.MODE.CREATE);
         price = new Price();
         stockSelector = new StockSelector(WebConstant.SELECTOR.MODE.ENABLE);
+        priceTypeSelector = new PriceTypeSelector(WebConstant.SELECTOR.MODE.ENABLE);
     }
 
     @Override
     public void add() {
         price.setStock(stockSelector.getSelectedValue());
+        price.setPriceType(priceTypeSelector.getSelectedValue());
         validator.setObject(price);
 
         if (validator.validate()) {

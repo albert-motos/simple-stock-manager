@@ -159,6 +159,8 @@ public interface CommonConstant {
         public static String TOTAL_AMOUNT = TEXT + "total_amount";
         public static String PRICE = TEXT + "price";
         public static String PRICE_TYPE = TEXT + "price_type";
+        public static String BEGIN_DATE = TEXT + "begin_date";
+        public static String END_DATE = TEXT + "end_date";
 
         public static String TYPE = TEXT + "type";
 

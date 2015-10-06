@@ -33,12 +33,17 @@ public class PriceTypeHelper extends CommonHelper implements BaseTypeHelper {
 
     @Override
     public Query getFindAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = entityManager.createNamedQuery("PriceType.findAll");
+
+        return query;
     }
 
     @Override
     public Query getFindEnable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = entityManager.createNamedQuery("PriceType.findByEnable");
+        query.setParameter("enable", true);
+
+        return query;
     }
     
     public Query getFindForBrowserQuery(String type, String translation, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom,

@@ -49,6 +49,7 @@ public interface WebConstant {
                 public static String PRODUCT = TEXT + "/product.xhtml";
                 public static String PROVIDER = TEXT + "/provider.xhtml";
                 public static String STORE = TEXT + "/store.xhtml";
+                public static String PRICE = TEXT + "/price.xhtml";
             }
 
             public interface TYPE {
@@ -85,6 +86,7 @@ public interface WebConstant {
                 public static String PRODUCT = TEXT + "/product.xhtml";
                 public static String PROVIDER = TEXT + "/provider.xhtml";
                 public static String STORE = TEXT + "/store.xhtml";
+                public static String PRICE = TEXT + "/price.xhtml";
             }
 
             public interface TYPE {
@@ -121,6 +123,7 @@ public interface WebConstant {
                 public static String PRODUCT = TEXT + "/product.xhtml";
                 public static String PROVIDER = TEXT + "/provider.xhtml";
                 public static String STORE = TEXT + "/store.xhtml";
+                public static String PRICE = TEXT + "/price.xhtml";
             }
 
             public interface TYPE {
@@ -153,6 +156,7 @@ public interface WebConstant {
         public static String PRODUCT = "product";
         public static String PROVIDER = "provider";
         public static String STORE = "store";
+        public static String PRICE = "price";
 
         public static String EMPLOYEE_TYPE = "employee_type";
         public static String PAYMENT_TYPE = "payment_type";

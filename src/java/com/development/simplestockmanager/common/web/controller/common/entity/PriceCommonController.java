@@ -4,9 +4,8 @@ import com.development.simplestockmanager.common.web.controller.common.BaseCommo
 import com.development.simplestockmanager.business.object.controller.general.PriceGeneralController;
 import com.development.simplestockmanager.business.object.controller.specific.PriceSpecificController;
 import com.development.simplestockmanager.business.persistence.Price;
-import com.development.simplestockmanager.web.object.selector.entity.ProductSelector;
 import com.development.simplestockmanager.web.object.selector.entity.StockSelector;
-import com.development.simplestockmanager.web.object.selector.entity.StoreSelector;
+import com.development.simplestockmanager.web.object.selector.type.PriceTypeSelector;
 import com.development.simplestockmanager.web.object.validator.entity.PriceValidator;
 
 /**
@@ -22,6 +21,7 @@ public class PriceCommonController extends BaseCommonController {
 
     protected Price price;
     protected StockSelector stockSelector;
+    protected PriceTypeSelector priceTypeSelector;
 
     public PriceCommonController(long mode) {
         generalController = new PriceGeneralController();
@@ -35,6 +35,10 @@ public class PriceCommonController extends BaseCommonController {
 
     public StockSelector getStockSelector() {
         return stockSelector;
+    }
+
+    public PriceTypeSelector getPriceTypeSelector() {
+        return priceTypeSelector;
     }
 
 }

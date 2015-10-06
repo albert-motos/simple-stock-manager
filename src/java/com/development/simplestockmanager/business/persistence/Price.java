@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -97,6 +98,19 @@ public class Price implements Serializable {
     private List<Item> itemList;
 
     public Price() {
+    }
+
+    public Price(Price price) {
+        this.id = price.id;
+        this.title = price.title;
+        this.cost = price.cost;
+        this.initialAmount = price.initialAmount;
+        this.endAmount = price.endAmount;
+        this.initialDate = price.initialDate;
+        this.endDate = price.endDate;
+        this.enable = price.enable;
+        this.priceType = price.priceType;
+        this.stock = price.stock;
     }
 
     public Price(Long id) {
@@ -235,19 +249,57 @@ public class Price implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.title);
+        hash = 79 * hash + Objects.hashCode(this.cost);
+        hash = 79 * hash + Objects.hashCode(this.initialAmount);
+        hash = 79 * hash + Objects.hashCode(this.endAmount);
+        hash = 79 * hash + Objects.hashCode(this.initialDate);
+        hash = 79 * hash + Objects.hashCode(this.endDate);
+        hash = 79 * hash + (this.enable ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(this.priceType);
+        hash = 79 * hash + Objects.hashCode(this.stock);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Price)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Price other = (Price) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Price other = (Price) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.cost, other.cost)) {
+            return false;
+        }
+        if (!Objects.equals(this.initialAmount, other.initialAmount)) {
+            return false;
+        }
+        if (!Objects.equals(this.endAmount, other.endAmount)) {
+            return false;
+        }
+        if (!Objects.equals(this.initialDate, other.initialDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.endDate, other.endDate)) {
+            return false;
+        }
+        if (this.enable != other.enable) {
+            return false;
+        }
+        if (!Objects.equals(this.priceType, other.priceType)) {
+            return false;
+        }
+        if (!Objects.equals(this.stock, other.stock)) {
             return false;
         }
         return true;
