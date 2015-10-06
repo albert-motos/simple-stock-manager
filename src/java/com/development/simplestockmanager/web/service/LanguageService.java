@@ -41,6 +41,8 @@ public class LanguageService implements Serializable {
 
     private final Header stock;
     private final Header record;
+    private final Header invoice;
+    private final Header item;
     
     private final Page attributes;
     private final Page browser;
@@ -78,6 +80,8 @@ public class LanguageService implements Serializable {
         
         stock = new Header(CommonConstant.RELATION.STOCK);
         record = new Header(CommonConstant.RELATION.RECORD);
+        invoice = new Header(CommonConstant.RELATION.INVOICE);
+        item = new Header(CommonConstant.RELATION.ITEM);
         
         attributes = new Page(controller.getWord(CommonConstant.PAGE.ATTRIBUTES));
         browser = new Page(controller.getWord(CommonConstant.PAGE.BROWSER));
@@ -204,6 +208,14 @@ public class LanguageService implements Serializable {
 
     public Header getRecord() {
         return record;
+    }
+
+    public Header getInvoice() {
+        return invoice;
+    }
+
+    public Header getItem() {
+        return item;
     }
 
     public static Language getLanguage(String code) {

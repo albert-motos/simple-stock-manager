@@ -9,6 +9,8 @@ import com.development.simplestockmanager.common.constant.WebConstant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * Selector class for Product object
@@ -40,7 +42,12 @@ public class ProductSelector extends CommonSelector implements BaseSelector {
         if (mode == WebConstant.SELECTOR.MODE.ALL) {
             productList = specificController.findAllByBrowser(browser);
         } else {
-            productList = specificController.findEnableByBrowser(browser);
+            if (mode == WebConstant.SELECTOR.MODE.RELATED) {
+                String store = (String) receiveObjectFromSession(WebConstant.SESSION.STORE);
+                productList = specificController.findEnableByStore(browser, store);
+            } else {
+                productList = specificController.findEnableByBrowser(browser);
+            }
         }
 
         for (Product product : productList) {
@@ -55,7 +62,7 @@ public class ProductSelector extends CommonSelector implements BaseSelector {
         list = new ArrayList<>();
         hashMap = new HashMap<>();
     }
-    
+
     public Product getSelectedValue() {
         Product product = new ProductNull();
 
@@ -65,15 +72,21 @@ public class ProductSelector extends CommonSelector implements BaseSelector {
 
         return product;
     }
-    
+
     public String getDisplayName(Product product) {
         String name = "";
-        
+
         if (product != null) {
             name = product.getName();
         }
-        
+
         return name;
+    }
+
+    private Object receiveObjectFromSession(String key) {
+        FacesContext currentInstance = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) currentInstance.getExternalContext().getRequest();
+        return request.getSession().getAttribute(key);
     }
 
 }

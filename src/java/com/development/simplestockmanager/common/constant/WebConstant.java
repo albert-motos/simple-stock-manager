@@ -25,6 +25,7 @@ public interface WebConstant {
             public static long ENABLE = 0;
             public static long ALL = 1;
             public static long NONE = 2;
+            public static long RELATED = 3;
         }
     }
 
@@ -66,6 +67,7 @@ public interface WebConstant {
                 public static String TEXT = ADD.TEXT + "/relation";
                 
                 public static String STOCK = TEXT + "/stock.xhtml";
+                public static String ITEM = TEXT + "/item.xhtml";
             }
         }
 
@@ -101,6 +103,7 @@ public interface WebConstant {
                 public static String TEXT = EDIT.TEXT + "/relation";
                 
                 public static String STOCK = TEXT + "/stock.xhtml";
+                public static String INVOICE = TEXT + "/invoice.xhtml";
             }
         }
 
@@ -137,6 +140,7 @@ public interface WebConstant {
                 
                 public static String STOCK = TEXT + "/stock.xhtml";
                 public static String RECORD = TEXT + "/record.xhtml";
+                public static String INVOICE = TEXT + "/invoice.xhtml";
             }
         }
     }

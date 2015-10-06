@@ -45,4 +45,18 @@ public class StockHelper extends CommonHelper {
 
         return query;
     }
+    
+    public Query getFindAllByBrowserQuery(String browser) {
+        Query query = entityManager.createNamedQuery("Stock.findAllByBrowser");
+        query.setParameter("browser", "%" + browser + "%");
+
+        return query;
+    }
+    
+    public Query getFindEnableByBrowserQuery(String browser) {
+        Query query = entityManager.createNamedQuery("Stock.findEnableByBrowser");
+        query.setParameter("browser", "%" + browser + "%");
+
+        return query;
+    }
 }

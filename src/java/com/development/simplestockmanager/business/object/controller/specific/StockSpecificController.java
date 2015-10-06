@@ -53,48 +53,33 @@ public class StockSpecificController {
         return list;
     }
 
-//    public Stock findByName(String name) {
-//        Stock brand;
-//
-//        try {
-////            Query query = helper.getFindByNameQuery(name);
-////            brand = (Stock) query.getSingleResult();
-//        } catch (Exception e) {
-//            brand = new StockNull();
-//        }
-//
-//        return brand;
-//    }
-//
-//    public List<Stock> findAllByBrowser(String browser) {
-//        List<Stock> list = new ArrayList<>();
-//
-//        try {
-////            Query query = helper.getFindAllByBrowser(browser);
-////            for (Object object : query.getResultList()) {
-////                list.add((Stock) object);
-////            }
-//        } catch (Exception e) {
-//            list = new ArrayList<>();
-//        }
-//
-//        return list;
-//    }
-//
-//    public List<Stock> findEnableByBrowser(String browser) {
-//        List<Stock> list = new ArrayList<>();
-//
-//        try {
-////            Query query = helper.getFindEnableByBrowser(browser);
-////            for (Object object : query.getResultList()) {
-////                list.add((Stock) object);
-////            }
-//        } catch (Exception e) {
-//            list = new ArrayList<>();
-//        }
-//
-//        return list;
-//    }
-    
-    
+    public List<Stock> findAllByBrowser(String browser) {
+        List<Stock> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindAllByBrowserQuery(browser);
+            for (Object object : query.getResultList()) {
+                list.add((Stock) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
+
+    public List<Stock> findEnableByBrowser(String browser) {
+        List<Stock> list = new ArrayList<>();
+
+        try {
+            Query query = helper.getFindEnableByBrowserQuery( browser);
+            for (Object object : query.getResultList()) {
+                list.add((Stock) object);
+            }
+        } catch (Exception e) {
+            list = new ArrayList<>();
+        }
+
+        return list;
+    }
 }

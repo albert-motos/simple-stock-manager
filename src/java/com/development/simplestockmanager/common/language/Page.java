@@ -23,6 +23,8 @@ public class Page {
     
     private final String stock;
     private final String record;
+    private final String invoice;
+    private final String item;
     
     public Page(String base) {
         brand = replace(base, CommonConstant.ENTITY.BRAND);
@@ -40,6 +42,8 @@ public class Page {
         
         stock = replace(base, CommonConstant.RELATION.STOCK);
         record = replace(base, CommonConstant.RELATION.RECORD);
+        invoice = replace(base, CommonConstant.RELATION.INVOICE);
+        item = replace(base, CommonConstant.RELATION.ITEM);
     }
     
     private String replace(String base, String type) {
@@ -106,6 +110,14 @@ public class Page {
 
     public String getRecord() {
         return record;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public String getItem() {
+        return item;
     }
     
 }

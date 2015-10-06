@@ -15,11 +15,11 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ProductSpecificController {
+public class PriceSpecificController {
     
     private final ProductHelper helper;
 
-    public ProductSpecificController() {
+    public PriceSpecificController() {
         helper = new ProductHelper();
     }
 

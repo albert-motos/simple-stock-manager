@@ -26,6 +26,7 @@ public interface CommonConstant {
         public static String PRODUCT = TEXT + "product";
         public static String PROVIDER = TEXT + "provider";
         public static String STORE = TEXT + "store";
+        public static String PRICE = TEXT + "price";
 
     }
 
@@ -49,6 +50,8 @@ public interface CommonConstant {
         public static String HEADER = TEXT + "header";
         public static String STOCK = TEXT + "stock";
         public static String RECORD = TEXT + "record";
+        public static String INVOICE = TEXT + "invoice";
+        public static String ITEM = TEXT + "item";
     }
 
     public interface HEADER {
@@ -154,6 +157,8 @@ public interface CommonConstant {
         public static String AMOUNT = TEXT + "amount";
         public static String ACTUAL_AMOUNT = TEXT + "actual_amount";
         public static String TOTAL_AMOUNT = TEXT + "total_amount";
+        public static String PRICE = TEXT + "price";
+        public static String PRICE_TYPE = TEXT + "price_type";
 
         public static String TYPE = TEXT + "type";
 

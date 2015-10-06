@@ -15,7 +15,7 @@ import javax.persistence.Query;
  *
  * @author foxtrot
  */
-public class ProductHelper extends CommonHelper {
+ public class ProductHelper extends CommonHelper {
 
     public ProductHelper() {
         super(BusinessConstant.QUERY.PRODUCT);
@@ -61,6 +61,14 @@ public class ProductHelper extends CommonHelper {
     public Query getFindEnableByBrowser(String browser) {
         Query query = entityManager.createNamedQuery("Product.findEnableByBrowser");
         query.setParameter("browser", "%" + browser + "%");
+        
+        return query;
+    }
+    
+    public Query getFindEnableByStore(String browser, String store) {
+        Query query = entityManager.createNamedQuery("Product.findEnableByStore");
+        query.setParameter("browser", "%" + browser + "%");
+        query.setParameter("store", store);
         
         return query;
     }

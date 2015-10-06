@@ -37,6 +37,7 @@ public class Label {
     private final String actual_amount;
     private final String total_amount;
     private final String note;
+    private final String price;
     
     private final String type;
     private final String translation_es_es;
@@ -78,6 +79,7 @@ public class Label {
         actual_amount = replace(base, controller.getWord(CommonConstant.LABEL.ACTUAL_AMOUNT));
         total_amount = replace(base, controller.getWord(CommonConstant.LABEL.TOTAL_AMOUNT));
         note = replace(base, controller.getWord(CommonConstant.LABEL.NOTE));
+        price = replace(base, controller.getWord(CommonConstant.LABEL.PRICE));
         
         type = replace(base, controller.getWord(CommonConstant.LABEL.TYPE));
         translation_ca_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.CA_ES));
@@ -226,6 +228,10 @@ public class Label {
 
     public String getDate() {
         return date;
+    }
+
+    public String getPrice() {
+        return price;
     }
 
 }

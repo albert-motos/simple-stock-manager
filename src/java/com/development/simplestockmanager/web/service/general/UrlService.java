@@ -51,6 +51,7 @@ public class UrlService implements Serializable {
         addHashMap.put("sex_type", WebConstant.WEB.ADD.TYPE.SEX_TYPE);
         
         addHashMap.put("stock", WebConstant.WEB.ADD.RELATION.STOCK);
+        addHashMap.put("item", WebConstant.WEB.ADD.RELATION.ITEM);
 
         searchHashMap.put("brand", WebConstant.WEB.SEARCH.ENTITY.BRAND);
         searchHashMap.put("client", WebConstant.WEB.SEARCH.ENTITY.CLIENT);
@@ -67,5 +68,6 @@ public class UrlService implements Serializable {
         
         searchHashMap.put("stock", WebConstant.WEB.SEARCH.RELATION.STOCK);
         searchHashMap.put("record", WebConstant.WEB.SEARCH.RELATION.RECORD);
+        searchHashMap.put("invoice", WebConstant.WEB.SEARCH.RELATION.INVOICE);
     }
 }

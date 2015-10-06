@@ -23,6 +23,12 @@ import javax.persistence.NamedQuery;
     @NamedQuery(
             name = "Product.findEnableByBrowser",
             query = "SELECT p FROM Product p WHERE p.name LIKE :browser AND p.enable = TRUE ORDER BY p.name"
+    ),
+    @NamedQuery(
+            name = "Product.findEnableByStore",
+            query = "SELECT DISTINCT P FROM Product p INNER JOIN Stock s ON p.id = s.product.id"
+                    + " AND s.store.id = (SELECT st.id FROM Store st WHERE st.name = :store) "
+                    + " WHERE p.name LIKE :browser AND p.enable = TRUE"
     )
 })
 public class ProductQueryHolder implements Serializable {
