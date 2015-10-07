@@ -67,7 +67,7 @@ public class PriceEditController extends PriceCommonController implements EditCo
                     action = true;
                     severity = FacesMessage.SEVERITY_INFO;
                     summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
-                    detail = messageService.getDetail(CommonConstant.ENTITY.BRAND, price.getId(), CommonConstant.MESSAGE.DETAIL.INFO.EDIT);
+                    detail = messageService.getDetail(CommonConstant.ENTITY.PRICE, price.getId(), CommonConstant.MESSAGE.DETAIL.INFO.EDIT);
                 }
 
                 getContext().addMessage(null, new FacesMessage(severity, summary, detail));
@@ -81,7 +81,7 @@ public class PriceEditController extends PriceCommonController implements EditCo
 
     @Override
     public final void back() {
-        new NavigationService().redirect(WebConstant.WEB.SEARCH.ENTITY.BRAND);
+        new NavigationService().redirect(WebConstant.WEB.SEARCH.ENTITY.PRICE);
     }
 
 }

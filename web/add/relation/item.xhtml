@@ -117,14 +117,24 @@
                     </p:panelGrid>
                     <p:panelGrid style="width: 100%">
                         <p:row>
-                            <p:column>
+                            <p:column style="width: 80%">
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
-                                        <p:column width="100%">
-                                            <p:selectOneMenu id="productList" value="#{itemAdd.productSelector.selection}" style="width: 700px">
+                                        <p:column>
+                                            <p:selectOneMenu id="productList" value="#{itemAdd.productSelector.selection}" style="width: 550px" valueChangeListener="#{itemAdd.productListener}">
                                                 <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
                                                 <f:selectItems value="#{itemAdd.productSelector.list}" />
+                                                <p:ajax event="valueChange" immediate="true" process="@this" />
                                             </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                            <p:column style="width: 20%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:commandButton value="#{language.button.select}" actionListener="#{itemAdd.priceSelector.search()}" update="@form:priceList" />
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -132,6 +142,45 @@
                         </p:row>
                     </p:panelGrid>
                 </p:panel>
+                <p:panel header="#{language.browser.price}" >
+                    <p:panelGrid style="width: 100%">
+                        <p:row>
+                            <p:column style="width: 80%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:selectOneMenu id="priceList" value="#{itemAdd.priceSelector.selection}" style="width: 550px">
+                                                <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                                <f:selectItems value="#{itemAdd.priceSelector.list}" />
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                            <p:column style="width: 20%">
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column>
+                                            <p:commandButton value="#{language.button.select}" update="@form" oncomplete="PF('dlg1').show();" actionListener="#{itemAdd.priceListener()}" />
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:panel>
+            </p:dialog>
+            <p:dialog header="#{language.label.amount}" widgetVar="dlg1" draggable="false" resizable="false" width="200" position="top" style="margin-top: 250px" >
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 50%">
+                            <p:spinner value="#{itemAdd.amount}" min="0" max="#{itemAdd.amount_max}" />
+                        </p:column>
+                        <p:column style="width: 50%">
+                            <p:commandButton value="#{language.button.add}" update="@form" oncomplete="PF('dlg1').close();" />
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
             </p:dialog>
 
             <p:outputPanel style="text-align: right">

@@ -725,6 +725,7 @@ public interface CommonConstant {
         public static String FINISH = TEXT + ".finish";
         public static String SEARCH = TEXT + ".search";
         public static String CLEAR = TEXT + ".clear";
+        public static String SELECT = TEXT + ".select";
     }
 
     public interface MESSAGE2 {

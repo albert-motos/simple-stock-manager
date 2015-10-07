@@ -4,6 +4,7 @@ import com.development.simplestockmanager.common.business.helper.common.CommonHe
 import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.controller.PriceJpaController;
 import com.development.simplestockmanager.common.constant.WebConstant;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Query;
 
@@ -34,5 +35,15 @@ public class PriceHelper extends CommonHelper {
         System.out.println("# " + query);
 
         return entityManager.createQuery(query);
+    }
+    
+    public Query getFindEnableByStockQuery(String store, String product) {
+        Query query = entityManager.createNamedQuery("Price.findEnableByStore");
+        query.setParameter("store", store);
+        query.setParameter("product", product);
+//        query = query.concat(" AND " + type + ".createdDate BETWEEN '" + new Timestamp(createdDateFrom.getTime())
+//                    + "' AND '" + new Timestamp(createdDateTo.getTime()) + "'");
+        
+        return query;
     }
 }

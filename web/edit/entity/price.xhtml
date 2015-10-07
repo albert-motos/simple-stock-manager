@@ -147,7 +147,7 @@
             </p:panel>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.add}" rendered="#{not priceEdit.action}" actionListener="#{priceEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.edit}" rendered="#{not priceEdit.action}" actionListener="#{priceEdit.edit()}" style="width: 100px" update="@form" />
                 <p:commandButton value="#{language.button.back(priceEdit.action)}" actionListener="#{priceEdit.back()}"
                                  style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>

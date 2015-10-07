@@ -30,6 +30,7 @@ public class StockSelector implements BaseSelector {
 
     public StockSelector(long mode, Stock stock) {
         this(mode);
+        this.selection = stock;
 //        this.selection = getDisplayName(stock);
 //        this.browser = this.selection;
         search();

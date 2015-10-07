@@ -23,6 +23,7 @@ public class Button {
     private final String finish;
     private final String search;
     private final String clear;
+    private final String select;
 
     public Button() {
         LanguageController controller = LanguageControllerManager.getInstance().getController();
@@ -33,6 +34,7 @@ public class Button {
         finish = controller.getWord(CommonConstant.BUTTON.FINISH);
         search = controller.getWord(CommonConstant.BUTTON.SEARCH);
         clear = controller.getWord(CommonConstant.BUTTON.CLEAR);
+        select = controller.getWord(CommonConstant.BUTTON.SELECT);
     }
 
     public String getAdd() {
@@ -53,6 +55,10 @@ public class Button {
 
     public String getClear() {
         return clear;
+    }
+
+    public String getSelect() {
+        return select;
     }
     
 }

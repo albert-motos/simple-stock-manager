@@ -7,6 +7,7 @@ import com.development.simplestockmanager.common.constant.CommonConstant;
 import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.common.web.controller.base.AddController;
 import com.development.simplestockmanager.common.web.controller.common.relation.ItemCommonController;
+import com.development.simplestockmanager.web.object.selector.entity.PriceSelector;
 import com.development.simplestockmanager.web.object.selector.entity.ProductSelector;
 import com.development.simplestockmanager.web.object.selector.entity.StoreSelector;
 import java.math.BigDecimal;
@@ -26,12 +27,17 @@ import javax.faces.event.ValueChangeEvent;
 @ManagedBean(name = "itemAdd")
 @ViewScoped
 public class ItemAddController extends ItemCommonController implements AddController {
-
+    
+    BigDecimal amount_max;
+    BigDecimal amount;
+    
     public ItemAddController() {
         super(WebConstant.VALIDATOR.MODE.CREATE);
         list = new ArrayList<>();
         storeSelector = new StoreSelector(WebConstant.SELECTOR.MODE.ENABLE);
         productSelector = new ProductSelector(WebConstant.SELECTOR.MODE.RELATED);
+        priceSelector = new PriceSelector(WebConstant.SELECTOR.MODE.RELATED);
+        amount = BigDecimal.ZERO;
     }
 
     @Override
@@ -78,6 +84,29 @@ public class ItemAddController extends ItemCommonController implements AddContro
         if (event.getNewValue() != null) {
             sendObjectToSession(WebConstant.SESSION.STORE, event.getNewValue());
         }
+    }
+    
+    public void productListener(ValueChangeEvent event) {
+        if (event.getNewValue() != null) {
+            sendObjectToSession(WebConstant.SESSION.PRODUCT, event.getNewValue());
+        }
+    }
+    
+    public void priceListener() {
+        amount = BigDecimal.ZERO;
+        amount_max = priceSelector.getSelectedValue().getEndAmount();
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public BigDecimal getAmount_max() {
+        return amount_max;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
     }
 
 }
