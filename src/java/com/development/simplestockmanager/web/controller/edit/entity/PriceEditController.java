@@ -7,6 +7,8 @@ import com.development.simplestockmanager.common.constant.WebConstant;
 import com.development.simplestockmanager.web.service.general.NavigationService;
 import com.development.simplestockmanager.common.web.controller.common.entity.PriceCommonController;
 import com.development.simplestockmanager.common.web.controller.base.EditController;
+import com.development.simplestockmanager.web.object.selector.entity.StockSelector;
+import com.development.simplestockmanager.web.object.selector.type.PriceTypeSelector;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -27,9 +29,10 @@ public class PriceEditController extends PriceCommonController implements EditCo
         super(WebConstant.VALIDATOR.MODE.EDIT);
         
         try {
-            price = (Price) receiveObjectFromSession(WebConstant.SESSION.PRICE
-            );
+            price = (Price) receiveObjectFromSession(WebConstant.SESSION.PRICE);
             basePrice = new Price(price);
+            stockSelector = new StockSelector(WebConstant.SELECTOR.MODE.ENABLE, price.getStock());
+            priceTypeSelector = new PriceTypeSelector(WebConstant.SELECTOR.MODE.ENABLE, price.getPriceType());
         } catch (Exception e) {
             back();
         }
@@ -37,6 +40,9 @@ public class PriceEditController extends PriceCommonController implements EditCo
 
     @Override
     public void edit() {
+        price.setStock(stockSelector.getSelectedValue());
+        price.setPriceType(priceTypeSelector.getSelectedValue());
+        
         if (price.equals(basePrice)) {
             action = true;
             severity = FacesMessage.SEVERITY_INFO;

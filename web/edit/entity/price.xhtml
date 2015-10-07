@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="content">
+        <h:form>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" style="margin: 0px !important"/>
+
+            <p:panel header="#{language.attributes.price}" >
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column width="100%">
+                            <p:panel header="#{language.browser.stock}" >
+                                <p:panelGrid style="width: 100%">
+                                    <p:row>
+                                        <p:column style="width: 100%">
+                                            <p:inputText value="#{priceEdit.stockSelector.browser}" style="width: 100%" />
+                                        </p:column>
+                                        <p:column>
+                                            <p:commandButton value="#{language.button.search}" actionListener="#{priceEdit.stockSelector.search()}" update="stockList" />
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <p:dataTable id="stockList" var="stock" value="#{priceEdit.stockSelector.list}" selectionMode="single"
+                                                         selection="#{priceEdit.stockSelector.selection}" rowKey="#{stock.id}">
+                                                <p:column headerText="#{language.column.store}">
+                                                    <h:outputText value="#{stock.store.name}" />
+                                                </p:column>
+                                                <p:column headerText="#{language.column.product}">
+                                                    <h:outputText value="#{stock.product.name}" />
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:panel>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.price_type}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectOneMenu id="brandList" value="#{priceEdit.priceTypeSelector.selection}" style="width: 100%">
+                                            <f:selectItem itemLabel="#{language.special.non_selection}" itemValue="" />
+                                            <f:selectItems value="#{priceEdit.priceTypeSelector.list}" />
+                                        </p:selectOneMenu>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 50%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.name}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:inputText value="#{priceEdit.price.title}" style="width: 100%" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 25%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.price}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:spinner value="#{priceEdit.price.cost}" stepFactor="0.01" min="0" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 25%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.amount}" />
+                                    </p:column>
+                                    <p:column style="width: 300px">
+                                        <p:spinner value="#{priceEdit.price.initialAmount}" stepFactor="0.001" min="0" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 25%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.begin_date}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:calendar value="#{priceEdit.price.initialDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                        <p:column style="width: 25%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.label.end_date}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:calendar value="#{priceEdit.price.endDate}" pattern="MM/dd/yyyy HH:mm:ss"/>
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
+
+            <p:panel header="#{language.visibility.price}">
+                <p:panelGrid style="width: 100%">
+                    <p:row>
+                        <p:column style="width: 100%">
+                            <p:panelGrid style="width: 100%">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="#{language.enable.price}" />
+                                    </p:column>
+                                    <p:column style="width: 100%">
+                                        <p:selectBooleanCheckbox value="#{priceEdit.price.enable}" />
+                                    </p:column>
+                                </p:row>
+                            </p:panelGrid>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
+
+            <p:outputPanel style="text-align: right">
+                <p:commandButton value="#{language.button.add}" rendered="#{not priceEdit.action}" actionListener="#{priceEdit.edit()}" style="width: 100px" update="@form" />
+                <p:commandButton value="#{language.button.back(priceEdit.action)}" actionListener="#{priceEdit.back()}"
+                                 style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
+            </p:outputPanel>
+        </h:form>
+    </ui:define>
+</ui:composition>

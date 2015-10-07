@@ -50,8 +50,8 @@ public class PriceSearchController extends PriceCommonController implements Sear
     }
 
     public void initEdit(Price price) {
-        sendObjectToSession(WebConstant.SESSION.BRAND, price);
-        new NavigationService().redirect(WebConstant.WEB.EDIT.ENTITY.BRAND);
+        sendObjectToSession(WebConstant.SESSION.PRICE, price);
+        new NavigationService().redirect(WebConstant.WEB.EDIT.ENTITY.PRICE);
     }
     
     public List<Price> getList() {
