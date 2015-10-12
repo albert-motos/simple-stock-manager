@@ -17,6 +17,9 @@ import javax.persistence.NamedQuery;
             name = "Stock.findByRelation",
             query = "SELECT s FROM Stock s WHERE s.store = :store AND s.product = :product"),
     @NamedQuery(
+            name = "Stock.findByProductAndStore",
+            query = "SELECT s FROM Stock s WHERE s.store.id = :store AND s.product.id = :product"),
+    @NamedQuery(
             name = "Stock.findEnableByBrowser",
             query = "SELECT s FROM Stock s WHERE (s.product.name LIKE :browser OR s.store.name LIKE :browser) AND s.enable = TRUE"),
     @NamedQuery(

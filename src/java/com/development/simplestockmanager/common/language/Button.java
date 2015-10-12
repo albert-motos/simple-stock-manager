@@ -1,13 +1,6 @@
 package com.development.simplestockmanager.common.language;
 
-import com.development.simplestockmanager.web.service.general.*;
-import com.development.simplestockmanager.business.persistence.Employee;
 import com.development.simplestockmanager.common.constant.CommonConstant;
-import com.development.simplestockmanager.common.constant.WebConstant;
-import java.io.Serializable;
-import java.util.Date;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 
 /**
  * Service class for button internationalization functionality
@@ -59,6 +52,10 @@ public class Button {
 
     public String getSelect() {
         return select;
+    }
+
+    public String getFinish() {
+        return finish;
     }
     
 }

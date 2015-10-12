@@ -15,10 +15,9 @@
     </h:head>
 
     <h:body onload="">
-
         <div id="top">
             <ui:insert name="top">
-                <h:form>
+                <h:form style="margin: 0px !important">
                     <p:menubar>
                         <p:submenu label="#{language.relation}">
                             <p:submenu label="#{language.stock.title}">
@@ -82,7 +81,7 @@
                             </p:submenu>
                         </p:submenu>
                         <f:facet name="options" >
-                            <p:commandButton value="CLOSE_SESSION" actionListener="#{authentication.logout()}" />
+                            <p:commandButton value="#{language.column.log_out}" actionListener="#{authentication.logout()}" />
                         </f:facet>
                     </p:menubar>
                 </h:form>
@@ -90,13 +89,8 @@
         </div>
 
         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+            <ui:insert name="content"></ui:insert>
         </div>
-
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
-        </div>
-
     </h:body>
 
 </html>

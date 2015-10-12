@@ -1,6 +1,7 @@
 package com.development.simplestockmanager.web.controller.add.relation;
 
 import com.development.simplestockmanager.business.persistence.Item;
+import com.development.simplestockmanager.business.persistence.Price;
 import com.development.simplestockmanager.common.constant.BusinessConstant;
 import com.development.simplestockmanager.business.persistence.Stock;
 import com.development.simplestockmanager.common.constant.CommonConstant;
@@ -10,6 +11,7 @@ import com.development.simplestockmanager.common.web.controller.common.relation.
 import com.development.simplestockmanager.web.object.selector.entity.PriceSelector;
 import com.development.simplestockmanager.web.object.selector.entity.ProductSelector;
 import com.development.simplestockmanager.web.object.selector.entity.StoreSelector;
+import com.development.simplestockmanager.web.service.general.NavigationService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +30,7 @@ import javax.faces.event.ValueChangeEvent;
 @ViewScoped
 public class ItemAddController extends ItemCommonController implements AddController {
     
+    boolean visible;
     BigDecimal amount_max;
     BigDecimal amount;
     
@@ -38,42 +41,34 @@ public class ItemAddController extends ItemCommonController implements AddContro
         productSelector = new ProductSelector(WebConstant.SELECTOR.MODE.RELATED);
         priceSelector = new PriceSelector(WebConstant.SELECTOR.MODE.RELATED);
         amount = BigDecimal.ZERO;
+        visible = false;
     }
 
     @Override
     public void add() {
-        System.out.println("here" + storeSelector.getSelectedValue());
-      
-//        stock.setStore(storeSelector.getSelectedValue());
-//        stock.setProduct(productSelector.getSelectedValue());
-//        stock.setTotalAmount(stock.getActualAmount());
-//        validator.setObject(stock);
-//
-//        if (validator.validate()) {
-//            stock.setCreatedDate(new Date());
-//            stock.setLastModifiedDate(new Date());
-//            stock.setCreatedUser(user);
-//            stock.setLastModifiedUser(user);
-//
-//            Long id = generalController.create(stock);
-//
-//            if (id == BusinessConstant.IDENTIFIER.INVALID) {
-//                severity = FacesMessage.SEVERITY_FATAL;
-//                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.FATAL);
-//                detail = messageService.getDetail(CommonConstant.MESSAGE.DETAIL.FATAL.DATABASE);
-//            } else {
-//                action = true;
-//                severity = FacesMessage.SEVERITY_INFO;
-//                summary = messageService.getSummary(CommonConstant.MESSAGE.SUMMARY.INFO);
-//                detail = messageService.getDetail(CommonConstant.RELATION.STOCK, id, CommonConstant.MESSAGE.DETAIL.INFO.CREATE);
-//            }
-//
-//            getContext().addMessage(null, new FacesMessage(severity, summary, detail));
-//        } else {
-//            for (FacesMessage message : validator.getMessageList()) {
-//                getContext().addMessage(null, message);
-//            }
-//        }
+        Stock stock = specificController.findByProductAndStore(productSelector.getSelectedValue(), storeSelector.getSelectedValue());
+        stock.setActualAmount(stock.getActualAmount().add(amount.negate()));
+        
+        Price price = priceSelector.getSelectedValue();
+        price.setEndAmount(price.getEndAmount().add(amount.negate()));
+        
+        Item item = new Item();
+        item.setAmount(amount);
+        item.setPrice(price);
+        item.setStock(stock);
+        
+        list.add(0, item);
+        if (!list.isEmpty()) {
+            visible = true;
+        }
+        
+        productSelector.clear();
+        priceSelector.clear();
+    }
+    
+    public void finish() {
+        sendObjectToSession(WebConstant.SESSION.ITEM, list);
+        new NavigationService().redirect(WebConstant.WEB.ADD.RELATION.INVOICE);
     }
     
     public void remove(Item item) {
@@ -107,6 +102,10 @@ public class ItemAddController extends ItemCommonController implements AddContro
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
 }

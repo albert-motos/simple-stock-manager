@@ -1,11 +1,7 @@
 package com.development.simplestockmanager.business.object.controller.specific;
 
 import com.development.simplestockmanager.business.object.helper.PriceHelper;
-import com.development.simplestockmanager.business.object.nullpackage.PriceNull;
-import com.development.simplestockmanager.business.persistence.Brand;
 import com.development.simplestockmanager.business.persistence.Price;
-import com.development.simplestockmanager.business.persistence.PriceType;
-import com.development.simplestockmanager.business.persistence.Provider;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +45,7 @@ public class PriceSpecificController {
             for (Object object : query.getResultList()) {
                 Price price = (Price) object;
                 Date date = new Date();
-                if (date.after(price.getInitialDate()) && date.before(price.getEndDate()) && !price.getEndAmount().equals(BigDecimal.ZERO)) {
+                if (date.after(price.getInitialDate()) && date.before(price.getEndDate()) && price.getEndAmount().compareTo(BigDecimal.ZERO) == 1) {
                     list.add(price);
                 }
             }

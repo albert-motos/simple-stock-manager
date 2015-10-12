@@ -35,6 +35,19 @@ public class StockSpecificController {
         
         return stock;
     }
+    
+    public Stock findByProductAndStore(Product product, Store store) {
+        Stock stock;
+        
+        try {
+            Query query = helper.getFindByProductAndStoreQuery(product.getId(), store.getId());
+            stock = (Stock) query.getSingleResult();
+        } catch (Exception e) {
+            stock = new StockNull();
+        }
+        
+        return stock;
+    }
 
     public List<Stock> findAllForBrowser(Stock browser, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom, Date lastModifiedDateTo,
             long createdUserID, long lastModifiedUserID) {

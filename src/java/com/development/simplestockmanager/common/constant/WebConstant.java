@@ -69,6 +69,7 @@ public interface WebConstant {
                 
                 public static String STOCK = TEXT + "/stock.xhtml";
                 public static String ITEM = TEXT + "/item.xhtml";
+                public static String INVOICE = TEXT + "/invoice.xhtml";
             }
         }
 
@@ -165,6 +166,7 @@ public interface WebConstant {
         public static String SEX_TYPE = "sex_type";
         
         public static String STOCK = "stock";
+        public static String ITEM = "item";
     }
 
     public interface LOGGER {

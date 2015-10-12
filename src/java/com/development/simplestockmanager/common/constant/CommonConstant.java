@@ -153,6 +153,8 @@ public interface CommonConstant {
         public static String STOCK = TEXT + "stock";
         public static String NOTE = TEXT + "note";
         public static String DATE = TEXT + "date";
+        public static String CLIENT = TEXT + "client";
+        public static String PAYMENT_TYPE = TEXT + "payment_type";
         
         public static String AMOUNT = TEXT + "amount";
         public static String ACTUAL_AMOUNT = TEXT + "actual_amount";
@@ -161,8 +163,10 @@ public interface CommonConstant {
         public static String PRICE_TYPE = TEXT + "price_type";
         public static String BEGIN_DATE = TEXT + "begin_date";
         public static String END_DATE = TEXT + "end_date";
+        public static String COST = TEXT + "cost";
 
         public static String TYPE = TEXT + "type";
+        public static String LOG_OUT = TEXT + "log_out";
 
         public interface TRANSLATION {
 

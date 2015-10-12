@@ -68,16 +68,16 @@
                                                 <p:commandButton icon="ui-icon-trash" actionListener="#{itemAdd.remove(item)}"  update="list"/>
                                             </p:column>
 
-                                            <p:column headerText="#{language.column.product}" sortBy="#{item.stock.product}">
-                                                <h:outputText value="#{item.stock.product}" />
+                                            <p:column headerText="#{language.column.product}">
+                                                <h:outputText value="#{item.stock.product.name}" />
                                             </p:column>
 
-                                            <p:column headerText="#{language.column.amount}" sortBy="#{item.amount}">
+                                            <p:column headerText="#{language.column.amount}">
                                                 <h:outputText value="#{item.amount}" />
                                             </p:column>
 
-                                            <p:column headerText="#{language.column.price}" sortBy="#{item.price}">
-                                                <h:outputText value="#{item.price}" />
+                                            <p:column headerText="#{language.column.price}" >
+                                                <h:outputText value="#{item.price.title}" />
                                             </p:column>
                                         </p:dataTable>
                                     </p:column>
@@ -161,7 +161,7 @@
                                 <p:panelGrid style="width: 100%">
                                     <p:row>
                                         <p:column>
-                                            <p:commandButton value="#{language.button.select}" update="@form" oncomplete="PF('dlg1').show();" actionListener="#{itemAdd.priceListener()}" />
+                                            <p:commandButton value="#{language.button.select}" update="@form" oncomplete="PF('dlg').hide(); PF('dlg1').show();" actionListener="#{itemAdd.priceListener()}" />
                                         </p:column>
                                     </p:row>
                                 </p:panelGrid>
@@ -170,22 +170,22 @@
                     </p:panelGrid>
                 </p:panel>
             </p:dialog>
-            <p:dialog header="#{language.label.amount}" widgetVar="dlg1" draggable="false" resizable="false" width="200" position="top" style="margin-top: 250px" >
+            <p:dialog header="#{language.column.amount}" widgetVar="dlg1" draggable="false" resizable="false" width="300" position="top" style="margin-top: 250px" >
                 <p:panelGrid style="width: 100%">
                     <p:row>
                         <p:column style="width: 50%">
                             <p:spinner value="#{itemAdd.amount}" min="0" max="#{itemAdd.amount_max}" />
                         </p:column>
                         <p:column style="width: 50%">
-                            <p:commandButton value="#{language.button.add}" update="@form" oncomplete="PF('dlg1').close();" />
+                            <p:commandButton value="#{language.button.add}" update="@form" actionListener="#{itemAdd.add()}" oncomplete="PF('dlg1').hide();" />
                         </p:column>
                     </p:row>
                 </p:panelGrid>
             </p:dialog>
 
             <p:outputPanel style="text-align: right">
-                <p:commandButton value="#{language.button.back(itemAdd.action)}" actionListener="#{itemAdd.back()}"
-                                 style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
+                <p:commandButton value="#{language.button.finish}" rendered="#{itemAdd.visible}" actionListener="#{itemAdd.finish()}" style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
+                <p:commandButton value="#{language.button.back(itemAdd.action)}" actionListener="#{itemAdd.back()}" style="width: 100px; margin: 15px; margin-bottom: 0px !important" />
             </p:outputPanel>
         </h:form>
     </ui:define>

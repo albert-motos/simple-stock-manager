@@ -41,12 +41,17 @@ public class Label {
     private final String price_type;
     private final String begin_date;
     private final String end_date;
+    private final String cost;
+    private final String client;
+    private final String payment_type;
     
     private final String type;
     private final String translation_es_es;
     private final String translation_ca_es;
     private final String translation_en_us;
     private final String translation;
+    
+    private final String log_out;
     
     private final String status;
 
@@ -86,6 +91,11 @@ public class Label {
         price_type = replace(base, controller.getWord(CommonConstant.LABEL.PRICE_TYPE));
         begin_date = replace(base, controller.getWord(CommonConstant.LABEL.BEGIN_DATE));
         end_date = replace(base, controller.getWord(CommonConstant.LABEL.END_DATE));
+        cost = replace(base, controller.getWord(CommonConstant.LABEL.COST));
+        client = replace(base, controller.getWord(CommonConstant.LABEL.CLIENT));
+        payment_type = replace(base, controller.getWord(CommonConstant.LABEL.PAYMENT_TYPE));
+        
+        log_out = replace(base, controller.getWord(CommonConstant.LABEL.LOG_OUT));
         
         type = replace(base, controller.getWord(CommonConstant.LABEL.TYPE));
         translation_ca_es = replace(base, controller.getWord(CommonConstant.LABEL.TRANSLATION.CA_ES));
@@ -250,6 +260,22 @@ public class Label {
 
     public String getEnd_date() {
         return end_date;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public String getPayment_type() {
+        return payment_type;
+    }
+
+    public String getLog_out() {
+        return log_out;
     }
 
 }

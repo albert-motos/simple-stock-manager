@@ -33,12 +33,17 @@ public class PaymentTypeHelper extends CommonHelper implements BaseTypeHelper {
 
     @Override
     public Query getFindAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = entityManager.createNamedQuery("PaymentType.findAll");
+
+        return query;
     }
 
     @Override
     public Query getFindEnable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = entityManager.createNamedQuery("PaymentType.findByEnable");
+        query.setParameter("enable", true);
+
+        return query;
     }
     
     public Query getFindForBrowserQuery(String type, String translation, long status, Date createdDateFrom, Date createdDateTo, Date lastModifiedDateFrom,
