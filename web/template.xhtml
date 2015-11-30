@@ -19,7 +19,7 @@
             <ui:insert name="top">
                 <h:form style="margin: 0px !important">
                     <p:menubar>
-                        <p:submenu label="#{language.relation}">
+                        <p:submenu label="#{language.relation}" rendered="#{authentication.hasVisibility('relation')}">
                             <p:submenu label="#{language.stock.title}">
                                 <p:menuitem value="#{language.stock.create}" url="#{url.add('stock')}" />
                                 <p:menuitem value="#{language.stock.search}" url="#{url.search('stock')}" />
@@ -32,7 +32,7 @@
                                 <p:menuitem value="#{language.record.search}" url="#{url.search('record')}" />
                             </p:submenu>
                         </p:submenu>
-                        <p:submenu label="#{language.entity}">
+                        <p:submenu label="#{language.entity}" rendered="#{authentication.hasVisibility('entity')}">
                             <p:submenu label="#{language.brand.title}">
                                 <p:menuitem value="#{language.brand.create}" url="#{url.add('brand')}" />
                                 <p:menuitem value="#{language.brand.search}" url="#{url.search('brand')}" />
@@ -44,6 +44,10 @@
                             <p:submenu label="#{language.employee.title}">
                                 <p:menuitem value="#{language.employee.create}" url="#{url.add('employee')}" />
                                 <p:menuitem value="#{language.employee.search}" url="#{url.search('employee')}" />
+                            </p:submenu>
+                            <p:submenu label="#{language.price.title}">
+                                <p:menuitem value="#{language.price.create}" url="#{url.add('price')}" />
+                                <p:menuitem value="#{language.price.search}" url="#{url.search('price')}" />
                             </p:submenu>
                             <p:submenu label="#{language.product.title}">
                                 <p:menuitem value="#{language.product.create}" url="#{url.add('product')}" />
@@ -58,7 +62,7 @@
                                 <p:menuitem value="#{language.store.search}" url="#{url.search('store')}" />
                             </p:submenu>
                         </p:submenu>
-                        <p:submenu label="#{language.type}">
+                        <p:submenu label="#{language.type}" rendered="#{authentication.hasVisibility('type')}">
                             <p:submenu label="#{language.employee_type.title}">
                                 <p:menuitem value="#{language.employee_type.create}" url="#{url.add('employee_type')}" />
                                 <p:menuitem value="#{language.employee_type.search}" url="#{url.search('employee_type')}" />

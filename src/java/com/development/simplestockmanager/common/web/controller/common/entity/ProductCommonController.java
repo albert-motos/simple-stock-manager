@@ -47,4 +47,16 @@ public class ProductCommonController extends BaseCommonController {
         return providerSelector;
     }
 
+    public void setProductTypeSelector(ProductTypeSelector productTypeSelector) {
+        this.productTypeSelector = productTypeSelector;
+    }
+
+    public void setBrandSelector(BrandSelector brandSelector) {
+        this.brandSelector = brandSelector;
+    }
+
+    public void setProviderSelector(ProviderSelector providerSelector) {
+        this.providerSelector = providerSelector;
+    }
+
 }

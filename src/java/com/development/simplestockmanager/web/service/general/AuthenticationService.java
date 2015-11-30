@@ -116,5 +116,23 @@ public class AuthenticationService implements Serializable {
     public Employee getEmployee() {
         return employee;
     }
+    
+    public boolean hasVisibility(String zone) {
+        boolean visibility = false;
+        Employee current_employee = getCurrentEmployee();
+        
+        if (current_employee.getEmployeeType().getId().equals((long) 111)) {
+            visibility = true;
+        } else {
+            if (zone.equals("relation")) {
+                visibility = true;
+            } else if (current_employee.getEmployeeType().getId().equals((long) 110) && zone.equals("entity")) {
+                visibility = true;
+            }
+        }
+        
+        
+        return visibility;
+    }
 
 }
